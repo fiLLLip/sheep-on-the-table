@@ -14,10 +14,10 @@ import java.util.logging.Logger;
  */
 public class mysqlHelper {
     
-    String dbHost =  "";
-    String dbUser = "";
-    String dbPass = "";
-    String dbName = "";
+    String dbHost =  "mysql.stud.ntnu.no";
+    String dbUser = "knutela_sheep";
+    String dbPass = "pwonthetable";
+    String dbName = "knutela_sheep";
     int port = 3306;
     Connection con;
     Statement stmt;
