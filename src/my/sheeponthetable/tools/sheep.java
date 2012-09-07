@@ -9,12 +9,12 @@ package my.sheeponthetable.tools;
  * @author Filip
  */
 public class sheep {
-    int id;
-    int eier_id;
-    String navn;
-    String kommentar;
-    int born_year;
-    sheepUpdate[] updates;
+    private int id;
+    private int eier_id;
+    private String navn;
+    private String kommentar;
+    private int born_year;
+    private sheepUpdate[] updates;
     
     /**
      *
