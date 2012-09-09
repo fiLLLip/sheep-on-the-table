@@ -4,6 +4,8 @@
  */
 package my.sheeponthetable.tools;
 
+import java.util.List;
+
 /**
  *
  * @author Filip
@@ -14,7 +16,7 @@ public class sheep {
     private String navn;
     private String kommentar;
     private int born_year;
-    private sheepUpdate[] updates;
+    private List<sheepUpdate> updates;
     
     /**
      *
@@ -25,7 +27,7 @@ public class sheep {
      * @param born_year
      * @param updates
      */
-    public sheep (int id, int eier_id, String navn, String kommentar, int born_year, sheepUpdate[] updates) {
+    public sheep (int id, int eier_id, String navn, String kommentar, int born_year, List<sheepUpdate> updates) {
         this.id = id;
         this.eier_id = eier_id;
         this.navn = navn;
