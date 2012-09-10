@@ -55,4 +55,8 @@ public class Sheep {
     public int getBornYear() {
         return born_year;
     }
+
+    public List<sheepUpdate> getUpdates() {
+        return updates;
+    }
 }

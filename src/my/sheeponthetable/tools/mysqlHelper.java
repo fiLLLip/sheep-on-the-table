@@ -90,6 +90,9 @@ public class mysqlHelper {
     public void storeNewSheep(Sheep s) {
         try {
             stmt.executeQuery("INSERT INTO sau(id, eier_id, navn, kommentar, fodt_ar) VALUES \'" + s.getID() + "\',\'" + s.getEierID() + "\',\'" + s.getNavn() + "\',\'" + s.getKommentar() + "\',\'" +  s.getBornYear() + "\'");
+            for (sheepUpdate su : s.getUpdates()) {
+                stmt.executeQuery("INSERT INTO oppdateringer(id, sau_id, timestamp, posisjon_x, posisjon_y, puls, temperatur) VALUES \'" + su.getID() + "\',\'" + s.getID() + "\',\'" + su.getTimeStamp() + "\',\'" + su.getX() + "\',\'" + su.getY() + "\',\'" + su.getPuls() + "\',\'" + su.getTemp() + "\'");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(mysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
