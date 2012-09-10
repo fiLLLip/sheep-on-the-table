@@ -87,14 +87,33 @@ public class mysqlHelper {
         }
     }
 
-    public void storeNewSheep(Sheep s) {
+    public boolean storeNewSheep(Sheep s) {
         try {
-            stmt.executeQuery("INSERT INTO sau(id, eier_id, navn, kommentar, fodt_ar) VALUES \'" + s.getID() + "\',\'" + s.getEierID() + "\',\'" + s.getNavn() + "\',\'" + s.getKommentar() + "\',\'" +  s.getBornYear() + "\'");
+            stmt.executeQuery("INSERT INTO sau (id, eier_id, navn, kommentar, fodt_ar) VALUES \'" + s.getID() + "\',\'" + s.getEierID() + "\',\'" + s.getNavn() + "\',\'" + s.getKommentar() + "\',\'" +  s.getBornYear() + "\'");
+            /* This should not try to store updates, since new sheep doesn't have any updates
             for (sheepUpdate su : s.getUpdates()) {
-                stmt.executeQuery("INSERT INTO oppdateringer(id, sau_id, timestamp, posisjon_x, posisjon_y, puls, temperatur) VALUES \'" + su.getID() + "\',\'" + s.getID() + "\',\'" + su.getTimeStamp() + "\',\'" + su.getX() + "\',\'" + su.getY() + "\',\'" + su.getPuls() + "\',\'" + su.getTemp() + "\'");
+                stmt.executeQuery("INSERT INTO oppdateringer (id, sau_id, timestamp, posisjon_x, posisjon_y, puls, temperatur) VALUES \'" + su.getID() + "\',\'" + s.getID() + "\',\'" + su.getTimeStamp() + "\',\'" + su.getX() + "\',\'" + su.getY() + "\',\'" + su.getPuls() + "\',\'" + su.getTemp() + "\'");
             }
+            */
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(mysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public boolean updateSheep(Sheep s) {
+        try {
+            stmt.executeQuery("UPDATE sau SET eier_id=\'" + s.getEierID() + "\', navn=\'" + s.getNavn() + "\', kommentar=\'" + s.getKommentar() + "\', fodt_ar=\'" +  s.getBornYear() + "\' WHERE id=\'" + s.getID() + "\'");
+            /* This should not try to store updates, since new sheep doesn't have any updates
+            for (sheepUpdate su : s.getUpdates()) {
+                stmt.executeQuery("INSERT INTO oppdateringer (id, sau_id, timestamp, posisjon_x, posisjon_y, puls, temperatur) VALUES \'" + su.getID() + "\',\'" + s.getID() + "\',\'" + su.getTimeStamp() + "\',\'" + su.getX() + "\',\'" + su.getY() + "\',\'" + su.getPuls() + "\',\'" + su.getTemp() + "\'");
+            }
+            */
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(mysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
     
