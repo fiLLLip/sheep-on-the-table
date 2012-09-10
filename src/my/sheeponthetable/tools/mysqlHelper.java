@@ -54,14 +54,14 @@ public class mysqlHelper {
      *
      * @return
      */
-    public List<sheep> getSheepList() {
+    public List<Sheep> getSheepList() {
         try {
-            List<sheep> sheeps = new ArrayList<>();
+            List<Sheep> sheeps = new ArrayList<>();
             ResultSet results;
             results = stmt.executeQuery("SELECT id, eier_id, navn, kommentar, fodt_ar FROM sau WHERE eier_id = 1");
             while(results.next()){
                 List<sheepUpdate> updates = getSheepUpdates(Integer.parseInt(results.getString(1)));
-                sheeps.add(new sheep(Integer.parseInt(results.getString(1)), Integer.parseInt(results.getString(2)), results.getString(3), results.getString(4), Integer.parseInt(results.getString(5)), updates));
+                sheeps.add(new Sheep(Integer.parseInt(results.getString(1)), Integer.parseInt(results.getString(2)), results.getString(3), results.getString(4), Integer.parseInt(results.getString(5)), updates));
             }
             results.close();
             return sheeps;
@@ -84,6 +84,14 @@ public class mysqlHelper {
         } catch (SQLException ex) {
             Logger.getLogger(mysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+
+    public void storeNewSheep(Sheep s) {
+        try {
+            stmt.executeQuery("INSERT INTO sau(id, eier_id, navn, kommentar, fodt_ar) VALUES \'" + s.getID() + "\',\'" + s.getEierID() + "\',\'" + s.getNavn() + "\',\'" + s.getKommentar() + "\',\'" +  s.getBornYear() + "\'");
+        } catch (SQLException ex) {
+            Logger.getLogger(mysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
