@@ -63,6 +63,7 @@ public class mysqlHelper {
                 List<sheepUpdate> updates = getSheepUpdates(Integer.parseInt(results.getString(1)));
                 sheeps.add(new sheep(Integer.parseInt(results.getString(1)), Integer.parseInt(results.getString(2)), results.getString(3), results.getString(4), Integer.parseInt(results.getString(5)), updates));
             }
+            results.close();
             return sheeps;
         } catch (SQLException ex) {
             Logger.getLogger(mysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,6 +79,7 @@ public class mysqlHelper {
             while(results.next()){
                 updates.add(new sheepUpdate(Integer.parseInt(results.getString(1)), Float.valueOf(results.getString(2).trim()), Float.valueOf(results.getString(3).trim()), Integer.parseInt(results.getString(4)), Integer.parseInt(results.getString(5)), Integer.parseInt(results.getString(6))));
             }
+            results.close();
             return updates;
         } catch (SQLException ex) {
             Logger.getLogger(mysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
