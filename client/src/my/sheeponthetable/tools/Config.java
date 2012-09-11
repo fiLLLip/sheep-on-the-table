@@ -4,7 +4,8 @@
  */
 package my.sheeponthetable.tools;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.util.Properties;
 import javax.swing.JOptionPane;
 
@@ -83,6 +84,37 @@ public class Config {
             this.dbUsername = properties.getProperty("dbUser");
             this.dbPassword = properties.getProperty("dbPass");
             this.dbName = properties.getProperty("dbName");
+            
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Failure when reading settings: " + e.toString());
+        }
+    }
+    
+    private void saveSettingsFile () {
+        
+        Properties properties = new Properties();
+        
+        try {
+            properties.load(getClass().getResourceAsStream("settings.properties"));
+            
+            /**
+             * Load the following settings and assign them to class variables
+             */
+            
+            properties.setProperty("dbHost", this.dbHost);
+            properties.setProperty("dbPort", Integer.toString(this.dbPort));
+            properties.setProperty("dbUser", this.dbUsername);
+            properties.setProperty("dbPass", this.dbPassword);
+            properties.setProperty("dbName", this.dbName);
+            
+            URL url = getClass().getResource("settings.properties");  
+            String path = url.getPath(); 
+            String comments = "# This is the config file where all settings should be.\n" +
+            "# Follow usual .properties-annotation\n" +
+            "# http://en.wikipedia.org/wiki/.properties\n" +
+            "# ";
+            Writer writer = new FileWriter(path);  
+            properties.store(writer, comments);
             
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Failure when reading settings: " + e.toString());
