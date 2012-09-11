@@ -15,7 +15,8 @@ import java.net.*;
 public final class Server {
 
     ServerMySqlHelper sqlH;
-    BufferedReader br;
+    BufferedReader keyReader;
+    BufferedReader clientReader;
     ServerSocket ss;
     Socket cs;
 
@@ -31,15 +32,14 @@ public final class Server {
         //sqlH = new ServerMySqlHelper();
         buildSockets();
         listenLoop();
-        inputLoop();
     }
 
     public void inputLoop() {
-        br = new BufferedReader(new InputStreamReader(System.in));
+        keyReader = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
         try {
             while (!input.equals("exit")){
-                input = br.readLine();
+                input = keyReader.readLine();
             }
         }
         catch (IOException e) {
@@ -55,16 +55,24 @@ public final class Server {
             System.err.println("Feil ved lytting på port 8888");
             System.exit(1);
         }
-        // Establish the client socket
+        // Wait for a client application
         try {
             cs = ss.accept();
+            clientReader = new BufferedReader(new InputStreamReader(cs.getInputStream()));
         } catch (IOException e) {
-            System.err.println("Klientserveren kunne ikke etableres");
+            System.err.println("Kunne ikke finne en klient");
             System.exit(1);
         }
     }
 
     private void listenLoop() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        String inputLine;
+        try {
+            while((inputLine = clientReader.readLine()) != null) {
+                System.out.println(inputLine);
+            }
+        } catch (IOException e) {
+            System.err.println("Feil i lesing av input fra server.");
+        }
     }
 }
