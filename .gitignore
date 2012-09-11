@@ -1,6 +1,7 @@
-/build/
-/dist/
-*/private.properties
+private.properties
 /server/nbproject/private/
-client/nbproject/private/private.properties
-server/nbproject/private/private.properties
+/client/nbproject/private/
+/server/build/
+/client/build/
+/server/dist/
+/client/dist/
