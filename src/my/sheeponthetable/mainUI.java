@@ -39,14 +39,14 @@ public class mainUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(157, 157, 157)
                 .addComponent(jLabel1)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(258, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(137, 137, 137)
                 .addComponent(jLabel1)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addContainerGap(267, Short.MAX_VALUE))
         );
 
         pack();

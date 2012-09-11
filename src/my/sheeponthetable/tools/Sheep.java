@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class Sheep {
     private int id;
-    private int eier_id;
+    private int eierId;
     private String navn;
     private String kommentar;
-    private int born_year;
+    private int bornYear;
     private List<sheepUpdate> updates;
     
     /**
@@ -27,12 +27,12 @@ public class Sheep {
      * @param born_year
      * @param updates
      */
-    public Sheep (int id, int eier_id, String navn, String kommentar, int born_year, List<sheepUpdate> updates) {
+    public Sheep (int id, int eierId, String navn, String kommentar, int bornYear, List<sheepUpdate> updates) {
         this.id = id;
-        this.eier_id = eier_id;
+        this.eierId = eierId;
         this.navn = navn;
         this.kommentar = kommentar;
-        this.born_year = born_year;
+        this.bornYear = bornYear;
         this.updates = updates;
     }
 
@@ -41,7 +41,7 @@ public class Sheep {
     }
 
     public int getEierID() {
-        return eier_id;
+        return eierId;
     }
 
     public String getNavn() {
@@ -53,7 +53,7 @@ public class Sheep {
     }
 
     public int getBornYear() {
-        return born_year;
+        return bornYear;
     }
 
     public List<sheepUpdate> getUpdates() {
