@@ -16,13 +16,13 @@ import java.util.logging.Logger;
  */
 public class mysqlHelper {
     
-    String dbHost;
-    String dbUser;
-    String dbPass;
-    String dbName;
-    int port = 3306;
-    Connection con;
-    Statement stmt;
+    private String dbHost;
+    private String dbUser;
+    private String dbPass;
+    private String dbName;
+    private int port = 3306;
+    private Connection con;
+    private Statement stmt;
     
     /**
      *
