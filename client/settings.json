@@ -1,0 +1,12 @@
+/* 
+ * 
+ */
+
+{
+    "mysqlhost": "",
+    "mysqlport": 3306,
+    "mysqldbname": "",
+    "mysqluser": "",
+    "mysqlpass": ""
+    
+}
