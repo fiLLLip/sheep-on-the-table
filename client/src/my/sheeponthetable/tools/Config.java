@@ -4,6 +4,10 @@
  */
 package my.sheeponthetable.tools;
 
+import java.io.IOException;
+import java.util.Properties;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author gruppe 7
@@ -20,8 +24,7 @@ public class Config {
      *
      */
     public Config () {
-        //TODO: read file and assign 
-        readConfigFile();
+        loadSettingsFile();
     }
     
     /**
@@ -64,8 +67,28 @@ public class Config {
         return this.dbPassword;
     }
     
-    private void readConfigFile () {
+    private void loadSettingsFile () {
         
+        Properties properties = new Properties();
+        
+        try {
+            properties.load(getClass().getResourceAsStream("settings.properties"));
+            
+            /**
+             * Load the following settings and assign them to class variables
+             */
+            
+            this.dbHost = properties.getProperty("dbHost");
+            this.dbPort = Integer.parseInt(properties.getProperty("dbPort"));
+            this.dbUsername = properties.getProperty("dbUser");
+            this.dbPassword = properties.getProperty("dbPass");
+            this.dbName = properties.getProperty("dbName");
+            
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Failure when reading settings: " + e.toString());
+        }
     }
+    
+    
     
 }
