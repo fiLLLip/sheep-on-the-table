@@ -4,19 +4,20 @@
  */
 package my.servonthetable;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.*;
 
 
 /**
  *
  * @author Filip
  */
-public class Server {
+public final class Server {
 
     ServerMySqlHelper sqlH;
     BufferedReader br;
+    ServerSocket ss;
+    Socket cs;
 
     /**
      * @param args the command line arguments
@@ -28,10 +29,12 @@ public class Server {
     public Server() {
         // Les inn fra config
         //sqlH = new ServerMySqlHelper();
-        mainLoop();
+        buildSockets();
+        listenLoop();
+        inputLoop();
     }
 
-    public void mainLoop() {
+    public void inputLoop() {
         br = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
         try {
@@ -40,8 +43,28 @@ public class Server {
             }
         }
         catch (IOException e) {
-            System.out.println("Feil i inputlesing. Input: " + input);
-            e.printStackTrace();
+            System.err.println("Feil i inputlesing. Input: " + input);
         }
+    }
+
+    private void buildSockets() {
+        // Establish the server socket
+        try {
+            ss = new ServerSocket(8888);
+        } catch (IOException e) {
+            System.err.println("Feil ved lytting på port 8888");
+            System.exit(1);
+        }
+        // Establish the client socket
+        try {
+            cs = ss.accept();
+        } catch (IOException e) {
+            System.err.println("Klientserveren kunne ikke etableres");
+            System.exit(1);
+        }
+    }
+
+    private void listenLoop() {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }
