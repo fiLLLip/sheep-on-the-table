@@ -2,3 +2,5 @@
 /dist/
 */private.properties
 /server/nbproject/private/
+client/nbproject/private/private.properties
+server/nbproject/private/private.properties
