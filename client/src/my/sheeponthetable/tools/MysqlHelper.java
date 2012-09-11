@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author Filip
  */
-public class mysqlHelper {
+public class MysqlHelper {
     
     private String dbHost;
     private String dbUser;
@@ -32,7 +32,7 @@ public class mysqlHelper {
      * @param dbName
      * @param port
      */
-    public mysqlHelper(String dbHost, int port, String dbUser, String dbPass, String dbName){
+    public MysqlHelper(String dbHost, int port, String dbUser, String dbPass, String dbName){
         this.dbHost = dbHost;
         this.dbName = dbName;
         this.dbPass = dbPass;
@@ -46,7 +46,7 @@ public class mysqlHelper {
             con = DriverManager.getConnection(url, dbUser, dbPass);
             stmt = con.createStatement();
         } catch (Exception ex) {
-            Logger.getLogger(mysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -60,29 +60,29 @@ public class mysqlHelper {
             ResultSet results;
             results = stmt.executeQuery("SELECT id, eier_id, navn, kommentar, fodt_ar FROM sau WHERE eier_id = 1");
             while(results.next()){
-                List<sheepUpdate> updates = getSheepUpdates(Integer.parseInt(results.getString(1)), 1);
+                List<SheepUpdate> updates = getSheepUpdates(Integer.parseInt(results.getString(1)), 1);
                 sheeps.add(new Sheep(Integer.parseInt(results.getString(1)), Integer.parseInt(results.getString(2)), results.getString(3), results.getString(4), Integer.parseInt(results.getString(5)), updates));
             }
             results.close();
             return sheeps;
         } catch (SQLException ex) {
-            Logger.getLogger(mysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
     
-    public List<sheepUpdate> getSheepUpdates(int id, int numUpdates) {
+    public List<SheepUpdate> getSheepUpdates(int id, int numUpdates) {
         try {
-            List<sheepUpdate> updates = new ArrayList<>();
+            List<SheepUpdate> updates = new ArrayList<>();
             ResultSet results;
             results = stmt.executeQuery("SELECT id, posisjon_x, posisjon_y, puls, temperatur, UNIX_TIMESTAMP(timestamp) FROM oppdateringer WHERE sau_id = " + Integer.toString(id) + " LIMIT " + Integer.toString(numUpdates) + " ORDER BY id DESC");
             while(results.next()){
-                updates.add(new sheepUpdate(Integer.parseInt(results.getString(1)), Float.valueOf(results.getString(2).trim()), Float.valueOf(results.getString(3).trim()), Integer.parseInt(results.getString(4)), Integer.parseInt(results.getString(5)), Integer.parseInt(results.getString(6))));
+                updates.add(new SheepUpdate(Integer.parseInt(results.getString(1)), Float.valueOf(results.getString(2).trim()), Float.valueOf(results.getString(3).trim()), Integer.parseInt(results.getString(4)), Integer.parseInt(results.getString(5)), Integer.parseInt(results.getString(6))));
             }
             results.close();
             return updates;
         } catch (SQLException ex) {
-            Logger.getLogger(mysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -102,7 +102,7 @@ public class mysqlHelper {
             */
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(mysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -122,7 +122,7 @@ public class mysqlHelper {
             */
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(mysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MysqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }

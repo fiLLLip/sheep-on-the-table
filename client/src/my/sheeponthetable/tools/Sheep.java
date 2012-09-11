@@ -16,7 +16,7 @@ public class Sheep {
     private String navn;
     private String kommentar;
     private int bornYear;
-    private List<sheepUpdate> updates;
+    private List<SheepUpdate> updates;
     
     /**
      *
@@ -27,7 +27,7 @@ public class Sheep {
      * @param born_year
      * @param updates
      */
-    public Sheep (int id, int eierId, String navn, String kommentar, int bornYear, List<sheepUpdate> updates) {
+    public Sheep (int id, int eierId, String navn, String kommentar, int bornYear, List<SheepUpdate> updates) {
         this.id = id;
         this.eierId = eierId;
         this.navn = navn;
@@ -56,7 +56,7 @@ public class Sheep {
         return bornYear;
     }
 
-    public List<sheepUpdate> getUpdates() {
+    public List<SheepUpdate> getUpdates() {
         return updates;
     }
 }
