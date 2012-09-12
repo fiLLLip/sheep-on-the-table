@@ -74,7 +74,7 @@ public class WarningBox extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void abortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abortActionPerformed
-    new WarningBox().setVisible(false);        // TODO add your handling code here:
+    this.setVisible(false);      // TODO add your handling code here:
     }//GEN-LAST:event_abortActionPerformed
 
     /**
