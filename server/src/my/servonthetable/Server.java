@@ -70,6 +70,10 @@ public final class Server {
         try {
             while((inputLine = clientReader.readLine()) != null) {
                 System.out.println(inputLine);
+                if (inputLine.toLowerCase().trim().contains("exit")){
+                    System.out.println("Exiting!");
+                    System.exit(0);
+                }
             }
         } catch (IOException e) {
             System.err.println("Feil i lesing av input fra server.");

@@ -1,7 +1,7 @@
 private.properties
-/server/nbproject/private/
-/client/nbproject/private/
-/server/build/
-/client/build/
-/server/dist/
-/client/dist/
+/server/nbproject/private/*
+/client/nbproject/private/*
+/server/build/*
+/client/build/*
+/server/dist/*
+/client/dist/*
