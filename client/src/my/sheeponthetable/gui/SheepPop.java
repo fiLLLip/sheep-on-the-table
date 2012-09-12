@@ -185,7 +185,7 @@ public class SheepPop extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKActionPerformed
-    this.setVisible(false);        // TODO add your handling code here:
+     this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_OKActionPerformed
 
     /**
