@@ -92,6 +92,10 @@ public class Server extends Thread {
             try {
                 serverSocket.setSoTimeout(5000);
                 socket = serverSocket.accept();
+                // Client has connected
+                System.out.println("Client "+socket+" has connected.");
+                // Add user to list
+                users.add(new ServerClient(socket));
             }
             catch (SocketException e) {
                 System.out.println("Client listen timeout.");
@@ -99,10 +103,6 @@ public class Server extends Thread {
             catch (IOException e) {
                 System.out.println("Could not get a client.");
             }
-            // Client has connected
-            System.out.println("Client "+socket+" has connected.");
-            // Add user to list
-            users.add(new ServerClient(socket));
             // Sleep
             try
             {
