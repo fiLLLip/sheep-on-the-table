@@ -45,7 +45,13 @@ public class Server extends Thread {
     // Attempt to get the host address
             try
             {
-                    hostAddress = InetAddress.getLocalHost();
+                byte[] addr = new byte[4];
+                addr[0] = (byte)127;
+                addr[1] = (byte)0;
+                addr[2] = (byte)0;
+                addr[3] = (byte)1;
+                hostAddress = InetAddress.getByAddress(addr);
+                //hostAddress = InetAddress.getLocalHost();
             }
             catch(UnknownHostException e)
             {
