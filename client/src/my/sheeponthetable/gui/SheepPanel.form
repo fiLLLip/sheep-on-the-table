@@ -100,10 +100,19 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
+<<<<<<< HEAD
+        <Component class="javax.swing.JList" name="jList1">
+          <Properties>
+            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.AbstractListModel() {&#xa;    String[] strings = { &quot;Sau1&quot;, &quot;Sau2&quot;, &quot;Sau3&quot;};&#xa;    public int getSize() { return strings.length; }&#xa;    public Object getElementAt(int i) { return strings[i]; }&#xa;}" type="code"/>
+            </Property>
+          </Properties>
+=======
         <Component class="javax.swing.JList" name="sheepList">
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sheepListMouseClicked"/>
           </Events>
+>>>>>>> 6ac28146cbfce682697518c6be6e3b2ece15cb94
         </Component>
       </SubComponents>
     </Container>
@@ -141,6 +150,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Deselect"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="aSheep">
       <Properties>
