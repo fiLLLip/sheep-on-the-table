@@ -6,7 +6,7 @@ package my.servonthetable;
 
 /**
  *
- * @author Filip
+ * @author Gruppe 7
  */
 import java.io.*;
 import java.net.Socket;
@@ -35,6 +35,7 @@ public class ServerClient extends Thread {
         // Announce
         System.out.println(socket + " has connected input.");
         try {
+            //TODO: Alt her er kun for testing. Implementer funksjoner som er passende her
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             out.println("Welcome! Press enter two times to continue!");
             in.readLine();
@@ -62,7 +63,7 @@ public class ServerClient extends Thread {
     }
 
     /**
-     * Creates a new Umbra Client User with the socket from the newly connected client.
+     * Creates a new Sheep Client User with the socket from the newly connected client.
      *
      * @param newSocket  The socket from the connected client.
      */

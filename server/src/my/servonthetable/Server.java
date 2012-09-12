@@ -8,13 +8,13 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 /**
  *
- * @author Filip
+ * @author Gruppe 7
  */
 public class Server extends Thread {
 
@@ -34,7 +34,7 @@ public class Server extends Thread {
     }
 
     /**
-     * Creates a new Umbra room for clients to connect to.
+     * Creates a new TCP/IP Socket for clients to connect to.
      */
     public Server() {
         // Attempt to get the host address
@@ -61,7 +61,7 @@ public class Server extends Thread {
         }
         // Announce the socket creation
         System.out.println("Socket " + serverSocket + " created.");
-        run();
+        start();
     }
 
     /**
@@ -80,6 +80,9 @@ public class Server extends Thread {
         }
     }
 
+    /**
+     * Check if someone has disconnected and close the link.
+     */
     private void checkForDisconnects(ArrayList<ServerClient> cs) {
         // Remove all disconnected clients
         for (int i = 0; i < cs.size(); i++) {
@@ -93,28 +96,40 @@ public class Server extends Thread {
         }
     }
 
+    /**
+     * Listen on specified port for any new TCP/IP Socket connections.
+     * When someone connects, add the user to list for maintenance.
+     */
     private void listenForConnectingClients() {
         // Get a client trying to connect
         try {
+            System.out.print("Listening for new client: ");
             serverSocket.setSoTimeout(TIMEOUT);
             socket = serverSocket.accept();
             // Client has connected
-            System.out.println("Client " + socket + " has connected.");
+            System.out.print(socket + " has connected.");
             // Add user to list
             clients.add(new ServerClient(socket));
-        } catch (SocketException e) {
-            System.out.println("Client listen timeout.");
-        } // Bør ikkje dette vera ein TimeOutException eller noko?
+        } 
+        catch (SocketTimeoutException e) {
+            System.out.print("listen timeout.");
+        }
         catch (IOException e) {
-            System.out.println("Could not get a client.");
+            System.out.print("could not connect.");
+        }
+        finally {
+            System.out.print("\r");
         }
     }
 
+    /**
+     * Method to make the Thread sleep for some time before continuing to prevent overflow.
+     */
     private void sleep() {
         try {
             Thread.sleep(WAITING_TIME);
         } catch (InterruptedException e) {
-            System.out.println("Room has been interrupted.");
+            System.out.println("Server thread has been interrupted.");
         }
     }
 }
