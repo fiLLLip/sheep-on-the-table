@@ -41,7 +41,7 @@ public class SheepPanel extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "Sau1", "Sau2", "Sau3"};
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -67,6 +67,11 @@ public class SheepPanel extends javax.swing.JFrame {
         );
 
         jButton1.setText("Deselect");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         aSheep.setText("Add sheep");
 
@@ -142,6 +147,10 @@ public class SheepPanel extends javax.swing.JFrame {
     private void rSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSheepActionPerformed
        new WarningBox().setVisible(true); // TODO add your handling code here:
     }//GEN-LAST:event_rSheepActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
