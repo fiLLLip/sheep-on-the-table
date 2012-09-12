@@ -17,9 +17,10 @@ import java.util.ArrayList;
  * @author Filip
  */
 public class Server extends Thread {
-    
+
     private static final int CLIENT_PORT = 30480;
     private static final int WAITING_TIME = 200;
+    private static final int TIMEOUT = 5000;
     private ServerSocket serverSocket;
     private InetAddress hostAddress;
     private Socket socket;
@@ -31,47 +32,42 @@ public class Server extends Thread {
     public static void main(String[] args) {
         Server s = new Server();
     }
-    
+
     /**
      * Creates a new Umbra room for clients to connect to.
      */
-    public Server(){
-    // Attempt to get the host address
-            try
-            {
-                byte[] addr = new byte[4];
-                addr[0] = (byte)127;
-                addr[1] = (byte)0;
-                addr[2] = (byte)0;
-                addr[3] = (byte)1;
-                hostAddress = InetAddress.getByAddress(addr);
-                //hostAddress = InetAddress.getLocalHost();
-            }
-            catch(UnknownHostException e)
-            {
-                    System.out.println("Could not get the host address.");
-                    return;
-            }
-            // Announce the host address
-            System.out.println("Server host address is: "+hostAddress);
-            // Attempt to create server socket
-            try
-            {
-                    serverSocket = new ServerSocket(CLIENT_PORT,0,hostAddress);
-            }
-            catch(IOException e)
-            {
-                    System.out.println("Could not open server socket.");
-                    return;
-            }
-            // Announce the socket creation
-            System.out.println("Socket "+serverSocket+" created.");
-            run();
+    public Server() {
+        // Attempt to get the host address
+        try {
+            byte[] addr = new byte[4];
+            addr[0] = (byte) 127;
+            addr[1] = (byte) 0;
+            addr[2] = (byte) 0;
+            addr[3] = (byte) 1;
+            hostAddress = InetAddress.getByAddress(addr);
+            //hostAddress = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            System.out.println("Could not get the host address.");
+            return;
+        }
+        // Announce the host address
+        System.out.println("Server host address is: " + hostAddress);
+        // Attempt to create server socket
+        try {
+            serverSocket = new ServerSocket(CLIENT_PORT, 0, hostAddress);
+        } catch (IOException e) {
+            System.out.println("Could not open server socket.");
+            return;
+        }
+        // Announce the socket creation
+        System.out.println("Socket " + serverSocket + " created.");
+        run();
     }
+
     /**
      * Starts the client accepting process.
      */
-    public void run () {
+    public void run() {
         // Announce the starting of the process
         System.out.println("Server has been started.");
         // set timeout
@@ -86,14 +82,13 @@ public class Server extends Thread {
 
     private void checkForDisconnects(ArrayList<ServerClient> cs) {
         // Remove all disconnected clients
-        for (int i = 0;i < cs.size();i++) {
+        for (int i = 0; i < cs.size(); i++) {
             // Check connection, remove on dead
-            if(!cs.get(i).isConnected()) {
-                System.out.println(cs.get(i)+" removed due to lack of connection.");
+            if (!cs.get(i).isConnected()) {
+                System.out.println(cs.get(i) + " removed due to lack of connection.");
                 cs.remove(i);
-            }
-            else {
-            System.out.println(cs.get(i)+" is still connected.");
+            } else {
+                System.out.println(cs.get(i) + " is still connected.");
             }
         }
     }
@@ -101,29 +96,24 @@ public class Server extends Thread {
     private void listenForConnectingClients() {
         // Get a client trying to connect
         try {
-            serverSocket.setSoTimeout(5000);
+            serverSocket.setSoTimeout(TIMEOUT);
             socket = serverSocket.accept();
-           // Client has connected
-           System.out.println("Client "+socket+" has connected.");
-           // Add user to list
-           clients.add(new ServerClient(socket));
-       }
-       catch (SocketException e) {
-           System.out.println("Client listen timeout.");
-       }
-       // Bør ikkje dette vera ein TimeOutException eller noko?
-       catch (IOException e) {
-           System.out.println("Could not get a client.");
-       }
+            // Client has connected
+            System.out.println("Client " + socket + " has connected.");
+            // Add user to list
+            clients.add(new ServerClient(socket));
+        } catch (SocketException e) {
+            System.out.println("Client listen timeout.");
+        } // Bør ikkje dette vera ein TimeOutException eller noko?
+        catch (IOException e) {
+            System.out.println("Could not get a client.");
+        }
     }
 
     private void sleep() {
-        try
-        {
+        try {
             Thread.sleep(WAITING_TIME);
-        }
-        catch(InterruptedException e)
-        {
+        } catch (InterruptedException e) {
             System.out.println("Room has been interrupted.");
         }
     }
