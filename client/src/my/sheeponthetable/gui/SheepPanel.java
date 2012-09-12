@@ -69,6 +69,11 @@ public class SheepPanel extends javax.swing.JFrame {
         jButton1.setText("Deselect");
 
         aSheep.setText("Add sheep");
+        aSheep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aSheepActionPerformed(evt);
+            }
+        });
 
         rSheep.setText("Remove sheep");
         rSheep.addActionListener(new java.awt.event.ActionListener() {
@@ -143,6 +148,10 @@ public class SheepPanel extends javax.swing.JFrame {
        new WarningBox().setVisible(true); // TODO add your handling code here:
     }//GEN-LAST:event_rSheepActionPerformed
 
+    private void aSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aSheepActionPerformed
+          new AddNewSheep().setVisible(true);  // TODO add your handling code here:
+    }//GEN-LAST:event_aSheepActionPerformed
+  
     /**
      * @param args the command line arguments
      */
