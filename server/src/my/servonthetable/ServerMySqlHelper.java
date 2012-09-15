@@ -137,6 +137,25 @@ public class ServerMySqlHelper {
         }
     }
     
+    
+    /* removes a sheep and all updates from the database */
+    public boolean removeSheep(Sheep sheep) {
+        try {
+            stmt.executeQuery("DELETE FROM sheep_sheep WHERE id = '" + sheep.getID() + "'");
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        try {
+            stmt.executeQuery("DELETE FROM sheep_updates WHERE sheep_id = '" + sheep.getID() + "'");
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
     private String urlGenerator(String host, int port, String database){
         String url;
         url = "jdbc:mysql://" + host + ":" + Integer.toString(port) + "/" + database;
