@@ -27,6 +27,7 @@ public class ServerClient extends Thread {
     public void run() {
         // Open the InputStream
         try {
+            
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
             System.out.println("Could not get input stream from " + socket.toString());
@@ -37,15 +38,22 @@ public class ServerClient extends Thread {
         try {
             //TODO: Alt her er kun for testing. Implementer funksjoner som er passende her
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            out.println("Welcome! Press enter two times to continue!");
-            in.readLine();
-            in.readLine();
-            out.println("Please enter username:");
             input = in.readLine();
-            System.out.println(socket.toString() + ": Username: " + input);
-            out.println("Please enter password:");
-            input = in.readLine();
-            System.out.println(socket.toString() + ": Password: " + input);
+            if ("HELO".equals(input.trim())) {
+                out.println("EHLO");
+                System.out.println(socket.toString() + ": Initialized");
+                out.println("USERNAME");
+                String username = in.readLine();
+                out.println("PASSWORD");
+                String password = in.readLine();
+                System.out.println(socket.toString() + ": USER: " + username + " AND PASS: " + password);
+            }
+            else {
+                System.out.println(socket.toString() + ": FAILED TO INIT");
+                socket.close();
+                connected = false;
+            }
+            
         } catch (IOException ex) {
             Logger.getLogger(ServerClient.class.getName()).log(Level.SEVERE, null, ex);
         }
