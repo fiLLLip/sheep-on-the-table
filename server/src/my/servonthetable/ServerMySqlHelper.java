@@ -65,13 +65,13 @@ public class ServerMySqlHelper {
             
 			while(results.next()){
                 List<SheepUpdate> updates = getSheepUpdates(results.getInt("id"), 1);
-                sheeps.add(new Sheep(	results.getInt("id"),
-										results.getInt("farm_id"),
-										results.getString("name"),
-										results.getInt("born"),
-										results.getInt("deceased"),
-										results.getString("comment"),
-										updates));
+                sheeps.add(new Sheep(   results.getInt("id"),
+                                        results.getInt("farm_id"),
+                                        results.getString("name"),
+                                        results.getInt("born"),
+                                        results.getInt("deceased"),
+                                        results.getString("comment"),
+                                        updates));
             }
 			
             results.close();
@@ -92,11 +92,11 @@ public class ServerMySqlHelper {
             results = stmt.executeQuery("SELECT id, sheep_id, UNIX_TIMESTAMP(timestamp) as timestamp, pos_x, pos_y, pulse, temp, alarm FROM sheep_updates WHERE sheep_id = " + Integer.toString(id) + " LIMIT " + Integer.toString(numUpdates) + " ORDER BY id DESC");
             while(results.next()){
                 updates.add(new SheepUpdate(	results.getInt("id"),
-												results.getFloat("pos_x"),
-												results.getFloat("pos_y"),
-												results.getInt("pulse"),
-												results.getFloat("temperature"),
-												results.getInt("timestamp")
+                                                results.getDouble("pos_x"),
+                                                results.getDouble("pos_y"),
+                                                results.getInt("pulse"),
+                                                results.getDouble("temperature"),
+                                                results.getInt("timestamp")
                 		));
             }
             results.close();
@@ -115,11 +115,6 @@ public class ServerMySqlHelper {
     public boolean storeNewSheep(Sheep s) {
         try {
             stmt.executeQuery("INSERT INTO sheep_sheep (farm_id, name, born, deceased, comment) VALUES '" + s.getFarmId() + "', '" + s.getName() + "', '" + s.getBorn() + "', '" +  s.getDeceased() + "', '" +  s.getComment() + "'");
-            /* This should not try to store updates, since new sheep doesn't have any updates
-            for (sheepUpdate su : s.getUpdates()) {
-                stmt.executeQuery("INSERT INTO oppdateringer (id, sau_id, timestamp, posisjon_x, posisjon_y, puls, temperatur) VALUES \'" + su.getID() + "\',\'" + s.getID() + "\',\'" + su.getTimeStamp() + "\',\'" + su.getX() + "\',\'" + su.getY() + "\',\'" + su.getPuls() + "\',\'" + su.getTemp() + "\'");
-            }
-            */
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
@@ -135,11 +130,6 @@ public class ServerMySqlHelper {
     public boolean updateSheep(Sheep s) {
         try {
             stmt.executeQuery("UPDATE sheep_sheep SET farm_id='" + s.getFarmId() + "', name='" + s.getName() + "', born='" + s.getBorn() + "', deceased='" + s.getDeceased() + "', comment='" + s.getComment() + "' WHERE id='" + s.getID() + "'");
-            /* This should not try to store updates, since new sheep doesn't have any updates
-            for (sheepUpdate su : s.getUpdates()) {
-                stmt.executeQuery("INSERT INTO oppdateringer (id, sau_id, timestamp, posisjon_x, posisjon_y, puls, temperatur) VALUES \'" + su.getID() + "\',\'" + s.getID() + "\',\'" + su.getTimeStamp() + "\',\'" + su.getX() + "\',\'" + su.getY() + "\',\'" + su.getPuls() + "\',\'" + su.getTemp() + "\'");
-            }
-            */
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);

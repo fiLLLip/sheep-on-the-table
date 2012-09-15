@@ -22,11 +22,11 @@ public class Sheep {
     /**
      *
      * @param id
-     * @param farm_id
+     * @param farmId 
      * @param name
      * @param comment
      * @param born
-	 * @param deceased
+     * @param deceased
      * @param updates
      */
     public Sheep (int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates) {
@@ -35,38 +35,70 @@ public class Sheep {
         this.name = name;
         this.comment = comment;
         this.born = born;
-		this.born = deceased;
+	this.born = deceased;
         this.updates = updates;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getID() {
         return id;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getFarmId() {
         return farmId;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getComment() {
         return comment;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getBorn() {
         return born;
     }
 	
-	public int getDeceased() {
+	/**
+     *
+     * @return
+     */
+    public int getDeceased() {
         return born;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<SheepUpdate> getUpdates() {
         return updates;
     }
 	
+    /**
+     *
+     * @return
+     */
     public Boolean isAlive() {
         if(this.deceased == 0)
                 return true;
