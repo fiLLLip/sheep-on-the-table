@@ -38,14 +38,17 @@ public class ServerClient extends Thread {
         try {
             //TODO: Alt her er kun for testing. Implementer funksjoner som er passende her
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            input = in.readLine();
-            if ("HELO".equals(input.trim())) {
+            if (in.readLine().trim().equals("HELO")) {
                 out.println("EHLO");
                 System.out.println(socket.toString() + ": Initialized");
                 out.println("USERNAME");
                 String username = in.readLine();
+                out.println("OK");
                 out.println("PASSWORD");
                 String password = in.readLine();
+                if (password != null) {
+                    out.println("SUCCESS");
+                }
                 System.out.println(socket.toString() + ": USER: " + username + " AND PASS: " + password);
             }
             else {
