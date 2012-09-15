@@ -14,7 +14,7 @@ public class SheepUpdate {
     private float pos_x;
     private float pos_y;
     private int pulse;
-    private double temperature;
+    private float temperature;
     private int timestamp;
 	private int alarm;
     
@@ -39,7 +39,7 @@ public class SheepUpdate {
      * @param temperature
      * @param timestamp
      */
-    public SheepUpdate (int id, float pos_x, float pos_y, int pulse, double temperature, int timestamp) {
+    public SheepUpdate (int id, float pos_x, float pos_y, int pulse, float temperature, int timestamp) {
         this.id = id;
         this.pos_x = pos_x;
         this.pos_y = pos_y;
@@ -56,11 +56,11 @@ public class SheepUpdate {
         return timestamp;
     }
 
-    public double getX() {
+    public float getX() {
         return pos_x;
     }
 
-    public double getY() {
+    public float getY() {
         return pos_y;
     }
 
@@ -68,7 +68,7 @@ public class SheepUpdate {
         return pulse;
     }
 
-    public int getTemp() {
+    public float getTemp() {
         return temperature;
     }
 
