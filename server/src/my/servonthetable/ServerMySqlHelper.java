@@ -5,6 +5,8 @@
 package my.servonthetable;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,12 +52,74 @@ public class ServerMySqlHelper {
     
     /**
      *
+     * @return
+     */
+    public List<Sheep> getSheepList() {
+        try {
+            List<Sheep> sheeps = new ArrayList<>();
+            ResultSet results;
+            results = stmt.executeQuery("SELECT id, eier_id, navn, kommentar, fodt_ar FROM sau WHERE eier_id = 1");
+            while(results.next()){
+                List<SheepUpdate> updates = getSheepUpdates(Integer.parseInt(results.getString(1)), 1);
+                sheeps.add(new Sheep(Integer.parseInt(results.getString(1)), Integer.parseInt(results.getString(2)), results.getString(3), results.getString(4), Integer.parseInt(results.getString(5)), updates));
+            }
+            results.close();
+            return sheeps;
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public List<SheepUpdate> getSheepUpdates(int id, int numUpdates) {
+        try {
+            List<SheepUpdate> updates = new ArrayList<>();
+            ResultSet results;
+            results = stmt.executeQuery("SELECT id, posisjon_x, posisjon_y, puls, temperatur, UNIX_TIMESTAMP(timestamp) FROM oppdateringer WHERE sau_id = " + Integer.toString(id) + " LIMIT " + Integer.toString(numUpdates) + " ORDER BY id DESC");
+            while(results.next()){
+                updates.add(new SheepUpdate(Integer.parseInt(results.getString(1)), Float.valueOf(results.getString(2).trim()), Float.valueOf(results.getString(3).trim()), Integer.parseInt(results.getString(4)), Integer.parseInt(results.getString(5)), Integer.parseInt(results.getString(6))));
+            }
+            results.close();
+            return updates;
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    /**
+     *
      * @param s
      * @return
      */
-    public boolean storeNewSheep() {
+    public boolean storeNewSheep(Sheep s) {
         try {
-            stmt.executeQuery("SQLQUERY");
+            stmt.executeQuery("INSERT INTO sau (eier_id, navn, kommentar, fodt_ar) VALUES \'" + s.getEierID() + "\',\'" + s.getNavn() + "\',\'" + s.getKommentar() + "\',\'" +  s.getBornYear() + "\'");
+            /* This should not try to store updates, since new sheep doesn't have any updates
+            for (sheepUpdate su : s.getUpdates()) {
+                stmt.executeQuery("INSERT INTO oppdateringer (id, sau_id, timestamp, posisjon_x, posisjon_y, puls, temperatur) VALUES \'" + su.getID() + "\',\'" + s.getID() + "\',\'" + su.getTimeStamp() + "\',\'" + su.getX() + "\',\'" + su.getY() + "\',\'" + su.getPuls() + "\',\'" + su.getTemp() + "\'");
+            }
+            */
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    /**
+     *
+     * @param s
+     * @return
+     */
+    public boolean updateSheep(Sheep s) {
+        try {
+            stmt.executeQuery("UPDATE sau SET eier_id=\'" + s.getEierID() + "\', navn=\'" + s.getNavn() + "\', kommentar=\'" + s.getKommentar() + "\', fodt_ar=\'" +  s.getBornYear() + "\' WHERE id=\'" + s.getID() + "\'");
+            /* This should not try to store updates, since new sheep doesn't have any updates
+            for (sheepUpdate su : s.getUpdates()) {
+                stmt.executeQuery("INSERT INTO oppdateringer (id, sau_id, timestamp, posisjon_x, posisjon_y, puls, temperatur) VALUES \'" + su.getID() + "\',\'" + s.getID() + "\',\'" + su.getTimeStamp() + "\',\'" + su.getX() + "\',\'" + su.getY() + "\',\'" + su.getPuls() + "\',\'" + su.getTemp() + "\'");
+            }
+            */
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);

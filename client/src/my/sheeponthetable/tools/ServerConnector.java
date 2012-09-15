@@ -45,7 +45,7 @@ public class ServerConnector {
      * Connects to the server and checks username and password.
      * @return true or false
      */
-    private Boolean connect () {
+    public Boolean connect () {
         try {
             this.socket = new Socket(this.host, this.port);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
