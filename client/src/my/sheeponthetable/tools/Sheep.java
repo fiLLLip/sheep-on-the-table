@@ -41,7 +41,7 @@ public class Sheep {
 
     /**
      *
-     * @return
+     * @return sheep id
      */
     public int getID() {
         return id;
@@ -49,7 +49,7 @@ public class Sheep {
 
     /**
      *
-     * @return
+     * @return the farm id where the sheep belongs
      */
     public int getFarmId() {
         return farmId;
@@ -57,7 +57,7 @@ public class Sheep {
 
     /**
      *
-     * @return
+     * @return the name of the sheep, if any
      */
     public String getName() {
         return name;
@@ -65,7 +65,7 @@ public class Sheep {
 
     /**
      *
-     * @return
+     * @return the comment (if it's pregnant, or hurt, or something)
      */
     public String getComment() {
         return comment;
@@ -73,7 +73,7 @@ public class Sheep {
 
     /**
      *
-     * @return
+     * @return the unix timestamp of when sheep was born
      */
     public int getBorn() {
         return born;
@@ -81,15 +81,15 @@ public class Sheep {
 	
 	/**
      *
-     * @return
+     * @return the unix timestamp of when sheep was deceased
      */
     public int getDeceased() {
-        return born;
+        return deceased;
     }
 
     /**
      *
-     * @return
+     * @return the list of updates for the sheep.
      */
     public List<SheepUpdate> getUpdates() {
         return updates;
@@ -97,7 +97,7 @@ public class Sheep {
 	
     /**
      *
-     * @return
+     * @return a Boolean parsed from 
      */
     public Boolean isAlive() {
         if(this.deceased == 0)
