@@ -105,4 +105,10 @@ public class ServerConnector {
     public String getLogger () {
         return this.logger;
     }
+    
+    protected void finalize() throws Throwable
+    {
+      socket.close();
+      super.finalize();
+    } 
 }
