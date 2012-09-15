@@ -10,13 +10,13 @@ package my.servonthetable;
  */
 public class SheepUpdate {
     private int id;
-	private int sheep_id;
-    private float pos_x;
-    private float pos_y;
+    private int sheep_id;
+    private double pos_x;
+    private double pos_y;
     private int pulse;
-    private float temperature;
+    private double temperature;
     private int timestamp;
-	private int alarm;
+    private int alarm;
     
     /**
      *
@@ -39,7 +39,7 @@ public class SheepUpdate {
      * @param temperature
      * @param timestamp
      */
-    public SheepUpdate (int id, float pos_x, float pos_y, int pulse, float temperature, int timestamp) {
+    public SheepUpdate (int id, double pos_x, double pos_y, int pulse, double temperature, int timestamp) {
         this.id = id;
         this.pos_x = pos_x;
         this.pos_y = pos_y;
@@ -56,11 +56,11 @@ public class SheepUpdate {
         return timestamp;
     }
 
-    public float getX() {
+    public double getX() {
         return pos_x;
     }
 
-    public float getY() {
+    public double getY() {
         return pos_y;
     }
 
@@ -68,7 +68,7 @@ public class SheepUpdate {
         return pulse;
     }
 
-    public float getTemp() {
+    public double getTemp() {
         return temperature;
     }
 

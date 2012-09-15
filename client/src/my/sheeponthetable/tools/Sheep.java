@@ -12,27 +12,30 @@ import java.util.List;
  */
 public class Sheep {
     private int id;
-    private int eierId;
-    private String navn;
-    private String kommentar;
-    private int bornYear;
+    private int farmId;
+    private String name;
+    private String comment;
+    private int born;
+    private int deceased;
     private List<SheepUpdate> updates;
     
     /**
      *
      * @param id
-     * @param eier_id
-     * @param navn
-     * @param kommentar
-     * @param born_year
+     * @param farm_id
+     * @param name
+     * @param comment
+     * @param born
+	 * @param deceased
      * @param updates
      */
-    public Sheep (int id, int eierId, String navn, String kommentar, int bornYear, List<SheepUpdate> updates) {
+    public Sheep (int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates) {
         this.id = id;
-        this.eierId = eierId;
-        this.navn = navn;
-        this.kommentar = kommentar;
-        this.bornYear = bornYear;
+        this.farmId = farmId;
+        this.name = name;
+        this.comment = comment;
+        this.born = born;
+		this.born = deceased;
         this.updates = updates;
     }
 
@@ -40,23 +43,33 @@ public class Sheep {
         return id;
     }
 
-    public int getEierID() {
-        return eierId;
+    public int getFarmId() {
+        return farmId;
     }
 
-    public String getNavn() {
-        return navn;
+    public String getName() {
+        return name;
     }
 
-    public String getKommentar() {
-        return kommentar;
+    public String getComment() {
+        return comment;
     }
 
-    public int getBornYear() {
-        return bornYear;
+    public int getBorn() {
+        return born;
+    }
+	
+	public int getDeceased() {
+        return born;
     }
 
     public List<SheepUpdate> getUpdates() {
         return updates;
+    }
+	
+    public Boolean isAlive() {
+        if(this.deceased == 0)
+                return true;
+        return false;
     }
 }

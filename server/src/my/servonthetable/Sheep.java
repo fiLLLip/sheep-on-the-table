@@ -16,7 +16,7 @@ public class Sheep {
     private String name;
     private String comment;
     private int born;
-	private int deceased;
+    private int deceased;
     private List<SheepUpdate> updates;
     
     /**
@@ -67,9 +67,9 @@ public class Sheep {
         return updates;
     }
 	
-	public bool isAlive() {
-		if(this.deceased == null)
-			return true;
-		return false;
-	}
+    public Boolean isAlive() {
+        if(this.deceased == 0)
+                return true;
+        return false;
+    }
 }
