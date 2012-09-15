@@ -10,40 +10,42 @@ package my.servonthetable;
  */
 public class SheepUpdate {
     private int id;
-    private float position_x;
-    private float position_y;
+	private int sheep_id;
+    private float pos_x;
+    private float pos_y;
     private int pulse;
-    private int temperature;
-    private int datetime;
+    private double temperature;
+    private int timestamp;
+	private int alarm;
     
     /**
      *
      */
     public SheepUpdate () {
         this.id = -1;
-        this.position_x = -1;
-        this.position_y = -1;
+        this.pos_x = -1;
+        this.pos_y = -1;
         this.pulse = -1;
-        this.temperature = -1;
-        this.datetime = -1;
+        this.temperature = -1.0;
+        this.timestamp = -1;
     }
     
     /**
      *
      * @param id 
-     * @param position_x
-     * @param position_y
+     * @param pos_x
+     * @param pos_y
      * @param pulse
      * @param temperature
-     * @param datetime
+     * @param timestamp
      */
-    public SheepUpdate (int id, float position_x, float position_y, int pulse, int temperature, int datetime) {
+    public SheepUpdate (int id, float pos_x, float pos_y, int pulse, double temperature, int timestamp) {
         this.id = id;
-        this.position_x = position_x;
-        this.position_y = position_y;
+        this.pos_x = pos_x;
+        this.pos_y = pos_y;
         this.pulse = pulse;
         this.temperature = temperature;
-        this.datetime = datetime;
+        this.timestamp = timestamp;
     }
 
     public int getID() {
@@ -51,18 +53,18 @@ public class SheepUpdate {
     }
 
     public int getTimeStamp() {
-        return datetime;
+        return timestamp;
     }
 
     public double getX() {
-        return position_x;
+        return pos_x;
     }
 
     public double getY() {
-        return position_y;
+        return pos_y;
     }
 
-    public int getPuls() {
+    public int getPulse() {
         return pulse;
     }
 

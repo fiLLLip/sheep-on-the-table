@@ -54,17 +54,29 @@ public class ServerMySqlHelper {
      *
      * @return
      */
-    public List<Sheep> getSheepList() {
-        try {
-            List<Sheep> sheeps = new ArrayList<>();
-            ResultSet results;
-            results = stmt.executeQuery("SELECT id, eier_id, navn, kommentar, fodt_ar FROM sau WHERE eier_id = 1");
-            while(results.next()){
-                List<SheepUpdate> updates = getSheepUpdates(Integer.parseInt(results.getString(1)), 1);
-                sheeps.add(new Sheep(Integer.parseInt(results.getString(1)), Integer.parseInt(results.getString(2)), results.getString(3), results.getString(4), Integer.parseInt(results.getString(5)), updates));
+    public List<Sheep> getSheepList(int farm_id) {
+        
+		List<Sheep> sheeps = new ArrayList<>();
+        ResultSet results;
+		
+		try {
+            
+			results = stmt.executeQuery("SELECT id, farm_id, name, UNIX_TIMESTAMP(born) as born, UNIX_TIMESTAMP(deceased) as deceased, comment FROM sheep_sheep WHERE farm_id = '" + farm_id + "' AND deceased = NULL");
+            
+			while(results.next()){
+                List<SheepUpdate> updates = getSheepUpdates(results.getInt("id"), 1);
+                sheeps.add(new Sheep(	results.getInt("id"),
+										results.getInt("farm_id"),
+										results.getString("name"),
+										results.getInt("born"),
+										results.getInt("deceased"),
+										results.getString("comment"),
+										updates));
             }
+			
             results.close();
             return sheeps;
+			
         } catch (SQLException ex) {
             Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -72,12 +84,19 @@ public class ServerMySqlHelper {
     }
     
     public List<SheepUpdate> getSheepUpdates(int id, int numUpdates) {
+	
+		List<SheepUpdate> updates = new ArrayList<>();
+        ResultSet results;
+	
         try {
-            List<SheepUpdate> updates = new ArrayList<>();
-            ResultSet results;
-            results = stmt.executeQuery("SELECT id, posisjon_x, posisjon_y, puls, temperatur, UNIX_TIMESTAMP(timestamp) FROM oppdateringer WHERE sau_id = " + Integer.toString(id) + " LIMIT " + Integer.toString(numUpdates) + " ORDER BY id DESC");
+            results = stmt.executeQuery("SELECT id, sheep_id, UNIX_TIMESTAMP(timestamp) as timestamp, pos_x, pos_y, pulse, temp, alarm FROM oppdateringer WHERE sheep_id = " + Integer.toString(id) + " LIMIT " + Integer.toString(numUpdates) + " ORDER BY id DESC");
             while(results.next()){
-                updates.add(new SheepUpdate(Integer.parseInt(results.getString(1)), Float.valueOf(results.getString(2).trim()), Float.valueOf(results.getString(3).trim()), Integer.parseInt(results.getString(4)), Integer.parseInt(results.getString(5)), Integer.parseInt(results.getString(6))));
+                updates.add(new SheepUpdate(	results.getInt("id"),
+												Float.valueOf(results.getString(2).trim()),
+												Float.valueOf(results.getString(3).trim()),
+												Integer.parseInt(results.getString(4)),
+												Integer.parseInt(results.getString(5)),
+												Integer.parseInt(results.getString(6))));
             }
             results.close();
             return updates;
