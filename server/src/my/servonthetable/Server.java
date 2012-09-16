@@ -25,6 +25,7 @@ public class Server extends Thread {
     private InetAddress hostAddress;
     private Socket socket;
     private ArrayList<ServerClient> clients = new ArrayList<>();
+    private MySqlHelper sqlHelper;
 
     /**
      * @param args the command line arguments
@@ -109,7 +110,7 @@ public class Server extends Thread {
             // Client has connected
             System.out.print(socket + " has connected.");
             // Add user to list
-            clients.add(new ServerClient(socket));
+            clients.add(new ServerClient(socket,sqlHelper));
         } 
         catch (SocketTimeoutException e) {
             System.out.print("listen timeout.");

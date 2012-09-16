@@ -10,6 +10,7 @@ package my.servonthetable;
  */
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,16 +19,20 @@ import java.util.logging.Logger;
  */
 public class ServerClient extends Thread {
 
+    private MySqlHelper sqlHelper;
     private static final int USER_THROTTLE = 200;
     private Socket socket;
     private boolean connected;
     private BufferedReader in;
     private String input = "";
 
+    private int userID = -1;
+    private boolean loggedIn = false;
+
     public void run() {
         // Open the InputStream
         try {
-            
+
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
             System.out.println("Could not get input stream from " + socket.toString());
@@ -36,27 +41,86 @@ public class ServerClient extends Thread {
         // Announce
         System.out.println(socket + " has connected input.");
         try {
-            //TODO: Alt her er kun for testing. Implementer funksjoner som er passende her
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            if (in.readLine().trim().equals("HELO")) {
-                out.println("EHLO");
-                System.out.println(socket.toString() + ": Initialized");
-                out.println("USERNAME");
-                String username = in.readLine();
-                out.println("OK");
-                out.println("PASSWORD");
-                String password = in.readLine();
-                if (password != null) {
-                    out.println("SUCCESS");
-                }
-                System.out.println(socket.toString() + ": USER: " + username + " AND PASS: " + password);
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+            String[] input = in.readLine().trim().split(" ");
+            switch (input[0]) {
+                case "LOGOUT":
+                    System.out.println(socket.toString() + ": LOGGED OUT");
+                    socket.close();
+                    connected = false;
+                    break;
+                case "LOGIN":
+                    if (loggedIn) {
+                        out.println("ERROR Already logged in");
+                    } else {
+                        // TODO
+                    }
+                    break;
+                case "GETSHEEPLIST":
+                    if (loggedIn) {
+                        // DISKUSJON: KVA GJER VI VED FLEIRE GARDAR
+                        int farm_id = 666;
+                        List<Sheep> sheepList = sqlHelper.getSheepList(farm_id);
+                        oos.writeObject(sheepList);
+                    } else {
+                        out.println("ERROR Not logged in");
+                    }
+                    break;
+                case "EDITSHEEP":
+                    if (loggedIn) {
+                        out.println("WAITING");
+                        try {
+                            Sheep editSheep = (Sheep) ois.readObject();
+                            Boolean success = sqlHelper.updateSheep(editSheep);
+                            if (success) {
+                                out.println("SUCCESS");
+                            } else {
+                                out.println("ERROR Could not edit");
+                            }
+                        } catch (ClassNotFoundException e) {
+                            out.println("ERROR Could not cast to sheep");
+                        }
+                    } else {
+                        out.println("ERROR Not logged in");
+                    }
+                    break;
+                case "GETUPDATES":
+                    if (loggedIn) {
+                        try {
+                            int sheepID = Integer.parseInt(input[1]);
+                            int updates = Integer.parseInt(input[2]);
+                            sqlHelper.getSheepUpdates(sheepID, updates);
+                        } catch (NumberFormatException e) {
+                            out.print("ERROR Input parameters must be numbers");
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            out.print("ERROR GETUPDATES must specify two parameters");
+                        }
+                    } else {
+                        out.println("ERROR Not logged in");
+                    }
+                    break;
+                case "NEWSHEEP":
+                    if (loggedIn) {
+                        out.println("WAITING");
+                        try {
+                            Sheep newSheep = (Sheep) ois.readObject();
+                            boolean success = sqlHelper.storeNewSheep(newSheep);
+                            if (success) {
+                                out.println("SUCCESS");
+                            } else {
+                                out.println("ERROR Could not store sheep");
+                            }
+                        } catch (ClassNotFoundException ex) {
+                            out.println("ERROR Could not cast to sheep");
+                        }
+                    } else {
+                        out.println("ERROR Not logged in");
+                    }
+                    break;
             }
-            else {
-                System.out.println(socket.toString() + ": FAILED TO INIT");
-                socket.close();
-                connected = false;
-            }
-            
+
         } catch (IOException ex) {
             Logger.getLogger(ServerClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -78,8 +142,9 @@ public class ServerClient extends Thread {
      *
      * @param newSocket  The socket from the connected client.
      */
-    public ServerClient(Socket newSocket) {
+    public ServerClient(Socket newSocket, MySqlHelper sqlHelper) {
         // Set properties
+        this.sqlHelper = sqlHelper;
         socket = newSocket;
         connected = true;
         // Get input
@@ -114,6 +179,6 @@ public class ServerClient extends Thread {
      * @return  A string representation.
      */
     public String toString() {
-        return new String(socket.toString());
+        return socket.toString();
     }
 }
