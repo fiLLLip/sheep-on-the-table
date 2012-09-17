@@ -23,8 +23,11 @@ public class ServerClient extends Thread {
     private static final int USER_THROTTLE = 200;
     private Socket socket;
     private boolean connected;
+
     private BufferedReader in;
-    private String input = "";
+    private PrintWriter out;
+    private ObjectOutputStream oos;
+    private ObjectInputStream ois;
 
     private int userID = -1;
     private boolean loggedIn = false;
@@ -32,106 +35,115 @@ public class ServerClient extends Thread {
     public void run() {
         // Open the InputStream
         try {
-
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+            oos = new ObjectOutputStream(socket.getOutputStream());
+            //ois = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
+            if (out != null) {
+            }
             System.out.println("Could not get input stream from " + socket.toString());
+            try {
+            socket.close();
+            } catch (IOException ee) {
+                System.out.println("Could not close connection to" + socket.toString() + ". This might be a problem!");
+            }
             return;
         }
-        // Announce
-        System.out.println(socket + " has connected input.");
-        try {
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-            String[] input = in.readLine().trim().split(" ");
-            switch (input[0]) {
-                case "LOGOUT":
-                    System.out.println(socket.toString() + ": LOGGED OUT");
-                    socket.close();
-                    connected = false;
-                    break;
-                case "LOGIN":
-                    if (loggedIn) {
-                        out.println("ERROR Already logged in");
-                    } else {
-                        // TODO
-                    }
-                    break;
-                case "GETSHEEPLIST":
-                    if (loggedIn) {
-                        // DISKUSJON: KVA GJER VI VED FLEIRE GARDAR
-                        int farm_id = 666;
-                        List<Sheep> sheepList = sqlHelper.getSheepList(farm_id);
-                        oos.writeObject(sheepList);
-                    } else {
-                        out.println("ERROR Not logged in");
-                    }
-                    break;
-                case "EDITSHEEP":
-                    if (loggedIn) {
-                        out.println("WAITING");
-                        try {
-                            Sheep editSheep = (Sheep) ois.readObject();
-                            Boolean success = sqlHelper.updateSheep(editSheep);
-                            if (success) {
-                                out.println("SUCCESS");
-                            } else {
-                                out.println("ERROR Could not edit");
-                            }
-                        } catch (ClassNotFoundException e) {
-                            out.println("ERROR Could not cast to sheep");
-                        }
-                    } else {
-                        out.println("ERROR Not logged in");
-                    }
-                    break;
-                case "GETUPDATES":
-                    if (loggedIn) {
-                        try {
-                            int sheepID = Integer.parseInt(input[1]);
-                            int updates = Integer.parseInt(input[2]);
-                            sqlHelper.getSheepUpdates(sheepID, updates);
-                        } catch (NumberFormatException e) {
-                            out.print("ERROR Input parameters must be numbers");
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            out.print("ERROR GETUPDATES must specify two parameters");
-                        }
-                    } else {
-                        out.println("ERROR Not logged in");
-                    }
-                    break;
-                case "NEWSHEEP":
-                    if (loggedIn) {
-                        out.println("WAITING");
-                        try {
-                            Sheep newSheep = (Sheep) ois.readObject();
-                            boolean success = sqlHelper.storeNewSheep(newSheep);
-                            if (success) {
-                                out.println("SUCCESS");
-                            } else {
-                                out.println("ERROR Could not store sheep");
-                            }
-                        } catch (ClassNotFoundException ex) {
-                            out.println("ERROR Could not cast to sheep");
-                        }
-                    } else {
-                        out.println("ERROR Not logged in");
-                    }
-                    break;
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(ServerClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         // Enter process loop
         try {
-            while ((input = in.readLine()) != null) {
-                System.out.println(socket.toString() + ": " + input);
+            while (connected) {
+                // Announce
+                System.out.println(socket + " has connected input.");
+                try {
+                    String[] input = in.readLine().trim().split(" ");
+                    for (int i = 0; i < input.length; i++) {
+                        System.out.println(input[i]);
+                    }
+                    switch (input[0]) {
+                        case "LOGOUT":
+                            System.out.println(socket.toString() + ": LOGGED OUT");
+                            socket.close();
+                            connected = false;
+                            break;
+                        case "LOGIN":
+                            if (loggedIn) {
+                                out.println("ERROR Already logged in");
+                            } else {
+                                // TODO
+                            }
+                            break;
+                        case "GETSHEEPLIST":
+                            if (loggedIn) {
+                                // DISKUSJON: KVA GJER VI VED FLEIRE GARDAR
+                                int farm_id = 666;
+                                List<Sheep> sheepList = sqlHelper.getSheepList(farm_id);
+                                oos.writeObject(sheepList);
+                            } else {
+                                out.println("ERROR Not logged in");
+                            }
+                            break;
+                        case "EDITSHEEP":
+                            if (loggedIn) {
+                                out.println("WAITING");
+                                try {
+                                    Sheep editSheep = (Sheep) ois.readObject();
+                                    Boolean success = sqlHelper.updateSheep(editSheep);
+                                    if (success) {
+                                        out.println("SUCCESS");
+                                    } else {
+                                        out.println("ERROR Could not edit");
+                                    }
+                                } catch (ClassNotFoundException e) {
+                                    out.println("ERROR Could not cast to sheep");
+                                }
+                            } else {
+                                out.println("ERROR Not logged in");
+                            }
+                            break;
+                        case "GETUPDATES":
+                            if (loggedIn) {
+                                try {
+                                    int sheepID = Integer.parseInt(input[1]);
+                                    int updates = Integer.parseInt(input[2]);
+                                    sqlHelper.getSheepUpdates(sheepID, updates);
+                                } catch (NumberFormatException e) {
+                                    out.print("ERROR Input parameters must be numbers");
+                                } catch (ArrayIndexOutOfBoundsException e) {
+                                    out.print("ERROR GETUPDATES must specify two parameters");
+                                }
+                            } else {
+                                out.println("ERROR Not logged in");
+                            }
+                            break;
+                        case "NEWSHEEP":
+                            if (loggedIn) {
+                                out.println("WAITING");
+                                try {
+                                    Sheep newSheep = (Sheep) ois.readObject();
+                                    boolean success = sqlHelper.storeNewSheep(newSheep);
+                                    if (success) {
+                                        out.println("SUCCESS");
+                                    } else {
+                                        out.println("ERROR Could not store sheep");
+                                    }
+                                } catch (ClassNotFoundException ex) {
+                                    out.println("ERROR Could not cast to sheep");
+                                }
+                            } else {
+                                out.println("ERROR Not logged in");
+                            }
+                            break;
+                        default:
+                           out.println("ERROR Not a valid command");
+                    }
+
+                } catch (IOException ex) {
+                    Logger.getLogger(ServerClient.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                // Sleep as to avoid overflow
                 Thread.sleep(USER_THROTTLE);
             }
-            connected = false;
         } catch (Exception e) {
             System.out.println(socket.toString() + " has input interrupted.");
         }
