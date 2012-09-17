@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Filip
  */
-public class Sheep {
+public class Sheep implements java.io.Serializable{
     private int id;
     private int farmId;
     private String name;

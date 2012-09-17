@@ -37,7 +37,7 @@ public class ServerClient extends Thread {
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-            oos = new ObjectOutputStream(socket.getOutputStream());
+            //oos = new ObjectOutputStream(socket.getOutputStream());
             //ois = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
             if (out != null) {
@@ -71,6 +71,8 @@ public class ServerClient extends Thread {
                                 out.println("ERROR Already logged in");
                             } else {
                                 // TODO
+                                out.println("SUCCES logged in");
+                                loggedIn = true;
                             }
                             break;
                         case "GETSHEEPLIST":
@@ -78,7 +80,10 @@ public class ServerClient extends Thread {
                                 // DISKUSJON: KVA GJER VI VED FLEIRE GARDAR
                                 int farm_id = 666;
                                 List<Sheep> sheepList = sqlHelper.getSheepList(farm_id);
+                                out.flush();
+                                oos = new ObjectOutputStream(socket.getOutputStream());
                                 oos.writeObject(sheepList);
+                                oos.flush();
                             } else {
                                 out.println("ERROR Not logged in");
                             }
@@ -87,6 +92,8 @@ public class ServerClient extends Thread {
                             if (loggedIn) {
                                 out.println("WAITING");
                                 try {
+                                    out.flush();
+                                    ois = new ObjectInputStream(socket.getInputStream());
                                     Sheep editSheep = (Sheep) ois.readObject();
                                     Boolean success = sqlHelper.updateSheep(editSheep);
                                     if (success) {
@@ -106,7 +113,11 @@ public class ServerClient extends Thread {
                                 try {
                                     int sheepID = Integer.parseInt(input[1]);
                                     int updates = Integer.parseInt(input[2]);
-                                    sqlHelper.getSheepUpdates(sheepID, updates);
+                                    List<SheepUpdate> sheepUpdateList = sqlHelper.getSheepUpdates(sheepID, updates);
+                                    out.flush();
+                                    oos = new ObjectOutputStream(socket.getOutputStream());
+                                    oos.writeObject(sheepUpdateList);
+                                    oos.flush();
                                 } catch (NumberFormatException e) {
                                     out.print("ERROR Input parameters must be numbers");
                                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -116,10 +127,13 @@ public class ServerClient extends Thread {
                                 out.println("ERROR Not logged in");
                             }
                             break;
+                            
                         case "NEWSHEEP":
                             if (loggedIn) {
                                 out.println("WAITING");
                                 try {
+                                    out.flush();
+                                    ois = new ObjectInputStream(socket.getInputStream());
                                     Sheep newSheep = (Sheep) ois.readObject();
                                     boolean success = sqlHelper.storeNewSheep(newSheep);
                                     if (success) {

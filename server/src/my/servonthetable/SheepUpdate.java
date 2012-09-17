@@ -8,7 +8,7 @@ package my.servonthetable;
  *
  * @author Filip
  */
-public class SheepUpdate {
+public class SheepUpdate implements java.io.Serializable{
     private int id;
     private int sheep_id;
     private double pos_x;
