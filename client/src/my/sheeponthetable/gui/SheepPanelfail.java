@@ -6,16 +6,26 @@ package my.sheeponthetable.gui;
 
 import java.util.*;
 import javax.swing.*;
-import my.sheeponthetable.tools.Sheep;
+import my.sheeponthetable.tools.*;
+import java.awt.event.*;
+import java.awt.*;
 /**
  *
  * @author Alex
  */
 public class SheepPanelfail extends javax.swing.JFrame {
-    private DefaultListModel sheep = new DefaultListModel();
-    private ArrayList sheepList = new ArrayList();
+    private DefaultListModel sheepShow = new DefaultListModel();
+    private ArrayList<Object> sheepList = new ArrayList();
     
-    
+    public void mouseClicked(MouseEvent evt) {
+       JList sheepJList = (JList)evt.getSource();
+        if (evt.getClickCount() == 2) {
+            new SheepPop().setVisible(true); }
+        else if (evt.getClickCount() == 3) {   // Triple-click
+            new WarningBox().setVisible(true);  }
+        }
+   
+   
     /**
      * Creates new form SheepPanelfail
      */
@@ -38,7 +48,7 @@ public class SheepPanelfail extends javax.swing.JFrame {
         refreshbtn = new javax.swing.JButton();
         deSelect = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        sheepJList = new javax.swing.JList();
         idTxt = new javax.swing.JTextField();
         posTxt = new javax.swing.JTextField();
         idLbl = new javax.swing.JLabel();
@@ -82,8 +92,8 @@ public class SheepPanelfail extends javax.swing.JFrame {
 
         deSelect.setText("Deselect");
 
-        jList1.setModel(sheep);
-        jScrollPane1.setViewportView(jList1);
+        sheepJList.setModel(sheepShow);
+        jScrollPane1.setViewportView(sheepJList);
 
         idLbl.setText("ID");
 
@@ -117,9 +127,8 @@ public class SheepPanelfail extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(20, 20, 20)
                                             .addComponent(removeSheep, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(refreshbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(addSheep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(refreshbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(addSheep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 22, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -170,17 +179,18 @@ public class SheepPanelfail extends javax.swing.JFrame {
 
     private void refreshbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshbtnActionPerformed
 
-        sheep.removeAllElements();
+        sheepShow.removeAllElements();
     
-    sheep.addElement("trouble");
-    sheep.addElement("is");
-    sheep.addElement("here");// TODO add your handling code here:
+    sheepShow.addElement("trouble");
+    sheepShow.addElement("is");
+    sheepShow.addElement("here");// TODO add your handling code here:
     }//GEN-LAST:event_refreshbtnActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -217,11 +227,11 @@ public class SheepPanelfail extends javax.swing.JFrame {
     private javax.swing.JLabel idLbl;
     private javax.swing.JTextField idTxt;
     private javax.swing.JInternalFrame jInternalFrame1;
-    private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel kordinateLbl;
     private javax.swing.JTextField posTxt;
     private javax.swing.JButton refreshbtn;
     private javax.swing.JButton removeSheep;
+    private javax.swing.JList sheepJList;
     // End of variables declaration//GEN-END:variables
 }

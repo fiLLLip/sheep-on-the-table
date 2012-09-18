@@ -52,7 +52,9 @@ public class Sheep {
         this.updates = updates;
         this.weight = weight;
     }
-
+    public Sheep getSheep(){
+        return this;
+    }
     /**
      *
      * @return sheep id
@@ -109,28 +111,7 @@ public class Sheep {
         return updates;
     }
     
-    public void setID(int d) {
-        this.id = d;
-    }
-
-    public void setEierID(int e) {
-        this.farmId = e;
-    }
-
-    public void setNavn(String n) {
-        this.name = n;
-    }
-
-    public void setKommentar(String k) {
-         this.comment = k;
-    }
-
-    public void setBornYear(int i) {
-        this.born = i;
-    }
-
-    
-	
+   
     /**
      *
      * @return a Boolean parsed from 
