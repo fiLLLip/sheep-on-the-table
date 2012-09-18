@@ -17,15 +17,17 @@ public class SheepPanelfail extends javax.swing.JFrame {
     private DefaultListModel sheepShow = new DefaultListModel();
     private ArrayList<Object> sheepList = new ArrayList();
     
-    public void mouseClicked(MouseEvent evt) {
-       JList sheepJList = (JList)evt.getSource();
+    
+    
+    /*public void mouseClicked(MouseEvent evt) {
+       sheepJList = (JList)evt.getSource();
         if (evt.getClickCount() == 2) {
             new SheepPop().setVisible(true);
-             // sheepJList.getSelectedValue();
+              //sheepJList.getSelectedValue();
         }
         else if (evt.getClickCount() == 3) {   // Triple-click
             new WarningBox().setVisible(true);  }
-        }
+        }*/
    
    
     /**
@@ -94,6 +96,11 @@ public class SheepPanelfail extends javax.swing.JFrame {
         });
 
         deSelect.setText("Deselect");
+        deSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deSelectActionPerformed(evt);
+            }
+        });
 
         sheepJList.setModel(sheepShow);
         jScrollPane1.setViewportView(sheepJList);
@@ -195,9 +202,16 @@ public class SheepPanelfail extends javax.swing.JFrame {
     sheepShow.addElement("here");// TODO add your handling code here:
     }//GEN-LAST:event_refreshbtnActionPerformed
 
+    private void deSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deSelectActionPerformed
+          sheepJList.clearSelection();  // TODO add your handling code here:
+    }//GEN-LAST:event_deSelectActionPerformed
+
     /**
      * @param args the command line arguments
      */
+    public void run(){
+    sheepJList.addMouseListener(null);
+    }
     public static void main(String args[]) {
         
         /* Set the Nimbus look and feel */
