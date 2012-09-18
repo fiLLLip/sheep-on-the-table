@@ -192,8 +192,9 @@ public class AddNewSheep extends javax.swing.JFrame {
     }//GEN-LAST:event_clearbtnActionPerformed
 
     private void addbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addbtnActionPerformed
-        // TODO add your handling code here:
+        // MÅ HENTE UT FARM ID
         Sheep newSheenewSheep = new Sheep(-1, 1, txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, Double.parseDouble(txtWeight.getText()));
+        
     }//GEN-LAST:event_addbtnActionPerformed
 
     /**
