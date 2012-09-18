@@ -20,7 +20,9 @@ public class SheepPanelfail extends javax.swing.JFrame {
     public void mouseClicked(MouseEvent evt) {
        JList sheepJList = (JList)evt.getSource();
         if (evt.getClickCount() == 2) {
-            new SheepPop().setVisible(true); }
+            new SheepPop().setVisible(true);
+             // sheepJList.getSelectedValue();
+        }
         else if (evt.getClickCount() == 3) {   // Triple-click
             new WarningBox().setVisible(true);  }
         }
@@ -53,6 +55,7 @@ public class SheepPanelfail extends javax.swing.JFrame {
         posTxt = new javax.swing.JTextField();
         idLbl = new javax.swing.JLabel();
         kordinateLbl = new javax.swing.JLabel();
+        idLbl2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,7 +136,11 @@ public class SheepPanelfail extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(deSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57))))
+                        .addGap(57, 57, 57))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(idLbl2)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,7 +148,9 @@ public class SheepPanelfail extends javax.swing.JFrame {
                 .addComponent(jInternalFrame1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addContainerGap()
+                .addComponent(idLbl2)
+                .addGap(11, 11, 11)
                 .addComponent(addSheep)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(removeSheep)
@@ -225,6 +234,7 @@ public class SheepPanelfail extends javax.swing.JFrame {
     private javax.swing.JButton addSheep;
     private javax.swing.JButton deSelect;
     private javax.swing.JLabel idLbl;
+    private javax.swing.JLabel idLbl2;
     private javax.swing.JTextField idTxt;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JScrollPane jScrollPane1;
