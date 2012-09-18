@@ -12,7 +12,7 @@ import my.sheeponthetable.tools.*;
  * @author Alex
  */
 public class SheepPanelfail extends javax.swing.JFrame {
-    private DefaultListModel sheep = new DefaultListModel();
+    private DefaultListModel sheepShow = new DefaultListModel();
     private ArrayList<Object> sheepList = new ArrayList();
     
     
@@ -82,7 +82,7 @@ public class SheepPanelfail extends javax.swing.JFrame {
 
         deSelect.setText("Deselect");
 
-        jList1.setModel(sheep);
+        jList1.setModel(sheepShow);
         jScrollPane1.setViewportView(jList1);
 
         idLbl.setText("ID");
@@ -117,9 +117,8 @@ public class SheepPanelfail extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(20, 20, 20)
                                             .addComponent(removeSheep, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(refreshbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(addSheep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(refreshbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(addSheep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 22, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -170,11 +169,11 @@ public class SheepPanelfail extends javax.swing.JFrame {
 
     private void refreshbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshbtnActionPerformed
 
-        sheep.removeAllElements();
+        sheepShow.removeAllElements();
     
-    sheep.addElement("trouble");
-    sheep.addElement("is");
-    sheep.addElement("here");// TODO add your handling code here:
+    sheepShow.addElement("trouble");
+    sheepShow.addElement("is");
+    sheepShow.addElement("here");// TODO add your handling code here:
     }//GEN-LAST:event_refreshbtnActionPerformed
 
     /**
