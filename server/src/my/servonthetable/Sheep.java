@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package my.sheeponthetable.tools;
+package my.servonthetable;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Filip
  */
-public class Sheep {
+public class Sheep implements java.io.Serializable{
     private int id;
     private int farmId;
     private String name;
@@ -94,29 +94,6 @@ public class Sheep {
     public List<SheepUpdate> getUpdates() {
         return updates;
     }
-<<<<<<< HEAD
-    public void setID(int d) {
-        this.id = d;
-    }
-
-    public void setEierID(int e) {
-        this.eierId = e;
-    }
-
-    public void setNavn(String n) {
-        this.navn = n;
-    }
-
-    public void setKommentar(String k) {
-         this.kommentar = k;
-    }
-
-    public void setBornYear(int i) {
-        this.bornYear = i;
-    }
-
-    
-=======
 	
     /**
      *
@@ -127,5 +104,4 @@ public class Sheep {
                 return true;
         return false;
     }
->>>>>>> 1b31e10ebe0965354cb3edc7f017c818b426fc2f
 }

@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author Filip
  */
-public class ServerMySqlHelper {
+public class MySqlHelper {
     
     private String dbHost;
     private String dbUser;
@@ -32,7 +32,7 @@ public class ServerMySqlHelper {
      * @param dbName
      * @param port
      */
-    public ServerMySqlHelper(String dbHost, int port, String dbUser, String dbPass, String dbName){
+    public MySqlHelper(String dbHost, int port, String dbUser, String dbPass, String dbName){
         this.dbHost = dbHost;
         this.dbName = dbName;
         this.dbPass = dbPass;
@@ -46,7 +46,7 @@ public class ServerMySqlHelper {
             con = DriverManager.getConnection(url, dbUser, dbPass);
             stmt = con.createStatement();
         } catch (Exception ex) {
-            Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -78,7 +78,7 @@ public class ServerMySqlHelper {
             return sheeps;
 			
         } catch (SQLException ex) {
-            Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -102,7 +102,7 @@ public class ServerMySqlHelper {
             results.close();
             return updates;
         } catch (SQLException ex) {
-            Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -117,7 +117,7 @@ public class ServerMySqlHelper {
             stmt.executeQuery("INSERT INTO sheep_sheep (farm_id, name, born, deceased, comment) VALUES '" + s.getFarmId() + "', '" + s.getName() + "', '" + s.getBorn() + "', '" +  s.getDeceased() + "', '" +  s.getComment() + "'");
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -132,7 +132,7 @@ public class ServerMySqlHelper {
             stmt.executeQuery("UPDATE sheep_sheep SET farm_id='" + s.getFarmId() + "', name='" + s.getName() + "', born='" + s.getBorn() + "', deceased='" + s.getDeceased() + "', comment='" + s.getComment() + "' WHERE id='" + s.getID() + "'");
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -143,7 +143,7 @@ public class ServerMySqlHelper {
         try {
             stmt.executeQuery("DELETE FROM sheep_sheep WHERE id = '" + sheep.getID() + "'");
         } catch (SQLException ex) {
-            Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         
@@ -151,7 +151,7 @@ public class ServerMySqlHelper {
             stmt.executeQuery("DELETE FROM sheep_updates WHERE sheep_id = '" + sheep.getID() + "'");
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ServerMySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }

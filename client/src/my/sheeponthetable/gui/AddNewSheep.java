@@ -49,6 +49,7 @@ public class AddNewSheep extends javax.swing.JFrame {
         jToggleButton3.setText("jToggleButton3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(409, 370));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Add new sheep");
