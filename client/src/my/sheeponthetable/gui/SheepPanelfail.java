@@ -13,6 +13,7 @@ import my.sheeponthetable.tools.Sheep;
  */
 public class SheepPanelfail extends javax.swing.JFrame {
     private DefaultListModel sheep = new DefaultListModel();
+    private ArrayList sheepList = new ArrayList();
     
     
     /**
