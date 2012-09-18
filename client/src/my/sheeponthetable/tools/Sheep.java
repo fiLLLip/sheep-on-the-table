@@ -18,6 +18,7 @@ public class Sheep {
     private int born;
     private int deceased;
     private List<SheepUpdate> updates;
+    private double weight;
     
     /**
      *
@@ -29,7 +30,19 @@ public class Sheep {
      * @param deceased
      * @param updates
      */
-    public Sheep (int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates) {
+    
+    public Sheep() {
+        this.id = -1;
+        this.farmId = -1;
+        this.name = "n0ll";
+        this.comment = "n0ll";
+        this.born = -1;
+	this.born = -1;
+        this.updates = null;
+        this.weight = -1;
+    }
+    
+    public Sheep (int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates, int weight) {
         this.id = id;
         this.farmId = farmId;
         this.name = name;
@@ -37,8 +50,11 @@ public class Sheep {
         this.born = born;
 	this.born = deceased;
         this.updates = updates;
+        this.weight = weight;
     }
-
+    public Sheep getSheep(){
+        return this;
+    }
     /**
      *
      * @return sheep id
@@ -94,7 +110,8 @@ public class Sheep {
     public List<SheepUpdate> getUpdates() {
         return updates;
     }
-	
+    
+   
     /**
      *
      * @return a Boolean parsed from 
@@ -104,4 +121,5 @@ public class Sheep {
                 return true;
         return false;
     }
+
 }
