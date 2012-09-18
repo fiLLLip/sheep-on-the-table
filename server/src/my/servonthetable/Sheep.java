@@ -42,7 +42,7 @@ public class Sheep {
         this.weight = -1;
     }
     
-    public Sheep (int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates, int weight) {
+    public Sheep (int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates, double weight) {
         this.id = id;
         this.farmId = farmId;
         this.name = name;
@@ -129,7 +129,9 @@ public class Sheep {
         this.born = i;
     }
 
-    
+    public void setUpdates (List<SheepUpdate> updates) {
+        this.updates = updates;
+    }
 	
     /**
      *
