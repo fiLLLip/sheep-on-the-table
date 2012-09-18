@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Filip
  */
-public class Sheep implements java.io.Serializable{
+public class Sheep {
     private int id;
     private int farmId;
     private String name;
@@ -18,6 +18,7 @@ public class Sheep implements java.io.Serializable{
     private int born;
     private int deceased;
     private List<SheepUpdate> updates;
+    private double weight;
     
     /**
      *
@@ -29,7 +30,19 @@ public class Sheep implements java.io.Serializable{
      * @param deceased
      * @param updates
      */
-    public Sheep (int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates) {
+    
+    public Sheep() {
+        this.id = -1;
+        this.farmId = -1;
+        this.name = "n0ll";
+        this.comment = "n0ll";
+        this.born = -1;
+	this.born = -1;
+        this.updates = null;
+        this.weight = -1;
+    }
+    
+    public Sheep (int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates, double weight) {
         this.id = id;
         this.farmId = farmId;
         this.name = name;
@@ -37,6 +50,7 @@ public class Sheep implements java.io.Serializable{
         this.born = born;
 	this.born = deceased;
         this.updates = updates;
+        this.weight = weight;
     }
 
     /**
@@ -94,6 +108,30 @@ public class Sheep implements java.io.Serializable{
     public List<SheepUpdate> getUpdates() {
         return updates;
     }
+    
+    public void setID(int d) {
+        this.id = d;
+    }
+
+    public void setEierID(int e) {
+        this.farmId = e;
+    }
+
+    public void setNavn(String n) {
+        this.name = n;
+    }
+
+    public void setKommentar(String k) {
+         this.comment = k;
+    }
+
+    public void setBornYear(int i) {
+        this.born = i;
+    }
+
+    public void setUpdates (List<SheepUpdate> updates) {
+        this.updates = updates;
+    }
 	
     /**
      *
@@ -104,4 +142,5 @@ public class Sheep implements java.io.Serializable{
                 return true;
         return false;
     }
+
 }

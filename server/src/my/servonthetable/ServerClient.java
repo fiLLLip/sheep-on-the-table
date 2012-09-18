@@ -10,6 +10,7 @@ package my.servonthetable;
  */
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,10 +79,13 @@ public class ServerClient extends Thread {
                         case "GETSHEEPLIST":
                             if (loggedIn) {
                                 // DISKUSJON: KVA GJER VI VED FLEIRE GARDAR
-                                int farm_id = 666;
+                                int farm_id = 1;
                                 List<Sheep> sheepList = sqlHelper.getSheepList(farm_id);
+                                //List<Sheep> sheepList = new ArrayList();
+                                //sheepList.add(new Sheep(1, 1, "lol", 4, 5, "asdasd", null));
                                 out.flush();
                                 oos = new ObjectOutputStream(socket.getOutputStream());
+                                System.out.println(sheepList.toString());
                                 oos.writeObject(sheepList);
                                 oos.flush();
                             } else {

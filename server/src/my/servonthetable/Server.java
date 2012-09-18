@@ -26,6 +26,7 @@ public class Server extends Thread {
     private Socket socket;
     private ArrayList<ServerClient> clients = new ArrayList<>();
     private MySqlHelper sqlHelper;
+    private Config config;
 
     /**
      * @param args the command line arguments
@@ -62,6 +63,13 @@ public class Server extends Thread {
         }
         // Announce the socket creation
         System.out.println("Socket " + serverSocket + " created.");
+        config = new Config();
+        sqlHelper = new MySqlHelper(config.getDBHost(),
+                                    config.getDBPort(),
+                                    config.getDBUsername(),
+                                    config.getDBPassword(),
+                                    config.getDBName());
+        sqlHelper.connect();
         start();
     }
 
