@@ -12,7 +12,7 @@ import my.sheeponthetable.tools.Sheep;
  * @author Alex
  */
 public class SheepPanelfail extends javax.swing.JFrame {
-  private DefaultListModel sheep = new DefaultListModel();
+    private DefaultListModel sheep = new DefaultListModel();
     
     
     /**

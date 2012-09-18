@@ -59,4 +59,25 @@ public class Sheep {
     public List<SheepUpdate> getUpdates() {
         return updates;
     }
+    public void setID(int d) {
+        this.id = d;
+    }
+
+    public void setEierID(int e) {
+        this.eierId = e;
+    }
+
+    public void setNavn(String n) {
+        this.navn = n;
+    }
+
+    public void setKommentar(String k) {
+         this.kommentar = k;
+    }
+
+    public void setBornYear(int i) {
+        this.bornYear = i;
+    }
+
+    
 }
