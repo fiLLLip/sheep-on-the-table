@@ -4,13 +4,14 @@
  */
 package my.sheeponthetable.tools;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Filip
  */
-public class Sheep {
+public class Sheep implements Serializable {
     private int id;
     private int farmId;
     private String name;

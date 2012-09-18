@@ -4,11 +4,13 @@
  */
 package my.servonthetable;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Filip
  */
-public class SheepUpdate implements java.io.Serializable{
+public class SheepUpdate implements Serializable {
     private int id;
     private int sheep_id;
     private double pos_x;
