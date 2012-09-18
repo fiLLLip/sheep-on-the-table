@@ -6,14 +6,14 @@ package my.sheeponthetable.gui;
 
 import java.util.*;
 import javax.swing.*;
-import my.sheeponthetable.tools.Sheep;
+import my.sheeponthetable.tools.*;
 /**
  *
  * @author Alex
  */
 public class SheepPanelfail extends javax.swing.JFrame {
     private DefaultListModel sheep = new DefaultListModel();
-    private ArrayList sheepList = new ArrayList();
+    private ArrayList<Object> sheepList = new ArrayList();
     
     
     /**
