@@ -64,6 +64,11 @@
                       <Component id="deSelect" min="-2" pref="151" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
+                      <Component id="idLbl2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
       </Group>
@@ -75,7 +80,9 @@
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="idLbl2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               <Component id="addSheep" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="removeSheep" min="-2" max="-2" attributes="0"/>
@@ -182,6 +189,8 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Position"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="idLbl2">
     </Component>
   </SubComponents>
 </Form>
