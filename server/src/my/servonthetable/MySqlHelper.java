@@ -76,7 +76,7 @@ public class MySqlHelper {
             results.close();
             
             for (Sheep sheep : sheeps) {
-                List<SheepUpdate> updates = getSheepUpdates(results.getInt("id"), 1);
+                List<SheepUpdate> updates = getSheepUpdates(sheep.getID(), 1);
                 sheep.setUpdates(updates);
             }
             
@@ -160,6 +160,23 @@ public class MySqlHelper {
             return false;
         }
     }
+
+    /*  */
+    public int findUser(String userName, String password) {
+        try {
+            ResultSet results = stmt.executeQuery("SELECT id, un, pw FROM sheep_user WHERE un = '" + userName + "' AND pw = '" + password + "'");
+            if (results.getRow() == 0) {
+                results.next();
+                return results.getInt("id");
+            } else {
+                return -1;
+            }
+        } catch (SQLException s) {
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, s);
+            return -1;
+        }
+    }
+
 
     private String urlGenerator(String host, int port, String database) {
         String url;

@@ -10,7 +10,6 @@ package my.servonthetable;
  */
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,12 +23,10 @@ public class ServerClient extends Thread {
     private static final int USER_THROTTLE = 200;
     private Socket socket;
     private boolean connected;
-
     private BufferedReader in;
     private PrintWriter out;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
-
     private int userID = -1;
     private boolean loggedIn = false;
 
@@ -38,14 +35,12 @@ public class ServerClient extends Thread {
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-            //oos = new ObjectOutputStream(socket.getOutputStream());
-            //ois = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
             if (out != null) {
             }
             System.out.println("Could not get input stream from " + socket.toString());
             try {
-            socket.close();
+                socket.close();
             } catch (IOException ee) {
                 System.out.println("Could not close connection to" + socket.toString() + ". This might be a problem!");
             }
@@ -67,22 +62,33 @@ public class ServerClient extends Thread {
                             socket.close();
                             connected = false;
                             break;
+
                         case "LOGIN":
                             if (loggedIn) {
                                 out.println("ERROR Already logged in");
                             } else {
-                                // TODO
-                                out.println("SUCCES logged in");
-                                loggedIn = true;
+                                try {
+                                    String userName = input[1];
+                                    String password = input[2];
+                                    userID = sqlHelper.findUser(userName, password);
+                                    if (userID >= 0) {
+                                        out.println("SUCCESS");
+                                        loggedIn = true;
+                                    } else {
+                                        out.println("ERROR username or password not correct");
+                                    }
+
+                                } catch (ArrayIndexOutOfBoundsException e) {
+                                    out.println("ERROR LOGIN requires a username and a password");
+                                }
                             }
                             break;
+
                         case "GETSHEEPLIST":
                             if (loggedIn) {
                                 // DISKUSJON: KVA GJER VI VED FLEIRE GARDAR
-                                int farm_id = 1;
+                                int farm_id = userID;
                                 List<Sheep> sheepList = sqlHelper.getSheepList(farm_id);
-                                //List<Sheep> sheepList = new ArrayList();
-                                //sheepList.add(new Sheep(1, 1, "lol", 4, 5, "asdasd", null));
                                 out.flush();
                                 oos = new ObjectOutputStream(socket.getOutputStream());
                                 System.out.println(sheepList.toString());
@@ -92,6 +98,7 @@ public class ServerClient extends Thread {
                                 out.println("ERROR Not logged in");
                             }
                             break;
+
                         case "EDITSHEEP":
                             if (loggedIn) {
                                 out.println("WAITING");
@@ -112,6 +119,7 @@ public class ServerClient extends Thread {
                                 out.println("ERROR Not logged in");
                             }
                             break;
+
                         case "GETUPDATES":
                             if (loggedIn) {
                                 try {
@@ -131,7 +139,7 @@ public class ServerClient extends Thread {
                                 out.println("ERROR Not logged in");
                             }
                             break;
-                            
+
                         case "NEWSHEEP":
                             if (loggedIn) {
                                 out.println("WAITING");
@@ -153,7 +161,7 @@ public class ServerClient extends Thread {
                             }
                             break;
                         default:
-                           out.println("ERROR Not a valid command");
+                            out.println("ERROR Not a valid command");
                     }
 
                 } catch (IOException ex) {

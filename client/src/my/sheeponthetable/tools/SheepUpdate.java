@@ -4,11 +4,13 @@
  */
 package my.sheeponthetable.tools;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Filip
  */
-public class SheepUpdate {
+public class SheepUpdate implements Serializable {
     private int id;
     private int sheep_id;
     private double pos_x;
