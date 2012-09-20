@@ -8,27 +8,17 @@ import java.util.*;
 import javax.swing.*;
 import my.sheeponthetable.tools.*;
 import java.awt.event.*;
-import java.awt.*;
 /**
  *
  * @author Alex
  */
 public class SheepPanelfail extends javax.swing.JFrame {
     private DefaultListModel sheepShow = new DefaultListModel();
-    private ArrayList<Object> sheepList = new ArrayList();
+    private List sheepList = new ArrayList();
+      
+    ServerConnector connect = new ServerConnector("Admin",80,"knut","knut");
     
-    
-    
-    /*public void mouseClicked(MouseEvent evt) {
-       sheepJList = (JList)evt.getSource();
-        if (evt.getClickCount() == 2) {
-            new SheepPop().setVisible(true);
-              //sheepJList.getSelectedValue();
-        }
-        else if (evt.getClickCount() == 3) {   // Triple-click
-            new WarningBox().setVisible(true);  }
-        }*/
-   
+       
    
     /**
      * Creates new form SheepPanelfail
@@ -210,7 +200,15 @@ public class SheepPanelfail extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public void run(){
-    sheepJList.addMouseListener(null);
+        Object sheep;
+        String nickName = "";
+        int id = 0;
+        sheepList = connect.getSheepList();
+        
+        for(int i= 0;i < sheepList.size()-1;i++){
+        sheep = new Sheep();
+        sheep = sheepList.get(i);
+        sheepShow.addElement(sheep);  }
     }
     public static void main(String args[]) {
         
