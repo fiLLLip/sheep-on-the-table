@@ -18,8 +18,11 @@ public class SheepPanelfail extends javax.swing.JFrame {
       
     ServerConnector connect = new ServerConnector("Admin",80,"knut","knut");
     
-       
-   
+    public void addSheepToList(Sheep sheep){
+    sheepShow.addElement(sheep);}
+    
+     
+    
     /**
      * Creates new form SheepPanelfail
      */
