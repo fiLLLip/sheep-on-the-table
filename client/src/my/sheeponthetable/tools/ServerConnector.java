@@ -42,33 +42,13 @@ public class ServerConnector {
     }
     
     /**
-     * Connects to the server and checks username and password.
+     * Connects to the server.
      * @return true or false
      */
     public Boolean connect () {
         try {
             this.socket = new Socket(this.host, this.port);
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out.println("HELO");
-            if (!in.readLine().trim().equals("EHLO")) {
-                return false;
-            }
-            if (!in.readLine().trim().equals("USERNAME")) {
-                return false;
-            }
-            out.println(this.username);
-            if (!in.readLine().trim().equals("OK")) {
-                return false;
-            }
-            if (!in.readLine().trim().equals("PASSWORD")) {
-                return false;
-            }
-            out.println(this.password);
-            if (!in.readLine().trim().equals("SUCCESS")) {
-                this.logger = "Wrong username or password";
-                return false;
-            }
+            this.logger = "Connection established";
             return true;
         } catch (IOException e) {
             this.logger =  "Could not open connection to server.";
@@ -77,17 +57,39 @@ public class ServerConnector {
     }
     
     /**
+     * Logs on to the server (checks username and password).
+     * @return true or false
+     */
+    public Boolean login () {
+        if (connect()) {
+            try {
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out.println("LOGIN " + this.username + " " + this.password);
+                if (!in.readLine().trim().equals("SUCCESS")) {
+                    return false;
+                }
+                return true;
+            } catch (IOException e) {
+                this.logger =  "Could not open connection to server.";
+                return false;
+            }
+        }
+        return false;
+    } 
+    
+    /**
      * Fetches the list of sheeps from the server.
-     * @return
+     * @return List<Sheep> or null
      */
     public List<Sheep> getSheepList () {
         List<Sheep> sheeps = null;
         if (connect()) {
             try {
-                InputStream is = this.socket.getInputStream();
-                ObjectInputStream ois = new ObjectInputStream(is);
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                out.println("GETSHEEPLIST");
+                ObjectInputStream ois = new ObjectInputStream(this.socket.getInputStream());
                 sheeps = (List<Sheep>)ois.readObject();
-                is.close();
             } catch (ClassNotFoundException ex) {
                     Logger.getLogger(ServerConnector.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException e) {
@@ -96,6 +98,80 @@ public class ServerConnector {
             }
         }
         return sheeps; //Returns null if no sheeps could be fetched from server
+    }
+    
+    /**
+     * Fetches the list of sheeps from the server.
+     * @return List<SheepUpdate> or null
+     */
+    public List<SheepUpdate> getSheepUpdates (Integer sheepID, Integer numUpdates) {
+        List<SheepUpdate> updates = null;
+        if (connect()) {
+            try {
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                out.println("GETUPDATES" + sheepID + " " + numUpdates);
+                ObjectInputStream ois = new ObjectInputStream(this.socket.getInputStream());
+                updates = (List<SheepUpdate>)ois.readObject();
+            } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ServerConnector.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+                this.logger =  "Could not fetch sheepupdates from server.";
+                return null;
+            }
+        }
+        return updates; //Returns null if no updates could be fetched from server
+    }
+    
+    /**
+     * Sends an updates sheep object to server.
+     * @return true or false
+     */
+    public Boolean editSheep (Sheep sheep) {
+        if (connect()) {
+            try {
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                out.println("EDITSHEEP");
+                out.flush();
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                oos.writeObject(sheep);
+                oos.flush();
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                if (!in.readLine().trim().equals("SUCCESS")) {
+                    return false;
+                }
+                return true;
+            } catch (IOException e) {
+                this.logger =  "Could not fetch sheepupdates from server.";
+                return null;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Sends a new sheep object with id = null and updates = null.
+     * @return true or false
+     */
+    public Boolean newSheep (Sheep sheep) {
+        if (connect()) {
+            try {
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                out.println("NEWSHEEP");
+                out.flush();
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                oos.writeObject(sheep);
+                oos.flush();
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                if (!in.readLine().trim().equals("SUCCESS")) {
+                    return false;
+                }
+                return true;
+            } catch (IOException e) {
+                this.logger =  "Could not fetch sheepupdates from server.";
+                return null;
+            }
+        }
+        return false;
     }
     
     /**

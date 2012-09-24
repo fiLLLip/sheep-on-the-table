@@ -124,8 +124,8 @@ public class ServerClient extends Thread {
                             if (loggedIn) {
                                 try {
                                     int sheepID = Integer.parseInt(input[1]);
-                                    int updates = Integer.parseInt(input[2]);
-                                    List<SheepUpdate> sheepUpdateList = sqlHelper.getSheepUpdates(sheepID, updates);
+                                    int numUpdates = Integer.parseInt(input[2]);
+                                    List<SheepUpdate> sheepUpdateList = sqlHelper.getSheepUpdates(sheepID, numUpdates);
                                     out.flush();
                                     oos = new ObjectOutputStream(socket.getOutputStream());
                                     oos.writeObject(sheepUpdateList);
