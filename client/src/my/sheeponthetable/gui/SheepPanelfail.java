@@ -13,20 +13,29 @@ import java.awt.event.*;
  * @author Alex
  */
 public class SheepPanelfail extends javax.swing.JFrame {
+    
     private DefaultListModel sheepShow = new DefaultListModel();
     private List sheepList = new ArrayList();
-      
-    ServerConnector connect = new ServerConnector("Admin",80,"knut","knut");
+    
+    private String serverURL;
+    private int serverPort;
+    private String username;
+    private String password;
+    private int farmID;
+    private int userID;
+    private ServerConnector connect;
     
     public void addSheepToList(Sheep sheep){
-    sheepShow.addElement(sheep);}
+        sheepShow.addElement(sheep);
+    }
     
      
     
     /**
      * Creates new form SheepPanelfail
      */
-    public SheepPanelfail() {
+    public SheepPanelfail(ServerConnector connect) {
+        this.connect = connect;
         initComponents();
     }
 
@@ -179,24 +188,22 @@ public class SheepPanelfail extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
    
     private void removeSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSheepActionPerformed
-    new WarningBox().setVisible(true);        // TODO add your handling code here:
+        new WarningBox().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_removeSheepActionPerformed
 
     private void addSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepActionPerformed
-    new AddNewSheep().setVisible(true);        // TODO add your handling code here:
+        new AddNewSheep().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_addSheepActionPerformed
 
     private void refreshbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshbtnActionPerformed
-
         sheepShow.removeAllElements();
-    
-    sheepShow.addElement("trouble");
-    sheepShow.addElement("is");
-    sheepShow.addElement("here");// TODO add your handling code here:
+        sheepShow.addElement("trouble");
+        sheepShow.addElement("is");
+        sheepShow.addElement("here");// TODO add your handling code here:
     }//GEN-LAST:event_refreshbtnActionPerformed
 
     private void deSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deSelectActionPerformed
-          sheepJList.clearSelection();  // TODO add your handling code here:
+        sheepJList.clearSelection();  // TODO add your handling code here:
     }//GEN-LAST:event_deSelectActionPerformed
 
     /**
@@ -212,38 +219,6 @@ public class SheepPanelfail extends javax.swing.JFrame {
         sheep = new Sheep();
         sheep = sheepList.get(i);
         sheepShow.addElement(sheep);  }
-    }
-    public static void main(String args[]) {
-        
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SheepPanelfail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SheepPanelfail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SheepPanelfail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SheepPanelfail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SheepPanelfail().setVisible(true);
-            }
-        });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheep;
