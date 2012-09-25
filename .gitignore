@@ -5,3 +5,8 @@ dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
+.DS_STORE
+.gitignore
+private.xml
+*.properties
+build-impl.xml
