@@ -92,11 +92,18 @@ public class ServerConnector {
             try {
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 out.println("GETSHEEPLIST");
+                System.out.println("Got out!");
+                out.flush();
                 ObjectInputStream ois = new ObjectInputStream(this.socket.getInputStream());
+                System.out.println("GETTINGSHEEP§");
                 sheeps = (List<Sheep>)ois.readObject();
+                System.out.println("GOTSHEEP!");
+                System.out.println(sheeps);
             } catch (ClassNotFoundException ex) {
+                    System.out.println("CLASSNOTFOUNDEX!");
                     Logger.getLogger(ServerConnector.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException e) {
+                System.out.println("IOEX!");
                 this.logger =  "Could not fetch sheeps from server.";
                 return null;
             }

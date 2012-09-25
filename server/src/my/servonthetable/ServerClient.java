@@ -48,7 +48,7 @@ public class ServerClient extends Thread {
         }
         // Enter process loop
         try {
-            while (connected) {
+            while (connected && in != null) {
                 // Announce
                 System.out.println(socket + " has connected input.");
                 try {

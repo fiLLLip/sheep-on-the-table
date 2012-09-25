@@ -37,6 +37,7 @@ public class SheepPanelfail extends javax.swing.JFrame {
     public SheepPanelfail(ServerConnector connect) {
         this.connect = connect;
         initComponents();
+        update();
     }
 
     /**
@@ -196,10 +197,7 @@ public class SheepPanelfail extends javax.swing.JFrame {
     }//GEN-LAST:event_addSheepActionPerformed
 
     private void refreshbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshbtnActionPerformed
-        sheepShow.removeAllElements();
-        sheepShow.addElement("trouble");
-        sheepShow.addElement("is");
-        sheepShow.addElement("here");// TODO add your handling code here:
+        sheepShow.removeAllElements(); // TODO add your handling code here:
     }//GEN-LAST:event_refreshbtnActionPerformed
 
     private void deSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deSelectActionPerformed
@@ -209,16 +207,20 @@ public class SheepPanelfail extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public void run(){
+    public void update(){
+        System.out.println("UPDATE!!!");
         Object sheep;
         String nickName = "";
         int id = 0;
         sheepList = connect.getSheepList();
-        
-        for(int i= 0;i < sheepList.size()-1;i++){
-        sheep = new Sheep();
-        sheep = sheepList.get(i);
-        sheepShow.addElement(sheep);  }
+        System.out.println("Got sheeplist");
+        if (sheepList != null) {
+            for (int i = 0; i < sheepList.size(); i++) {
+                sheep = new Sheep();
+                sheep = sheepList.get(i);
+                sheepShow.addElement(sheep);
+            }
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheep;
