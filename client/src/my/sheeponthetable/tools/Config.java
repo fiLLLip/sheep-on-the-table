@@ -53,10 +53,12 @@ public class Config {
     
     public void setUsername (String username) {
         this.username = username;
+        this.saveSettingsFile();
     }
     
     public void setPassword (String password) {
         this.password = password;
+        this.saveSettingsFile();
     }
     
     private void loadSettingsFile () {
