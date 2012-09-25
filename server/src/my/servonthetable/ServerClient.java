@@ -71,6 +71,7 @@ public class ServerClient extends Thread {
                                     String userName = input[1];
                                     String password = input[2];
                                     userID = sqlHelper.findUser(userName, password);
+                                    System.out.println("USERID: " + userID);
                                     if (userID >= 0) {
                                         out.println("SUCCESS");
                                         loggedIn = true;

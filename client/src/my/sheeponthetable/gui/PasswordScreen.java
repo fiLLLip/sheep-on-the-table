@@ -150,7 +150,7 @@ public class PasswordScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         this.username = this.jUserIDField.getText();
-        this.password = this.jPasswordField1.getPassword().toString();
+        this.password = this.jPasswordField1.getText(); // Possible security threat
         
         if (this.username.isEmpty() || this.password.isEmpty()) {
             logger = "Username or password not set";
@@ -165,19 +165,22 @@ public class PasswordScreen extends javax.swing.JFrame {
             logger = "Server url or port not set in config file";
             return;
         }
-        
+
         this.connect = new ServerConnector(this.serverURL, this.serverPort, this.username, this.password);
 
         if (!this.connect.connect()) {
             // TODO add failure code here
+            System.out.println("Connect failed");
             return;
         }
 
         if (!this.connect.login()) {
+            System.out.println("Failed login");
             // TODO add failure when not able to login here
             return;
         }
-        
+
+        System.out.println("login successful");
         // If you have made it to this point, you have a successfull login
         
         new SheepPanelfail(this.connect).setVisible(true);

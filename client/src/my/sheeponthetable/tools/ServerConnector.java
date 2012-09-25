@@ -49,8 +49,10 @@ public class ServerConnector {
         try {
             this.socket = new Socket(this.host, this.port);
             this.logger = "Connection established";
+            System.out.println("Connection established");
             return true;
         } catch (IOException e) {
+            System.out.println("Could not open connection to server.");
             this.logger =  "Could not open connection to server.";
             return false;
         }
@@ -66,7 +68,9 @@ public class ServerConnector {
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out.println("LOGIN " + this.username + " " + this.password);
-                if (!in.readLine().trim().equals("SUCCESS")) {
+                String ir = in.readLine().trim();
+                System.out.println(ir);
+                if (!ir.equals("SUCCESS")) {
                     return false;
                 }
                 return true;
