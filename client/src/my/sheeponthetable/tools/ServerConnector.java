@@ -186,7 +186,23 @@ public class ServerConnector {
         }
         return false;
     }
-    
+
+    /**
+     * Asks the server for current user's ID
+     * @return int
+     */
+    public int getUserId() {
+        if (connected) {
+            try {
+                out.println("GETUSERID");
+                return Integer.parseInt(in.readLine().trim());
+            } catch (IOException e) {
+                return -1;
+            }
+        }
+        return -1;
+    }
+
     /**
      * Gets the reason why something has failed.
      * @return string

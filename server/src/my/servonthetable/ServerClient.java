@@ -159,6 +159,10 @@ public class ServerClient extends Thread {
                                 out.println("ERROR Not logged in");
                             }
                             break;
+
+                        case "GETUSERID":
+                            out.println(userID);
+                            break;
                             
                         default:
                             out.println("ERROR Not a valid command");
