@@ -17,6 +17,8 @@ public class Config {
     
     private String serverURL = null;
     private int serverPort = -1;
+    private String username = null;
+    private String password = null;
     
     /**
      *
@@ -41,6 +43,22 @@ public class Config {
         return this.serverPort;
     }
     
+    public String getUsername () {
+        return this.username;
+    }
+    
+    public String getPassword () {
+        return this.password;
+    }
+    
+    public void setUsername (String username) {
+        this.username = username;
+    }
+    
+    public void setPassword (String password) {
+        this.password = password;
+    }
+    
     private void loadSettingsFile () {
         
         Properties properties = new Properties();
@@ -54,6 +72,8 @@ public class Config {
             
             this.serverURL = properties.getProperty("serverURL");
             this.serverPort = Integer.parseInt(properties.getProperty("serverPort"));
+            this.username = properties.getProperty("username");
+            this.password = properties.getProperty("password");
             
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Failure when reading settings: " + e.toString());
@@ -73,6 +93,8 @@ public class Config {
             
             properties.setProperty("serverURL", this.serverURL);
             properties.setProperty("serverPort", Integer.toString(this.serverPort));
+            properties.setProperty("username", this.username);
+            properties.setProperty("password", this.password);
             
             URL url = getClass().getResource("settings.properties");  
             String path = url.getPath(); 
