@@ -164,7 +164,6 @@ public class AddNewSheep extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelActionPerformed
 
     private void clearbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearbtnActionPerformed
-    txtID.setText("");
     txtBorn.setText("");
     txtNick.setText("");
     txtWeight.setText("");
