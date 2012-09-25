@@ -63,7 +63,6 @@ public class MySqlHelper {
             results = stmt.executeQuery("SELECT id, farm_id, name, UNIX_TIMESTAMP(born) as born, UNIX_TIMESTAMP(deceased) as deceased, comment, weight FROM sheep_sheep WHERE farm_id = '" + farm_id + "'");
             System.out.println(results.toString());
             while (results.next()) {
-                //List<SheepUpdate> updates = getSheepUpdates(results.getInt("id"), 1);
                 sheeps.add(new Sheep(results.getInt("id"),
                         results.getInt("farm_id"),
                         results.getString("name"),
@@ -121,7 +120,9 @@ public class MySqlHelper {
      */
     public boolean storeNewSheep(Sheep s) {
         try {
-            stmt.executeQuery("INSERT INTO sheep_sheep (farm_id, name, born, deceased, comment) VALUES '" + s.getFarmId() + "', '" + s.getName() + "', '" + s.getBorn() + "', '" + s.getDeceased() + "', '" + s.getComment() + "'");
+            String sq = "INSERT INTO sheep_sheep (farm_id, name, born, deceased, comment) VALUES ('" + s.getFarmId() + "', '" + s.getName() + "', '" + s.getBorn() + "', '" + s.getDeceased() + "', '" + s.getComment() + "')";
+            System.out.println(sq);
+            stmt.executeUpdate(sq);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);

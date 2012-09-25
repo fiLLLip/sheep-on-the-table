@@ -193,7 +193,7 @@ public class SheepPanelfail extends javax.swing.JFrame {
     }//GEN-LAST:event_removeSheepActionPerformed
 
     private void addSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepActionPerformed
-        new AddNewSheep().setVisible(true);        // TODO add your handling code here:
+        new AddNewSheep(connect).setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_addSheepActionPerformed
 
     private void refreshbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshbtnActionPerformed

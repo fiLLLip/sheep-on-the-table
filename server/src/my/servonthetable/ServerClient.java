@@ -88,9 +88,7 @@ public class ServerClient extends Thread {
                                 // DISKUSJON: KVA GJER VI VED FLEIRE GARDAR
                                 int farm_id = userID;
                                 List<Sheep> sheepList = sqlHelper.getSheepList(farm_id);
-                                System.out.println("The following is the sheep list:");
                                 for (Sheep s : sheepList) {
-                                    System.out.println(s.toString(true));
                                     out.println(s.toString(true));
                                 }
                                 out.println("SUCCESS");
@@ -141,18 +139,22 @@ public class ServerClient extends Thread {
 
                         case "NEWSHEEP":
                             if (loggedIn) {
-                                out.println("WAITING");
-                                try {
-                                    Sheep newSheep =  new Sheep(in.readLine());
-                                    boolean success = sqlHelper.storeNewSheep(newSheep);
-                                    if (success) {
-                                        out.println("SUCCESS");
-                                    } else {
-                                        out.println("ERROR Could not store sheep");
-                                    }
-                                } catch (IOException ex) {
-                                    out.println("ERROR Could not get sheep");
+                                // Make the rest of the input into a single string
+                                String sheepParseString = "";
+                                for (int i = 1; i < input.length; i++) {
+                                    sheepParseString += input[i] + " ";
                                 }
+                                sheepParseString.trim();
+                                // The make a sheep for string and store in DB
+                                System.out.println(sheepParseString);
+                                Sheep newSheep = new Sheep(sheepParseString);
+                                boolean success = sqlHelper.storeNewSheep(newSheep);
+                                if (success) {
+                                    out.println("SUCCESS");
+                                } else {
+                                    out.println("ERROR Could not store sheep");
+                                }
+
                             } else {
                                 out.println("ERROR Not logged in");
                             }

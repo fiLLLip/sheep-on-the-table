@@ -129,7 +129,7 @@ public class ServerConnector {
      */
     public List<SheepUpdate> getSheepUpdates (Integer sheepID, Integer numUpdates) {
         List<SheepUpdate> updates = new ArrayList<>();
-        if (connect()) {
+        if (connected) {
             try {
                 out.println("GETUPDATES" + sheepID + " " + numUpdates);
                 String inline = in.readLine();
@@ -150,7 +150,7 @@ public class ServerConnector {
      * @return true or false
      */
     public Boolean editSheep (Sheep sheep) {
-        if (connect()) {
+        if (connected) {
             try {
                 out.println("EDITSHEEP");
                 out.println(sheep.toString(false));
@@ -167,14 +167,14 @@ public class ServerConnector {
     }
     
     /**
-     * Sends a new sheep object with id = null and updates = null.
+     * Stores a sheep object in the database.
      * @return true or false
      */
     public Boolean newSheep (Sheep sheep) {
-        if (connect()) {
+        if (connected) {
             try {
-                out.println("NEWSHEEP");
-                out.println(sheep.toString());
+                out.println("NEWSHEEP " + sheep.toString(false));
+                System.out.println(sheep.toString(false));
                 if (!in.readLine().trim().equals("SUCCESS")) {
                     return false;
                 }

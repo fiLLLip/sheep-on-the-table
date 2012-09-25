@@ -9,12 +9,15 @@ import my.sheeponthetable.tools.*;
  * @author Håkon
  */
 public class AddNewSheep extends javax.swing.JFrame {
-    
+
+    ServerConnector connect;
+
     /**
      * Creates new form AddNewSheep
      */
-    public AddNewSheep() {
+    public AddNewSheep(ServerConnector connect) {
         initComponents();
+        this.connect = connect;
     }
 
     /**
@@ -172,7 +175,8 @@ public class AddNewSheep extends javax.swing.JFrame {
 
     private void addbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addbtnActionPerformed
         // Farm ID blir satt på serversiden, om vi ikke skal ha flerfarm-støtte
-        Sheep newSheep = new Sheep(-1, -1, txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, Double.parseDouble(txtWeight.getText()));        
+        Sheep newSheep = new Sheep(-1, 1, txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, Double.parseDouble(txtWeight.getText()));
+        connect.newSheep(newSheep);
     }//GEN-LAST:event_addbtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
