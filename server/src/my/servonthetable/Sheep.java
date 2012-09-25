@@ -5,6 +5,7 @@
 package my.servonthetable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,18 +44,19 @@ public class Sheep implements Serializable {
         this.weight = -1;
     }
 
-    public Sheep(String[] parseString) {
+    public Sheep(String string) {
+        String[] parseString = string.split("@");
         try {
-        id = Integer.parseInt(parseString[0]);
-        farmId = Integer.parseInt(parseString[1]);
-        name = parseString[2];
-        comment = parseString[3];
-        born = Integer.parseInt(parseString[4]);
-        deceased = Integer.parseInt(parseString[5]);
-        weight = Double.parseDouble(parseString[6]);
-        }
-        catch (Exception e) {
+            id = Integer.parseInt(parseString[1]);
+            farmId = Integer.parseInt(parseString[2]);
+            name = parseString[3];
+            comment = parseString[4];
+            born = Integer.parseInt(parseString[5]);
+            deceased = Integer.parseInt(parseString[6]);
+            weight = Double.parseDouble(parseString[7]);
+        } catch (Exception e) {
             System.err.println("Could not convert string to a sheep object!");
+            e.printStackTrace();
         }
     }
     
@@ -147,6 +149,13 @@ public class Sheep implements Serializable {
 
     public void setUpdates (List<SheepUpdate> updates) {
         this.updates = updates;
+    }
+
+    public void addUpdate(SheepUpdate su) {
+        if (updates == null) {
+            updates = new ArrayList<>();
+        }
+        updates.add(su);
     }
 	
     /**

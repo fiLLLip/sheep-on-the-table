@@ -25,8 +25,6 @@ public class ServerClient extends Thread {
     private boolean connected;
     private BufferedReader in;
     private PrintWriter out;
-    private ObjectOutputStream oos;
-    private ObjectInputStream ois;
     private int userID = -1;
     private boolean loggedIn = false;
 
@@ -73,8 +71,8 @@ public class ServerClient extends Thread {
                                     userID = sqlHelper.findUser(userName, password);
                                     System.out.println("USERID: " + userID);
                                     if (userID >= 0) {
-                                        out.println("SUCCESS");
                                         loggedIn = true;
+                                        out.println("SUCCESS");                              
                                     } else {
                                         out.println("ERROR username or password not correct");
                                     }
@@ -90,12 +88,12 @@ public class ServerClient extends Thread {
                                 // DISKUSJON: KVA GJER VI VED FLEIRE GARDAR
                                 int farm_id = userID;
                                 List<Sheep> sheepList = sqlHelper.getSheepList(farm_id);
-                                out.flush();
-                                socket.shutdownOutput();
-                                oos = new ObjectOutputStream(socket.getOutputStream());
-                                System.out.println(sheepList.toString());
-                                oos.writeObject(sheepList);
-                                oos.flush();
+                                System.out.println("The following is the sheep list:");
+                                for (Sheep s : sheepList) {
+                                    System.out.println(s.toString(true));
+                                    out.println(s.toString(true));
+                                }
+                                out.println("SUCCESS");
                             } else {
                                 out.println("ERROR Not logged in");
                             }
@@ -105,18 +103,17 @@ public class ServerClient extends Thread {
                             if (loggedIn) {
                                 out.println("WAITING");
                                 try {
-                                    out.flush();
-                                    ois = new ObjectInputStream(socket.getInputStream());
-                                    Sheep editSheep = (Sheep) ois.readObject();
+                                    Sheep editSheep = new Sheep(in.readLine());
                                     Boolean success = sqlHelper.updateSheep(editSheep);
                                     if (success) {
                                         out.println("SUCCESS");
                                     } else {
                                         out.println("ERROR Could not edit");
                                     }
-                                } catch (ClassNotFoundException e) {
-                                    out.println("ERROR Could not cast to sheep");
+                                } catch (IOException ex) {
+                                    out.println("ERROR Could not get sheep");
                                 }
+
                             } else {
                                 out.println("ERROR Not logged in");
                             }
@@ -128,10 +125,10 @@ public class ServerClient extends Thread {
                                     int sheepID = Integer.parseInt(input[1]);
                                     int numUpdates = Integer.parseInt(input[2]);
                                     List<SheepUpdate> sheepUpdateList = sqlHelper.getSheepUpdates(sheepID, numUpdates);
-                                    socket.shutdownInput();
-                                    oos = new ObjectOutputStream(socket.getOutputStream());
-                                    oos.writeObject(sheepUpdateList);
-                                    oos.flush();
+
+                                    for (SheepUpdate su : sheepUpdateList) {
+                                        out.println(su.toString());
+                                    }
                                 } catch (NumberFormatException e) {
                                     out.print("ERROR Input parameters must be numbers");
                                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -146,22 +143,21 @@ public class ServerClient extends Thread {
                             if (loggedIn) {
                                 out.println("WAITING");
                                 try {
-                                    out.flush();
-                                    ois = new ObjectInputStream(socket.getInputStream());
-                                    Sheep newSheep = (Sheep) ois.readObject();
+                                    Sheep newSheep =  new Sheep(in.readLine());
                                     boolean success = sqlHelper.storeNewSheep(newSheep);
                                     if (success) {
                                         out.println("SUCCESS");
                                     } else {
                                         out.println("ERROR Could not store sheep");
                                     }
-                                } catch (ClassNotFoundException ex) {
-                                    out.println("ERROR Could not cast to sheep");
+                                } catch (IOException ex) {
+                                    out.println("ERROR Could not get sheep");
                                 }
                             } else {
                                 out.println("ERROR Not logged in");
                             }
                             break;
+                            
                         default:
                             out.println("ERROR Not a valid command");
                     }

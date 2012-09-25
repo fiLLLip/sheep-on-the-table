@@ -15,7 +15,7 @@ import java.awt.event.*;
 public class SheepPanelfail extends javax.swing.JFrame {
     
     private DefaultListModel sheepShow = new DefaultListModel();
-    private List sheepList = new ArrayList();
+    private List<Sheep> sheepList = new ArrayList();
     
     private String serverURL;
     private int serverPort;
@@ -208,15 +208,11 @@ public class SheepPanelfail extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public void update(){
-        System.out.println("UPDATE!!!");
-        Object sheep;
-        String nickName = "";
-        int id = 0;
         sheepList = connect.getSheepList();
         System.out.println("Got sheeplist");
         if (sheepList != null) {
             for (int i = 0; i < sheepList.size(); i++) {
-                sheep = new Sheep();
+                Sheep sheep = new Sheep();
                 sheep = sheepList.get(i);
                 sheepShow.addElement(sheep);
             }

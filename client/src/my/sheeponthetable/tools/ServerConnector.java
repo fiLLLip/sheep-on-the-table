@@ -26,7 +26,10 @@ public class ServerConnector {
     private String password;
     private Socket socket;
     private String logger;
-    
+    private PrintWriter out;
+    private BufferedReader in;
+    private boolean connected = false;
+
     /**
      *
      * @param host
@@ -50,9 +53,11 @@ public class ServerConnector {
             this.socket = new Socket(this.host, this.port);
             this.logger = "Connection established";
             System.out.println("Connection established");
+            this.out = new PrintWriter(socket.getOutputStream(), true);
+            this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.connected = true;
             return true;
         } catch (IOException e) {
-            System.out.println("Could not open connection to server.");
             this.logger =  "Could not open connection to server.";
             return false;
         }
@@ -63,23 +68,18 @@ public class ServerConnector {
      * @return true or false
      */
     public Boolean login () {
-        if (connect()) {
-            try {
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out.println("LOGIN " + this.username + " " + this.password);
-                String ir = in.readLine().trim();
-                System.out.println(ir);
-                if (!ir.equals("SUCCESS")) {
-                    return false;
-                }
-                return true;
-            } catch (IOException e) {
-                this.logger =  "Could not open connection to server.";
+        try {
+            out.println("LOGIN " + this.username + " " + this.password);
+            String ir = in.readLine().trim();
+            System.out.println(ir);
+            if (!ir.equals("SUCCESS")) {
                 return false;
             }
+            return true;
+        } catch (IOException e) {
+            this.logger = "Could not open connection to server.";
+            return false;
         }
-        return false;
     } 
     
     /**
@@ -87,27 +87,39 @@ public class ServerConnector {
      * @return List<Sheep> or null
      */
     public List<Sheep> getSheepList () {
-        List<Sheep> sheeps = null;
-        if (connect()) {
+        List<Sheep> sheeps = new ArrayList<>();
+        if (connected) {
             try {
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 out.println("GETSHEEPLIST");
-                System.out.println("Got out!");
-                out.flush();
-                ObjectInputStream ois = new ObjectInputStream(this.socket.getInputStream());
-                System.out.println("GETTINGSHEEP§");
-                sheeps = (List<Sheep>)ois.readObject();
-                System.out.println("GOTSHEEP!");
-                System.out.println(sheeps);
-            } catch (ClassNotFoundException ex) {
-                    System.out.println("CLASSNOTFOUNDEX!");
-                    Logger.getLogger(ServerConnector.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("GetSheepList");
+                String inline = in.readLine();
+                Sheep currentSheep = null;
+                while (inline != null && !inline.equals("SUCCESS")) {
+                    System.out.println(inline);
+                    // This line contains a sheep
+                    if (inline.indexOf("S") >= 0) {
+                        if (currentSheep != null) {
+                            sheeps.add(currentSheep);
+                        }
+                        System.out.println("Made a sheep!");
+                        currentSheep = new Sheep(inline);
+                    }
+                    // This line contains a sheep update
+                    else if (inline.indexOf("SU") >= 0) {
+                        System.out.println("Made a sheep update!");
+                        SheepUpdate su = new SheepUpdate(inline);
+                        currentSheep.addUpdate(su);
+                    }
+                    inline = in.readLine();
+                }
+                sheeps.add(currentSheep);
             } catch (IOException e) {
                 System.out.println("IOEX!");
                 this.logger =  "Could not fetch sheeps from server.";
                 return null;
             }
         }
+        
         return sheeps; //Returns null if no sheeps could be fetched from server
     }
     
@@ -116,15 +128,15 @@ public class ServerConnector {
      * @return List<SheepUpdate> or null
      */
     public List<SheepUpdate> getSheepUpdates (Integer sheepID, Integer numUpdates) {
-        List<SheepUpdate> updates = null;
+        List<SheepUpdate> updates = new ArrayList<>();
         if (connect()) {
             try {
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 out.println("GETUPDATES" + sheepID + " " + numUpdates);
-                ObjectInputStream ois = new ObjectInputStream(this.socket.getInputStream());
-                updates = (List<SheepUpdate>)ois.readObject();
-            } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ServerConnector.class.getName()).log(Level.SEVERE, null, ex);
+                String inline = in.readLine();
+                while (inline != null) {
+                    updates.add(new SheepUpdate(inline));
+                    inline = in.readLine();
+                }
             } catch (IOException e) {
                 this.logger =  "Could not fetch sheepupdates from server.";
                 return null;
@@ -140,13 +152,8 @@ public class ServerConnector {
     public Boolean editSheep (Sheep sheep) {
         if (connect()) {
             try {
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 out.println("EDITSHEEP");
-                out.flush();
-                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-                oos.writeObject(sheep);
-                oos.flush();
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out.println(sheep.toString(false));
                 if (!in.readLine().trim().equals("SUCCESS")) {
                     return false;
                 }
@@ -166,13 +173,8 @@ public class ServerConnector {
     public Boolean newSheep (Sheep sheep) {
         if (connect()) {
             try {
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 out.println("NEWSHEEP");
-                out.flush();
-                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-                oos.writeObject(sheep);
-                oos.flush();
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out.println(sheep.toString());
                 if (!in.readLine().trim().equals("SUCCESS")) {
                     return false;
                 }

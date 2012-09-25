@@ -18,7 +18,7 @@ public class SheepUpdate implements Serializable {
     private double temperature;
     private int timestamp;
     private boolean alarm;
-    
+
     /**
      *
      */
@@ -31,23 +31,26 @@ public class SheepUpdate implements Serializable {
         this.timestamp = -1;
     }
 
-    public SheepUpdate(String[] parseString) {
+    public SheepUpdate(String string) {
+        System.out.println(string);
+        String[] parseString = string.split("@");
         try {
-        id = Integer.parseInt(parseString[0]);
-        pos_x = Double.parseDouble(parseString[1]);
-        pos_y = Double.parseDouble(parseString[2]);
-        pulse = Integer.parseInt(parseString[3]);
-        temperature = Double.parseDouble(parseString[4]);
-        alarm = Boolean.getBoolean(parseString[5]);
-        timestamp = Integer.parseInt(parseString[6]);
+            id = Integer.parseInt(parseString[1]);
+            pos_x = Double.parseDouble(parseString[2]);
+            pos_y = Double.parseDouble(parseString[3]);
+            pulse = Integer.parseInt(parseString[4]);
+            temperature = Double.parseDouble(parseString[5]);
+            alarm = Boolean.getBoolean(parseString[6]);
+            timestamp = Integer.parseInt(parseString[7]);
         } catch (Exception e) {
             System.err.println("Could not convert string to SheepUpdate object!");
+            e.printStackTrace();
         }
     }
 
     /**
      *
-     * @param id 
+     * @param id
      * @param pos_x
      * @param pos_y
      * @param pulse
