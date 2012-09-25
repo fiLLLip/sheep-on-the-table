@@ -38,9 +38,24 @@ public class Sheep implements Serializable {
         this.name = "n0ll";
         this.comment = "n0ll";
         this.born = -1;
-	this.born = -1;
+	this.deceased = -1;
         this.updates = null;
         this.weight = -1;
+    }
+
+    public Sheep(String[] parseString) {
+        try {
+        id = Integer.parseInt(parseString[0]);
+        farmId = Integer.parseInt(parseString[1]);
+        name = parseString[2];
+        comment = parseString[3];
+        born = Integer.parseInt(parseString[4]);
+        deceased = Integer.parseInt(parseString[5]);
+        weight = Double.parseDouble(parseString[6]);
+        }
+        catch (Exception e) {
+            System.err.println("Could not convert string to a sheep object!");
+        }
     }
     
     public Sheep (int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates, double weight) {
@@ -49,7 +64,7 @@ public class Sheep implements Serializable {
         this.name = name;
         this.comment = comment;
         this.born = born;
-	this.born = deceased;
+	this.deceased = deceased;
         this.updates = updates;
         this.weight = weight;
     }
@@ -144,4 +159,13 @@ public class Sheep implements Serializable {
         return false;
     }
 
+    public String toString(boolean includeUpdates) {
+        String s = "S@" + id + "@" + farmId + "@" + name + "@" + comment + "@" + born + "@" + deceased + "@" + weight;
+        if (includeUpdates) {
+            for (SheepUpdate su : updates) {
+                s += "\n" + su.toString();
+            }
+        }
+        return s;
+    }
 }
