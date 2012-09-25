@@ -91,6 +91,7 @@ public class ServerClient extends Thread {
                                 int farm_id = userID;
                                 List<Sheep> sheepList = sqlHelper.getSheepList(farm_id);
                                 out.flush();
+                                socket.shutdownOutput();
                                 oos = new ObjectOutputStream(socket.getOutputStream());
                                 System.out.println(sheepList.toString());
                                 oos.writeObject(sheepList);
@@ -127,7 +128,7 @@ public class ServerClient extends Thread {
                                     int sheepID = Integer.parseInt(input[1]);
                                     int numUpdates = Integer.parseInt(input[2]);
                                     List<SheepUpdate> sheepUpdateList = sqlHelper.getSheepUpdates(sheepID, numUpdates);
-                                    out.flush();
+                                    socket.shutdownInput();
                                     oos = new ObjectOutputStream(socket.getOutputStream());
                                     oos.writeObject(sheepUpdateList);
                                     oos.flush();
