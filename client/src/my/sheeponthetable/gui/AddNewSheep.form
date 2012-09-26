@@ -43,9 +43,9 @@
               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="addbtn" linkSize="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="addSheepButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cancel" linkSize="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cancel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="clearbtn" min="-2" pref="79" max="-2" attributes="0"/>
                   </Group>
@@ -108,9 +108,9 @@
               <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="addbtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cancel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="clearbtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="addSheepButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -152,14 +152,6 @@
         <Property name="text" type="java.lang.String" value="Comment:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JToggleButton" name="addbtn">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="ADD"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addbtnActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JToggleButton" name="cancel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancel"/>
@@ -195,6 +187,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearbtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="addSheepButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Add Sheep"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addSheepButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
