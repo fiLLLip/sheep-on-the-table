@@ -60,6 +60,11 @@ public class ServerClient extends Thread {
                             socket.close();
                             connected = false;
                             break;
+                        
+                        case "PING":
+                            //System.out.println(socket.toString() + ": PINGING");
+                            out.println("PONG");
+                            break;
 
                         case "LOGIN":
                             if (loggedIn) {

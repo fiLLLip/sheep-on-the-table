@@ -28,7 +28,6 @@ public class ServerConnector {
     private String logger;
     private PrintWriter out;
     private BufferedReader in;
-    private boolean connected = false;
     private int userID;
     private int farmID;
     private String farmName;
@@ -57,7 +56,6 @@ public class ServerConnector {
             this.out = new PrintWriter(socket.getOutputStream(), true);
             this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.logger = "Connection established";
-            this.connected = true;
             return true;
         } catch (IOException e) {
             this.logger =  "Could not open connection to server.";
@@ -92,10 +90,15 @@ public class ServerConnector {
      */
     public List<Sheep> getSheepList () {
         List<Sheep> sheeps = new ArrayList();
-        if (connected) {
+        if (isConnected()) {
             try {
                 out.println("GETSHEEPLIST");
                 String inline = in.readLine();
+                if(inline == null) {
+                    this.logger = "Not connected";
+                    System.out.println(logger);
+                    return null;
+                }
                 Sheep currentSheep = null;
                 while (inline != null && !inline.equals("SUCCESS")) {
                     // This line contains a sheep
@@ -115,21 +118,20 @@ public class ServerConnector {
                 if (currentSheep != null) {
                     sheeps.add(currentSheep);
                 }
-                
             } catch (IOException e) {
-                //this.connected = false;
                 this.logger =  "Could not fetch sheeps from server.";
                 return null;
             }
         }
         else{
-            System.out.println("Not connected");
+            System.out.println("Is not connected");
             return null;
         }
         if (!sheeps.isEmpty()) {
             return sheeps;
         }
         else {
+            System.out.println("No sheeps");
             return null;//Returns null if no sheeps could be fetched from server
         }
     }
@@ -142,7 +144,7 @@ public class ServerConnector {
      */
     public List<SheepUpdate> getSheepUpdates (Integer sheepID, Integer numUpdates) {
         List<SheepUpdate> updates = new ArrayList<>();
-        if (connected) {
+        if (isConnected()) {
             try {
                 out.println("GETUPDATES" + sheepID + " " + numUpdates);
                 String inline = in.readLine();
@@ -164,7 +166,7 @@ public class ServerConnector {
      * @return true or false
      */
     public Boolean editSheep (Sheep sheep) {
-        if (connected) {
+        if (isConnected()) {
             try {
                 out.println(sheep.toString(false));
                 if (!in.readLine().trim().equals("SUCCESS")) {
@@ -185,7 +187,7 @@ public class ServerConnector {
      * @return true or false
      */
     public Boolean newSheep (Sheep sheep) {
-        if (connected) {
+        if (isConnected()) {
             try {
                 out.println("NEWSHEEP " + sheep.toString(false));
                 if (!in.readLine().trim().equals("SUCCESS")) {
@@ -204,8 +206,8 @@ public class ServerConnector {
      * Asks the server for current user's ID
      * @return int
      */
-    public int getUserId() {
-        if (connected) {
+    public int getUserId () {
+        if (isConnected()) {
             try {
                 out.println("GETUSERID");
                 return Integer.parseInt(in.readLine().trim());
@@ -220,7 +222,7 @@ public class ServerConnector {
      *
      * @return
      */
-    public String getUsername() {
+    public String getUsername () {
         return this.username;
     }
     
@@ -228,7 +230,7 @@ public class ServerConnector {
      *
      * @return
      */
-    public String getFarmName() {
+    public String getFarmName () {
         return this.farmName;
     }
 
@@ -240,9 +242,30 @@ public class ServerConnector {
         return this.logger;
     }
     
-    protected void finalize() throws Throwable
+    /**
+     *
+     * @return
+     */
+    public boolean isConnected () {
+        try {
+            out.println("PING");
+            String input = in.readLine();
+            if (input != null) {
+                return true;
+            } 
+            else {
+                this.socket.close();
+                return false;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ServerConnector.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    protected void finalize () throws Throwable
     {
       socket.close();
       super.finalize();
-    } 
+    }
 }
