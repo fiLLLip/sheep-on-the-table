@@ -10,3 +10,4 @@ nb-configuration.xml
 private.xml
 *.properties
 build-impl.xml
+client/nbproject/project.properties
