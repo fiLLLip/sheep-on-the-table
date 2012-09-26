@@ -40,6 +40,10 @@ public class MySqlHelper {
         this.port = port;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -55,6 +59,7 @@ public class MySqlHelper {
 
     /**
      *
+     * @param farm_id 
      * @return
      */
     public List<Sheep> getSheepList(int farm_id) {
@@ -90,6 +95,12 @@ public class MySqlHelper {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @param numUpdates
+     * @return
+     */
     public List<SheepUpdate> getSheepUpdates(int id, int numUpdates) {
 
         List<SheepUpdate> updates = new ArrayList<>();
@@ -148,6 +159,11 @@ public class MySqlHelper {
     }
 
     /* removes a sheep and all updates from the database */
+    /**
+     *
+     * @param sheep
+     * @return
+     */
     public boolean removeSheep(Sheep sheep) {
         try {
             stmt.executeQuery("DELETE FROM sheep_sheep WHERE id = '" + sheep.getID() + "'");
@@ -166,6 +182,12 @@ public class MySqlHelper {
     }
 
     /*  */
+    /**
+     *
+     * @param userName
+     * @param password
+     * @return
+     */
     public int findUser(String userName, String password) {
         try {
             String q = "SELECT id, un, pw FROM sheep_user WHERE un = '" + userName + "' AND pw = '" + password + "'";
@@ -183,6 +205,11 @@ public class MySqlHelper {
         }
     }
     
+    /**
+     *
+     * @param userID
+     * @return
+     */
     public int findFarm (int userID) {
         try {
             String q = "SELECT farm_id FROM sheep_user WHERE id = '" + userID + "' LIMIT 1";
@@ -200,6 +227,11 @@ public class MySqlHelper {
         }
     }
     
+    /**
+     *
+     * @param farmID
+     * @return
+     */
     public String findFarmName (int farmID) {
         try {
             String q = "SELECT name FROM sheep_farm WHERE id = '" + farmID + "' LIMIT 1";

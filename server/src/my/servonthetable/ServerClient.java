@@ -185,6 +185,7 @@ public class ServerClient extends Thread {
      * Creates a new Sheep Client User with the socket from the newly connected client.
      *
      * @param newSocket  The socket from the connected client.
+     * @param sqlHelper  
      */
     public ServerClient(Socket newSocket, MySqlHelper sqlHelper) {
         // Set properties

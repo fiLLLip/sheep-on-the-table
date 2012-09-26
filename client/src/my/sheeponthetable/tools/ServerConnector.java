@@ -131,6 +131,8 @@ public class ServerConnector {
     
     /**
      * Fetches the list of sheeps from the server.
+     * @param sheepID 
+     * @param numUpdates 
      * @return List<SheepUpdate> or null
      */
     public List<SheepUpdate> getSheepUpdates (Integer sheepID, Integer numUpdates) {
@@ -153,6 +155,7 @@ public class ServerConnector {
     
     /**
      * Sends an updates sheep object to server.
+     * @param sheep 
      * @return true or false
      */
     public Boolean editSheep (Sheep sheep) {
@@ -174,6 +177,7 @@ public class ServerConnector {
     
     /**
      * Stores a sheep object in the database.
+     * @param sheep 
      * @return true or false
      */
     public Boolean newSheep (Sheep sheep) {
@@ -209,10 +213,18 @@ public class ServerConnector {
         return -1;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getUsername() {
         return this.username;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getFarmName() {
         return this.farmName;
     }

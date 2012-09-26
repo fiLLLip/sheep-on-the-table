@@ -28,6 +28,10 @@ public class SheepPanel extends javax.swing.JFrame {
     private int userID;
     private ServerConnector connect;
     
+    /**
+     *
+     * @param sheep
+     */
     public void addSheepToList(Sheep sheep){
         sheepShow.addElement(sheep);
     }
@@ -36,6 +40,7 @@ public class SheepPanel extends javax.swing.JFrame {
     
     /**
      * Creates new form SheepPanelfail
+     * @param connect 
      */
     public SheepPanel(ServerConnector connect) {
         this.connect = connect;
@@ -99,6 +104,8 @@ public class SheepPanel extends javax.swing.JFrame {
         updatedTxt = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItemCloseProgram = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -165,6 +172,23 @@ public class SheepPanel extends javax.swing.JFrame {
         sheepUpdatedLabel.setText("Updated");
 
         jMenu1.setText("File");
+
+        jMenuItemCloseProgram.setText("Log out");
+        jMenuItemCloseProgram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCloseProgramActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemCloseProgram);
+
+        jMenuItem2.setText("Close program");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -287,8 +311,19 @@ public class SheepPanel extends javax.swing.JFrame {
         sheepJList.clearSelection();  // TODO add your handling code here:
     }//GEN-LAST:event_deSelectActionPerformed
 
+    private void jMenuItemCloseProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCloseProgramActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new PasswordScreen().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemCloseProgramActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
-     * @param args the command line arguments
      */
     public void update(){
         sheepList = connect.getSheepList();
@@ -317,6 +352,8 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelUser;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItemCloseProgram;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel kordinateLbl;
