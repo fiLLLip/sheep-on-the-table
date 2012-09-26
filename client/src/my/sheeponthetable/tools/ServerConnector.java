@@ -181,7 +181,7 @@ public class ServerConnector {
                 return true;
             } catch (IOException e) {
                 this.logger =  "Could not fetch sheepupdates from server.";
-                return null;
+                return false;
             }
         }
         return false;
