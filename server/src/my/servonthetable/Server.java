@@ -42,10 +42,10 @@ public class Server extends Thread {
         // Attempt to get the host address
         try {
             byte[] addr = new byte[4];
-            addr[0] = (byte) 127;
+            addr[0] = (byte) 0;
             addr[1] = (byte) 0;
             addr[2] = (byte) 0;
-            addr[3] = (byte) 1;
+            addr[3] = (byte) 0;
             hostAddress = InetAddress.getByAddress(addr);
             //hostAddress = InetAddress.getLocalHost();
         } catch (UnknownHostException e) {
@@ -69,7 +69,10 @@ public class Server extends Thread {
                                     config.getDBUsername(),
                                     config.getDBPassword(),
                                     config.getDBName());
-        sqlHelper.connect();
+        if (!sqlHelper.connect()) {
+            System.out.println("Could not connect to MySQL");
+            System.exit(1);
+        }
         start();
     }
 

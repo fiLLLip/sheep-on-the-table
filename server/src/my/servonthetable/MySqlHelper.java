@@ -40,14 +40,16 @@ public class MySqlHelper {
         this.port = port;
     }
 
-    void connect() {
+    public boolean connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = urlGenerator(this.dbHost, this.port, this.dbName);
             con = DriverManager.getConnection(url, dbUser, dbPass);
             stmt = con.createStatement();
+            return true;
         } catch (Exception ex) {
             Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
 
