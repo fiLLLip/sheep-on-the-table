@@ -72,7 +72,9 @@ public class ServerClient extends Thread {
                                     System.out.println("USERID: " + userID);
                                     if (userID >= 0) {
                                         loggedIn = true;
-                                        out.println("SUCCESS");                              
+                                        int farmID = sqlHelper.findFarm(userID);
+                                        String farmName = sqlHelper.findFarmName(farmID);
+                                        out.println("SUCCESS@" + userID + "@" + farmID + "@" + farmName);                              
                                     } else {
                                         out.println("ERROR username or password not correct");
                                     }

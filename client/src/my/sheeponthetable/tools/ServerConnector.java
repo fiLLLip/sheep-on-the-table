@@ -29,6 +29,9 @@ public class ServerConnector {
     private PrintWriter out;
     private BufferedReader in;
     private boolean connected = false;
+    private int userID;
+    private int farmID;
+    private String farmName;
 
     /**
      *
@@ -70,11 +73,14 @@ public class ServerConnector {
     public Boolean login () {
         try {
             out.println("LOGIN " + this.username + " " + this.password);
-            String ir = in.readLine().trim();
+            String[] ir = in.readLine().trim().split("@");
             System.out.println(ir);
-            if (!ir.equals("SUCCESS")) {
+            if (!ir[0].trim().equals("SUCCESS")) {
                 return false;
             }
+            this.userID = Integer.parseInt(ir[1].trim());
+            this.farmID = Integer.parseInt(ir[2].trim());
+            this.farmName = ir[3].trim();
             return true;
         } catch (IOException e) {
             this.logger = "Could not open connection to server.";
@@ -201,6 +207,14 @@ public class ServerConnector {
             }
         }
         return -1;
+    }
+    
+    public String getUsername() {
+        return this.username;
+    }
+    
+    public String getFarmName() {
+        return this.farmName;
     }
 
     /**

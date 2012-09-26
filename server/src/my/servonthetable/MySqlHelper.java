@@ -182,6 +182,40 @@ public class MySqlHelper {
             return -1;
         }
     }
+    
+    public int findFarm (int userID) {
+        try {
+            String q = "SELECT farm_id FROM sheep_user WHERE id = '" + userID + "' LIMIT 1";
+            System.out.println(q);
+            ResultSet results = stmt.executeQuery(q);
+
+            if (results.next()) {
+                return results.getInt("farm_id");
+            } else {
+                return -1;
+            }
+        } catch (SQLException s) {
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, s);
+            return -1;
+        }
+    }
+    
+    public String findFarmName (int farmID) {
+        try {
+            String q = "SELECT name FROM sheep_farm WHERE id = '" + farmID + "' LIMIT 1";
+            System.out.println(q);
+            ResultSet results = stmt.executeQuery(q);
+
+            if (results.next()) {
+                return results.getString("name");
+            } else {
+                return null;
+            }
+        } catch (SQLException s) {
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, s);
+            return null;
+        }
+    }
 
     private String urlGenerator(String host, int port, String database) {
         String url;

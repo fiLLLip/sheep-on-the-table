@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="jMenu1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="File"/>
+          </Properties>
+        </Menu>
+      </SubComponents>
+    </Menu>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
   <SyntheticProperties>
+    <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
   <AuxValues>
@@ -24,91 +36,123 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jInternalFrame1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="refreshbtn" min="-2" pref="127" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="deSelect" min="-2" pref="125" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="addSheep" min="-2" pref="125" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="removeSheep" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabel2" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jLabel3" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jLabel1" max="32767" attributes="0"/>
+                      </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                              <Component id="idLbl2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="kordinateLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="idLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="idTxt" min="-2" pref="151" max="-2" attributes="0"/>
-                                          <Component id="posTxt" min="-2" pref="151" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                          <Component id="removeSheep" min="-2" pref="151" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="refreshbtn" alignment="1" min="-2" pref="151" max="-2" attributes="0"/>
-                                      <Component id="addSheep" alignment="1" min="-2" pref="151" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabelFarm" pref="194" max="32767" attributes="0"/>
+                                  <Component id="jLabelLastUpdate" min="-2" pref="178" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="22" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabelUser" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="86" max="32767" attributes="0"/>
-                      <Component id="deSelect" min="-2" pref="151" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
-                      <Component id="idLbl2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="184" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="idLbl" alignment="1" min="-2" pref="61" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="kordinateLbl" max="32767" attributes="0"/>
+                                  <Component id="sheepUpdatedLabel" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="posTxt" max="32767" attributes="0"/>
+                          <Component id="idTxt" max="32767" attributes="0"/>
+                          <Component id="updatedTxt" alignment="1" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jInternalFrame1" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="idLbl2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-              <Component id="addSheep" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="removeSheep" min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="idLbl" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                  </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="refreshbtn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="10" max="32767" attributes="0"/>
-                      <Component id="idTxt" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="posTxt" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="kordinateLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelUser" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelFarm" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelLastUpdate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="idLbl2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="addSheep" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="removeSheep" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="idLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="idTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="kordinateLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="posTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="updatedTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="sheepUpdatedLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="269" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="refreshbtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="deSelect" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
+                  <Component id="jInternalFrame1" max="32767" attributes="0"/>
               </Group>
-              <Component id="jScrollPane1" min="-2" pref="269" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="deSelect" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -122,19 +166,19 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="323" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="597" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="501" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="604" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
     </Container>
     <Component class="javax.swing.JButton" name="addSheep">
       <Properties>
-        <Property name="text" type="java.lang.String" value="AddSheep"/>
+        <Property name="text" type="java.lang.String" value="Add sheep"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addSheepActionPerformed"/>
@@ -142,7 +186,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="removeSheep">
       <Properties>
-        <Property name="text" type="java.lang.String" value="RemoveSheep"/>
+        <Property name="text" type="java.lang.String" value="Remove sheep"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeSheepActionPerformed"/>
@@ -150,7 +194,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="refreshbtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Refresh"/>
+        <Property name="text" type="java.lang.String" value="Refresh list"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refreshbtnActionPerformed"/>
@@ -195,6 +239,45 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="idLbl2">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="User:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Farm:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Last update:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator1">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelUser">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="user"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelFarm">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="farm"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelLastUpdate">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="time"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="sheepUpdatedLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Updated"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="updatedTxt">
     </Component>
   </SubComponents>
 </Form>
