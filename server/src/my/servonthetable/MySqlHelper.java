@@ -103,7 +103,7 @@ public class MySqlHelper {
                         results.getDouble("pos_x"),
                         results.getDouble("pos_y"),
                         results.getInt("pulse"),
-                        results.getDouble("temperature"),
+                        results.getDouble("temp"),
                         false,
                         results.getInt("timestamp")));
             }
