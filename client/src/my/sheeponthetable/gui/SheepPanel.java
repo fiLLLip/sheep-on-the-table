@@ -45,16 +45,17 @@ public class SheepPanel extends javax.swing.JFrame {
     public SheepPanel(ServerConnector connect) {
         this.connect = connect;
         initComponents();
+        this.setLocationRelativeTo(null);
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 // TODO add stuff to do when selected here
-                if (! listSelectionEvent.getValueIsAdjusting()) {
+                JList list = (JList) listSelectionEvent.getSource();
+                if (! listSelectionEvent.getValueIsAdjusting() && list.getSelectedIndex() != -1) {
                     // Settings textfields to "Not available" before update
                     // because there may be no updates for selected Sheep
                     idTxt.setText("Not available");
                     posTxt.setText("Not available");
-                    JList list = (JList) listSelectionEvent.getSource();
-                    System.out.println("Selected index: " + list.getSelectedIndex());
+                    updatedTxt.setText("Not available");
                     int id = sheepList.get(list.getSelectedIndex()).getID();
                     idTxt.setText(Integer.toString(id));
                     if (!sheepList.get(list.getSelectedIndex()).getUpdates().isEmpty()) {
@@ -62,6 +63,8 @@ public class SheepPanel extends javax.swing.JFrame {
                         double xpos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getX();
                         double ypos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getY();
                         posTxt.setText(xpos + ", " + ypos);
+                        Date formattedTimestamp = new Date((long)sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTimeStamp() * 1000);
+                        updatedTxt.setText(formattedTimestamp.toLocaleString());
                     }
                 }
             }
@@ -119,7 +122,7 @@ public class SheepPanel extends javax.swing.JFrame {
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 604, Short.MAX_VALUE)
+            .addGap(0, 607, Short.MAX_VALUE)
         );
 
         addSheep.setText("Add sheep");
@@ -230,18 +233,15 @@ public class SheepPanel extends javax.swing.JFrame {
                                 .addComponent(jLabelUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(idLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(kordinateLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(sheepUpdatedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(sheepUpdatedLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                            .addComponent(kordinateLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(idLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(posTxt)
+                            .addComponent(updatedTxt)
                             .addComponent(idTxt)
-                            .addComponent(updatedTxt, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(posTxt, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -309,6 +309,9 @@ public class SheepPanel extends javax.swing.JFrame {
 
     private void deSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deSelectActionPerformed
         sheepJList.clearSelection();  // TODO add your handling code here:
+        idTxt.setText("");
+        posTxt.setText("");
+        updatedTxt.setText("");
     }//GEN-LAST:event_deSelectActionPerformed
 
     private void jMenuItemCloseProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCloseProgramActionPerformed
@@ -328,7 +331,6 @@ public class SheepPanel extends javax.swing.JFrame {
     public void update(){
         sheepList = connect.getSheepList();
         jLabelLastUpdate.setText(new Date().toLocaleString());
-        System.out.println("Got sheeplist");
         if (sheepList != null) {
             for (int i = 0; i < sheepList.size(); i++) {
                 Sheep sheep;

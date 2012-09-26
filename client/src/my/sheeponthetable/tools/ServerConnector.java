@@ -54,10 +54,9 @@ public class ServerConnector {
     public Boolean connect () {
         try {
             this.socket = new Socket(this.host, this.port);
-            this.logger = "Connection established";
-            System.out.println("Connection established");
             this.out = new PrintWriter(socket.getOutputStream(), true);
             this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.logger = "Connection established";
             this.connected = true;
             return true;
         } catch (IOException e) {
@@ -74,7 +73,6 @@ public class ServerConnector {
         try {
             out.println("LOGIN " + this.username + " " + this.password);
             String[] ir = in.readLine().trim().split("@");
-            System.out.println(ir);
             if (!ir[0].trim().equals("SUCCESS")) {
                 return false;
             }
@@ -97,22 +95,18 @@ public class ServerConnector {
         if (connected) {
             try {
                 out.println("GETSHEEPLIST");
-                System.out.println("GetSheepList");
                 String inline = in.readLine();
                 Sheep currentSheep = null;
                 while (inline != null && !inline.equals("SUCCESS")) {
-                    System.out.println(inline);
                     // This line contains a sheep
                     if (inline.indexOf("S") == 0) {
                         if (currentSheep != null) {
                             sheeps.add(currentSheep);
                         }
-                        System.out.println("Made a sheep!");
                         currentSheep = new Sheep(inline);
                     }
                     // This line contains a sheep update
                     else if (inline.indexOf("U") == 0) {
-                        System.out.println("Made a sheep update!");
                         SheepUpdate su = new SheepUpdate(inline);
                         currentSheep.addUpdate(su);
                     }
@@ -120,7 +114,6 @@ public class ServerConnector {
                 }
                 sheeps.add(currentSheep);
             } catch (IOException e) {
-                System.out.println("IOEX!");
                 this.logger =  "Could not fetch sheeps from server.";
                 return null;
             }
@@ -161,7 +154,6 @@ public class ServerConnector {
     public Boolean editSheep (Sheep sheep) {
         if (connected) {
             try {
-                out.println("EDITSHEEP");
                 out.println(sheep.toString(false));
                 if (!in.readLine().trim().equals("SUCCESS")) {
                     return false;
@@ -184,7 +176,6 @@ public class ServerConnector {
         if (connected) {
             try {
                 out.println("NEWSHEEP " + sheep.toString(false));
-                System.out.println(sheep.toString(false));
                 if (!in.readLine().trim().equals("SUCCESS")) {
                     return false;
                 }

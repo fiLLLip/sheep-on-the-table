@@ -94,21 +94,16 @@
                   </Group>
                   <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="idLbl" alignment="1" min="-2" pref="61" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="kordinateLbl" max="32767" attributes="0"/>
-                                  <Component id="sheepUpdatedLabel" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="sheepUpdatedLabel" alignment="0" pref="63" max="32767" attributes="0"/>
+                          <Component id="kordinateLbl" alignment="0" max="32767" attributes="0"/>
+                          <Component id="idLbl" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="posTxt" max="32767" attributes="0"/>
+                          <Component id="updatedTxt" max="32767" attributes="0"/>
                           <Component id="idTxt" max="32767" attributes="0"/>
-                          <Component id="updatedTxt" alignment="1" max="32767" attributes="0"/>
+                          <Component id="posTxt" alignment="1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -189,7 +184,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="604" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="607" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
