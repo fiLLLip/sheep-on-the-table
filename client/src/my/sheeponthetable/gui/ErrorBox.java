@@ -15,6 +15,7 @@ public class ErrorBox extends javax.swing.JPanel {
      */
     public ErrorBox() {
         initComponents();
+        
     }
 
     /**

@@ -338,6 +338,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 sheepShow.addElement(sheep.getID() + " - " + sheep.getName());
             }
         }
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheep;

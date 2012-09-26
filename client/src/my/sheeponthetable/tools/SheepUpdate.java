@@ -32,7 +32,6 @@ public class SheepUpdate implements Serializable {
     }
 
     public SheepUpdate(String string) {
-        System.out.println(string);
         String[] parseString = string.split("@");
         try {
             id = Integer.parseInt(parseString[1]);

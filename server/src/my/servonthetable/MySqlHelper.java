@@ -190,7 +190,7 @@ public class MySqlHelper {
      */
     public int findUser(String userName, String password) {
         try {
-            String q = "SELECT id, un, pw FROM sheep_user WHERE un = '" + userName + "' AND pw = '" + password + "'";
+            String q = "SELECT id, un, pw FROM sheep_user WHERE un = '" + userName + "' AND pw = '" + password + "' LIMIT 1";
             System.out.println(q);
             ResultSet results = stmt.executeQuery(q);
 

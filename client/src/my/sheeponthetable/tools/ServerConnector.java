@@ -91,7 +91,7 @@ public class ServerConnector {
      * @return List<Sheep> or null
      */
     public List<Sheep> getSheepList () {
-        List<Sheep> sheeps = new ArrayList<>();
+        List<Sheep> sheeps = new ArrayList();
         if (connected) {
             try {
                 out.println("GETSHEEPLIST");
@@ -112,14 +112,26 @@ public class ServerConnector {
                     }
                     inline = in.readLine();
                 }
-                sheeps.add(currentSheep);
+                if (currentSheep != null) {
+                    sheeps.add(currentSheep);
+                }
+                
             } catch (IOException e) {
+                //this.connected = false;
                 this.logger =  "Could not fetch sheeps from server.";
                 return null;
             }
         }
-        
-        return sheeps; //Returns null if no sheeps could be fetched from server
+        else{
+            System.out.println("Not connected");
+            return null;
+        }
+        if (!sheeps.isEmpty()) {
+            return sheeps;
+        }
+        else {
+            return null;//Returns null if no sheeps could be fetched from server
+        }
     }
     
     /**
