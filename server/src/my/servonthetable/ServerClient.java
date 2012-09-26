@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.servonthetable;
 
-/**
- *
- * @author Gruppe 7
- */
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
@@ -15,7 +7,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This object handles the execution for a single user.
+ * Each ServerClient object handles communication with a single client.
+ * Upon creation it establishes a socket to read and write input to the client.
+ * To handle each client in parallel, each ServerClient is implemented as a
+ * separate thread.
+ *
+ * @author Gruppe 7
  */
 public class ServerClient extends Thread {
 
@@ -28,143 +25,50 @@ public class ServerClient extends Thread {
     private int userID = -1;
     private boolean loggedIn = false;
 
+    /*
+     * Handles the main loop of the ServerClient. Runs a continous loop
+     * listening to input from the connected client until a break order is
+     * called.
+     *
+     */
     public void run() {
-        // Open the InputStream
         try {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
-        } catch (IOException e) {
-            if (out != null) {
-            }
-            System.out.println("Could not get input stream from " + socket.toString());
-            try {
-                socket.close();
-            } catch (IOException ee) {
-                System.out.println("Could not close connection to" + socket.toString() + ". This might be a problem!");
-            }
-            return;
-        }
-        // Enter process loop
-        try {
-            while (connected && in != null) {
-                // Announce
+            while (connected) {
+                // Announce for debug
                 System.out.println(socket + " has connected input.");
                 try {
                     String[] input = in.readLine().trim().split(" ");
+                    // Print for debug??
                     for (int i = 0; i < input.length; i++) {
                         System.out.println(input[i]);
                     }
                     switch (input[0]) {
                         case "LOGOUT":
-                            System.out.println(socket.toString() + ": LOGGED OUT");
-                            socket.close();
-                            connected = false;
+                            logout();
                             break;
                         
                         case "PING":
-                            //System.out.println(socket.toString() + ": PINGING");
                             out.println("PONG");
                             break;
 
                         case "LOGIN":
-                            if (loggedIn) {
-                                out.println("ERROR Already logged in");
-                            } else {
-                                try {
-                                    String userName = input[1];
-                                    String password = input[2];
-                                    userID = sqlHelper.findUser(userName, password);
-                                    System.out.println("USERID: " + userID);
-                                    if (userID >= 0) {
-                                        loggedIn = true;
-                                        int farmID = sqlHelper.findFarm(userID);
-                                        String farmName = sqlHelper.findFarmName(farmID);
-                                        out.println("SUCCESS@" + userID + "@" + farmID + "@" + farmName);                              
-                                    } else {
-                                        out.println("ERROR username or password not correct");
-                                    }
-
-                                } catch (ArrayIndexOutOfBoundsException e) {
-                                    out.println("ERROR LOGIN requires a username and a password");
-                                }
-                            }
+                            login(input);
                             break;
 
                         case "GETSHEEPLIST":
-                            if (loggedIn) {
-                                // DISKUSJON: KVA GJER VI VED FLEIRE GARDAR
-                                int farm_id = userID;
-                                List<Sheep> sheepList = sqlHelper.getSheepList(farm_id);
-                                for (Sheep s : sheepList) {
-                                    out.println(s.toString(true));
-                                }
-                                out.println("SUCCESS");
-                            } else {
-                                out.println("ERROR Not logged in");
-                            }
+                            getSheepList();
                             break;
 
                         case "EDITSHEEP":
-                            if (loggedIn) {
-                                out.println("WAITING");
-                                try {
-                                    Sheep editSheep = new Sheep(in.readLine());
-                                    Boolean success = sqlHelper.updateSheep(editSheep);
-                                    if (success) {
-                                        out.println("SUCCESS");
-                                    } else {
-                                        out.println("ERROR Could not edit");
-                                    }
-                                } catch (IOException ex) {
-                                    out.println("ERROR Could not get sheep");
-                                }
-
-                            } else {
-                                out.println("ERROR Not logged in");
-                            }
+                            editSheep();
                             break;
 
                         case "GETUPDATES":
-                            if (loggedIn) {
-                                try {
-                                    int sheepID = Integer.parseInt(input[1]);
-                                    int numUpdates = Integer.parseInt(input[2]);
-                                    List<SheepUpdate> sheepUpdateList = sqlHelper.getSheepUpdates(sheepID, numUpdates);
-
-                                    for (SheepUpdate su : sheepUpdateList) {
-                                        out.println(su.toString());
-                                    }
-                                } catch (NumberFormatException e) {
-                                    out.print("ERROR Input parameters must be numbers");
-                                } catch (ArrayIndexOutOfBoundsException e) {
-                                    out.print("ERROR GETUPDATES must specify two parameters");
-                                }
-                            } else {
-                                out.println("ERROR Not logged in");
-                            }
+                            getUpdates(input);
                             break;
 
                         case "NEWSHEEP":
-                            if (loggedIn) {
-                                // Make the rest of the input into a single string
-                                String sheepParseString = "";
-                                for (int i = 1; i < input.length; i++) {
-                                    sheepParseString += input[i] + " ";
-                                }
-                                sheepParseString.trim();
-                                // The make a sheep for string and store in DB
-                                System.out.println(sheepParseString);
-                                Sheep newSheep = new Sheep(sheepParseString);
-                                boolean success = sqlHelper.storeNewSheep(newSheep);
-                                if (success) {
-                                    out.println("SUCCESS");
-                                } else {
-                                    out.println("ERROR Could not store sheep");
-                                }
-
-                            } else {
-                                out.println("ERROR Not logged in");
-                            }
+                            newSheep(input);
                             break;
 
                         case "GETUSERID":
@@ -197,8 +101,26 @@ public class ServerClient extends Thread {
         this.sqlHelper = sqlHelper;
         socket = newSocket;
         connected = true;
+        establishConnection();
         // Get input
         start();
+    }
+
+    /**
+     * Creates input and output readers to communicate with the client.
+     * Called on creation.
+     *
+     * @return boolean - connection is successful or not
+     */
+    private boolean establishConnection() {
+        try {
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+            return true;
+        } catch (IOException e) {
+            System.out.println("Could not get streams from " + socket.toString());
+            return false;
+        }
     }
 
     /**
@@ -230,5 +152,134 @@ public class ServerClient extends Thread {
      */
     public String toString() {
         return socket.toString();
+    }
+
+    /**
+     *  Called by run() to handle the LOGOUT order from a client.
+     */
+    private void logout() throws IOException {
+        // Debug print
+        System.out.println(socket.toString() + ": LOGGED OUT");
+        socket.close();
+        connected = false;
+    }
+
+    /**
+     *  Called by run() to handle the LOGIN order from a client.
+     */
+    private void login(String[] input) {
+        if (loggedIn) {
+            out.println("ERROR Already logged in");
+        } else {
+            try {
+                String userName = input[1];
+                String password = input[2];
+                userID = sqlHelper.findUser(userName, password);
+                System.out.println("USERID: " + userID);
+                if (userID >= 0) {
+                    loggedIn = true;
+                    int farmID = sqlHelper.findFarm(userID);
+                    String farmName = sqlHelper.findFarmName(farmID);
+                    out.println("SUCCESS@" + userID + "@" + farmID + "@" + farmName);
+                } else {
+                    out.println("ERROR username or password not correct");
+                }
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+                out.println("ERROR LOGIN requires a username and a password");
+            }
+        }
+
+    }
+
+    /**
+     *  Called by run() to handle the GETSHEEPLIST order from a client.
+     */
+    private void getSheepList() {
+        if (loggedIn) {
+            int farm_id = userID;
+            List<Sheep> sheepList = sqlHelper.getSheepList(farm_id);
+            for (Sheep s : sheepList) {
+                out.println(s.toString(true));
+            }
+            out.println("SUCCESS");
+        } else {
+            out.println("ERROR Not logged in");
+        }
+    }
+
+    /**
+     *  Called by run() to handle the GETSHEEPLIST order from a client.
+     */
+    private void editSheep() {
+        if (loggedIn) {
+            out.println("WAITING");
+            try {
+                Sheep editSheep = new Sheep(in.readLine());
+                Boolean success = sqlHelper.updateSheep(editSheep);
+                if (success) {
+                    out.println("SUCCESS");
+                } else {
+                    out.println("ERROR Could not edit");
+                }
+            } catch (IOException ex) {
+                out.println("ERROR Could not get sheep");
+            }
+
+        } else {
+            out.println("ERROR Not logged in");
+        }
+
+    }
+
+    /**
+     *  Called by run() to handle the GETUPDATES order from a client.
+     */
+    private void getUpdates(String[] input) {
+        if (loggedIn) {
+            try {
+                int sheepID = Integer.parseInt(input[1]);
+                int numUpdates = Integer.parseInt(input[2]);
+                List<SheepUpdate> sheepUpdateList = sqlHelper.getSheepUpdates(sheepID, numUpdates);
+
+                for (SheepUpdate su : sheepUpdateList) {
+                    out.println(su.toString());
+                }
+            } catch (NumberFormatException e) {
+                out.print("ERROR Input parameters must be numbers");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                out.print("ERROR GETUPDATES must specify two parameters");
+            }
+        } else {
+            out.println("ERROR Not logged in");
+        }
+
+    }
+
+    /**
+     *  Called by run() to handle the NEWSHEEP order from a client.
+     */
+    private void newSheep(String[] input) {
+        if (loggedIn) {
+            // Make the rest of the input into a single string
+            String sheepParseString = "";
+            for (int i = 1; i < input.length; i++) {
+                sheepParseString += input[i] + " ";
+            }
+            sheepParseString.trim();
+            // The make a sheep for string and store in DB
+            System.out.println(sheepParseString);
+            Sheep newSheep = new Sheep(sheepParseString);
+            boolean success = sqlHelper.storeNewSheep(newSheep);
+            if (success) {
+                out.println("SUCCESS");
+            } else {
+                out.println("ERROR Could not store sheep");
+            }
+
+        } else {
+            out.println("ERROR Not logged in");
+        }
+
     }
 }

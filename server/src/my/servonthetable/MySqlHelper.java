@@ -109,7 +109,7 @@ public class MySqlHelper {
             String query = "SELECT id, sheep_id, UNIX_TIMESTAMP(timestamp) as timestamp, pos_x, pos_y, pulse, temp, alarm FROM sheep_updates WHERE sheep_id = '" + id + "' ORDER BY id DESC";
             System.out.println(query);
             results = stmt.executeQuery(query);
-            while (results.next()) {
+            while (results.next() && updates.size() != numUpdates) {
                 updates.add(new SheepUpdate(results.getInt("id"),
                         results.getDouble("pos_x"),
                         results.getDouble("pos_y"),

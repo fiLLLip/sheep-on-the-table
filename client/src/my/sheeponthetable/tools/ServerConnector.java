@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.sheeponthetable.tools;
 
 import java.io.*;
@@ -12,13 +8,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * This object works as a backend, managing the communication with the server
+ * on behalf of the client application.
+ *
+ * Upon creation, it tries to open a socket to the server. Using the socket, it
+ * reads and writes information to and from the server when the appropriate
+ * methods are called.
  *
  * @author Gruppe 7
  */
 public class ServerConnector {
     
     /**
-     * Declaring private variables for functions.
+     * Declaring private fields.
      */
     private String host;
     private int port;
@@ -34,10 +36,10 @@ public class ServerConnector {
 
     /**
      *
-     * @param host
-     * @param port
-     * @param username
-     * @param password
+     * @param String host - the IP address of the server application
+     * @param int port - the port that the server uses for sockets
+     * @param String username
+     * @param String password
      */
     public ServerConnector (String host, int port, String username, String password) {
         this.host = host;
@@ -48,13 +50,15 @@ public class ServerConnector {
     
     /**
      * Connects to the server.
-     * @return true or false
+     *
+     * @return true if successfully connected, or false otherwise
      */
     public Boolean connect () {
         try {
-            this.socket = new Socket(this.host, this.port);
-            this.out = new PrintWriter(socket.getOutputStream(), true);
-            this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            socket = new Socket(host, port);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            InputStreamReader isr = new InputStreamReader(socket.getInputStream());
+            in = new BufferedReader(isr);
             this.logger = "Connection established";
             return true;
         } catch (IOException e) {
@@ -65,18 +69,21 @@ public class ServerConnector {
     
     /**
      * Logs on to the server (checks username and password).
-     * @return true or false
+     * Simultaniously retrieves information about the farm and user from the
+     * server.
+     *
+     * @return true if login is successful, or false otherwise
      */
     public Boolean login () {
         try {
-            out.println("LOGIN " + this.username + " " + this.password);
-            String[] ir = in.readLine().trim().split("@");
+            out.println("LOGIN " + username + " " + password);
+            String[] ir = in.readLine().split("@");
             if (!ir[0].trim().equals("SUCCESS")) {
                 return false;
             }
-            this.userID = Integer.parseInt(ir[1].trim());
-            this.farmID = Integer.parseInt(ir[2].trim());
-            this.farmName = ir[3].trim();
+            userID = Integer.parseInt(ir[1]);
+            farmID = Integer.parseInt(ir[2]);
+            farmName = ir[3];
             return true;
         } catch (IOException e) {
             this.logger = "Could not open connection to server.";
@@ -85,8 +92,12 @@ public class ServerConnector {
     } 
     
     /**
-     * Fetches the list of sheeps from the server.
-     * @return List<Sheep> or null
+     * Fetches the list of sheep from the server. 
+     * 
+     * Requires the connector to the logged in and connected.
+     *
+     * @return List<Sheep> or null, if not logged in, not connected or the user
+     * doesn't have any sheep in the database.
      */
     public List<Sheep> getSheepList () {
         List<Sheep> sheeps = new ArrayList();
@@ -99,6 +110,8 @@ public class ServerConnector {
                     System.out.println(logger);
                     return null;
                 }
+                // Do a loop over the list of input strings.
+                // Each line can either contain a sheep or sheep update.
                 Sheep currentSheep = null;
                 while (inline != null && !inline.equals("SUCCESS")) {
                     // This line contains a sheep
@@ -115,6 +128,7 @@ public class ServerConnector {
                     }
                     inline = in.readLine();
                 }
+                // Store the final sheep
                 if (currentSheep != null) {
                     sheeps.add(currentSheep);
                 }
@@ -127,22 +141,29 @@ public class ServerConnector {
             System.out.println("Is not connected");
             return null;
         }
+        // Only return a list if there are sheep in it
         if (!sheeps.isEmpty()) {
             return sheeps;
         }
         else {
             System.out.println("No sheeps");
-            return null;//Returns null if no sheeps could be fetched from server
+            return null;
         }
     }
     
     /**
-     * Fetches the list of sheeps from the server.
-     * @param sheepID 
-     * @param numUpdates 
-     * @return List<SheepUpdate> or null
+     * Fetches the list of updates that a given sheep has stored in the database
+     * from the server. 
+     * 
+     * Requires the connector to be logged in and connected.
+     * .
+     * @param sheepID - the ID of the given sheep
+     * @param numUpdates - the max number of updates desired. Give a negative
+     * number to get all availible updates.
+     * @return List<SheepUpdate> or null if no updates could be fetched from
+     * the server.
      */
-    public List<SheepUpdate> getSheepUpdates (Integer sheepID, Integer numUpdates) {
+    public List<SheepUpdate> getSheepUpdates (int sheepID, int numUpdates) {
         List<SheepUpdate> updates = new ArrayList<>();
         if (isConnected()) {
             try {
@@ -157,13 +178,15 @@ public class ServerConnector {
                 return null;
             }
         }
-        return updates; //Returns null if no updates could be fetched from server
+        return updates;
     }
     
     /**
-     * Sends an updates sheep object to server.
+     * Asks the server to update the information contained in the database
+     * about a given sheep.
+     *
      * @param sheep 
-     * @return true or false
+     * @return true if successful or false if an error happened.
      */
     public Boolean editSheep (Sheep sheep) {
         if (isConnected()) {
@@ -174,7 +197,7 @@ public class ServerConnector {
                 }
                 return true;
             } catch (IOException e) {
-                this.logger =  "Could not fetch sheepupdates from server.";
+                this.logger =  "Could not edit sheep" + sheep.toString(false);
                 return null;
             }
         }
@@ -182,9 +205,10 @@ public class ServerConnector {
     }
     
     /**
-     * Stores a sheep object in the database.
+     * Asks the server to store a new sheep in the database.
+     *
      * @param sheep 
-     * @return true or false
+     * @return true if successful or false if an error happened.
      */
     public Boolean newSheep (Sheep sheep) {
         if (isConnected()) {
@@ -195,7 +219,8 @@ public class ServerConnector {
                 }
                 return true;
             } catch (IOException e) {
-                this.logger =  "Could not fetch sheepupdates from server.";
+                this.logger =  "Could not store new sheep."
+                        + sheep.toString(false);
                 return false;
             }
         }
@@ -203,8 +228,10 @@ public class ServerConnector {
     }
 
     /**
-     * Asks the server for current user's ID
-     * @return int
+     * Asks the server for current user's ID.
+     *
+     * @return int - user ID if logged in and no errors occur, or -1 if not
+     * logged in or in case an error occured.
      */
     public int getUserId () {
         if (isConnected()) {
@@ -219,16 +246,18 @@ public class ServerConnector {
     }
     
     /**
+     * Gets the username stored in the server connector.
      *
-     * @return
+     * @return String username
      */
     public String getUsername () {
-        return this.username;
+        return username;
     }
     
     /**
+     * Gets the farmname stored in the server connector.
      *
-     * @return
+     * @return String farm name
      */
     public String getFarmName () {
         return this.farmName;
@@ -236,6 +265,7 @@ public class ServerConnector {
 
     /**
      * Gets the reason why something has failed.
+     *
      * @return string
      */
     public String getLogger () {
@@ -243,8 +273,9 @@ public class ServerConnector {
     }
     
     /**
+     * Asks whether the connector is connected to the server or not.
      *
-     * @return
+     * @return boolean
      */
     public boolean isConnected () {
         try {
@@ -262,10 +293,14 @@ public class ServerConnector {
             return false;
         }
     }
-    
+
+
+    /**
+     * Closes the socket, hence terminating the connection to the server.
+     *
+     */
     protected void finalize () throws Throwable
     {
       socket.close();
-      super.finalize();
     }
 }
