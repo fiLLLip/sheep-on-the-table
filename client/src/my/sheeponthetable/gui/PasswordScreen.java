@@ -31,12 +31,13 @@ public class PasswordScreen extends javax.swing.JFrame {
         initComponents();
         
         this.setLocationRelativeTo(null);
+        jDialog1.setLocationRelativeTo(null);
         
         this.config = new Config();
         if(!this.config.getUsername().equals("")) {
             this.jUserIDField.setText(this.config.getUsername());
             this.jPasswordField1.setText(this.config.getPassword());
-            this.jCheckBox1.setSelected(true);
+            this.rememberMeCheckbox.setSelected(true);
         }
     }
 
@@ -53,17 +54,19 @@ public class PasswordScreen extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        loginBtn = new javax.swing.JToggleButton();
-        cancelbtn = new javax.swing.JToggleButton();
         jUserIDField = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        titleLabel = new javax.swing.JLabel();
+        usernameLabel = new javax.swing.JLabel();
+        passwordLabel = new javax.swing.JLabel();
+        rememberMeCheckbox = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
+        logOnButton = new javax.swing.JButton();
+        quitButton = new javax.swing.JButton();
+        welcomeLabel = new javax.swing.JLabel();
 
         jDialog1.setAlwaysOnTop(true);
+        jDialog1.setMinimumSize(new java.awt.Dimension(272, 83));
         jDialog1.setResizable(false);
 
         jLabel2.setText("Invalid username or password.");
@@ -105,20 +108,6 @@ public class PasswordScreen extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        loginBtn.setText("OK");
-        loginBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginBtnActionPerformed(evt);
-            }
-        });
-
-        cancelbtn.setText("Cancel");
-        cancelbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelbtnActionPerformed(evt);
-            }
-        });
-
         jUserIDField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 onEnterLogon(evt);
@@ -136,80 +125,96 @@ public class PasswordScreen extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setText("Sheep Finder Alpha");
+        titleLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        titleLabel.setText("Sheep Finder Alpha");
 
-        jLabel5.setText("Username");
+        usernameLabel.setText("Username");
 
-        jLabel6.setText("Password");
+        passwordLabel.setText("Password");
 
-        jCheckBox1.setText("Remember me");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        rememberMeCheckbox.setText("Remember me");
+        rememberMeCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                rememberMeCheckboxActionPerformed(evt);
             }
         });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/confused sheep.jpg"))); // NOI18N
+
+        logOnButton.setText("Log on");
+        logOnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logOnButtonActionPerformed(evt);
+            }
+        });
+
+        quitButton.setText("Quit");
+        quitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitButtonActionPerformed(evt);
+            }
+        });
+
+        welcomeLabel.setText("Welcome to Sheep Finder Alpha, please log in to manage your sheeps.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cancelbtn))
-                            .addComponent(jUserIDField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
                             .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox1))))
-                .addGap(0, 14, Short.MAX_VALUE))
+                            .addComponent(jUserIDField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(usernameLabel)
+                            .addComponent(passwordLabel)
+                            .addComponent(rememberMeCheckbox)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(logOnButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(quitButton))))
+                    .addComponent(welcomeLabel)
+                    .addComponent(titleLabel))
+                .addGap(31, 31, 31))
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancelbtn, loginBtn});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
+                .addComponent(titleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(welcomeLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(usernameLabel)
+                        .addGap(1, 1, 1)
                         .addComponent(jUserIDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
+                        .addComponent(passwordLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rememberMeCheckbox)
+                        .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(loginBtn)
-                            .addComponent(cancelbtn)))
+                            .addComponent(logOnButton)
+                            .addComponent(quitButton)))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,15 +227,6 @@ public class PasswordScreen extends javax.swing.JFrame {
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordField1ActionPerformed
-
-    private void cancelbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelbtnActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_cancelbtnActionPerformed
-
-    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        // TODO add your handling code here:
-        loginAction();        
-    }//GEN-LAST:event_loginBtnActionPerformed
 
     private void loginAction () {
         this.username = this.jUserIDField.getText();
@@ -253,16 +249,14 @@ public class PasswordScreen extends javax.swing.JFrame {
         this.connect = new ServerConnector(this.serverURL, this.serverPort, this.username, this.password);
 
         if (!this.connect.connect()) {
-            // TODO add failure code here
-            System.out.println("Connect failed");
+            // Connection to server failed
             this.jLabel2.setText("Connection to the server failed!");
             this.jDialog1.setVisible(true);
             return;
         }
 
         if (!this.connect.login()) {
-            System.out.println("Failed login");
-            // TODO add failure when not able to login here
+            // Login failed
             this.config.setUsername("");
             this.config.setPassword("");
             this.jLabel2.setText("Invalid username or password!");
@@ -270,15 +264,14 @@ public class PasswordScreen extends javax.swing.JFrame {
             return;
         }
 
-        System.out.println("login successful");
         // If you have made it to this point, you have a successfull login
         
-        if(this.jCheckBox1.isSelected()) {
-            System.out.println("Checkbox is checked, saving username and password to file.");
+        if(this.rememberMeCheckbox.isSelected()) {
+            // Checkbox is checked, saving username and password to file.
             this.config.setUsername(this.username);
             this.config.setPassword(this.password);
         } else {
-            System.out.println("Checkbox is NOT checked, removing username and password to file.");
+            // Checkbox is NOT checked, removing username and password to file.
             this.config.setUsername("");
             this.config.setPassword("");
         }
@@ -292,9 +285,9 @@ public class PasswordScreen extends javax.swing.JFrame {
         this.jDialog1.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void rememberMeCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rememberMeCheckboxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_rememberMeCheckboxActionPerformed
 
     private void onEnterLogon(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_onEnterLogon
         // TODO add your handling code here:
@@ -302,6 +295,14 @@ public class PasswordScreen extends javax.swing.JFrame {
             loginAction();
         }
     }//GEN-LAST:event_onEnterLogon
+
+    private void logOnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOnButtonActionPerformed
+       loginAction();
+    }//GEN-LAST:event_logOnButtonActionPerformed
+
+    private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_quitButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -338,18 +339,19 @@ public class PasswordScreen extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton cancelbtn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jUserIDField;
-    private javax.swing.JToggleButton loginBtn;
+    private javax.swing.JButton logOnButton;
+    private javax.swing.JLabel passwordLabel;
+    private javax.swing.JButton quitButton;
+    private javax.swing.JCheckBox rememberMeCheckbox;
+    private javax.swing.JLabel titleLabel;
+    private javax.swing.JLabel usernameLabel;
+    private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 }
