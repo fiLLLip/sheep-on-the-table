@@ -97,7 +97,7 @@ public class ServerConnector {
                 while (inline != null && !inline.equals("SUCCESS")) {
                     System.out.println(inline);
                     // This line contains a sheep
-                    if (inline.indexOf("S") >= 0) {
+                    if (inline.indexOf("S") == 0) {
                         if (currentSheep != null) {
                             sheeps.add(currentSheep);
                         }
@@ -105,7 +105,7 @@ public class ServerConnector {
                         currentSheep = new Sheep(inline);
                     }
                     // This line contains a sheep update
-                    else if (inline.indexOf("SU") >= 0) {
+                    else if (inline.indexOf("U") == 0) {
                         System.out.println("Made a sheep update!");
                         SheepUpdate su = new SheepUpdate(inline);
                         currentSheep.addUpdate(su);

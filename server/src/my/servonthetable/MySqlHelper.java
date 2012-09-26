@@ -71,7 +71,7 @@ public class MySqlHelper {
                         results.getInt("born"),
                         results.getInt("deceased"),
                         results.getString("comment"),
-                        null,
+                        new ArrayList(),
                         results.getDouble("weight")));
             }
             results.close();
@@ -95,7 +95,7 @@ public class MySqlHelper {
         List<SheepUpdate> updates = new ArrayList<>();
         ResultSet results;
         try {
-            String query = "SELECT id, sheep_id, UNIX_TIMESTAMP(timestamp) as timestamp, pos_x, pos_y, pulse, temp, alarm FROM sheep_updates WHERE sheep_id = '" + id + "'";
+            String query = "SELECT id, sheep_id, UNIX_TIMESTAMP(timestamp) as timestamp, pos_x, pos_y, pulse, temp, alarm FROM sheep_updates WHERE sheep_id = '" + id + "' ORDER BY id DESC";
             System.out.println(query);
             results = stmt.executeQuery(query);
             while (results.next()) {

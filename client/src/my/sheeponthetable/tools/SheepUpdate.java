@@ -95,8 +95,8 @@ public class SheepUpdate implements Serializable {
         return alarm;
     }
 
-    public String toString(int sheepId) {
-        return "SU@" + sheepId +"@" + id + "@" + pos_x + "@" + pos_y + "@" + pulse + "@" + temperature + "@" + alarm + "@"+ timestamp;
+    public String toString() {
+        return "U@" + id + "@" + pos_x + "@" + pos_y + "@" + pulse + "@" + temperature + "@" + alarm + "@"+ timestamp;
     }
 
 }

@@ -54,6 +54,7 @@ public class Sheep implements Serializable {
             born = Integer.parseInt(parseString[5]);
             deceased = Integer.parseInt(parseString[6]);
             weight = Double.parseDouble(parseString[7]);
+            updates = new ArrayList();
         } catch (Exception e) {
             System.err.println("Could not convert string to a sheep object!");
             e.printStackTrace();
