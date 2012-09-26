@@ -4,6 +4,7 @@
  */
 package my.sheeponthetable.gui;
 
+import java.awt.event.KeyEvent;
 import my.sheeponthetable.tools.Config;
 import my.sheeponthetable.tools.ServerConnector;
 
@@ -64,7 +65,6 @@ public class PasswordScreen extends javax.swing.JFrame {
 
         jDialog1.setAlwaysOnTop(true);
         jDialog1.setResizable(false);
-        jDialog1.setSize(new java.awt.Dimension(272, 83));
 
         jLabel2.setText("Invalid username or password.");
 
@@ -119,9 +119,20 @@ public class PasswordScreen extends javax.swing.JFrame {
             }
         });
 
+        jUserIDField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                onEnterLogon(evt);
+            }
+        });
+
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordField1ActionPerformed(evt);
+            }
+        });
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                onEnterLogon(evt);
             }
         });
 
@@ -218,7 +229,10 @@ public class PasswordScreen extends javax.swing.JFrame {
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
-        
+        loginAction();        
+    }//GEN-LAST:event_loginBtnActionPerformed
+
+    private void loginAction () {
         this.username = this.jUserIDField.getText();
         this.password = this.jPasswordField1.getText(); // Possible security threat
         
@@ -271,9 +285,8 @@ public class PasswordScreen extends javax.swing.JFrame {
         new SheepPanel(this.connect).setVisible(true);
         this.setVisible(false);
         this.dispose();
-        
-    }//GEN-LAST:event_loginBtnActionPerformed
-
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.jDialog1.setVisible(false);
@@ -282,6 +295,13 @@ public class PasswordScreen extends javax.swing.JFrame {
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void onEnterLogon(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_onEnterLogon
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            loginAction();
+        }
+    }//GEN-LAST:event_onEnterLogon
 
     /**
      * @param args the command line arguments

@@ -43,13 +43,20 @@ public class SheepPanel extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 // TODO add stuff to do when selected here
                 if (! listSelectionEvent.getValueIsAdjusting()) {
+                    // Settings textfields to "Not available" before update
+                    // because there may be no updates for selected Sheep
+                    idTxt.setText("Not available");
+                    posTxt.setText("Not available");
                     JList list = (JList) listSelectionEvent.getSource();
                     System.out.println("Selected index: " + list.getSelectedIndex());
-                    //double xpos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getX();
-                    //double ypos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getY();
                     int id = sheepList.get(list.getSelectedIndex()).getID();
-                    //posTxt.setText(xpos + " - " + ypos);
                     idTxt.setText(Integer.toString(id));
+                    if (!sheepList.get(list.getSelectedIndex()).getUpdates().isEmpty()) {
+                        // Getting update index 0 because 0 is the latest (newest) update
+                        double xpos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getX();
+                        double ypos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getY();
+                        posTxt.setText(xpos + " - " + ypos);
+                    }
                 }
             }
         };
