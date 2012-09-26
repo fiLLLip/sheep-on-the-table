@@ -41,7 +41,8 @@ public class ServerConnector {
      * @param String username
      * @param String password
      */
-    public ServerConnector (String host, int port, String username, String password) {
+    public ServerConnector (String host, int port,
+                            String username, String password) {
         this.host = host;
         this.port = port;
         this.username = username;
@@ -57,10 +58,17 @@ public class ServerConnector {
         try {
             socket = new Socket(host, port);
             out = new PrintWriter(socket.getOutputStream(), true);
-            InputStreamReader isr = new InputStreamReader(socket.getInputStream());
+            InputStreamReader isr = 
+                    new InputStreamReader(socket.getInputStream());
             in = new BufferedReader(isr);
-            this.logger = "Connection established";
-            return true;
+            if (isConnected()) {
+                this.logger = "Connection established";
+                return true;
+            }
+            else {
+                this.logger =  "Could not open connection to server.";
+                return false;
+            }
         } catch (IOException e) {
             this.logger =  "Could not open connection to server.";
             return false;
@@ -289,7 +297,8 @@ public class ServerConnector {
                 return false;
             }
         } catch (IOException ex) {
-            Logger.getLogger(ServerConnector.class.getName()).log(Level.SEVERE, null, ex);
+            String getThisClassName = ServerConnector.class.getName();
+            Logger.getLogger(getThisClassName).log(Level.SEVERE, null, ex);
             return false;
         }
     }

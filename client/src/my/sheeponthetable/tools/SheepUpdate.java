@@ -31,6 +31,11 @@ public class SheepUpdate implements Serializable {
         this.timestamp = -1;
     }
 
+    /**
+     * Parses the parameter string and initializes SheepUpdate
+     *
+     * @param string @-splittet string
+     */
     public SheepUpdate(String string) {
         String[] parseString = string.split("@");
         try {
@@ -48,13 +53,15 @@ public class SheepUpdate implements Serializable {
     }
 
     /**
+     * Initializes class SheepUpdate
      *
-     * @param id
-     * @param pos_x
-     * @param pos_y
-     * @param pulse
-     * @param temperature
-     * @param timestamp
+     * @param id 
+     * @param pos_x 
+     * @param pos_y 
+     * @param pulse 
+     * @param temperature 
+     * @param alarm 
+     * @param timestamp  
      */
     public SheepUpdate (int id, double pos_x, double pos_y, int pulse, double temperature, boolean alarm, int timestamp) {
         this.id = id;
@@ -66,36 +73,67 @@ public class SheepUpdate implements Serializable {
         this.alarm = alarm;
     }
 
+    /**
+     *
+     * @return int id
+     */
     public int getID() {
         return id;
     }
 
+    /**
+     *
+     * @return int timestamp
+     */
     public int getTimeStamp() {
         return timestamp;
     }
 
+    /**
+     *
+     * @return double position x
+     */
     public double getX() {
         return pos_x;
     }
 
+    /**
+     *
+     * @return double position y
+     */
     public double getY() {
         return pos_y;
     }
 
+    /**
+     *
+     * @return int pulse
+     */
     public int getPulse() {
         return pulse;
     }
 
+    /**
+     *
+     * @return double temperature
+     */
     public double getTemp() {
         return temperature;
     }
 
+    /**
+     *
+     * @return boolean alarm
+     */
     public boolean isAlarm() {
         return alarm;
     }
 
+    
     public String toString() {
-        return "U@" + id + "@" + pos_x + "@" + pos_y + "@" + pulse + "@" + temperature + "@" + alarm + "@"+ timestamp;
+        String output = "U@" + id + "@" + pos_x + "@" + pos_y + "@" + pulse
+                + "@" + temperature + "@" + alarm + "@"+ timestamp;
+        return output;
     }
 
 }

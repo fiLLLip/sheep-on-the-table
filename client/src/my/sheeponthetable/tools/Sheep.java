@@ -24,13 +24,6 @@ public class Sheep implements Serializable {
     
     /**
      *
-     * @param id
-     * @param farmId 
-     * @param name
-     * @param comment
-     * @param born
-     * @param deceased
-     * @param updates
      */
     
     public Sheep() {
@@ -44,6 +37,11 @@ public class Sheep implements Serializable {
         this.weight = -1;
     }
 
+    /**
+     * Parses the parameter string and initializes Sheep.
+     * 
+     * @param String string: Expects @-splittet string
+     */
     public Sheep(String string) {
         String[] parseString = string.split("@");
         try {
@@ -56,11 +54,23 @@ public class Sheep implements Serializable {
             weight = Double.parseDouble(parseString[7]);
             updates = new ArrayList();
         } catch (Exception e) {
-            System.err.println("Could not convert string to a sheep object!");
+            System.err.println("Could not convert this string to a sheep object!");
             e.printStackTrace();
         }
     }
     
+    /**
+     * Initializes class Sheep
+     * 
+     * @param int id
+     * @param int farmId
+     * @param String name
+     * @param int born
+     * @param int deceased
+     * @param String comment
+     * @param List<SheepUpdate> updates
+     * @param double weight
+     */
     public Sheep (int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates, double weight) {
         this.id = id;
         this.farmId = farmId;
@@ -128,30 +138,58 @@ public class Sheep implements Serializable {
         return updates;
     }
     
+    /**
+     *
+     * @param d
+     */
     public void setID(int d) {
         this.id = d;
     }
 
+    /**
+     *
+     * @param e
+     */
     public void setEierID(int e) {
         this.farmId = e;
     }
 
+    /**
+     *
+     * @param n
+     */
     public void setNavn(String n) {
         this.name = n;
     }
 
+    /**
+     *
+     * @param k
+     */
     public void setKommentar(String k) {
          this.comment = k;
     }
 
+    /**
+     *
+     * @param i
+     */
     public void setBornYear(int i) {
         this.born = i;
     }
 
+    /**
+     *
+     * @param updates
+     */
     public void setUpdates (List<SheepUpdate> updates) {
         this.updates = updates;
     }
 
+    /**
+     *
+     * @param su
+     */
     public void addUpdate(SheepUpdate su) {
         if (updates == null) {
             updates = new ArrayList<>();
@@ -169,6 +207,11 @@ public class Sheep implements Serializable {
         return false;
     }
 
+    /**
+     *
+     * @param includeUpdates
+     * @return
+     */
     public String toString(boolean includeUpdates) {
         String s = "S@" + id + "@" + farmId + "@" + name + "@" + comment + "@" + born + "@" + deceased + "@" + weight;
         if (includeUpdates) {
