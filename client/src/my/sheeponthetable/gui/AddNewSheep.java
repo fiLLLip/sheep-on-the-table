@@ -39,11 +39,11 @@ public class AddNewSheep extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        addbtn = new javax.swing.JToggleButton();
         cancel = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtComment = new javax.swing.JTextArea();
         clearbtn = new javax.swing.JButton();
+        addSheepButton = new javax.swing.JButton();
 
         jLabel7.setText("jLabel7");
 
@@ -65,13 +65,6 @@ public class AddNewSheep extends javax.swing.JFrame {
 
         jLabel6.setText("Comment:");
 
-        addbtn.setText("ADD");
-        addbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addbtnActionPerformed(evt);
-            }
-        });
-
         cancel.setText("Cancel");
         cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,6 +85,13 @@ public class AddNewSheep extends javax.swing.JFrame {
             }
         });
 
+        addSheepButton.setText("Add Sheep");
+        addSheepButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSheepButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -100,7 +100,7 @@ public class AddNewSheep extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(addbtn)
+                        .addComponent(addSheepButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -126,9 +126,6 @@ public class AddNewSheep extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(45, 45, 45))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {addbtn, cancel});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -153,9 +150,9 @@ public class AddNewSheep extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addbtn)
                     .addComponent(cancel)
-                    .addComponent(clearbtn))
+                    .addComponent(clearbtn)
+                    .addComponent(addSheepButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -173,14 +170,18 @@ public class AddNewSheep extends javax.swing.JFrame {
     txtComment.setText("");// TODO add your handling code here:
     }//GEN-LAST:event_clearbtnActionPerformed
 
-    private void addbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addbtnActionPerformed
-        // Farm ID blir satt på serversiden, om vi ikke skal ha flerfarm-støtte
+    private void addSheepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepButtonActionPerformed
         Sheep newSheep = new Sheep(-1, connect.getUserId(), txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, Double.parseDouble(txtWeight.getText()));
-        connect.newSheep(newSheep);
-    }//GEN-LAST:event_addbtnActionPerformed
+        if(connect.newSheep(newSheep)) {
+            this.setVisible(false);
+        } else {
+            //ErrorMessageDialog errorBox = new ErrorMessageDialog();
+            //errorBox.errorMessageDialogTitleLabel.setText("halla");
+        }
+    }//GEN-LAST:event_addSheepButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton addbtn;
+    private javax.swing.JButton addSheepButton;
     private javax.swing.JToggleButton cancel;
     private javax.swing.JButton clearbtn;
     private javax.swing.JLabel jLabel1;
