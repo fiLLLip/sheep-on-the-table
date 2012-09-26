@@ -8,11 +8,13 @@ import java.util.*;
 import javax.swing.*;
 import my.sheeponthetable.tools.*;
 import java.awt.event.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 /**
  *
  * @author Alex
  */
-public class SheepPanelfail extends javax.swing.JFrame {
+public class SheepPanel extends javax.swing.JFrame {
     
     private DefaultListModel sheepShow = new DefaultListModel();
     private List<Sheep> sheepList = new ArrayList();
@@ -34,9 +36,24 @@ public class SheepPanelfail extends javax.swing.JFrame {
     /**
      * Creates new form SheepPanelfail
      */
-    public SheepPanelfail(ServerConnector connect) {
+    public SheepPanel(ServerConnector connect) {
         this.connect = connect;
         initComponents();
+        ListSelectionListener listSelectionListener = new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                // TODO add stuff to do when selected here
+                if (! listSelectionEvent.getValueIsAdjusting()) {
+                    JList list = (JList) listSelectionEvent.getSource();
+                    System.out.println("Selected index: " + list.getSelectedIndex());
+                    //double xpos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getX();
+                    //double ypos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getY();
+                    int id = sheepList.get(list.getSelectedIndex()).getID();
+                    //posTxt.setText(xpos + " - " + ypos);
+                    idTxt.setText(Integer.toString(id));
+                }
+            }
+        };
+        sheepJList.addListSelectionListener(listSelectionListener);
         update();
     }
 
@@ -74,7 +91,7 @@ public class SheepPanelfail extends javax.swing.JFrame {
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 501, Short.MAX_VALUE)
         );
 
         addSheep.setText("AddSheep");
@@ -144,13 +161,13 @@ public class SheepPanelfail extends javax.swing.JFrame {
                                         .addComponent(addSheep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 22, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                         .addComponent(deSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(57, 57, 57))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(110, 110, 110)
                         .addComponent(idLbl2)
-                        .addContainerGap())))
+                        .addContainerGap(184, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,18 +183,18 @@ public class SheepPanelfail extends javax.swing.JFrame {
                 .addComponent(removeSheep)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(idLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                        .addComponent(kordinateLbl)
-                        .addGap(18, 18, 18))
+                        .addGap(54, 54, 54))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(refreshbtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                         .addComponent(idTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(posTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(posTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(kordinateLbl))
                         .addGap(4, 4, 4)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -197,7 +214,8 @@ public class SheepPanelfail extends javax.swing.JFrame {
     }//GEN-LAST:event_addSheepActionPerformed
 
     private void refreshbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshbtnActionPerformed
-        sheepShow.removeAllElements(); // TODO add your handling code here:
+        sheepShow.removeAllElements();
+        update();
     }//GEN-LAST:event_refreshbtnActionPerformed
 
     private void deSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deSelectActionPerformed
@@ -212,9 +230,9 @@ public class SheepPanelfail extends javax.swing.JFrame {
         System.out.println("Got sheeplist");
         if (sheepList != null) {
             for (int i = 0; i < sheepList.size(); i++) {
-                Sheep sheep = new Sheep();
+                Sheep sheep;
                 sheep = sheepList.get(i);
-                sheepShow.addElement(sheep);
+                sheepShow.addElement(sheep.getID() + " - " + sheep.getName());
             }
         }
     }
