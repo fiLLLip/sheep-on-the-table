@@ -27,6 +27,7 @@ public class Server extends Thread {
     private ArrayList<ServerClient> clients = new ArrayList<>();
     private MySqlHelper sqlHelper;
     private Config config;
+    private SmsSender sendSms;
 
     /**
      * @param args the command line arguments
@@ -73,6 +74,9 @@ public class Server extends Thread {
             System.out.println("Could not connect to MySQL");
             System.exit(1);
         }
+        
+        sendSms = new SmsSender(config.getApiKey());
+        
         start();
     }
 

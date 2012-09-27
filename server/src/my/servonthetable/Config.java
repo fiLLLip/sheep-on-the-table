@@ -20,6 +20,7 @@ public class Config {
     private String dbName;
     private String dbUsername;
     private String dbPassword;
+    private String apiKey;
     
     /**
      *
@@ -68,6 +69,10 @@ public class Config {
         return this.dbPassword;
     }
     
+    public String getApiKey () {
+        return this.apiKey;
+    }
+    
     private void loadSettingsFile () {
         
         Properties properties = new Properties();
@@ -84,6 +89,7 @@ public class Config {
             this.dbUsername = properties.getProperty("dbUser");
             this.dbPassword = properties.getProperty("dbPass");
             this.dbName = properties.getProperty("dbName");
+            this.apiKey = properties.getProperty("apiKey");
             
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Failure when reading settings: " + e.toString());
@@ -106,6 +112,7 @@ public class Config {
             properties.setProperty("dbUser", this.dbUsername);
             properties.setProperty("dbPass", this.dbPassword);
             properties.setProperty("dbName", this.dbName);
+            properties.setProperty("apiKey", this.apiKey);
             
             URL url = getClass().getResource("settings.properties");  
             String path = url.getPath(); 
