@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.servonthetable;
 
 import java.util.ArrayList;
@@ -11,11 +7,15 @@ import java.util.logging.Logger;
 import java.sql.*;
 
 /**
+ * The MySqlHelper handles mySql-queries from the server to the database.
  *
  * @author Filip
  */
 public class MySqlHelper {
 
+    /*
+     *      Declare the local fields
+     */
     private String dbHost;
     private String dbUser;
     private String dbPass;
@@ -25,12 +25,14 @@ public class MySqlHelper {
     private Statement stmt;
 
     /**
+     * Constructor method. All the information required to connect to the
+     * database can be found and read from a config-file.
      *
-     * @param dbHost
-     * @param dbUser
-     * @param dbPass
-     * @param dbName
-     * @param port
+     * @param dbHost - the IP adress of the database
+     * @param dbUser - the username used to connect to the database
+     * @param dbPass - the password used to connect to the database
+     * @param dbName - the name of the database
+     * @param port   - the port that you use to acess the database
      */
     public MySqlHelper(String dbHost, int port, String dbUser, String dbPass, String dbName) {
         this.dbHost = dbHost;
@@ -41,8 +43,9 @@ public class MySqlHelper {
     }
 
     /**
+     * Initiate a connection to the database.
      *
-     * @return
+     * @return true is successful, false otherwise.
      */
     public boolean connect() {
         try {
@@ -58,15 +61,18 @@ public class MySqlHelper {
     }
 
     /**
+     * Fetch the list of sheep belonging to the given farm in the database.
      *
-     * @param farm_id 
-     * @return
+     * @param farm_id - the ID of the farm
+     *
+     * @return List<sheep>
      */
     public List<Sheep> getSheepList(int farm_id) {
         List<Sheep> sheeps = new ArrayList<>();
         ResultSet results;
 
         try {
+            // First the sheep without the assosiated sheepUpdates
             results = stmt.executeQuery("SELECT id, farm_id, name, UNIX_TIMESTAMP(born) as born, UNIX_TIMESTAMP(deceased) as deceased, comment, weight FROM sheep_sheep WHERE farm_id = '" + farm_id + "'");
             System.out.println(results.toString());
             while (results.next()) {
@@ -76,11 +82,12 @@ public class MySqlHelper {
                         results.getInt("born"),
                         results.getInt("deceased"),
                         results.getString("comment"),
-                        new ArrayList(),
+                        null,
                         results.getDouble("weight")));
             }
             results.close();
 
+            // Then fetch the list of sheepUpdates for every sheep
             for (Sheep sheep : sheeps) {
                 List<SheepUpdate> updates = getSheepUpdates(sheep.getID(), 1);
                 sheep.setUpdates(updates);
@@ -96,10 +103,13 @@ public class MySqlHelper {
     }
 
     /**
+     * Ask for the set of updates for a given sheep.
      *
-     * @param id
-     * @param numUpdates
-     * @return
+     * @param id - the ID of the given sheep
+     * @param numUpdates - the max number of updates wanted. If you want all availible, 
+     * use a negative number.
+     *
+     * @return List<SheepUpdates>
      */
     public List<SheepUpdate> getSheepUpdates(int id, int numUpdates) {
 
@@ -127,9 +137,11 @@ public class MySqlHelper {
     }
 
     /**
+     * Store another sheep in the database.
      *
-     * @param s
-     * @return
+     * @param s - the given Sheep
+     *
+     * @return boolean - success or failure
      */
     public boolean storeNewSheep(Sheep s) {
         try {
@@ -144,9 +156,11 @@ public class MySqlHelper {
     }
 
     /**
+     * Update the information in the database concerning a single sheep.
      *
-     * @param s
-     * @return
+     * @param s - sheep object containing all the up-to-date information
+     *
+     * @return boolean - success or failure
      */
     public boolean updateSheep(Sheep s) {
         try {
@@ -158,11 +172,12 @@ public class MySqlHelper {
         }
     }
 
-    /* removes a sheep and all updates from the database */
     /**
+     * Delete a sheep and all its updates from the database.
      *
-     * @param sheep
-     * @return
+     * @param sheep - the unfortunate sheep
+     *
+     * @return boolean - success or failure
      */
     public boolean removeSheep(Sheep sheep) {
         try {
@@ -181,16 +196,18 @@ public class MySqlHelper {
         }
     }
 
-    /*  */
     /**
+     * Find the user ID of a user with the given username or password.
      *
      * @param userName
      * @param password
-     * @return
+     *
+     * @return int - user ID if password and username is correct, -1 otherwise
+     * or in case of an error.
      */
     public int findUser(String userName, String password) {
         try {
-            String q = "SELECT id, un, pw FROM sheep_user WHERE un = '" + userName + "' AND pw = '" + password + "' LIMIT 1";
+            String q = "SELECT id FROM sheep_user WHERE un = '" + userName + "' AND pw = '" + password + "' LIMIT 1";
             System.out.println(q);
             ResultSet results = stmt.executeQuery(q);
 
@@ -206,9 +223,11 @@ public class MySqlHelper {
     }
     
     /**
+     * Returns the farm ID of the user's farm.
      *
      * @param userID
-     * @return
+     *
+     * @return farm ID or -1 is non-existant or errror occured.
      */
     public int findFarm (int userID) {
         try {
@@ -228,9 +247,11 @@ public class MySqlHelper {
     }
     
     /**
+     * Find farm name based on farm ID
      *
      * @param farmID
-     * @return
+     *
+     * @return farm name or null if a problem occurred.
      */
     public String findFarmName (int farmID) {
         try {
@@ -249,14 +270,27 @@ public class MySqlHelper {
         }
     }
 
+    /**
+     * Makes a url-string from host name, port and database name.
+     *
+     * @param String host
+     * @param int port
+     * @param String database
+     *
+     * @return url string
+     */
     private String urlGenerator(String host, int port, String database) {
         String url;
         url = "jdbc:mysql://" + host + ":" + Integer.toString(port) + "/" + database;
         return url;
     }
 
+    /**
+     * Terminate the connection.
+     *
+     * @throws Throwable
+     */
     protected void finalize() throws Throwable {
         con.close();
-        super.finalize();
     }
 }

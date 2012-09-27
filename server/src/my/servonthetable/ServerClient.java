@@ -60,7 +60,7 @@ public class ServerClient extends Thread {
                             break;
 
                         case "EDITSHEEP":
-                            editSheep();
+                            editSheep(input);
                             break;
 
                         case "GETUPDATES":
@@ -211,25 +211,20 @@ public class ServerClient extends Thread {
     /**
      *  Called by run() to handle the GETSHEEPLIST order from a client.
      */
-    private void editSheep() {
+    private void editSheep(String[] input) {
+        String sheepParseString = buildParameterString(input);
         if (loggedIn) {
-            out.println("WAITING");
-            try {
-                Sheep editSheep = new Sheep(in.readLine());
-                Boolean success = sqlHelper.updateSheep(editSheep);
-                if (success) {
-                    out.println("SUCCESS");
-                } else {
-                    out.println("ERROR Could not edit");
-                }
-            } catch (IOException ex) {
-                out.println("ERROR Could not get sheep");
+            Sheep editSheep = new Sheep(sheepParseString);
+            Boolean success = sqlHelper.updateSheep(editSheep);
+            if (success) {
+                out.println("SUCCESS");
+            } else {
+                out.println("ERROR Could not edit");
             }
 
         } else {
             out.println("ERROR Not logged in");
         }
-
     }
 
     /**
@@ -261,12 +256,7 @@ public class ServerClient extends Thread {
      */
     private void newSheep(String[] input) {
         if (loggedIn) {
-            // Make the rest of the input into a single string
-            String sheepParseString = "";
-            for (int i = 1; i < input.length; i++) {
-                sheepParseString += input[i] + " ";
-            }
-            sheepParseString.trim();
+            String sheepParseString = buildParameterString(input);
             // The make a sheep for string and store in DB
             System.out.println(sheepParseString);
             Sheep newSheep = new Sheep(sheepParseString);
@@ -281,5 +271,21 @@ public class ServerClient extends Thread {
             out.println("ERROR Not logged in");
         }
 
+    }
+
+    /**
+     * Transforms the input string array into a single string. This is used to
+     * build a complete string to parse into a sheep or sheepUpdate. 
+     *
+     * @param String[] input
+     * @return String input combined into a single string
+     */
+
+    private String buildParameterString(String[] input) {
+        String parameterString = "";
+        for (int i = 1; i < input.length; i++) {
+            parameterString += input[i] + " ";
+        }
+        return parameterString.trim();
     }
 }
