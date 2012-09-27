@@ -20,7 +20,7 @@ public class SheepPanel extends javax.swing.JFrame {
     
     private DefaultListModel sheepShow = new DefaultListModel();
     private List<Sheep> sheepList = new ArrayList();
-    
+
     private String serverURL;
     private int serverPort;
     private String username;
@@ -46,9 +46,11 @@ public class SheepPanel extends javax.swing.JFrame {
         this.connect = connect;
         initComponents();
         this.setLocationRelativeTo(null);
+        showInfoBtn.setVisible(false);
+        closeInfoBtn.setVisible(false);
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
-            
-            public void mousePressed(MouseEvent e) {// dobbelclick
+        
+           /* public void mousePressed(MouseEvent e) {// dobbelclick
 
                    //tomme variabler
                if( e.getClickCount() == 2){
@@ -64,7 +66,7 @@ public class SheepPanel extends javax.swing.JFrame {
                    lblPulse.setText(Integer.toString(pulse));
                    lblTemp.setText(Integer.toString(Temp));
                }
-               }
+               }*/
      
             
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
@@ -73,6 +75,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 if (! listSelectionEvent.getValueIsAdjusting() && list.getSelectedIndex() != -1) {
                     // Settings textfields to "Not available" before update
                     // because there may be no updates for selected Sheep
+                    showInfoBtn.setVisible(true);
                     lblDtxt.setText("Not available");
                     lblPosTxt.setText("Not available");
                     lblUpdateTxt.setText("Not available");
@@ -93,6 +96,7 @@ public class SheepPanel extends javax.swing.JFrame {
         jLabelUser.setText(this.connect.getUsername());
         jLabelFarm.setText(this.connect.getFarmName());
         update();
+        
     }
 
     /**
@@ -129,6 +133,8 @@ public class SheepPanel extends javax.swing.JFrame {
         lblDtxt = new javax.swing.JLabel();
         lblPosTxt = new javax.swing.JLabel();
         lblUpdateTxt = new javax.swing.JLabel();
+        showInfoBtn = new javax.swing.JButton();
+        closeInfoBtn = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemCloseProgram = new javax.swing.JMenuItem();
@@ -212,6 +218,20 @@ public class SheepPanel extends javax.swing.JFrame {
 
         lblUpdateTxt.setText("-");
 
+        showInfoBtn.setText("Show Info");
+        showInfoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showInfoBtnActionPerformed(evt);
+            }
+        });
+
+        closeInfoBtn.setText("Close Info");
+        closeInfoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeInfoBtnActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
 
         jMenuItemCloseProgram.setText("Log out");
@@ -286,7 +306,11 @@ public class SheepPanel extends javax.swing.JFrame {
                                     .addComponent(lblDtxt)
                                     .addComponent(lblPosTxt)
                                     .addComponent(lblUpdateTxt))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(showInfoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(closeInfoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -334,7 +358,11 @@ public class SheepPanel extends javax.swing.JFrame {
                         .addComponent(lblNickName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblComment)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(showInfoBtn)
+                            .addComponent(closeInfoBtn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -379,6 +407,24 @@ public class SheepPanel extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void showInfoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showInfoBtnActionPerformed
+     showInfoBtn.setVisible(false);
+     closeInfoBtn.setVisible(true);
+     // TODO add your handling code here:
+    }//GEN-LAST:event_showInfoBtnActionPerformed
+
+    private void closeInfoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeInfoBtnActionPerformed
+      showInfoBtn.setVisible(true);
+      closeInfoBtn.setVisible(false);
+        lblDtxt.setText("");
+         lblPosTxt.setText("");
+          lblUpdateTxt.setText("");
+            lblNickName.setText("");
+          lblComment.setText("");
+         lblPulse.setText(Integer.toString(0));
+      lblTemp.setText(Integer.toString(0));// TODO add your handling code here:
+    }//GEN-LAST:event_closeInfoBtnActionPerformed
+
     /**
      */
     public void update(){
@@ -395,6 +441,7 @@ public class SheepPanel extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheep;
+    private javax.swing.JButton closeInfoBtn;
     private javax.swing.JButton deSelect;
     private javax.swing.JLabel idLbl;
     private javax.swing.JLabel idLbl2;
@@ -423,5 +470,6 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JButton removeSheep;
     private javax.swing.JList sheepJList;
     private javax.swing.JLabel sheepUpdatedLabel;
+    private javax.swing.JButton showInfoBtn;
     // End of variables declaration//GEN-END:variables
 }
