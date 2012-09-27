@@ -107,7 +107,7 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblDtxt" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblIDtxt" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblPosTxt" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblUpdateTxt" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -157,7 +157,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="idLbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblDtxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblIDtxt" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -333,7 +333,7 @@
         <Property name="text" type="java.lang.String" value="-"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblDtxt">
+    <Component class="javax.swing.JLabel" name="lblIDtxt">
       <Properties>
         <Property name="text" type="java.lang.String" value="-"/>
       </Properties>
