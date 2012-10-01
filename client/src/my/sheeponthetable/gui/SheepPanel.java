@@ -158,7 +158,7 @@ public class SheepPanel extends javax.swing.JFrame {
         sheepNicknameLabel = new javax.swing.JLabel();
         sheepCommentLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        sheepUpdateJList = new javax.swing.JList();
+        sheepJList1 = new javax.swing.JList();
         jLabel5 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -244,14 +244,14 @@ public class SheepPanel extends javax.swing.JFrame {
 
         lblUpdateTxt.setText("-");
 
-        showInfoBtn.setText("Show Info");
+        showInfoBtn.setText("OLD REMOVE");
         showInfoBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showInfoBtnActionPerformed(evt);
             }
         });
 
-        closeInfoBtn.setText("Close Info");
+        closeInfoBtn.setText("OLD REMOVE");
         closeInfoBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeInfoBtnActionPerformed(evt);
@@ -268,8 +268,8 @@ public class SheepPanel extends javax.swing.JFrame {
 
         sheepCommentLabel.setText("Comment");
 
-        sheepUpdateJList.setModel(sheepShow);
-        jScrollPane2.setViewportView(sheepUpdateJList);
+        sheepJList1.setModel(sheepShow);
+        jScrollPane2.setViewportView(sheepJList1);
 
         jLabel5.setText("Updates");
 
@@ -550,10 +550,10 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JButton removeSheep;
     private javax.swing.JLabel sheepCommentLabel;
     private javax.swing.JList sheepJList;
+    private javax.swing.JList sheepJList1;
     private javax.swing.JLabel sheepNicknameLabel;
     private javax.swing.JLabel sheepPulseLabel;
     private javax.swing.JLabel sheepTemperatureLabel;
-    private javax.swing.JList sheepUpdateJList;
     private javax.swing.JLabel sheepUpdatedLabel;
     private javax.swing.JButton showInfoBtn;
     // End of variables declaration//GEN-END:variables

@@ -375,7 +375,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="showInfoBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Show Info"/>
+        <Property name="text" type="java.lang.String" value="OLD REMOVE"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showInfoBtnActionPerformed"/>
@@ -383,7 +383,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="closeInfoBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Close Info"/>
+        <Property name="text" type="java.lang.String" value="OLD REMOVE"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeInfoBtnActionPerformed"/>
@@ -421,7 +421,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="sheepUpdateJList">
+        <Component class="javax.swing.JList" name="sheepJList1">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="sheepShow" type="code"/>
