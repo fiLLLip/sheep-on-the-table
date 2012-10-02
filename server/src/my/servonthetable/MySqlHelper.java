@@ -216,6 +216,25 @@ public class MySqlHelper {
     }
 
     /**
+     *  Set the deceased parameter to the current time, thus stating that the
+     *  sheep is dead.
+     *
+     * @param sheep - the unfortunate sheep
+     *
+     * @return boolean - success or failure
+     */
+    public boolean killSheep(int id, Long time) {
+        try {
+            time /= 1000;
+            stmt.executeUpdate("UPDATE sheep_sheep SET deceased = '" + time + "'  WHERE id = '" + id + "'");
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    /**
      * Find the user ID of a user with the given username or password.
      *
      * @param userName
