@@ -306,6 +306,7 @@ public class MySqlHelper {
         try {
             String query = "SELECT UNIX_TIMESTAMP(timestamp) as timestamp FROM sheep_updates ORDER BY timestamp DESC";
             results = stmt.executeQuery(query);
+            results.next();
             lastUpdate = results.getLong("timestamp");
         } catch (SQLException ex) {
             Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);

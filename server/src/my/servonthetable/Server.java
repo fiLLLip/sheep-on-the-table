@@ -19,13 +19,13 @@ import java.util.ArrayList;
 public class Server extends Thread {
 
     private static final int CLIENT_PORT = 30480;
+    private static final int SHEEP_PORT = 4104;
     private static final int WAITING_TIME = 200;
-    private static final int TIMEOUT = 5000;
-
-    private ServerSocket serverSocket;
+    private static final int TIMEOUT = 2500;
+    private ServerSocket serverSocket, sheepSocket;
     private InetAddress hostAddress;
-    private Socket socket;
     private ArrayList<ServerClient> clients = new ArrayList<>();
+    private ArrayList<SheepConnector> sheepConnectors = new ArrayList<>();
     private MySqlHelper sqlHelper;
     private Config config;
     private SmsSender sendSms;
@@ -50,7 +50,6 @@ public class Server extends Thread {
             addr[2] = (byte) 0;
             addr[3] = (byte) 0;
             hostAddress = InetAddress.getByAddress(addr);
-            //hostAddress = InetAddress.getLocalHost();
         } catch (UnknownHostException e) {
             System.out.println("Could not get the host address.");
             return;
@@ -59,6 +58,7 @@ public class Server extends Thread {
         System.out.println("Server host address is: " + hostAddress);
         // Attempt to create server socket
         try {
+            sheepSocket = new ServerSocket(SHEEP_PORT, 0, hostAddress);
             serverSocket = new ServerSocket(CLIENT_PORT, 0, hostAddress);
         } catch (IOException e) {
             System.out.println("Could not open server socket.");
@@ -68,18 +68,18 @@ public class Server extends Thread {
         System.out.println("Socket " + serverSocket + " created.");
         config = new Config();
         sqlHelper = new MySqlHelper(config.getDBHost(),
-                                    config.getDBPort(),
-                                    config.getDBUsername(),
-                                    config.getDBPassword(),
-                                    config.getDBName());
+                config.getDBPort(),
+                config.getDBUsername(),
+                config.getDBPassword(),
+                config.getDBName());
         if (!sqlHelper.connect()) {
             System.out.println("Could not connect to MySQL");
             System.exit(1);
         }
         lastUpdate = sqlHelper.getLastUpdateTime();
-        
+
         sendSms = new SmsSender(config.getApiKey());
-        
+
         start();
     }
 
@@ -95,6 +95,7 @@ public class Server extends Thread {
         while (run) {
             checkForDisconnects(clients);
             listenForConnectingClients();
+            listenForConnectingSheep();
             sleep();
         }
     }
@@ -121,23 +122,45 @@ public class Server extends Thread {
      */
     private void listenForConnectingClients() {
         // Get a client trying to connect
+        Socket socket;
         try {
-            System.out.print("Listening for new client: ");
+            System.out.println("Listening for new client: ");
             serverSocket.setSoTimeout(TIMEOUT);
             socket = serverSocket.accept();
             // Client has connected
             System.out.print(socket + " has connected.");
             // Add user to list
-            clients.add(new ServerClient(this,socket,sqlHelper));
-        } 
-        catch (SocketTimeoutException e) {
+            clients.add(new ServerClient(this, socket, sqlHelper));
+        } catch (SocketTimeoutException e) {
             System.out.print("listen timeout.");
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.print("could not connect.");
-        }
-        finally {
+        } finally {
             System.out.print("\r");
+        }
+    }
+
+        /**
+     * Listen on specified port for any new TCP/IP Socket connections.
+     * When someone connects, add the user to list for maintenance.
+     */
+    private void listenForConnectingSheep() {
+        // Get a client trying to connect
+        Socket socket;
+        try {
+            System.out.println("Listening for new sheep:");
+            sheepSocket.setSoTimeout(TIMEOUT);
+            socket = sheepSocket.accept();
+            // Client has connected
+            System.out.println(socket + " has connected.");
+            // Add user to list
+            sheepConnectors.add(new SheepConnector(socket));
+        } catch (SocketTimeoutException e) {
+            System.out.println("listen timeout.");
+        } catch (IOException e) {
+            System.out.println("could not connect.");
+        } finally {
+            System.out.println("\r");
         }
     }
 
