@@ -125,7 +125,7 @@ public class MySqlHelper {
                         results.getDouble("pos_y"),
                         results.getInt("pulse"),
                         results.getDouble("temp"),
-                        false,
+                        0,
                         results.getInt("timestamp")));
             }
             results.close();
@@ -164,7 +164,7 @@ public class MySqlHelper {
      */
     public boolean addUpdate(SheepUpdate su) {
         try {
-            String sq = "INSERT INTO sheep_updates (sheep_id, timestamp, pos_x, pos_y, pulse, temp, alarm) VALUES ('" + su.getID() + "', '" + su.getTimeStamp() + "', '" + su.getX() + "', '" + su.getY() + "', '" + su.getPulse() + "', '" + su.getTemp() + "', '" + su.isAlarm() + "')";
+            String sq = "INSERT INTO sheep_updates (sheep_id, timestamp, pos_x, pos_y, pulse, temp, alarm) VALUES ('" + su.getID() + "', from_unixtime('" + su.getTimeStamp() + "'), '" + su.getX() + "', '" + su.getY() + "', '" + su.getPulse() + "', '" + su.getTemp() + "', '" + su.isAlarm() + "')";
             System.out.println(sq);
             stmt.executeUpdate(sq);
             return true;
@@ -286,6 +286,35 @@ public class MySqlHelper {
         } catch (SQLException s) {
             Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, s);
             return null;
+        }
+    }
+
+    /**
+     * Find phone number based on sheep ID
+     *
+     * @param int sheepID
+     *
+     * @return int phoen number
+     */
+    public int findPhoneNumber (int sheepID) {
+        try {
+            String q = "SELECT u.phone"
+                + "FROM sheep_user u, sheep_updates up, sheep_sheep s, sheep_farm f"
+                + "WHERE up.sheep_id = s.id"
+                + "AND s.farm_id = f.id"
+                + "AND u.farm_id = f.id"
+                + "AND s.id =  '" + sheepID + "'"
+                + "LIMIT 1";
+            ResultSet results = stmt.executeQuery(q);
+
+            if (results.next()) {
+                return results.getInt("phone");
+            } else {
+                return -1;
+            }
+        } catch (SQLException s) {
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, s);
+            return -1;
         }
     }
 

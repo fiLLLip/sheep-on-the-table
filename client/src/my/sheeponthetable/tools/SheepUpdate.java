@@ -17,7 +17,7 @@ public class SheepUpdate implements Serializable {
     private int pulse;
     private double temperature;
     private int timestamp;
-    private boolean alarm;
+    private int alarm;
 
     /**
      *
@@ -29,14 +29,11 @@ public class SheepUpdate implements Serializable {
         this.pulse = -1;
         this.temperature = -1.0;
         this.timestamp = -1;
+        this.alarm = -1;
     }
 
-    /**
-     * Parses the parameter string and initializes SheepUpdate
-     *
-     * @param string @-splittet string
-     */
     public SheepUpdate(String string) {
+        System.out.println(string);
         String[] parseString = string.split("@");
         try {
             id = Integer.parseInt(parseString[1]);
@@ -44,7 +41,7 @@ public class SheepUpdate implements Serializable {
             pos_y = Double.parseDouble(parseString[3]);
             pulse = Integer.parseInt(parseString[4]);
             temperature = Double.parseDouble(parseString[5]);
-            alarm = Boolean.getBoolean(parseString[6]);
+            alarm = Integer.parseInt(parseString[6]);
             timestamp = Integer.parseInt(parseString[7]);
         } catch (Exception e) {
             System.err.println("Could not convert string to SheepUpdate object!");
@@ -53,17 +50,15 @@ public class SheepUpdate implements Serializable {
     }
 
     /**
-     * Initializes class SheepUpdate
      *
-     * @param id 
-     * @param pos_x 
-     * @param pos_y 
-     * @param pulse 
-     * @param temperature 
-     * @param alarm 
-     * @param timestamp  
+     * @param id
+     * @param pos_x
+     * @param pos_y
+     * @param pulse
+     * @param temperature
+     * @param timestamp
      */
-    public SheepUpdate (int id, double pos_x, double pos_y, int pulse, double temperature, boolean alarm, int timestamp) {
+    public SheepUpdate (int id, double pos_x, double pos_y, int pulse, double temperature, int alarm, int timestamp) {
         this.id = id;
         this.pos_x = pos_x;
         this.pos_y = pos_y;
@@ -73,67 +68,40 @@ public class SheepUpdate implements Serializable {
         this.alarm = alarm;
     }
 
-    /**
-     *
-     * @return int id
-     */
     public int getID() {
         return id;
     }
 
-    /**
-     *
-     * @return int timestamp
-     */
     public int getTimeStamp() {
         return timestamp;
     }
 
-    /**
-     *
-     * @return double position x
-     */
     public double getX() {
         return pos_x;
     }
 
-    /**
-     *
-     * @return double position y
-     */
     public double getY() {
         return pos_y;
     }
 
-    /**
-     *
-     * @return int pulse
-     */
     public int getPulse() {
         return pulse;
     }
 
-    /**
-     *
-     * @return double temperature
-     */
     public double getTemp() {
         return temperature;
     }
 
-    /**
-     *
-     * @return boolean alarm
-     */
     public boolean isAlarm() {
-        return alarm;
+        return (alarm>0);
     }
 
-    
+    public void setAlarm(int alarm) {
+        this.alarm = alarm;
+    }
+
     public String toString() {
-        String output = "U@" + id + "@" + pos_x + "@" + pos_y + "@" + pulse
-                + "@" + temperature + "@" + alarm + "@"+ timestamp;
-        return output;
+        return "U@" + id + "@" + pos_x + "@" + pos_y + "@" + pulse + "@" + temperature + "@" + alarm + "@"+ timestamp;
     }
 
 }
