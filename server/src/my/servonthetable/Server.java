@@ -21,6 +21,7 @@ public class Server extends Thread {
     private static final int CLIENT_PORT = 30480;
     private static final int WAITING_TIME = 200;
     private static final int TIMEOUT = 5000;
+
     private ServerSocket serverSocket;
     private InetAddress hostAddress;
     private Socket socket;
@@ -28,6 +29,7 @@ public class Server extends Thread {
     private MySqlHelper sqlHelper;
     private Config config;
     private SmsSender sendSms;
+    private Long lastUpdate;
 
     /**
      * @param args the command line arguments
@@ -74,6 +76,7 @@ public class Server extends Thread {
             System.out.println("Could not connect to MySQL");
             System.exit(1);
         }
+        lastUpdate = sqlHelper.getLastUpdateTime();
         
         sendSms = new SmsSender(config.getApiKey());
         
@@ -125,7 +128,7 @@ public class Server extends Thread {
             // Client has connected
             System.out.print(socket + " has connected.");
             // Add user to list
-            clients.add(new ServerClient(socket,sqlHelper));
+            clients.add(new ServerClient(this,socket,sqlHelper));
         } 
         catch (SocketTimeoutException e) {
             System.out.print("listen timeout.");
@@ -147,5 +150,16 @@ public class Server extends Thread {
         } catch (InterruptedException e) {
             System.out.println("Server thread has been interrupted.");
         }
+    }
+
+    /**
+     * Set last update
+     */
+    public void setLastDBUpdate(Long lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public Long getLastDBUpdate() {
+        return lastUpdate;
     }
 }

@@ -29,6 +29,7 @@ public class ServerConnector {
     private Socket socket;
     private String logger;
     private PrintWriter out;
+    private BufferedReader listenToUpdatesIn;
     private BufferedReader in;
     private int userID;
     private int farmID;
@@ -74,7 +75,7 @@ public class ServerConnector {
             return false;
         }
     }
-    
+
     /**
      * Logs on to the server (checks username and password).
      * Simultaniously retrieves information about the farm and user from the
