@@ -31,6 +31,7 @@ public class ServerClient extends Thread {
      * called.
      *
      */
+    @Override
     public void run() {
         try {
             while (connected) {
@@ -81,6 +82,8 @@ public class ServerClient extends Thread {
 
                 } catch (IOException ex) {
                     Logger.getLogger(ServerClient.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(socket.toString() + " has connection reset.");
+                    purge();
                 }
                 // Sleep as to avoid overflow
                 Thread.sleep(USER_THROTTLE);
@@ -150,6 +153,7 @@ public class ServerClient extends Thread {
      *
      * @return  A string representation.
      */
+    @Override
     public String toString() {
         return socket.toString();
     }

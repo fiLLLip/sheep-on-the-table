@@ -12,15 +12,15 @@ import java.text.DateFormat;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
+
 /**
  *
  * @author Alex
  */
 public class SheepPanel extends javax.swing.JFrame {
-    
+
     private DefaultListModel sheepShow = new DefaultListModel();
     private List<Sheep> sheepList = new ArrayList();
-    
     private String serverURL;
     private int serverPort;
     private String username;
@@ -28,23 +28,23 @@ public class SheepPanel extends javax.swing.JFrame {
     private int farmID;
     private int userID;
     private ServerConnector connect;
-   
     // mye sheep info
     private String nickname, comment;
-     private int globalId, pulse, temp;
-     private double posY, posX;
-     /**
+    private int globalId, pulse, temp;
+    private double posY, posX;
+
+    /**
      *
      * @param sheep
      */
-    public void addSheepToList(Sheep sheep){
+    public void addSheepToList(Sheep sheep) {
         sheepShow.addElement(sheep);
     }
-   
-    
+
     /**
      * Creates new form SheepPanelfail
-     * @param connect 
+     *
+     * @param connect
      */
     public SheepPanel(ServerConnector connect) {
         this.connect = connect;
@@ -53,26 +53,23 @@ public class SheepPanel extends javax.swing.JFrame {
         editSheepBtn.setEnabled(false);
         removeSheepBtn.setEnabled(false);
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
-        
-           /* public void mousePressed(MouseEvent e) {// dobbelclick
+            /* public void mousePressed(MouseEvent e) {// dobbelclick
 
-                   //tomme variabler
-               if( e.getClickCount() == 2){
-                   String Nickname ="";        
-                   String Comment ="";
-                   int pulse = 0;
-                   int Temp = 0;
+             //tomme variabler
+             if( e.getClickCount() == 2){
+             String Nickname ="";        
+             String Comment ="";
+             int pulse = 0;
+             int Temp = 0;
 
-                   //sett variabler
+             //sett variabler
 
-                   lblNickName.setText(Nickname);
-                   lblComment.setText(Comment);
-                   lblPulse.setText(Integer.toString(pulse));
-                   lblTemp.setText(Integer.toString(Temp));
-               }
-               }*/
-     
-            
+             lblNickName.setText(Nickname);
+             lblComment.setText(Comment);
+             lblPulse.setText(Integer.toString(pulse));
+             lblTemp.setText(Integer.toString(Temp));
+             }
+             }*/
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 // TODO add stuff to do when selected here
                 JList list = (JList) listSelectionEvent.getSource();
@@ -85,13 +82,13 @@ public class SheepPanel extends javax.swing.JFrame {
                     lblPosTxt.setText("Not available");
                     lblUpdateTxt.setText("Not available");
                     lblNickName.setText("Not available");
-                    lblComment.setText("Not available");
+                    txtComment.setText("Not available");
                     lblPulse.setText("Not available");
                     lblTemp.setText("Not available");
                     int id = sheepList.get(list.getSelectedIndex()).getID();
                     lblIDtxt.setText(Integer.toString(id));
                     lblNickName.setText(sheepList.get(list.getSelectedIndex()).getName());
-                    lblComment.setText(sheepList.get(list.getSelectedIndex()).getComment());
+                    txtComment.setText(sheepList.get(list.getSelectedIndex()).getComment());
                     globalId = id;
                     nickname = sheepList.get(list.getSelectedIndex()).getName();
                     comment = sheepList.get(list.getSelectedIndex()).getComment();
@@ -114,7 +111,7 @@ public class SheepPanel extends javax.swing.JFrame {
         jLabelUser.setText(this.connect.getUsername());
         jLabelFarm.setText(this.connect.getFarmName());
         update();
-        
+
     }
 
     /**
@@ -147,7 +144,6 @@ public class SheepPanel extends javax.swing.JFrame {
         lblPulse = new javax.swing.JLabel();
         lblTemp = new javax.swing.JLabel();
         lblNickName = new javax.swing.JLabel();
-        lblComment = new javax.swing.JLabel();
         lblIDtxt = new javax.swing.JLabel();
         lblPosTxt = new javax.swing.JLabel();
         lblUpdateTxt = new javax.swing.JLabel();
@@ -158,9 +154,11 @@ public class SheepPanel extends javax.swing.JFrame {
         sheepNicknameLabel = new javax.swing.JLabel();
         sheepCommentLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        sheepJList1 = new javax.swing.JList();
+        sheepUpdateJList = new javax.swing.JList();
         jLabel5 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtComment = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemCloseProgram = new javax.swing.JMenuItem();
@@ -178,7 +176,7 @@ public class SheepPanel extends javax.swing.JFrame {
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 634, Short.MAX_VALUE)
+            .addGap(0, 714, Short.MAX_VALUE)
         );
 
         addSheep.setText("Add new sheep");
@@ -236,9 +234,6 @@ public class SheepPanel extends javax.swing.JFrame {
 
         lblNickName.setText("-");
 
-        lblComment.setText("-");
-        lblComment.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
         lblIDtxt.setText("-");
 
         lblPosTxt.setText("-");
@@ -262,10 +257,17 @@ public class SheepPanel extends javax.swing.JFrame {
 
         sheepCommentLabel.setText("Comment");
 
-        sheepJList1.setModel(sheepShow);
-        jScrollPane2.setViewportView(sheepJList1);
+        sheepUpdateJList.setModel(sheepShow);
+        jScrollPane2.setViewportView(sheepUpdateJList);
 
         jLabel5.setText("Updates");
+
+        txtComment.setEditable(false);
+        txtComment.setColumns(20);
+        txtComment.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        txtComment.setLineWrap(true);
+        txtComment.setRows(5);
+        jScrollPane3.setViewportView(txtComment);
 
         jMenu1.setText("File");
 
@@ -302,33 +304,11 @@ public class SheepPanel extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelFarm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabelLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(sheepNicknameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(sheepUpdatedLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
-                            .addComponent(kordinateLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(idLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(sheepPulseLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(sheepTemperatureLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(sheepCommentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTemp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblIDtxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPosTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblUpdateTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPulse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblComment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblNickName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabelFarm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -337,18 +317,37 @@ public class SheepPanel extends javax.swing.JFrame {
                         .addComponent(removeSheepBtn))
                     .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(addSheep, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(idLbl2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 4, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(sheepNicknameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(sheepUpdatedLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                                    .addComponent(kordinateLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(idLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(sheepPulseLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(sheepTemperatureLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(sheepCommentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblTemp, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                                    .addComponent(lblIDtxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblPosTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblUpdateTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblPulse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblNickName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane3)))
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(refreshbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                         .addComponent(deSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -383,7 +382,7 @@ public class SheepPanel extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(idLbl)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -395,10 +394,7 @@ public class SheepPanel extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(sheepTemperatureLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(sheepNicknameLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(sheepCommentLabel)
-                                        .addGap(33, 33, 33))
+                                        .addComponent(sheepNicknameLabel))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lblIDtxt)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -410,19 +406,24 @@ public class SheepPanel extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(lblTemp)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblNickName)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblComment, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                        .addComponent(lblNickName)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(editSheepBtn)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane2))
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(editSheepBtn)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel5)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(removeSheepBtn)
+                                                .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(removeSheepBtn)
+                                        .addComponent(sheepCommentLabel)
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addComponent(jScrollPane1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -435,7 +436,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-   
+
     private void removeSheepBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSheepBtnActionPerformed
         new WarningBox().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_removeSheepBtnActionPerformed
@@ -455,7 +456,7 @@ public class SheepPanel extends javax.swing.JFrame {
         lblPosTxt.setText("");
         lblUpdateTxt.setText("");
         lblNickName.setText("");
-        lblComment.setText("");
+        txtComment.setText("");
         lblPulse.setText("");
         lblTemp.setText("");
     }//GEN-LAST:event_deSelectActionPerformed
@@ -473,13 +474,13 @@ public class SheepPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void editSheepBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSheepBtnActionPerformed
-     editSheepBtn.setVisible(false);
-     // TODO add your handling code here:
+        editSheepBtn.setVisible(false);
+        // TODO add your handling code here:
     }//GEN-LAST:event_editSheepBtnActionPerformed
 
     /**
      */
-    public void update(){
+    public void update() {
         sheepList = connect.getSheepList();
         jLabelLastUpdate.setText(new Date().toLocaleString());
         if (sheepList != null) {
@@ -489,7 +490,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 sheepShow.addElement(sheep.getID() + " - " + sheep.getName());
             }
         }
-        
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheep;
@@ -512,10 +513,10 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemCloseProgram;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel kordinateLbl;
-    private javax.swing.JLabel lblComment;
     private javax.swing.JLabel lblIDtxt;
     private javax.swing.JLabel lblNickName;
     private javax.swing.JLabel lblPosTxt;
@@ -526,10 +527,11 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JButton removeSheepBtn;
     private javax.swing.JLabel sheepCommentLabel;
     private javax.swing.JList sheepJList;
-    private javax.swing.JList sheepJList1;
     private javax.swing.JLabel sheepNicknameLabel;
     private javax.swing.JLabel sheepPulseLabel;
     private javax.swing.JLabel sheepTemperatureLabel;
+    private javax.swing.JList sheepUpdateJList;
     private javax.swing.JLabel sheepUpdatedLabel;
+    private javax.swing.JTextArea txtComment;
     // End of variables declaration//GEN-END:variables
 }
