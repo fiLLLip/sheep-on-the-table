@@ -2,6 +2,7 @@ package my.servonthetable;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,9 @@ public class ServerClient extends Thread {
     private PrintWriter out;
     private int userID = -1;
     private boolean loggedIn = false;
+    private long lastClientUpdate;
+    private Date date = new Date();
+    private Server server;
 
     /*
      * Handles the main loop of the ServerClient. Runs a continous loop
@@ -75,6 +79,10 @@ public class ServerClient extends Thread {
                         case "GETUSERID":
                             out.println(userID);
                             break;
+
+                        case "ARETHEREUPDATES":
+                            areThereUpdates();
+                            break;
                             
                         default:
                             out.println("ERROR Not a valid command");
@@ -99,11 +107,13 @@ public class ServerClient extends Thread {
      * @param newSocket  The socket from the connected client.
      * @param sqlHelper  
      */
-    public ServerClient(Socket newSocket, MySqlHelper sqlHelper) {
+    public ServerClient(Server server, Socket newSocket, MySqlHelper sqlHelper) {
         // Set properties
         this.sqlHelper = sqlHelper;
+        this.server = server;
         socket = newSocket;
         connected = true;
+        lastClientUpdate = new Long("0");
         establishConnection();
         // Get input
         start();
@@ -206,6 +216,7 @@ public class ServerClient extends Thread {
             for (Sheep s : sheepList) {
                 out.println(s.toString(true));
             }
+            lastClientUpdate = date.getTime();
             out.println("SUCCESS");
         } else {
             out.println("ERROR Not logged in");
@@ -275,6 +286,20 @@ public class ServerClient extends Thread {
             out.println("ERROR Not logged in");
         }
 
+    }
+
+    /**
+     *  Called by run() to handle the ARETHEREUPDATES order from a client,
+     *  which checks the timestamps to see whether there are updates in the
+     *  database that the client didn't fetch yet.
+     */
+    private void areThereUpdates() {
+        if (lastClientUpdate < server.getLastDBUpdate()) {
+            out.println("TRUE");
+        }
+        else {
+            out.println("FALSE");
+        }
     }
 
     /**

@@ -293,4 +293,23 @@ public class MySqlHelper {
     protected void finalize() throws Throwable {
         con.close();
     }
+
+    /**
+     * Find the timestap of the most recent update.
+     * 
+     * @return The timestap as a long, corresponding to the number of milliseconds
+     * since the first of january 1970.
+     */
+    public Long getLastUpdateTime() {
+        ResultSet results;
+        Long lastUpdate = new Long("0");
+        try {
+            String query = "SELECT UNIX_TIMESTAMP(timestamp) as timestamp FROM sheep_updates ORDER BY timestamp DESC";
+            results = stmt.executeQuery(query);
+            lastUpdate = results.getLong("timestamp");
+        } catch (SQLException ex) {
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lastUpdate;
+    }
 }
