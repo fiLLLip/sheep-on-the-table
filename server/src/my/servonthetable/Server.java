@@ -154,7 +154,7 @@ public class Server extends Thread {
             // Client has connected
             System.out.println(socket + " has connected.");
             // Add user to list
-            sheepConnectors.add(new SheepConnector(socket));
+            sheepConnectors.add(new SheepConnector(socket, sqlHelper));
         } catch (SocketTimeoutException e) {
             System.out.println("listen timeout.");
         } catch (IOException e) {

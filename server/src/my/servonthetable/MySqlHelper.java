@@ -156,6 +156,25 @@ public class MySqlHelper {
     }
 
     /**
+     * Store a new update in the database
+     * 
+     * @param sheepUpdate
+     * 
+     * @return boolean - success or failure
+     */
+    public boolean addUpdate(SheepUpdate su) {
+        try {
+            String sq = "INSERT INTO sheep_updates (sheep_id, timestamp, pos_x, pos_y, pulse, temp, alarm) VALUES ('" + su.getID() + "', '" + su.getTimeStamp() + "', '" + su.getX() + "', '" + su.getY() + "', '" + su.getPulse() + "', '" + su.getTemp() + "', '" + su.isAlarm() + "')";
+            System.out.println(sq);
+            stmt.executeUpdate(sq);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    /**
      * Update the information in the database concerning a single sheep.
      *
      * @param s - sheep object containing all the up-to-date information
