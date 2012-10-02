@@ -20,6 +20,7 @@ import javax.swing.event.MouseInputListener;
 public class SheepPanel extends javax.swing.JFrame {
 
     private DefaultListModel sheepShow = new DefaultListModel();
+    private DefaultListModel sheepUpdatesShow = new DefaultListModel();
     private List<Sheep> sheepList = new ArrayList();
     private String serverURL;
     private int serverPort;
@@ -257,7 +258,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
         sheepCommentLabel.setText("Comment");
 
-        sheepUpdateJList.setModel(sheepShow);
+        sheepUpdateJList.setModel(sheepUpdatesShow);
         jScrollPane2.setViewportView(sheepUpdateJList);
 
         jLabel5.setText("Updates");
