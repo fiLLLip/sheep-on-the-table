@@ -176,7 +176,7 @@ public class SheepPanel extends javax.swing.JFrame {
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 714, Short.MAX_VALUE)
+            .addGap(0, 719, Short.MAX_VALUE)
         );
 
         addSheep.setText("Add new sheep");
@@ -267,6 +267,8 @@ public class SheepPanel extends javax.swing.JFrame {
         txtComment.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         txtComment.setLineWrap(true);
         txtComment.setRows(5);
+        txtComment.setTabSize(4);
+        txtComment.setWrapStyleWord(true);
         jScrollPane3.setViewportView(txtComment);
 
         jMenu1.setText("File");
@@ -411,14 +413,14 @@ public class SheepPanel extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(editSheepBtn)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel5)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
+                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(removeSheepBtn)
                                                 .addGap(0, 0, Short.MAX_VALUE))))
@@ -426,10 +428,11 @@ public class SheepPanel extends javax.swing.JFrame {
                                         .addComponent(sheepCommentLabel)
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addComponent(jScrollPane1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(refreshbtn)
-                            .addComponent(deSelect)))
+                            .addComponent(deSelect))
+                        .addGap(5, 5, 5))
                     .addComponent(jInternalFrame1))
                 .addGap(0, 0, 0))
         );
