@@ -164,7 +164,7 @@ public class MySqlHelper {
      */
     public boolean addUpdate(SheepUpdate su) {
         try {
-            String sq = "INSERT INTO sheep_updates (sheep_id, timestamp, pos_x, pos_y, pulse, temp, alarm) VALUES ('" + su.getID() + "', from_unixtime('" + su.getTimeStamp() + "'), '" + su.getX() + "', '" + su.getY() + "', '" + su.getPulse() + "', '" + su.getTemp() + "', '" + su.isAlarm() + "')";
+            String sq = "INSERT INTO sheep_updates (sheep_id, timestamp, pos_x, pos_y, pulse, temp, alarm) VALUES ('" + su.getID() + "', from_unixtime('" + su.getTimeStamp() + "'), '" + su.getX() + "', '" + su.getY() + "', '" + su.getPulse() + "', '" + su.getTemp() + "', '" + su.getAlarm() + "')";
             System.out.println(sq);
             stmt.executeUpdate(sq);
             return true;
@@ -298,12 +298,12 @@ public class MySqlHelper {
      */
     public int findPhoneNumber (int sheepID) {
         try {
-            String q = "SELECT u.phone"
-                + "FROM sheep_user u, sheep_updates up, sheep_sheep s, sheep_farm f"
-                + "WHERE up.sheep_id = s.id"
-                + "AND s.farm_id = f.id"
-                + "AND u.farm_id = f.id"
-                + "AND s.id =  '" + sheepID + "'"
+            String q = "SELECT u.phone "
+                + "FROM sheep_user u, sheep_updates up, sheep_sheep s, sheep_farm f "
+                + "WHERE up.sheep_id = s.id "
+                + "AND s.farm_id = f.id "
+                + "AND u.farm_id = f.id "
+                + "AND s.id =  '" + sheepID + "' "
                 + "LIMIT 1";
             ResultSet results = stmt.executeQuery(q);
 

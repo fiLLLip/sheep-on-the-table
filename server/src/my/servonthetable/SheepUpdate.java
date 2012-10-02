@@ -92,6 +92,10 @@ public class SheepUpdate implements Serializable {
         return temperature;
     }
 
+    public int getAlarm() {
+        return alarm;
+    }
+
     public boolean isAlarm() {
         return (alarm>0);
     }
