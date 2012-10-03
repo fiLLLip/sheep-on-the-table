@@ -47,6 +47,8 @@ public class SheepPanel extends javax.swing.JFrame {
     private int globalId, pulse, temp;
     private double posY, posX;
 
+    /* to know what do to when you press the edit or save button */
+    private boolean isEditingSheep = false;
     /**
      *
      * @param sheep
@@ -469,7 +471,10 @@ public class SheepPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void removeSheepBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSheepBtnActionPerformed
-        new WarningBox().setVisible(true);        // TODO add your handling code here:
+        new WarningBox().setVisible(true);
+        /* Fix ^^, */
+        // new WarningBox(Sheep sheepToDelete).setVisible(true) <--------------
+        
     }//GEN-LAST:event_removeSheepBtnActionPerformed
 
     private void addSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepActionPerformed
@@ -505,8 +510,14 @@ public class SheepPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void editSheepBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSheepBtnActionPerformed
-        editSheepBtn.setVisible(false);
-        // TODO add your handling code here:
+        if(this.isEditingSheep) {
+            // then we should save the sheep
+            this.editSheepBtn.setText("Edit Sheep");
+            this.isEditingSheep = false;
+        } else {
+            this.editSheepBtn.setText("Save");
+            this.isEditingSheep = true;
+        }
     }//GEN-LAST:event_editSheepBtnActionPerformed
 
     /**

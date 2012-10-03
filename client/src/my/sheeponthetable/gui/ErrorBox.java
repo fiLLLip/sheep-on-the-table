@@ -30,7 +30,7 @@ public class ErrorBox extends javax.swing.JFrame {
         titleLabel = new javax.swing.JLabel();
         imageLabel = new javax.swing.JLabel();
         errorMessageLabel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        closeButton = new javax.swing.JButton();
 
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -48,10 +48,10 @@ public class ErrorBox extends javax.swing.JFrame {
         errorMessageLabel.setBackground(new java.awt.Color(255, 255, 255));
         errorMessageLabel.setText("The sheep is sad, something went wrong!");
 
-        jButton1.setText("Close");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        closeButton.setText("Close");
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                closeButtonActionPerformed(evt);
             }
         });
 
@@ -67,7 +67,7 @@ public class ErrorBox extends javax.swing.JFrame {
                     .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                         .add(jPanel1Layout.createSequentialGroup()
                             .add(210, 210, 210)
-                            .add(jButton1))
+                            .add(closeButton))
                         .add(jPanel1Layout.createSequentialGroup()
                             .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                             .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -90,7 +90,7 @@ public class ErrorBox extends javax.swing.JFrame {
                             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                             .add(errorMessageLabel)
                             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(jButton1)))
+                            .add(closeButton)))
                     .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -108,9 +108,9 @@ public class ErrorBox extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,9 +147,9 @@ public class ErrorBox extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton closeButton;
     public javax.swing.JLabel errorMessageLabel;
     public javax.swing.JLabel imageLabel;
-    public javax.swing.JButton jButton1;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
