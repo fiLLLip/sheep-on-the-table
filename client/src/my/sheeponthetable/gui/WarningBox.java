@@ -30,7 +30,7 @@ public class WarningBox extends javax.swing.JFrame {
         abort = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Warning");
 
         jButton1.setText("Yes");
 

@@ -49,7 +49,7 @@ public class AddNewSheep extends javax.swing.JFrame {
 
         jToggleButton3.setText("jToggleButton3");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Register new Sheep");
         setAutoRequestFocus(false);
         setPreferredSize(new java.awt.Dimension(409, 305));
         setResizable(false);
