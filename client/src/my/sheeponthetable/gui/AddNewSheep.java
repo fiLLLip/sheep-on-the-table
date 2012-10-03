@@ -171,12 +171,27 @@ public class AddNewSheep extends javax.swing.JFrame {
     }//GEN-LAST:event_clearbtnActionPerformed
 
     private void addSheepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepButtonActionPerformed
+        
+        // sjekker om alle felt er fylt ut
+        if(     this.txtBorn.getText().equals("") &&
+                this.txtNick.getText().equals("") &&
+                this.txtWeight.getText().equals("") &&
+                this.txtComment.getText().equals(""))
+        {
+            System.out.println("Error");
+            new ErrorBox().setVisible(true);
+            //errorBox.errorMessageLabel.setText("Please fill in all required fields.");
+           
+            return;
+        }
+        // alle felt er fylt ut, opprett sau
+        
         Sheep newSheep = new Sheep(-1, connect.getUserId(), txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, Double.parseDouble(txtWeight.getText()));
         if(connect.newSheep(newSheep)) {
             this.setVisible(false);
         } else {
-            //ErrorMessageDialog errorBox = new ErrorMessageDialog();
-            //errorBox.errorMessageDialogTitleLabel.setText("halla");
+            ErrorBox errorBox = new ErrorBox();
+            errorBox.errorMessageLabel.setText("Sheep creation failed.");
         }
     }//GEN-LAST:event_addSheepButtonActionPerformed
 
