@@ -3,7 +3,9 @@
  * and open the template in the editor.
  */
 package my.sheeponthetable.gui;
+
 import my.sheeponthetable.tools.*;
+
 /**
  *
  * @author Håkon
@@ -164,37 +166,37 @@ public class AddNewSheep extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelActionPerformed
 
     private void clearbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearbtnActionPerformed
-    txtBorn.setText("");
-    txtNick.setText("");
-    txtWeight.setText("");
-    txtComment.setText("");// TODO add your handling code here:
+        txtBorn.setText("");
+        txtNick.setText("");
+        txtWeight.setText("");
+        txtComment.setText("");// TODO add your handling code here:
     }//GEN-LAST:event_clearbtnActionPerformed
 
     private void addSheepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepButtonActionPerformed
-        
+        ErrorBox errorBox = null;
         // sjekker om alle felt er fylt ut
-        if(     this.txtBorn.getText().equals("") &&
-                this.txtNick.getText().equals("") &&
-                this.txtWeight.getText().equals("") &&
-                this.txtComment.getText().equals(""))
-        {
-            System.out.println("Error");
-            new ErrorBox().setVisible(true);
-            //errorBox.errorMessageLabel.setText("Please fill in all required fields.");
-           
+        if (this.txtBorn.getText().equals("")
+                && this.txtNick.getText().equals("")
+                && this.txtWeight.getText().equals("")
+                && this.txtComment.getText().equals("")) {
+            System.out.println("Error should now show up...");
+            errorBox = new ErrorBox();
+            errorBox.errorMessageLabel.setText("Please fill in all the required fields.");
+            errorBox.setVisible(true);
             return;
         }
         // alle felt er fylt ut, opprett sau
-        
+
         Sheep newSheep = new Sheep(-1, connect.getUserId(), txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, Double.parseDouble(txtWeight.getText()));
-        if(connect.newSheep(newSheep)) {
+        if (connect.newSheep(newSheep)) {
             this.setVisible(false);
         } else {
-            ErrorBox errorBox = new ErrorBox();
+            if(errorBox == null)
+            errorBox = new ErrorBox();
             errorBox.errorMessageLabel.setText("Sheep creation failed.");
+            errorBox.setVisible(true);
         }
     }//GEN-LAST:event_addSheepButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheepButton;
     private javax.swing.JToggleButton cancel;

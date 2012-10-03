@@ -132,6 +132,7 @@ public class PasswordScreen extends javax.swing.JFrame {
 
         passwordLabel.setText("Password");
 
+        rememberMeCheckbox.setBackground(new java.awt.Color(255, 255, 255));
         rememberMeCheckbox.setText("Remember me");
         rememberMeCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
