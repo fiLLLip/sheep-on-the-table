@@ -277,7 +277,7 @@ public class PasswordScreen extends javax.swing.JFrame {
             this.config.setPassword("");
         }
         new SheepPanel(this.connect).setVisible(true);
-        this.setVisible(false);
+        
         this.dispose();
     }
     

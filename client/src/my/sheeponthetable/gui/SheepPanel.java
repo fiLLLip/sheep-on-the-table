@@ -471,9 +471,7 @@ public class SheepPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void removeSheepBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSheepBtnActionPerformed
-        new WarningBox().setVisible(true);
-        /* Fix ^^, */
-        // new WarningBox(Sheep sheepToDelete).setVisible(true) <--------------
+        new WarningBox( this.sheepList.get(this.sheepJList.getSelectedIndex()), this.connect).setVisible(true);
         
     }//GEN-LAST:event_removeSheepBtnActionPerformed
 

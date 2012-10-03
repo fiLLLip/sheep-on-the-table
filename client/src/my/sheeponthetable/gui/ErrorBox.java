@@ -109,7 +109,7 @@ public class ErrorBox extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
