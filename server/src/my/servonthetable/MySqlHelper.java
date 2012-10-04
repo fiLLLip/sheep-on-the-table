@@ -200,14 +200,15 @@ public class MySqlHelper {
      */
     public boolean removeSheep(Sheep sheep) {
         try {
-            stmt.executeQuery("DELETE FROM sheep_sheep WHERE id = '" + sheep.getID() + "'");
+            stmt.execute("DELETE FROM sheep_sheep WHERE id = '" + sheep.getID() + "'");
+            
         } catch (SQLException ex) {
             Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
 
         try {
-            stmt.executeQuery("DELETE FROM sheep_updates WHERE sheep_id = '" + sheep.getID() + "'");
+            stmt.execute("DELETE FROM sheep_updates WHERE sheep_id = '" + sheep.getID() + "'");
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);
