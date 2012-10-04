@@ -14,6 +14,7 @@ import my.sheeponthetable.tools.Sheep;
 public class WarningBox extends javax.swing.JFrame {
 
     ServerConnector connect;
+    Sheep sheepToRemove;
     /**
      * Creates new form WarningBox
      */
@@ -26,6 +27,7 @@ public class WarningBox extends javax.swing.JFrame {
         this.titleLabel.setText("Are you sure?");
         this.errorMessageLabel.setText("Delete sheep " + sheep.getName() + " with id #" + sheep.getID() + "?");
         this.connect = connect;
+        this.sheepToRemove = sheep;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -130,9 +132,7 @@ public class WarningBox extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
-        /* REMOVE THE SHEEP ***********/
-        /* removemethod is missing :( */
-        /******************************/
+        this.connect.removeSheep(this.sheepToRemove);
         this.dispose();
     }//GEN-LAST:event_confirmButtonActionPerformed
 

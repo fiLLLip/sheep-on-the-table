@@ -235,6 +235,29 @@ public class ServerConnector {
         }
         return false;
     }
+    
+    /**
+     * Asks the server to remove a from the database.
+     *
+     * @param sheep 
+     * @return true if successful or false if an error happened.
+     */
+    public Boolean removeSheep (Sheep sheep) {
+        if (isConnected()) {
+            try {
+                out.println("REMOVESHEEP " + sheep.toString(false));
+                if (!in.readLine().trim().equals("SUCCESS")) {
+                    return false;
+                }
+                return true;
+            } catch (IOException e) {
+                this.logger =  "Could not remove sheep."
+                        + sheep.toString(false);
+                return false;
+            }
+        }
+        return false;
+    }
 
     /**
      * Asks the server for current user's ID.

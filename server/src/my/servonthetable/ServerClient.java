@@ -75,6 +75,10 @@ public class ServerClient extends Thread {
                         case "NEWSHEEP":
                             newSheep(input);
                             break;
+                            
+                        case "REMOVESHEEP":
+                            removeSheep(input);
+                            break;
 
                         case "GETUSERID":
                             out.println(userID);
@@ -280,6 +284,28 @@ public class ServerClient extends Thread {
                 out.println("SUCCESS");
             } else {
                 out.println("ERROR Could not store sheep");
+            }
+
+        } else {
+            out.println("ERROR Not logged in");
+        }
+
+    }
+    
+    /**
+     *  Called by run() to handle the REMOVESHEEP order from a client.
+     */
+    private void removeSheep(String[] input) {
+        if (loggedIn) {
+            String sheepParseString = buildParameterString(input);
+            
+            System.out.println(sheepParseString);
+            Sheep newSheep = new Sheep(sheepParseString);
+            boolean success = sqlHelper.removeSheep(newSheep);
+            if (success) {
+                out.println("SUCCESS");
+            } else {
+                out.println("ERROR Could not remove sheep");
             }
 
         } else {
