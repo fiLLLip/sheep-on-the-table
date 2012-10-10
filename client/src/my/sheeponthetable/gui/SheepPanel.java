@@ -508,14 +508,15 @@ public class SheepPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void editSheepBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSheepBtnActionPerformed
-        if(this.isEditingSheep) {
+      /*  if(this.isEditingSheep) {
             // then we should save the sheep
             this.editSheepBtn.setText("Edit Sheep");
             this.isEditingSheep = false;
         } else {
             this.editSheepBtn.setText("Save");
             this.isEditingSheep = true;
-        }
+        }*/
+         new EditSheep().setVisible(true);
     }//GEN-LAST:event_editSheepBtnActionPerformed
 
     /**
