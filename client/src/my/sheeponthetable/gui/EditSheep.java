@@ -6,6 +6,7 @@ package my.sheeponthetable.gui;
 //TROOLOLOLOL
 
 import my.sheeponthetable.tools.ServerConnector;
+import my.sheeponthetable.tools.Sheep;
 
 /**
  *
@@ -81,6 +82,11 @@ public class EditSheep extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtComment);
 
         saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -208,6 +214,32 @@ public class EditSheep extends javax.swing.JFrame {
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+    ErrorBox errorBox = null;
+        // sjekker om alle felt er fylt ut
+        if (this.txtBorn.getText().equals("")
+                && this.txtNick.getText().equals("")
+                && this.txtWeight.getText().equals("")
+                && this.txtComment.getText().equals("")) {
+            System.out.println("Error should now show up...");
+            errorBox = new ErrorBox();
+            errorBox.errorMessageLabel.setText("Please fill in all the required fields.");
+            errorBox.setVisible(true);
+            return;
+        }
+        /*// alle felt er fylt ut, opprett sau
+
+        Sheep newSheep = new Sheep(-1, connect.getUserId(), txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, Double.parseDouble(txtWeight.getText()));
+        if (connect.newSheep(newSheep)) {
+            this.setVisible(false);
+        } else {
+            if(errorBox == null)
+            errorBox = new ErrorBox();
+            errorBox.errorMessageLabel.setText("Sheep creation failed.");
+            errorBox.setVisible(true);
+        */   // TODO add your handling code here:
+    }//GEN-LAST:event_saveButtonActionPerformed
 
     /**
      * @param args the command line arguments
