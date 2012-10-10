@@ -4,6 +4,7 @@
  */
 package my.sheeponthetable.gui;
 
+import java.awt.Color;
 import java.util.*;
 import javax.swing.*;
 import my.sheeponthetable.tools.*;
@@ -529,6 +530,9 @@ public class SheepPanel extends javax.swing.JFrame {
                 Sheep sheep;
                 sheep = sheepList.get(i);
                 sheepShow.addElement(sheep.getID() + " - " + sheep.getName());
+                if(!sheepList.get(i).isAlive()){
+                setBackground(Color.RED);
+                }
             }
         }
 

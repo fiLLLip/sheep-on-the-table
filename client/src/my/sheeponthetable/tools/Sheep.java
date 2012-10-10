@@ -185,7 +185,13 @@ public class Sheep implements Serializable {
     public void setUpdates (List<SheepUpdate> updates) {
         this.updates = updates;
     }
-
+    /**
+     *
+     * @param bo
+     */
+    public void setDeceased (int bo) {
+       this.deceased = bo;
+    }
     /**
      *
      * @param su
