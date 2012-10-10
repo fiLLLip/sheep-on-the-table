@@ -191,6 +191,8 @@ public class EditSheep extends javax.swing.JFrame {
         txtNick.setText("");
         txtWeight.setText("");
         txtComment.setText("");
+        isDeadCheck.setSelected(false);
+        
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
