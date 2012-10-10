@@ -516,7 +516,7 @@ public class SheepPanel extends javax.swing.JFrame {
             this.editSheepBtn.setText("Save");
             this.isEditingSheep = true;
         }*/
-         new EditSheep().setVisible(true);
+         new EditSheep(connect, globalId).setVisible(true);
     }//GEN-LAST:event_editSheepBtnActionPerformed
 
     /**

@@ -32,6 +32,7 @@ public class ErrorBox extends javax.swing.JFrame {
         errorMessageLabel = new javax.swing.JLabel();
         closeButton = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(100, 100));

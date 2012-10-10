@@ -4,17 +4,27 @@
  */
 package my.sheeponthetable.gui;
 //TROOLOLOLOL
+
+import my.sheeponthetable.tools.ServerConnector;
+
 /**
  *
  * @author Håkon
  */
 public class EditSheep extends javax.swing.JFrame {
-
+    private final int globalId;
     /**
      * Creates new form EditSheep
      */
-    public EditSheep() {
+    ServerConnector connect;
+
+    /**
+     * Creates new form AddNewSheep
+     */
+    public EditSheep(ServerConnector connect, int id) {
         initComponents();
+        this.connect = connect;
+        this.globalId = id;
     }
 
     /**
@@ -48,7 +58,7 @@ public class EditSheep extends javax.swing.JFrame {
 
         jButton4.setText("jButton4");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         idLabel.setText("ID:");
 
@@ -229,7 +239,7 @@ public class EditSheep extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditSheep().setVisible(true);
+               // new EditSheep().setVisible(true);
             }
         });
     }
