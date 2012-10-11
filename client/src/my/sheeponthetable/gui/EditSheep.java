@@ -5,6 +5,8 @@
 package my.sheeponthetable.gui;
 //TROOLOLOLOL
 
+import java.util.ArrayList;
+import java.util.List;
 import my.sheeponthetable.tools.ServerConnector;
 import my.sheeponthetable.tools.Sheep;
 
@@ -14,11 +16,12 @@ import my.sheeponthetable.tools.Sheep;
  */
 public class EditSheep extends javax.swing.JFrame {
     private final int globalId;
+    
     /**
      * Creates new form EditSheep
      */
     ServerConnector connect;
-
+    Sheep change;
     /**
      * Creates new form AddNewSheep
      */
@@ -26,6 +29,17 @@ public class EditSheep extends javax.swing.JFrame {
         initComponents();
         this.connect = connect;
         this.globalId = id;
+        getTheSheep();
+    }
+    
+    public void getTheSheep(){
+    List<Sheep> temp = new ArrayList();
+    temp = connect.getSheepList();
+    for(Sheep element :temp){
+    if (element.getID() == globalId)
+         change = element;   }
+    idLabel.setText(Integer.toString(change.getID()));
+    farmLabel.setText(this.connect.getFarmName());
     }
 
     /**
@@ -74,6 +88,12 @@ public class EditSheep extends javax.swing.JFrame {
         weightLabel.setText("Weight:");
 
         bornLabel.setText("Born ddmmyyyy:");
+
+        txtWeight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtWeightActionPerformed(evt);
+            }
+        });
 
         commentLabel.setText("Comment:");
 
@@ -228,18 +248,24 @@ public class EditSheep extends javax.swing.JFrame {
             errorBox.setVisible(true);
             return;
         }
-        /*// alle felt er fylt ut, opprett sau
-
-        Sheep newSheep = new Sheep(-1, connect.getUserId(), txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, Double.parseDouble(txtWeight.getText()));
-        if (connect.newSheep(newSheep)) {
-            this.setVisible(false);
-        } else {
-            if(errorBox == null)
-            errorBox = new ErrorBox();
-            errorBox.errorMessageLabel.setText("Sheep creation failed.");
-            errorBox.setVisible(true);
-        */   // TODO add your handling code here:
+        else{
+            if (!this.txtBorn.getText().equals("")){
+                change.setBornYear((Integer.parseInt(txtBorn.getText())));}
+            if (!this.txtWeight.getText().equals("")){
+                change.setWeight((Double.parseDouble(txtWeight.getText())));}
+            if (!this.txtNick.getText().equals("")){
+                change.setNavn(txtNick.getText());}
+            if (!this.txtComment.getText().equals("")){
+                change.setKommentar(txtComment.getText());}
+            if(isDeadCheck.isSelected()){change.setDeceaced(1);}
+         
+         this.dispose();
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void txtWeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWeightActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtWeightActionPerformed
 
     /**
      * @param args the command line arguments

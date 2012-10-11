@@ -177,6 +177,21 @@ public class Sheep implements Serializable {
     public void setBornYear(int i) {
         this.born = i;
     }
+     /**
+     *
+     * @param w
+     */
+    public void setWeight(double w) {
+        this.weight = w;
+    }
+    
+    /**
+    *
+    * @param d
+    */
+    public void setDeceaced(int d) {
+        this.deceased = d;
+    }
 
     /**
      *

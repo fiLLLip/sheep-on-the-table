@@ -4,6 +4,7 @@
  */
 package my.sheeponthetable.gui;
 
+import java.awt.Color;
 import java.util.*;
 import javax.swing.*;
 import my.sheeponthetable.tools.*;
@@ -111,6 +112,12 @@ public class SheepPanel extends javax.swing.JFrame {
                     globalId = id;
                     nickname = sheepList.get(list.getSelectedIndex()).getName();
                     comment = sheepList.get(list.getSelectedIndex()).getComment();
+                    /*if (!sheepList.get(list.getSelectedIndex()).isAlive())
+                            setBackground(Color.red);
+                    if (sheepList.get(list.getSelectedIndex()).getDeceased()== -1)
+                            setBackground(Color.blue);
+                    if (sheepList.get(list.getSelectedIndex()).isAlive())
+                            setBackground(Color.green);*/
                     if (!sheepList.get(list.getSelectedIndex()).getUpdates().isEmpty()) {
                         // Getting update index 0 because 0 is the latest (newest) update
                         double xpos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getX();
@@ -529,6 +536,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 Sheep sheep;
                 sheep = sheepList.get(i);
                 sheepShow.addElement(sheep.getID() + " - " + sheep.getName());
+               
             }
         }
 
