@@ -12,14 +12,14 @@ import my.sheeponthetable.tools.*;
  */
 public class AddNewSheep extends javax.swing.JFrame {
 
-    ServerConnector connect;
+    SheepPanel sheepPanel;
 
     /**
      * Creates new form AddNewSheep
      */
-    public AddNewSheep(ServerConnector connect) {
+    public AddNewSheep(SheepPanel sp) {
         initComponents();
-        this.connect = connect;
+        this.sheepPanel = sp;
     }
 
     /**
@@ -187,15 +187,18 @@ public class AddNewSheep extends javax.swing.JFrame {
             return;
         }
         // alle felt er fylt ut, opprett sau
-
+        ServerConnector connect = sheepPanel.getConnector();
         Sheep newSheep = new Sheep(-1, connect.getUserId(), txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, Double.parseDouble(txtWeight.getText()));
         if (connect.newSheep(newSheep)) {
             this.setVisible(false);
+            sheepPanel.refreshSheepList();
+            this.dispose();
         } else {
             if(errorBox == null)
             errorBox = new ErrorBox();
             errorBox.errorMessageLabel.setText("Sheep creation failed.");
             errorBox.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_addSheepButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

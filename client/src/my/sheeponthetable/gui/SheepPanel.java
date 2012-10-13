@@ -478,18 +478,22 @@ public class SheepPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void removeSheepBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSheepBtnActionPerformed
-        new WarningBox( this.sheepList.get(this.sheepJList.getSelectedIndex()), this.connect).setVisible(true);
+        new WarningBox( this.sheepList.get(this.sheepJList.getSelectedIndex()), this).setVisible(true);
         
     }//GEN-LAST:event_removeSheepBtnActionPerformed
 
     private void addSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepActionPerformed
-        new AddNewSheep(connect).setVisible(true);        // TODO add your handling code here:
+        new AddNewSheep(this).setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_addSheepActionPerformed
 
     private void refreshbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshbtnActionPerformed
+        refreshSheepList();
+    }//GEN-LAST:event_refreshbtnActionPerformed
+
+    public void refreshSheepList() {
         sheepShow.removeAllElements();
         update();
-    }//GEN-LAST:event_refreshbtnActionPerformed
+    }
 
     private void deSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deSelectActionPerformed
         sheepJList.clearSelection();  // TODO add your handling code here:
@@ -574,6 +578,10 @@ public class SheepPanel extends javax.swing.JFrame {
 
         jXSheepMap.addKeyListener(new PanKeyListener(jXSheepMap));
 
+    }
+
+    public ServerConnector getConnector() {
+        return connect;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

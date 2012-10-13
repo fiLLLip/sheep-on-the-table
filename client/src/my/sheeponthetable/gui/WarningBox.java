@@ -13,7 +13,7 @@ import my.sheeponthetable.tools.Sheep;
  */
 public class WarningBox extends javax.swing.JFrame {
 
-    ServerConnector connect;
+    SheepPanel sheepPanel;
     Sheep sheepToRemove;
     /**
      * Creates new form WarningBox
@@ -22,11 +22,11 @@ public class WarningBox extends javax.swing.JFrame {
         initComponents();
     }
     
-    public WarningBox(Sheep sheep, ServerConnector connect) {
+    public WarningBox(Sheep sheep, SheepPanel sp) {
         initComponents();
         this.titleLabel.setText("Are you sure?");
         this.errorMessageLabel.setText("Delete sheep " + sheep.getName() + " with id #" + sheep.getID() + "?");
-        this.connect = connect;
+        this.sheepPanel = sp;
         this.sheepToRemove = sheep;
     }
     /**
@@ -133,8 +133,9 @@ public class WarningBox extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
-        this.connect.removeSheep(this.sheepToRemove);
-        this.dispose();
+        sheepPanel.getConnector().removeSheep(this.sheepToRemove);
+        sheepPanel.refreshSheepList();
+        dispose();
     }//GEN-LAST:event_confirmButtonActionPerformed
 
     private void abortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abortButtonActionPerformed
