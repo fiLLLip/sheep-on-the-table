@@ -16,7 +16,7 @@ public class SheepUpdate implements Serializable {
     private double pos_y;
     private int pulse;
     private double temperature;
-    private int timestamp;
+    private long timestamp;
     private int alarm;
 
     /**
@@ -28,13 +28,16 @@ public class SheepUpdate implements Serializable {
         this.pos_y = -1;
         this.pulse = -1;
         this.temperature = -1.0;
-        this.timestamp = -1;
+        this.timestamp = 0;
         this.alarm = -1;
     }
 
     public SheepUpdate(String string) {
         System.out.println(string);
         String[] parseString = string.split("@");
+        for (int i = 0; i < parseString.length; i++) {
+            System.out.println(parseString[i]);
+        }
         try {
             id = Integer.parseInt(parseString[1]);
             pos_x = Double.parseDouble(parseString[2]);
@@ -42,7 +45,7 @@ public class SheepUpdate implements Serializable {
             pulse = Integer.parseInt(parseString[4]);
             temperature = Double.parseDouble(parseString[5]);
             alarm = Integer.parseInt(parseString[6]);
-            timestamp = Integer.parseInt(parseString[7]);
+            timestamp = Long.parseLong(parseString[7]);
         } catch (Exception e) {
             System.err.println("Could not convert string to SheepUpdate object!");
             e.printStackTrace();
@@ -58,7 +61,7 @@ public class SheepUpdate implements Serializable {
      * @param temperature
      * @param timestamp
      */
-    public SheepUpdate (int id, double pos_x, double pos_y, int pulse, double temperature, int alarm, int timestamp) {
+    public SheepUpdate (int id, double pos_x, double pos_y, int pulse, double temperature, int alarm, long timestamp) {
         this.id = id;
         this.pos_x = pos_x;
         this.pos_y = pos_y;
@@ -72,7 +75,7 @@ public class SheepUpdate implements Serializable {
         return id;
     }
 
-    public int getTimeStamp() {
+    public Long getTimeStamp() {
         return timestamp;
     }
 
@@ -92,12 +95,12 @@ public class SheepUpdate implements Serializable {
         return temperature;
     }
 
-    public int getAlarm() {
-        return alarm;
-    }
-
     public boolean isAlarm() {
         return (alarm>0);
+    }
+
+    public int getAlarm() {
+        return alarm;
     }
 
     public void setAlarm(int alarm) {

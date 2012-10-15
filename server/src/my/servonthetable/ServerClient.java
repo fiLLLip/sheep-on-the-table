@@ -220,7 +220,7 @@ public class ServerClient extends Thread {
             for (Sheep s : sheepList) {
                 out.println(s.toString(true));
             }
-            lastClientUpdate = date.getTime();
+            lastClientUpdate = date.getTime()/1000;
             out.println("SUCCESS");
         } else {
             out.println("ERROR Not logged in");
@@ -320,6 +320,8 @@ public class ServerClient extends Thread {
      *  database that the client didn't fetch yet.
      */
     private void areThereUpdates() {
+        System.out.println("Last C Update: " + lastClientUpdate);
+        System.out.println("Last S Update: " + server.getLastDBUpdate());
         if (lastClientUpdate < server.getLastDBUpdate()) {
             out.println("TRUE");
         }

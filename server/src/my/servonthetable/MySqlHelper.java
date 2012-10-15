@@ -23,6 +23,7 @@ public class MySqlHelper {
     private int port = 3306;
     private Connection con;
     private Statement stmt;
+    private Server server;
 
     /**
      * Constructor method. All the information required to connect to the
@@ -34,12 +35,13 @@ public class MySqlHelper {
      * @param dbName - the name of the database
      * @param port   - the port that you use to acess the database
      */
-    public MySqlHelper(String dbHost, int port, String dbUser, String dbPass, String dbName) {
+    public MySqlHelper(String dbHost, int port, String dbUser, String dbPass, String dbName, Server server) {
         this.dbHost = dbHost;
         this.dbName = dbName;
         this.dbPass = dbPass;
         this.dbUser = dbUser;
         this.port = port;
+        this.server = server;
     }
 
     /**
@@ -167,6 +169,7 @@ public class MySqlHelper {
             String sq = "INSERT INTO sheep_updates (sheep_id, timestamp, pos_x, pos_y, pulse, temp, alarm) VALUES ('" + su.getID() + "', from_unixtime('" + su.getTimeStamp() + "'), '" + su.getX() + "', '" + su.getY() + "', '" + su.getPulse() + "', '" + su.getTemp() + "', '" + su.getAlarm() + "')";
             System.out.println(sq);
             stmt.executeUpdate(sq);
+            server.setLastDBUpdate(su.getTimeStamp());
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(MySqlHelper.class.getName()).log(Level.SEVERE, null, ex);

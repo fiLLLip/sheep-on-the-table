@@ -29,7 +29,7 @@ public class Server extends Thread {
     private MySqlHelper sqlHelper;
     private Config config;
     private SmsSender sendSms;
-    private Long lastUpdate;
+    private long lastUpdate;
 
     /**
      * @param args the command line arguments
@@ -71,7 +71,8 @@ public class Server extends Thread {
                 config.getDBPort(),
                 config.getDBUsername(),
                 config.getDBPassword(),
-                config.getDBName());
+                config.getDBName(),
+                this);
         if (!sqlHelper.connect()) {
             System.out.println("Could not connect to MySQL");
             System.exit(1);
@@ -178,7 +179,7 @@ public class Server extends Thread {
     /**
      * Set last update
      */
-    public void setLastDBUpdate(Long lastUpdate) {
+    public void setLastDBUpdate(long lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

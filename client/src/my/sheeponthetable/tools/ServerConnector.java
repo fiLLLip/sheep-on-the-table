@@ -327,6 +327,30 @@ public class ServerConnector {
         }
     }
 
+    /**
+     * haveNewUpdates is called to ask the server whether there have arrived new
+     * updates that the client hasn't seen yet.
+     *
+     * @return
+     */
+    public boolean haveNewUpdates() {
+        try {
+            out.println("ARETHEREUPDATES");
+            String input = in.readLine();
+            System.out.println(input);
+            if (input.equals("TRUE")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        } catch (IOException ex) {
+            String getThisClassName = ServerConnector.class.getName();
+            Logger.getLogger(getThisClassName).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
 
     /**
      * Closes the socket, hence terminating the connection to the server.

@@ -43,6 +43,7 @@ public class SheepPanel extends javax.swing.JFrame {
     private int farmID;
     private int userID;
     private ServerConnector connect;
+    private ServerPinger serverPinger;
     // mye sheep info
     private String nickname, comment;
     private int globalId, pulse, temp;
@@ -69,7 +70,7 @@ public class SheepPanel extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         editSheepBtn.setEnabled(false);
         removeSheepBtn.setEnabled(false);
-        
+
         mapInitialize();
         
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
@@ -123,6 +124,7 @@ public class SheepPanel extends javax.swing.JFrame {
                         double xpos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getX();
                         double ypos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getY();
                         lblPosTxt.setText(xpos + ", " + ypos);
+                        // Her klikker noko. TOFIX
                         Date formattedTimestamp = new Date((long) sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTimeStamp() * 1000);
                         lblUpdateTxt.setText(formattedTimestamp.toLocaleString());
                         lblPulse.setText(Integer.toString(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getPulse()));
@@ -138,6 +140,8 @@ public class SheepPanel extends javax.swing.JFrame {
         jLabelFarm.setText(this.connect.getFarmName());
         update();
 
+        this.serverPinger = new ServerPinger(this);
+        serverPinger.start();
     }
 
     /**
