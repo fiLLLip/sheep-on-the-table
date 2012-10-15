@@ -134,7 +134,7 @@ public class WarningBox extends javax.swing.JFrame {
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         sheepPanel.getConnector().removeSheep(this.sheepToRemove);
-        sheepPanel.refreshSheepList();
+        sheepPanel.update();
         dispose();
     }//GEN-LAST:event_confirmButtonActionPerformed
 

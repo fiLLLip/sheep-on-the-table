@@ -490,13 +490,9 @@ public class SheepPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_addSheepActionPerformed
 
     private void refreshbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshbtnActionPerformed
-        refreshSheepList();
+        update();
     }//GEN-LAST:event_refreshbtnActionPerformed
 
-    public void refreshSheepList() {
-        sheepShow.removeAllElements();
-        update();
-    }
 
     private void deSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deSelectActionPerformed
         sheepJList.clearSelection();  // TODO add your handling code here:
@@ -538,6 +534,7 @@ public class SheepPanel extends javax.swing.JFrame {
     public void update() {
         sheepList = connect.getSheepList();
         jLabelLastUpdate.setText(new Date().toLocaleString());
+        sheepShow.removeAllElements();
         if (sheepList != null) {
             for (int i = 0; i < sheepList.size(); i++) {
                 Sheep sheep;
@@ -546,7 +543,6 @@ public class SheepPanel extends javax.swing.JFrame {
                
             }
         }
-
     }
     
     private void mapInitialize() {

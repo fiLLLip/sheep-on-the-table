@@ -191,7 +191,7 @@ public class AddNewSheep extends javax.swing.JFrame {
         Sheep newSheep = new Sheep(-1, connect.getUserId(), txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, Double.parseDouble(txtWeight.getText()));
         if (connect.newSheep(newSheep)) {
             this.setVisible(false);
-            sheepPanel.refreshSheepList();
+            sheepPanel.update();
             this.dispose();
         } else {
             if(errorBox == null)
