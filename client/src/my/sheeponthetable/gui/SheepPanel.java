@@ -124,8 +124,7 @@ public class SheepPanel extends javax.swing.JFrame {
                         double xpos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getX();
                         double ypos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getY();
                         lblPosTxt.setText(xpos + ", " + ypos);
-                        // Her klikker noko. TOFIX
-                        Date formattedTimestamp = new Date((long) sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTimeStamp() * 1000);
+                        Date formattedTimestamp = new Date(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTimeStamp()*1000);
                         lblUpdateTxt.setText(formattedTimestamp.toLocaleString());
                         lblPulse.setText(Integer.toString(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getPulse()));
                         lblTemp.setText(Double.toString(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTemp()));

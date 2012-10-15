@@ -127,7 +127,7 @@ public class MySqlHelper {
                         results.getDouble("pos_y"),
                         results.getInt("pulse"),
                         results.getDouble("temp"),
-                        0,
+                        results.getInt("alarm"),
                         results.getInt("timestamp")));
             }
             results.close();

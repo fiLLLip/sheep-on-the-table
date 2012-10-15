@@ -7,11 +7,11 @@ import subprocess, datetime, time
 
 process = subprocess.Popen(['telnet', '0.0.0.0', '4104'], stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-ID = "16"
-x = "65.0"
-y = "62.5"
-puls = "99"
-temp = "37.5"
+ID = "11"
+x = "0.0"
+y = "0.5"
+puls = "100"
+temp = "39.5"
 alarm = "0"
 
 tid = str(time.mktime(datetime.datetime.now().timetuple()))
