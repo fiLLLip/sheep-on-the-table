@@ -121,6 +121,14 @@ public class Sheep implements Serializable {
     public int getBorn() {
         return born;
     }
+    
+    /**
+     *
+     * @return the unix timestamp of when sheep was born
+     */
+    public double getWeight() {
+        return weight;
+    }
 	
 	/**
      *

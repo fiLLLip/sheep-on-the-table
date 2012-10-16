@@ -26,7 +26,7 @@ public class ServerPinger extends Thread {
             System.out.println("Doing a check!");
             if (connect.haveNewUpdates()) {
                 System.out.println("New stuff!");
-                sheepPanel.refreshSheepList();
+                sheepPanel.update();
             }
             try {
                 Thread.sleep(WAITING_PERIOD);
