@@ -15,6 +15,7 @@ public class ErrorBox extends javax.swing.JFrame {
      */
     public ErrorBox() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

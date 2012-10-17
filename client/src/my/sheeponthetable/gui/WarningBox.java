@@ -24,6 +24,7 @@ public class WarningBox extends javax.swing.JFrame {
     
     public WarningBox(Sheep sheep, SheepPanel sp) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.titleLabel.setText("Are you sure?");
         this.errorMessageLabel.setText("Delete sheep " + sheep.getName() + " with id #" + sheep.getID() + "?");
         this.sheepPanel = sp;
