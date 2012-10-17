@@ -166,7 +166,7 @@ public class Sheep implements Serializable {
      *
      * @param n
      */
-    public void setNavn(String n) {
+    public void setName(String n) {
         this.name = n;
     }
 
