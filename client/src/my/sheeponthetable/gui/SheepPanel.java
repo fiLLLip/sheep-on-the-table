@@ -376,10 +376,20 @@ public class SheepPanel extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuFarmTools.setText("Farm Tools");
+        jMenuFarmTools.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuFarmToolsActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuFarmTools);
 
         jMenuProperties.setText("User Properties");
         jMenuProperties.setActionCommand("UserProperties");
+        jMenuProperties.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuPropertiesActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuProperties);
 
         jMenuBar1.add(jMenu1);
@@ -649,6 +659,16 @@ public class SheepPanel extends javax.swing.JFrame {
     private void txtDeadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeadActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDeadActionPerformed
+
+    private void jMenuFarmToolsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFarmToolsActionPerformed
+        this.setVisible(false);
+        new FarmTools(this).setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_jMenuFarmToolsActionPerformed
+
+    private void jMenuPropertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPropertiesActionPerformed
+        this.setVisible(false);
+        new UserProperties(this).setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_jMenuPropertiesActionPerformed
 
     /**
      */

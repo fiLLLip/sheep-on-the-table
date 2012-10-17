@@ -29,12 +29,18 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Farm Tools"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuFarmToolsActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuProperties">
               <Properties>
                 <Property name="text" type="java.lang.String" value="User Properties"/>
                 <Property name="actionCommand" type="java.lang.String" value="UserProperties"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuPropertiesActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
