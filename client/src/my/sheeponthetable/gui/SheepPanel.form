@@ -25,6 +25,17 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuFarmTools">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Farm Tools"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuProperties">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="User Properties"/>
+                <Property name="actionCommand" type="java.lang.String" value="UserProperties"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
       </SubComponents>

@@ -222,6 +222,8 @@ public class SheepPanel extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItemCloseProgram = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuFarmTools = new javax.swing.JMenuItem();
+        jMenuProperties = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -372,6 +374,13 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem2);
+
+        jMenuFarmTools.setText("Farm Tools");
+        jMenu1.add(jMenuFarmTools);
+
+        jMenuProperties.setText("User Properties");
+        jMenuProperties.setActionCommand("UserProperties");
+        jMenu1.add(jMenuProperties);
 
         jMenuBar1.add(jMenu1);
 
@@ -671,7 +680,8 @@ public class SheepPanel extends javax.swing.JFrame {
                 sheepJList.setEnabled(true);
                 addSheep.setEnabled(true);
                 removeSheepBtn.setEnabled(true);
-    }
+                refreshbtn.setEnabled(true);
+                deSelect.setEnabled(true); }
      
     public void setInvisible(){
             lblNick.setVisible(false);
@@ -687,7 +697,9 @@ public class SheepPanel extends javax.swing.JFrame {
            
             sheepJList.setEnabled(false);
             addSheep.setEnabled(false);
-            removeSheepBtn.setEnabled(false);}
+            removeSheepBtn.setEnabled(false);
+            refreshbtn.setEnabled(false);
+            deSelect.setEnabled(false);}
     
     public void prepEditSheep(){
     int x = 0;
@@ -724,7 +736,7 @@ public class SheepPanel extends javax.swing.JFrame {
         if(!txtWeight.getText().equals(Double.toString(change.getWeight()))){
              change.setWeight(Double.parseDouble(txtDead.getText()));}
      
-     update();
+     
      return;
     }
     
@@ -783,8 +795,10 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelUser;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuFarmTools;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItemCloseProgram;
+    private javax.swing.JMenuItem jMenuProperties;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
