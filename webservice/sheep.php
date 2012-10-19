@@ -161,7 +161,7 @@ class Sheep extends JsonRpcService{
 		$deceased = $DB->escapeStrings($deceased);
 		$comment = $DB->escapeStrings($comment);
 		$weight = $DB->escapeStrings($weight);
-		$numrows = $DB->getNumRows('SELECT un FROM sheep_user u, sheep_sheep s WHERE s.id=\'' . $userid . '\' AND u.farm_id=s.farm_id AND s.id=\'' . $id . '\'');
+		$numrows = $DB->getNumRows('SELECT un FROM sheep_user u, sheep_sheep s WHERE u.id=\'' . $userid . '\' AND u.farm_id=s.farm_id AND s.id=\'' . $id . '\'');
 		if ($numrows >= 1) {
 			$result = $DB->setFields('UPDATE sheep_sheep
 				SET name=\'' . $name . '\',

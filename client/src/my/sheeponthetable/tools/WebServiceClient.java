@@ -210,7 +210,7 @@ public class WebServiceClient {
                 //System.out.println(sheeparr);
                 for (int i = 0; i < sheeparr.size(); i++) {
                     JSONObject obj = (JSONObject)sheeparr.get(i);
-                    System.out.println(obj);
+                    //System.out.println(obj);
                     SheepUpdate update = new SheepUpdate(
                             Integer.parseInt(obj.get("id").toString()),
                             Double.parseDouble(obj.get("pos_x").toString()),
@@ -246,7 +246,7 @@ public class WebServiceClient {
         connect();
         boolean returnValue = false;
         // Construct new request
-        String method = "getSheepUpdates";
+        String method = "editSheep";
         int requestID = 1;
         List<String> params=new ArrayList<String>();
         params.add(Integer.toString(sheep.getID()));
