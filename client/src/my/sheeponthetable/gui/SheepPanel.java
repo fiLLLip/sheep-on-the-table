@@ -42,8 +42,8 @@ public class SheepPanel extends javax.swing.JFrame {
     private String password;
     private int farmID;
     private int userID;
-    private ServerConnector connect;
-    private ServerPinger serverPinger;
+    //private ServerConnector connect;
+    //private ServerPinger serverPinger;
     // mye sheep info
     private String nickname, comment;
     private int globalId, pulse, temp;
@@ -64,8 +64,8 @@ public class SheepPanel extends javax.swing.JFrame {
      *
      * @param connect
      */
-    public SheepPanel(ServerConnector connect) {
-        this.connect = connect;
+    //public SheepPanel(ServerConnector connect) {
+    public SheepPanel() {
         initComponents();
         this.setLocationRelativeTo(null);
         editSheepBtn.setEnabled(false);
@@ -154,12 +154,12 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         };
         sheepJList.addListSelectionListener(listSelectionListener);
-        jLabelUser.setText(this.connect.getUsername());
-        jLabelFarm.setText(this.connect.getFarmName());
+        //jLabelUser.setText(this.connect.getUsername());
+        //jLabelFarm.setText(this.connect.getFarmName());
         update();
 
-        this.serverPinger = new ServerPinger(this);
-        serverPinger.start();
+        //this.serverPinger = new ServerPinger(this);
+        //serverPinger.start();
     }
 
     /**
@@ -673,7 +673,8 @@ public class SheepPanel extends javax.swing.JFrame {
     /**
      */
     public void update() {
-        sheepList = connect.getSheepList();
+        //sheepList = connect.getSheepList();
+        sheepList = WebServiceClient.getSheepList();
         jLabelLastUpdate.setText(new Date().toLocaleString());
         sheepShow.removeAllElements();
         if (sheepList != null) {
@@ -793,11 +794,7 @@ public class SheepPanel extends javax.swing.JFrame {
         jXSheepMap.addKeyListener(new PanKeyListener(jXSheepMap));
 
     }
-
-    public ServerConnector getConnector() {
-        return connect;
-    }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheep;
     private javax.swing.JButton deSelect;

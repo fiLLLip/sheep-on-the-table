@@ -8,7 +8,7 @@ import my.sheeponthetable.gui.SheepPanel;
  *
  * @author eliasaa
  */
-public class ServerPinger extends Thread {
+/*public class ServerPinger extends Thread {
 
     public static final int WAITING_PERIOD = 10000;
     private ServerConnector connect;
@@ -37,4 +37,4 @@ public class ServerPinger extends Thread {
         }
     }
 
-}
+}*/

@@ -187,7 +187,7 @@ public class AddNewSheep extends javax.swing.JFrame {
             return;
         }
         // alle felt er fylt ut, opprett sau
-        ServerConnector connect = sheepPanel.getConnector();
+        /*ServerConnector connect = sheepPanel.getConnector();
         Sheep newSheep = new Sheep(-1, connect.getUserId(), txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, Double.parseDouble(txtWeight.getText()));
         if (connect.newSheep(newSheep)) {
             this.setVisible(false);
@@ -199,7 +199,7 @@ public class AddNewSheep extends javax.swing.JFrame {
             errorBox.errorMessageLabel.setText("Sheep creation failed.");
             errorBox.setVisible(true);
             this.dispose();
-        }
+        }*/
     }//GEN-LAST:event_addSheepButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheepButton;

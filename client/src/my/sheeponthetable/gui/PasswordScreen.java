@@ -5,8 +5,10 @@
 package my.sheeponthetable.gui;
 
 import java.awt.event.KeyEvent;
+import java.util.List;
 import my.sheeponthetable.tools.Config;
-import my.sheeponthetable.tools.ServerConnector;
+//import my.sheeponthetable.tools.ServerConnector;
+import my.sheeponthetable.tools.WebServiceClient;
 
 /**
  *
@@ -19,10 +21,8 @@ public class PasswordScreen extends javax.swing.JFrame {
     private int serverPort;
     private String username;
     private String password;
-    private int userID;
-    private int farmID;
-    private ServerConnector connect;
     private String logger;
+    //private ServerConnector connect;
     
     /**
      * Creates new form PasswordScreen
@@ -238,32 +238,25 @@ public class PasswordScreen extends javax.swing.JFrame {
             return;
         }
         
+        this.config.setTempUser(this.username);
+        this.config.setTempPass(this.password);
         
-        this.serverURL = config.getServerURL();
-        this.serverPort = config.getServerPort();
-        
-        if (this.serverURL == null || this.serverPort == -1) {
-            logger = "Server url or port not set in config file";
-            return;
-        }
-
-        this.connect = new ServerConnector(this.serverURL, this.serverPort, this.username, this.password);
-
-        if (!this.connect.connect()) {
-            // Connection to server failed
-            this.errorMesageLabel.setText("Connection to the server failed!");
-            this.errorMessageDialog.setVisible(true);
-            return;
-        }
-
-        if (!this.connect.login()) {
+        //if (!this.connect.login()) {
+        List<Object> values = WebServiceClient.isLoggedIn();
+        if (values.get(0).toString().length() != 40) {
             // Login failed
             this.config.setUsername("");
             this.config.setPassword("");
+            this.config.setTempUser("");
+            this.config.setTempPass("");
             this.errorMesageLabel.setText("Invalid username or password!");
             this.errorMessageDialog.setVisible(true);
             return;
         }
+        
+        this.config.setTempHash(values.get(0).toString());
+        this.config.setTempUserID(values.get(1).toString());
+        this.config.setTempFarmID(values.get(2).toString());
 
         // If you have made it to this point, you have a successfull login
         
@@ -276,7 +269,8 @@ public class PasswordScreen extends javax.swing.JFrame {
             this.config.setUsername("");
             this.config.setPassword("");
         }
-        new SheepPanel(this.connect).setVisible(true);
+        //new SheepPanel(this.connect).setVisible(true);
+        new SheepPanel().setVisible(true);
         
         this.dispose();
     }

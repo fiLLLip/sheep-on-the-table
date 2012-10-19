@@ -19,8 +19,8 @@ public class Sheep implements Serializable {
     private String comment;
     private int born;
     private int deceased;
-    private List<SheepUpdate> updates;
     private double weight;
+    private List<SheepUpdate> updates;
     
     /**
      *
@@ -77,9 +77,9 @@ public class Sheep implements Serializable {
         this.name = name;
         this.comment = comment;
         this.born = born;
-	this.deceased = deceased;
-        this.updates = updates;
+        this.deceased = deceased;
         this.weight = weight;
+        this.updates = updates;
     }
 
     /**
