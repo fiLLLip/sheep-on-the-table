@@ -26,6 +26,7 @@ class Database {
 			return false;
 		}
 		else {
+			$this->mysqli->set_charset("utf8");
 			return true;
 		}
 	}
@@ -99,7 +100,7 @@ class Database {
 	 * @return boolean
 	 */
 	public function disconnect () {
-		if ($this->mysqli->close) {
+		if ($this->mysqli->close()) {
 			return true;
 		}
 		else {

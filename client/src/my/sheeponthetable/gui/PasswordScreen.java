@@ -109,18 +109,13 @@ public class PasswordScreen extends javax.swing.JFrame {
         loginPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 onEnterLogon(evt);
             }
         });
 
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
         passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 onEnterLogon(evt);
             }
         });
@@ -225,10 +220,6 @@ public class PasswordScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
     private void loginAction () {
         this.username = this.usernameField.getText();
         this.password = this.passwordField.getText(); // Possible security threat
@@ -243,7 +234,7 @@ public class PasswordScreen extends javax.swing.JFrame {
         
         //if (!this.connect.login()) {
         List<Object> values = WebServiceClient.isLoggedIn();
-        if (values.get(0).toString().length() != 40) {
+        if (values == null || values.get(0).toString().length() != 40) {
             // Login failed
             this.config.setUsername("");
             this.config.setPassword("");

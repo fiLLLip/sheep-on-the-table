@@ -67,16 +67,16 @@ class Sheep extends JsonRpcService{
 	 */	 
 	public function getSheepList ($hash, $userid, $farmid) {
 		if (!isset($hash)) {
-			return null;
+			return "nohash";
 		}
 		if ($this->checkSession($hash) == null) {
-			return null;
+			return "hashwat?";
 		}
 		if (!isset($userid)) {
-			return null;
+			return "userid";
 		}
 		if (!isset($farmid)) {
-			return null;
+			return "farmid";
 		}
 		$DB = new Database();
 		$DB->connect();
@@ -84,13 +84,14 @@ class Sheep extends JsonRpcService{
 		$farmid = $DB->escapeStrings($farmid);
 		$numrows = $DB->getNumRows('SELECT un FROM sheep_user WHERE id = \'' . $userid . '\' AND farm_id = \'' . $farmid . '\'');
 		if ($numrows >= 1) {
-			$returnarr = $DB->getResults('SELECT id, farm_id, name, UNIX_TIMESTAMP(born) as born, UNIX_TIMESTAMP(deceased) as deceased, comment, weight FROM sheep_sheep WHERE farm_id = \''. $farmid .'\'');
+			$returnarr = $DB->getResults('SELECT id, farm_id, name, UNIX_TIMESTAMP(born) as born, UNIX_TIMESTAMP(deceased) as deceased, comment, weight 
+				FROM sheep_sheep WHERE farm_id = \''. $farmid .'\'');
 			$DB->disconnect();
 			return array($returnarr);
 		}
 		else {
 			$DB->disconnect();
-			return $farmid;
+			return "nohash";
 		}
 	}
 }

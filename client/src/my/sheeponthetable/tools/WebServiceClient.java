@@ -140,6 +140,7 @@ public class WebServiceClient {
         List<String> params=new ArrayList<String>();
         params.add(farmid);
         params = hashParameters(params);
+        System.out.println(params);
         //params.put("pass", this.password);
         JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
 
