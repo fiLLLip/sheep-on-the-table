@@ -127,5 +127,56 @@ class Sheep extends JsonRpcService{
 		$DB->disconnect();
 		return array($returnarr);
 	}
+
+	/** @JsonRpcMethod
+	 * Method that receives a all values of a sheep to update
+	 * in the database
+	 *
+	 * @return mixed
+	 */	 
+	public function editSheep ($hash, $userid, $id, $name, $born, $deceased, $comment, $weight) {
+		if (!isset($id)) {
+			return "id";
+		}
+		if (!isset($name)) {
+			return "name";
+		}
+		if (!isset($born)) {
+			return "born";
+		}
+		if (!isset($deceased)) {
+			return "deceased";
+		}
+		if (!isset($comment)) {
+			return "comment";
+		}
+		if (!isset($weight)) {
+			return "weight";
+		}
+		$DB = new Database();
+		$DB->connect();
+		$id = $DB->escapeStrings($id);
+		$name = $DB->escapeStrings($name);
+		$born = $DB->escapeStrings($born);
+		$deceased = $DB->escapeStrings($deceased);
+		$comment = $DB->escapeStrings($comment);
+		$weight = $DB->escapeStrings($weight);
+		$numrows = $DB->getNumRows('SELECT un FROM sheep_user u, sheep_sheep s WHERE s.id=\'' . $userid . '\' AND u.farm_id=s.farm_id AND s.id=\'' . $id . '\'');
+		if ($numrows >= 1) {
+			$result = $DB->setFields('UPDATE sheep_sheep
+				SET name=\'' . $name . '\',
+				born=FROM_UNIXTIME(' . $born . '),
+				deceased=FROM_UNIXTIME(' . $deceased . '),
+				comment=\'' . $comment . '\',
+				weight=\'' . $weight . '\'
+				WHERE id=\'' . $id . '\'');
+			$return = $result;
+		}
+		else {
+			$return = "NOT OWNER";
+		}
+		$DB->disconnect();
+		return $return;
+	}
 }
 ?>

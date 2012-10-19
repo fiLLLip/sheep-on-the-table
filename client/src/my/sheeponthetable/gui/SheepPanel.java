@@ -51,7 +51,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
     /* to know what do to when you press the edit or save button */
     private boolean isEditingSheep = false;
-    
+
     /**
      *
      * @param sheep
@@ -59,7 +59,7 @@ public class SheepPanel extends javax.swing.JFrame {
     public void addSheepToList(Sheep sheep) {
         sheepShow.addElement(sheep);
     }
-    
+
     /**
      *
      * @param update
@@ -85,7 +85,7 @@ public class SheepPanel extends javax.swing.JFrame {
         txtDead.setVisible(false);
         txtWeight.setVisible(false);
         mapInitialize();
-        
+
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
             /* public void mousePressed(MouseEvent e) {// dobbelclick
 
@@ -122,31 +122,32 @@ public class SheepPanel extends javax.swing.JFrame {
                     lblBornTxt.setText("Not available");
                     lblWeightTxt.setText("Not available");
                     lblDeadTxt.setText("Not available");
-                    
-                    
+
+
                     lblDeadTxt.setText(Integer.toString(sheepList.get(list.getSelectedIndex()).getDeceased()));
                     lblBornTxt.setText(Integer.toString(sheepList.get(list.getSelectedIndex()).getBorn()));
                     lblWeightTxt.setText(Double.toString((sheepList.get(list.getSelectedIndex()).getWeight())));
                     int id = sheepList.get(list.getSelectedIndex()).getID();
                     lblIDtxt.setText(Integer.toString(id));
-                   
+
                     txtComment.setText(sheepList.get(list.getSelectedIndex()).getComment());
                     globalId = id;
-                    nickname = sheepList.get(list.getSelectedIndex()).getName(); 
-                    comment = sheepList.get(list.getSelectedIndex()).getComment(); 
+                    nickname = sheepList.get(list.getSelectedIndex()).getName();
+                    comment = sheepList.get(list.getSelectedIndex()).getComment();
                     lblNick.setText(nickname);
                     System.out.println(nickname);
-                    if(sheepList.get(list.getSelectedIndex()).getDeceased() == 0){
+                    if (sheepList.get(list.getSelectedIndex()).getDeceased() == 0) {
                         txtDead.setText("Not Dead");
-                          txtDead.setBackground(Color.green);
-                              lblDeadTxt.setText("Not Dead");
-                                 lblDeadTxt.setBackground(Color.green);}
+                        txtDead.setBackground(Color.green);
+                        lblDeadTxt.setText("Not Dead");
+                        lblDeadTxt.setBackground(Color.green);
+                    }
                     /*if (!sheepList.get(list.getSelectedIndex()).isAlive())
-                            setBackground(Color.red);
-                    if (sheepList.get(list.getSelectedIndex()).getDeceased()== -1)
-                            setBackground(Color.blue);
-                    if (sheepList.get(list.getSelectedIndex()).isAlive())
-                            setBackground(Color.green);*/
+                     setBackground(Color.red);
+                     if (sheepList.get(list.getSelectedIndex()).getDeceased()== -1)
+                     setBackground(Color.blue);
+                     if (sheepList.get(list.getSelectedIndex()).isAlive())
+                     setBackground(Color.green);*/
                     sheepUpdatesShow.removeAllElements();
                     sheepList.get(list.getSelectedIndex()).setUpdates(WebServiceClient.getSheepUpdate(Integer.toString(id), "100"));
                     if (!sheepList.get(list.getSelectedIndex()).getUpdates().isEmpty()) {
@@ -154,7 +155,7 @@ public class SheepPanel extends javax.swing.JFrame {
                         double xpos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getX();
                         double ypos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getY();
                         lblPosTxt.setText(xpos + ", " + ypos);
-                        Date formattedTimestamp = new Date(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTimeStamp()*1000);
+                        Date formattedTimestamp = new Date(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTimeStamp() * 1000);
                         lblUpdateTxt.setText(formattedTimestamp.toLocaleString());
                         lblPulse.setText(Integer.toString(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getPulse()));
                         lblTemp.setText(Double.toString(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTemp()));
@@ -162,7 +163,7 @@ public class SheepPanel extends javax.swing.JFrame {
                         posY = ypos;
                         for (int i = 0; i < sheepList.get(list.getSelectedIndex()).getUpdates().size(); i++) {
                             SheepUpdate update = sheepList.get(list.getSelectedIndex()).getUpdates().get(i);
-                            Date formattedUpdateTimestamp = new Date(update.getTimeStamp()*1000);
+                            Date formattedUpdateTimestamp = new Date(update.getTimeStamp() * 1000);
                             sheepUpdatesShow.addElement(formattedUpdateTimestamp.toLocaleString());
                         }
                     }
@@ -612,8 +613,8 @@ public class SheepPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void removeSheepBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSheepBtnActionPerformed
-        new WarningBox( this.sheepList.get(this.sheepJList.getSelectedIndex()), this).setVisible(true);
-        
+        new WarningBox(this.sheepList.get(this.sheepJList.getSelectedIndex()), this).setVisible(true);
+
     }//GEN-LAST:event_removeSheepBtnActionPerformed
 
     private void addSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepActionPerformed
@@ -623,7 +624,6 @@ public class SheepPanel extends javax.swing.JFrame {
     private void refreshbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshbtnActionPerformed
         update();
     }//GEN-LAST:event_refreshbtnActionPerformed
-
 
     private void deSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deSelectActionPerformed
         sheepJList.clearSelection();  // TODO add your handling code here:
@@ -649,23 +649,23 @@ public class SheepPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void editSheepBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSheepBtnActionPerformed
-       
-        if(this.isEditingSheep) {
-            EditSheep();
+
+        if (this.isEditingSheep) {
             // then we should save the sheep
+            WebServiceClient.editSheep(sheepList.get(EditSheep()));
             this.editSheepBtn.setText("Edit Sheep");
             this.isEditingSheep = false;
-              setVisible();
-               
-        } 
-        else {
+            setVisible();
+            update();
+
+        } else {
             prepEditSheep();
             setInvisible();
             this.editSheepBtn.setText("Save");
             this.isEditingSheep = true;
         }
-        
-       
+
+
     }//GEN-LAST:event_editSheepBtnActionPerformed
 
     private void txtBornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBornActionPerformed
@@ -698,85 +698,94 @@ public class SheepPanel extends javax.swing.JFrame {
                 Sheep sheep;
                 sheep = sheepList.get(i);
                 sheepShow.addElement(sheep.getID() + " - " + sheep.getName());
-               
+
             }
         }
     }
-    public void setVisible(){
-                txtNick.setVisible(false);
-                txtComment.setEditable(false);
-                txtBorn.setVisible(false);
-                txtDead.setVisible(false);
-                txtWeight.setVisible(false);
-            
-                    lblNick.setVisible(true);
-                    lblBornTxt.setVisible(true);
-                    lblDeadTxt.setVisible(true);
-                    lblWeightTxt.setVisible(true);
-                
-                sheepJList.setEnabled(true);
-                addSheep.setEnabled(true);
-                removeSheepBtn.setEnabled(true);
-                refreshbtn.setEnabled(true);
-                deSelect.setEnabled(true); }
-     
-    public void setInvisible(){
-            lblNick.setVisible(false);
-            lblBornTxt.setVisible(false);
-            lblDeadTxt.setVisible(false);
-            lblWeightTxt.setVisible(false);
-           
-                txtNick.setVisible(true);
-                txtComment.setEditable(true);
-                txtBorn.setVisible(true);
-                txtDead.setVisible(true);
-                txtWeight.setVisible(true);
-           
-            sheepJList.setEnabled(false);
-            addSheep.setEnabled(false);
-            removeSheepBtn.setEnabled(false);
-            refreshbtn.setEnabled(false);
-            deSelect.setEnabled(false);}
-    
-    public void prepEditSheep(){
-    int x = 0;
-       for(int i = 0; i < sheepList.size(); i++){
-       if(sheepList.get(i).getID() == globalId){
-       x = i;}}
-     
-         Sheep change = sheepList.get(x);
-         txtNick.setText(change.getName());
-         txtComment.setText(change.getComment());
-         txtDead.setText(Integer.toString(change.getDeceased()));
-         txtWeight.setText(Double.toString(change.getWeight()));}
-    
-    public void EditSheep(){
-    int x = 0;
-       for(int i = 0; i < sheepList.size(); i++){
-       if(sheepList.get(i).getID() == globalId){
-       x = i;}}
-     
-         Sheep change = sheepList.get(x);
-         txtNick.setText(change.getName());
-         txtComment.setText(change.getComment());
-         txtDead.setText(Integer.toString(change.getDeceased()));
-         txtWeight.setText(Double.toString(change.getWeight()));
-        /*String newComment, newName;
-        int newDeceased;
-        double newWeight;*/
-        if(!txtNick.getText().equals(change.getName())){
-             change.setName(txtNick.getText());}
-        if(!txtComment.getText().equals(change.getComment())){
-             change.setKommentar(txtComment.getText());}
-        if(!txtDead.getText().equals(Integer.toString(change.getDeceased()))){
-            change.setDeceaced(Integer.parseInt(txtDead.getText()));}
-        if(!txtWeight.getText().equals(Double.toString(change.getWeight()))){
-             change.setWeight(Double.parseDouble(txtDead.getText()));}
-     
-     
-     return;
+
+    public void setVisible() {
+        txtNick.setVisible(false);
+        txtComment.setEditable(false);
+        txtBorn.setVisible(false);
+        txtDead.setVisible(false);
+        txtWeight.setVisible(false);
+
+        lblNick.setVisible(true);
+        lblBornTxt.setVisible(true);
+        lblDeadTxt.setVisible(true);
+        lblWeightTxt.setVisible(true);
+
+        sheepJList.setEnabled(true);
+        addSheep.setEnabled(true);
+        removeSheepBtn.setEnabled(true);
+        refreshbtn.setEnabled(true);
+        deSelect.setEnabled(true);
     }
-    
+
+    public void setInvisible() {
+        lblNick.setVisible(false);
+        lblBornTxt.setVisible(false);
+        lblDeadTxt.setVisible(false);
+        lblWeightTxt.setVisible(false);
+
+        txtNick.setVisible(true);
+        txtComment.setEditable(true);
+        txtBorn.setVisible(true);
+        txtDead.setVisible(true);
+        txtWeight.setVisible(true);
+
+        sheepJList.setEnabled(false);
+        addSheep.setEnabled(false);
+        removeSheepBtn.setEnabled(false);
+        refreshbtn.setEnabled(false);
+        deSelect.setEnabled(false);
+    }
+
+    public void prepEditSheep() {
+        int x = 0;
+        for (int i = 0; i < sheepList.size(); i++) {
+            if (sheepList.get(i).getID() == globalId) {
+                x = i;
+            }
+        }
+
+        Sheep change = sheepList.get(x);
+        txtNick.setText(change.getName());
+        txtComment.setText(change.getComment());
+        txtDead.setText(Integer.toString(change.getDeceased()));
+        txtWeight.setText(Double.toString(change.getWeight()));
+    }
+
+    public int EditSheep() {
+        int x = 0;
+        for (int i = 0; i < sheepList.size(); i++) {
+            if (sheepList.get(i).getID() == globalId) {
+                x = i;
+            }
+        }
+        Sheep change = sheepList.get(x);
+        /*String newComment, newName;
+         int newDeceased;
+         double newWeight;*/
+        if (!txtNick.getText().equals(change.getName())) {
+            change.setName(txtNick.getText());
+        }
+        if (!txtComment.getText().equals(change.getComment())) {
+            change.setKommentar(txtComment.getText());
+        }
+        if (!txtDead.getText().equals(Integer.toString(change.getDeceased()))) {
+            change.setDeceaced(Integer.parseInt(txtDead.getText()));
+        }
+        if (!txtWeight.getText().equals(Double.toString(change.getWeight()))) {
+            change.setWeight(Double.parseDouble(txtDead.getText()));
+        }
+        lblNick.setText(change.getName());
+        txtComment.setText(change.getComment());
+        lblDeadTxt.setText(Integer.toString(change.getDeceased()));
+        lblWeightTxt.setText(Double.toString(change.getWeight()));
+        return x;
+    }
+
     private void mapInitialize() {
         // Map test
         WMSService wms = new WMSService();
@@ -797,7 +806,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
         jXSheepMap.setZoom(10);
         jXSheepMap.setAddressLocation(trondheim);
-        
+
         // Add interactions
         MouseInputListener mia = new PanMouseInputListener(jXSheepMap);
         jXSheepMap.addMouseListener(mia);
@@ -810,7 +819,6 @@ public class SheepPanel extends javax.swing.JFrame {
         jXSheepMap.addKeyListener(new PanKeyListener(jXSheepMap));
 
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheep;
     private javax.swing.JButton deSelect;
