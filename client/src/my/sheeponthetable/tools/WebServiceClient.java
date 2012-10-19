@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import com.thetransactioncompany.jsonrpc2.client.*;
 import com.thetransactioncompany.jsonrpc2.*;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import net.minidev.json.*;
@@ -31,11 +32,11 @@ public class WebServiceClient {
      */
     private static Config config = new Config();
     private static String url;
-    private static String username;
-    private static String password;
-    private static String hash;
-    private static String userid;
-    private static String farmid;
+    public static String username;
+    public static String password;
+    public static String hash;
+    public static String userid;
+    public static String farmid;
     private static URL serverURL;
     private static JSONRPC2Session mySession;
     
@@ -47,11 +48,7 @@ public class WebServiceClient {
     private static boolean connect () {
         config.loadSettingsFile();
         url = config.getServerURL();
-        username = config.getTempUser();
-        password = config.getTempPass();
-        userid = config.getTempUserID();
-        hash = config.getTempHash();
-        farmid = config.getTempFarmID();
+        
         try {
             serverURL = new URL(url);
         } catch (MalformedURLException e) {
@@ -79,7 +76,7 @@ public class WebServiceClient {
         }
     }
     
-    public static List<Object> isLoggedIn () {
+    public static boolean isLoggedIn () {
         connect();
         // Construct new request
         String method = "sheepLogon";
@@ -87,37 +84,35 @@ public class WebServiceClient {
         List<String> params=new ArrayList<String>();
         params.add(username);
         params.add(password);
-        //params.put("pass", this.password);
+        
         JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
 
-        // Send request
         JSONRPC2Response response = null;
-
+        
+        // Send request and print response result / error
+        boolean returnValue = false;
         try {
             response = mySession.send(request);
-        } catch (JSONRPC2SessionException e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
-
-        // Print response result / error
-        try {
             if (response.indicatesSuccess()) {
                 List<Object> values = (List<Object>)response.getResult();
                 if (values.get(0).toString().length() == 40) {
                     System.out.println(values.toString());
-                    return values;
+                    hash = values.get(0).toString();
+                    userid = values.get(1).toString();
+                    farmid = values.get(2).toString();
+                    returnValue = true;
                 } else {
-                    System.out.println(response.getResult());
-                    return null;
+                    System.out.println("Error:" + response.getResult());
                 }
             } else {
-                System.out.println(response.getError().getMessage());
-                return null;
+                System.err.println("Error:" + response.getError().getMessage());
             }
-        } catch (Exception e) {
+        } catch (JSONRPC2SessionException e) {
             System.err.println(e.getMessage());
-            return null;
+        }catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            return returnValue;
         }
 
     }
@@ -131,6 +126,7 @@ public class WebServiceClient {
      * doesn't have any sheep in the database.
      */
     public static List<Sheep> getSheepList () {
+        long startTime = new Date().getTime();
         connect();
         List<Sheep> sheeps = new ArrayList();
         
@@ -144,18 +140,10 @@ public class WebServiceClient {
         //params.put("pass", this.password);
         JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
 
-        // Send request
         JSONRPC2Response response = null;
-
+        // Send request and print response result / error
         try {
             response = mySession.send(request);
-        } catch (JSONRPC2SessionException e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
-
-        // Print response result / error
-        try {
             if (response.indicatesSuccess()) {
                 //System.out.println(response.getResult().toString());
                 // Gets a JSONArray within a JSONArray
@@ -175,14 +163,16 @@ public class WebServiceClient {
                             );
                     sheeps.add(sheep);
                 }
-                return sheeps;
             } else {
                 System.err.println(response.getError().getMessage());
-                return null;
             }
+        } catch (JSONRPC2SessionException e) {
+            System.err.println(e.getMessage());
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return null;
+        } finally {
+            System.out.println("GetSheepList used: " + (new Date().getTime() - startTime) + "ms");
+            return sheeps;
         }
     }
     
@@ -209,18 +199,11 @@ public class WebServiceClient {
         //params.put("pass", this.password);
         JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
 
-        // Send request
         JSONRPC2Response response = null;
 
+        // Send request and print response result / error
         try {
             response = mySession.send(request);
-        } catch (JSONRPC2SessionException e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
-
-        // Print response result / error
-        try {
             if (response.indicatesSuccess()) {
                 //System.out.println(response.getResult().toString());
                 // Gets a JSONArray within a JSONArray
@@ -243,6 +226,9 @@ public class WebServiceClient {
             } else {
                 System.err.println(response.getError().getMessage());
             }
+        } catch (JSONRPC2SessionException e) {
+            System.err.println(e.getMessage());
+            return null;
         } catch (Exception e) {
             System.err.println(e.getMessage());
         } finally {

@@ -229,25 +229,19 @@ public class PasswordScreen extends javax.swing.JFrame {
             return;
         }
         
-        this.config.setTempUser(this.username);
-        this.config.setTempPass(this.password);
+        WebServiceClient.username = this.username;
+        WebServiceClient.password = this.password;
         
-        //if (!this.connect.login()) {
-        List<Object> values = WebServiceClient.isLoggedIn();
-        if (values == null || values.get(0).toString().length() != 40) {
+        if (!WebServiceClient.isLoggedIn()) {
             // Login failed
             this.config.setUsername("");
             this.config.setPassword("");
-            this.config.setTempUser("");
-            this.config.setTempPass("");
+            //this.config.setTempUser("");
+            //this.config.setTempPass("");
             this.errorMesageLabel.setText("Invalid username or password!");
             this.errorMessageDialog.setVisible(true);
             return;
         }
-        
-        this.config.setTempHash(values.get(0).toString());
-        this.config.setTempUserID(values.get(1).toString());
-        this.config.setTempFarmID(values.get(2).toString());
 
         // If you have made it to this point, you have a successfull login
         
