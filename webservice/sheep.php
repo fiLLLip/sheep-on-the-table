@@ -104,19 +104,19 @@ class Sheep extends JsonRpcService{
 	 */	 
 	public function getSheepUpdates ($hash, $userid, $sheepid, $limit) {
 		if (!isset($hash)) {
-			return "nohash";
+			return null;
 		}
 		if ($this->checkSession($hash) == null) {
-			return "hashwat?";
+			return null;
 		}
 		if (!isset($userid)) {
-			return "userid";
+			return null;
 		}
 		if (!isset($sheepid)) {
-			return "sheepid";
+			return null;
 		}
 		if (!isset($limit)) {
-			return "limit";
+			return null;
 		}
 		$DB = new Database();
 		$DB->connect();
@@ -135,23 +135,29 @@ class Sheep extends JsonRpcService{
 	 * @return mixed
 	 */	 
 	public function editSheep ($hash, $userid, $id, $name, $born, $deceased, $comment, $weight) {
+		if (!isset($hash)) {
+			return null;
+		}
+		if ($this->checkSession($hash) == null) {
+			return null;
+		}
 		if (!isset($id)) {
-			return "id";
+			return null;
 		}
 		if (!isset($name)) {
-			return "name";
+			return null;
 		}
 		if (!isset($born)) {
-			return "born";
+			return null;
 		}
 		if (!isset($deceased)) {
-			return "deceased";
+			return null;
 		}
 		if (!isset($comment)) {
-			return "comment";
+			return null;
 		}
 		if (!isset($weight)) {
-			return "weight";
+			return null;
 		}
 		$DB = new Database();
 		$DB->connect();
@@ -173,7 +179,86 @@ class Sheep extends JsonRpcService{
 			$return = $result;
 		}
 		else {
-			$return = "NOT OWNER";
+			$return = null;
+		}
+		$DB->disconnect();
+		return $return;
+	}
+	
+	/** @JsonRpcMethod
+	 * Method that receives var for a "new sheep" and stores it in 
+	 * a database
+	 *
+	 * @return mixed
+	 */	
+	public function newSheep ($hash, $userid, $farmid, $name, $born, $deceased, $comment, $weight) {
+		if (!isset($hash)) {
+			return "nohash";
+		}
+		if ($this->checkSession($hash) == null) {
+			return "hashwat?";
+		}
+		if (!isset($farmid)) {
+			return null;
+		}
+		if (!isset($name)) {
+			return null;
+		}
+		if (!isset($born)) {
+			return null;
+		}
+		if (!isset($deceased)) {
+			return null;
+		}
+		if (!isset($comment)) {
+			return null;
+		}
+		if (!isset($weight)) {
+			return null;
+		}
+		$DB = new Database();
+		$DB->connect();
+		$farmid = $DB->escapeStrings($farmid);
+		$name = $DB->escapeStrings($name);
+		$born = $DB->escapeStrings($born);
+		$deceased = $DB->escapeStrings($deceased);
+		$comment = $DB->escapeStrings($comment);
+		$weight = $DB->escapeStrings($weight);
+		$result = $DB->setFields('INSERT INTO sheep_sheep
+			(farm_id, name, born, deceased, comment, weight)
+			VALUES (\'' . $farmid . '\', \'' . $name . '\', FROM_UNIXTIME(' . $born . '),
+			FROM_UNIXTIME(' . $deceased . '), \'' . $comment . '\', ' . $weight . ')
+		');
+		$return = $result;
+		$DB->disconnect();
+		return $return;
+	}
+
+	/** @JsonRpcMethod
+	 * Method that deletes a sheep from the database given ID
+	 *
+	 * @return mixed
+	 */	 
+	public function removeSheep ($hash, $userid, $id) {
+		if (!isset($hash)) {
+			return null;
+		}
+		if ($this->checkSession($hash) == null) {
+			return null;
+		}
+		if (!isset($id)) {
+			return null;
+		}
+		$DB = new Database();
+		$DB->connect();
+		$id = $DB->escapeStrings($id);
+		$numrows = $DB->getNumRows('SELECT un FROM sheep_user u, sheep_sheep s WHERE u.id=\'' . $userid . '\' AND u.farm_id=s.farm_id AND s.id=\'' . $id . '\'');
+		if ($numrows >= 1) {
+			$result = $DB->setFields('DELETE FROM sheep_sheep WHERE id=\'' . $id . '\'');
+			$return = $result;
+		}
+		else {
+			$return = null;
 		}
 		$DB->disconnect();
 		return $return;

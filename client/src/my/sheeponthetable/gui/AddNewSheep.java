@@ -4,6 +4,7 @@
  */
 package my.sheeponthetable.gui;
 
+import java.text.NumberFormat;
 import my.sheeponthetable.tools.*;
 
 /**
@@ -187,19 +188,25 @@ public class AddNewSheep extends javax.swing.JFrame {
             return;
         }
         // alle felt er fylt ut, opprett sau
-        /*ServerConnector connect = sheepPanel.getConnector();
-        Sheep newSheep = new Sheep(-1, connect.getUserId(), txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, Double.parseDouble(txtWeight.getText()));
-        if (connect.newSheep(newSheep)) {
-            this.setVisible(false);
-            sheepPanel.update();
-            this.dispose();
-        } else {
-            if(errorBox == null)
-            errorBox = new ErrorBox();
-            errorBox.errorMessageLabel.setText("Sheep creation failed.");
-            errorBox.setVisible(true);
-            this.dispose();
-        }*/
+        try {
+            Double weight = Double.parseDouble(txtWeight.getText().replace(",", "."));
+            Sheep newSheep = new Sheep(-1, -1, txtNick.getText(), Integer.parseInt(txtBorn.getText()), 0, txtComment.getText(), null, weight);
+            if (WebServiceClient.newSheep(newSheep)) {
+                this.setVisible(false);
+                sheepPanel.update();
+                this.dispose();
+            } else {
+                if (errorBox == null) {
+                    errorBox = new ErrorBox();
+                }
+                errorBox.errorMessageLabel.setText("Sheep creation failed.");
+                errorBox.setVisible(true);
+                //this.dispose();
+            }
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+        
     }//GEN-LAST:event_addSheepButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheepButton;

@@ -236,8 +236,7 @@ public class WebServiceClient {
     }
     
     /**
-     * Asks the server to update the information contained in the database
-     * about a given sheep.
+     * Edits a specific sheep in the database
      *
      * @param sheep 
      * @return true if successful or false if an error happened.
@@ -246,7 +245,7 @@ public class WebServiceClient {
         connect();
         boolean returnValue = false;
         // Construct new request
-        String method = "editSheep";
+        String method = "newSheep";
         int requestID = 1;
         List<String> params=new ArrayList<String>();
         params.add(Integer.toString(sheep.getID()));
@@ -266,10 +265,100 @@ public class WebServiceClient {
         try {
             response = mySession.send(request);
             if (response.indicatesSuccess()) {
-                System.out.println(response.getResult().toString());
+                if(response.getResult() != null) {
+                    returnValue = true;
+                }
                 // Gets a JSONArray within a JSONArray
                 //JSONArray sheeparr = getArrayOfJSONObjects(response.getResult());
                 //System.out.println(sheeparr);
+            } else {
+                System.err.println(response.getError().getMessage());
+            }
+        } catch (JSONRPC2SessionException e) {
+            System.err.println(e.getMessage());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            return returnValue;
+        }
+    }
+    
+    /**
+     * Creates a new sheep in the database
+     *
+     * @param sheep 
+     * @return true if successful or false if an error happened.
+     */
+    public static Boolean newSheep (Sheep sheep) {        
+        connect();
+        boolean returnValue = false;
+        // Construct new request
+        String method = "newSheep";
+        int requestID = 1;
+        List<String> params=new ArrayList<String>();
+        params.add(farmid);
+        params.add(sheep.getName());
+        params.add(Integer.toString(sheep.getBorn()));
+        params.add(Integer.toString(sheep.getDeceased()));
+        params.add(sheep.getComment());
+        params.add(Double.toString(sheep.getWeight()));
+        params = hashParameters(params);
+        System.out.println(params);
+        
+        JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
+
+        JSONRPC2Response response = null;
+
+        // Send request and print response result / error
+        try {
+            response = mySession.send(request);
+            if (response.indicatesSuccess()) {
+                if(response.getResult() != null) {
+                    returnValue = true;
+                }
+                // Gets a JSONArray within a JSONArray
+                //JSONArray sheeparr = getArrayOfJSONObjects(response.getResult());
+                //System.out.println(sheeparr);
+            } else {
+                System.err.println(response.getError().getMessage());
+            }
+        } catch (JSONRPC2SessionException e) {
+            System.err.println(e.getMessage());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            return returnValue;
+        }
+    }
+    
+    /**
+     * Edits a specific sheep in the database
+     *
+     * @param sheep 
+     * @return true if successful or false if an error happened.
+     */
+    public static Boolean removeSheep (Sheep sheep) {        
+        connect();
+        boolean returnValue = false;
+        // Construct new request
+        String method = "removeSheep";
+        int requestID = 1;
+        List<String> params=new ArrayList<String>();
+        params.add(Integer.toString(sheep.getID()));
+        params = hashParameters(params);
+        System.out.println(params);
+        
+        JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
+
+        JSONRPC2Response response = null;
+
+        // Send request and print response result / error
+        try {
+            response = mySession.send(request);
+            if (response.indicatesSuccess()) {
+                if(response.getResult() != null) {
+                    returnValue = true;
+                }
             } else {
                 System.err.println(response.getError().getMessage());
             }

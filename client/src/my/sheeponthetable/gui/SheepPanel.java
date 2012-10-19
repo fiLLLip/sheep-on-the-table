@@ -613,8 +613,13 @@ public class SheepPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void removeSheepBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSheepBtnActionPerformed
-        new WarningBox(this.sheepList.get(this.sheepJList.getSelectedIndex()), this).setVisible(true);
-
+        //new WarningBox(this.sheepList.get(this.sheepJList.getSelectedIndex()), this).setVisible(true);
+        
+        int option = JOptionPane.showConfirmDialog(null, "Do you really want to delete this sheep?", "Confirm", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            WebServiceClient.removeSheep(sheepList.get(sheepJList.getSelectedIndex()));
+            update();
+        }
     }//GEN-LAST:event_removeSheepBtnActionPerformed
 
     private void addSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepActionPerformed
@@ -701,6 +706,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
             }
         }
+        sheepJList.setSelectedIndex(0);
     }
 
     public void setVisible() {
