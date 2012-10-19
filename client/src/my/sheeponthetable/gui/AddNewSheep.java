@@ -5,6 +5,8 @@
 package my.sheeponthetable.gui;
 
 import java.text.NumberFormat;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import my.sheeponthetable.tools.*;
 
 /**
@@ -19,6 +21,7 @@ public class AddNewSheep extends javax.swing.JFrame {
      * Creates new form AddNewSheep
      */
     public AddNewSheep(SheepPanel sp) {
+        this.setLocationRelativeTo(null);
         initComponents();
         this.sheepPanel = sp;
     }
@@ -175,16 +178,15 @@ public class AddNewSheep extends javax.swing.JFrame {
     }//GEN-LAST:event_clearbtnActionPerformed
 
     private void addSheepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepButtonActionPerformed
-        ErrorBox errorBox = null;
-        // sjekker om alle felt er fylt ut
+       // sjekker om alle felt er fylt ut
         if (this.txtBorn.getText().equals("")
                 && this.txtNick.getText().equals("")
                 && this.txtWeight.getText().equals("")
                 && this.txtComment.getText().equals("")) {
             System.out.println("Error should now show up...");
-            errorBox = new ErrorBox();
-            errorBox.errorMessageLabel.setText("Please fill in all the required fields.");
-            errorBox.setVisible(true);
+            final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
+            JOptionPane.showMessageDialog(null, "Please fill in all the required fields.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            
             return;
         }
         // alle felt er fylt ut, opprett sau
@@ -196,11 +198,7 @@ public class AddNewSheep extends javax.swing.JFrame {
                 sheepPanel.update();
                 this.dispose();
             } else {
-                if (errorBox == null) {
-                    errorBox = new ErrorBox();
-                }
-                errorBox.errorMessageLabel.setText("Sheep creation failed.");
-                errorBox.setVisible(true);
+                JOptionPane.showMessageDialog(null, "Sheep creation failed.", "Error", JOptionPane.ERROR_MESSAGE);
                 //this.dispose();
             }
         } catch (Exception ex) {

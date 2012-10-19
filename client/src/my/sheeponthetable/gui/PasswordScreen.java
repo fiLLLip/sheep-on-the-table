@@ -6,6 +6,7 @@ package my.sheeponthetable.gui;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
+import javax.swing.JOptionPane;
 import my.sheeponthetable.tools.Config;
 //import my.sheeponthetable.tools.ServerConnector;
 import my.sheeponthetable.tools.WebServiceClient;
@@ -17,11 +18,8 @@ import my.sheeponthetable.tools.WebServiceClient;
 public class PasswordScreen extends javax.swing.JFrame {
 
     private Config config;
-    private String serverURL;
-    private int serverPort;
     private String username;
     private String password;
-    private String logger;
     //private ServerConnector connect;
     
     /**
@@ -31,7 +29,6 @@ public class PasswordScreen extends javax.swing.JFrame {
         initComponents();
         
         this.setLocationRelativeTo(null);
-        errorMessageDialog.setLocationRelativeTo(null);
         
         this.config = new Config();
         if(!this.config.getUsername().equals("")) {
@@ -50,9 +47,6 @@ public class PasswordScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        errorMessageDialog = new javax.swing.JDialog();
-        errorMesageLabel = new javax.swing.JLabel();
-        errorMessageCloseButton = new javax.swing.JButton();
         loginPanel = new javax.swing.JPanel();
         usernameField = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
@@ -64,43 +58,6 @@ public class PasswordScreen extends javax.swing.JFrame {
         logOnButton = new javax.swing.JButton();
         quitButton = new javax.swing.JButton();
         welcomeLabel = new javax.swing.JLabel();
-
-        errorMessageDialog.setAlwaysOnTop(true);
-        errorMessageDialog.setMinimumSize(new java.awt.Dimension(272, 83));
-        errorMessageDialog.setResizable(false);
-
-        errorMesageLabel.setText("Invalid username or password.");
-
-        errorMessageCloseButton.setText("Close");
-        errorMessageCloseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                errorMessageCloseButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout errorMessageDialogLayout = new javax.swing.GroupLayout(errorMessageDialog.getContentPane());
-        errorMessageDialog.getContentPane().setLayout(errorMessageDialogLayout);
-        errorMessageDialogLayout.setHorizontalGroup(
-            errorMessageDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(errorMessageDialogLayout.createSequentialGroup()
-                .addGroup(errorMessageDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(errorMessageDialogLayout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(errorMesageLabel))
-                    .addGroup(errorMessageDialogLayout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addComponent(errorMessageCloseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(38, Short.MAX_VALUE))
-        );
-        errorMessageDialogLayout.setVerticalGroup(
-            errorMessageDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(errorMessageDialogLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(errorMesageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(errorMessageCloseButton)
-                .addGap(12, 12, 12))
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -225,7 +182,7 @@ public class PasswordScreen extends javax.swing.JFrame {
         this.password = this.passwordField.getText(); // Possible security threat
         
         if (this.username.isEmpty() || this.password.isEmpty()) {
-            logger = "Username or password not set";
+            System.out.println("Warning: Username or password not set");
             return;
         }
         
@@ -236,10 +193,7 @@ public class PasswordScreen extends javax.swing.JFrame {
             // Login failed
             this.config.setUsername("");
             this.config.setPassword("");
-            //this.config.setTempUser("");
-            //this.config.setTempPass("");
-            this.errorMesageLabel.setText("Invalid username or password!");
-            this.errorMessageDialog.setVisible(true);
+            JOptionPane.showMessageDialog(null, "Wrong username or password!");
             return;
         }
 
@@ -260,11 +214,6 @@ public class PasswordScreen extends javax.swing.JFrame {
         this.dispose();
     }
     
-    private void errorMessageCloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorMessageCloseButtonActionPerformed
-        // TODO add your handling code here:
-        this.errorMessageDialog.setVisible(false);
-    }//GEN-LAST:event_errorMessageCloseButtonActionPerformed
-
     private void rememberMeCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rememberMeCheckboxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rememberMeCheckboxActionPerformed
@@ -284,44 +233,7 @@ public class PasswordScreen extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_quitButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PasswordScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PasswordScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PasswordScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PasswordScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PasswordScreen().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel errorMesageLabel;
-    private javax.swing.JButton errorMessageCloseButton;
-    private javax.swing.JDialog errorMessageDialog;
     private javax.swing.JButton logOnButton;
     private javax.swing.JPanel loginPanel;
     private javax.swing.JPasswordField passwordField;
