@@ -67,16 +67,16 @@ class Sheep extends JsonRpcService{
 	 */	 
 	public function getSheepList ($hash, $userid, $farmid) {
 		if (!isset($hash)) {
-			return "nohash";
+			return null;
 		}
 		if ($this->checkSession($hash) == null) {
-			return "hashwat?";
+			return null;
 		}
 		if (!isset($userid)) {
-			return "userid";
+			return null;
 		}
 		if (!isset($farmid)) {
-			return "farmid";
+			return null;
 		}
 		$DB = new Database();
 		$DB->connect();
@@ -91,8 +91,41 @@ class Sheep extends JsonRpcService{
 		}
 		else {
 			$DB->disconnect();
+			return null;
+		}
+	}
+	
+	/** @JsonRpcMethod
+	 * Method that serves the client all the n updates that belong 
+	 * to his sheep
+	 *
+	 * @param array $param
+	 * @return mixed
+	 */	 
+	public function getSheepUpdates ($hash, $userid, $sheepid, $limit) {
+		if (!isset($hash)) {
 			return "nohash";
 		}
+		if ($this->checkSession($hash) == null) {
+			return "hashwat?";
+		}
+		if (!isset($userid)) {
+			return "userid";
+		}
+		if (!isset($sheepid)) {
+			return "sheepid";
+		}
+		if (!isset($limit)) {
+			return "limit";
+		}
+		$DB = new Database();
+		$DB->connect();
+		$sheepid = $DB->escapeStrings($sheepid);
+		$limit = $DB->escapeStrings($limit);
+		$returnarr = $DB->getResults('SELECT id, UNIX_TIMESTAMP(timestamp) as timestamp, pos_x, pos_y, pulse, temp, alarm
+			FROM sheep_updates WHERE sheep_id = \''. $sheepid .'\' LIMIT ' . $limit . '');
+		$DB->disconnect();
+		return array($returnarr);
 	}
 }
 ?>

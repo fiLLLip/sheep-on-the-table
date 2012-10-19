@@ -170,7 +170,7 @@ public class WebServiceClient {
                             Integer.parseInt(obj.get("born").toString()),
                             Integer.parseInt(obj.get("deceased").toString()),
                             obj.get("comment").toString(),
-                            new ArrayList(),
+                            WebServiceClient.getSheepUpdate(obj.get("id").toString(), "1"),
                             Double.parseDouble(obj.get("weight").toString())
                             );
                     sheeps.add(sheep);
@@ -183,6 +183,70 @@ public class WebServiceClient {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return null;
+        }
+    }
+    
+    /**
+     * Fetches the list of sheep from the server. 
+     * 
+     * Requires the connector to the logged in and connected.
+     *
+     * @return List<Sheep> or null, if not logged in, not connected or the user
+     * doesn't have any sheep in the database.
+     */
+    public static List<SheepUpdate> getSheepUpdate (String sheepid, String limit) {
+        connect();
+        List<SheepUpdate> updates = new ArrayList();
+        
+        // Construct new request
+        String method = "getSheepUpdates";
+        int requestID = 1;
+        List<String> params=new ArrayList<String>();
+        params.add(sheepid);
+        params.add(limit);
+        params = hashParameters(params);
+        System.out.println(params);
+        //params.put("pass", this.password);
+        JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
+
+        // Send request
+        JSONRPC2Response response = null;
+
+        try {
+            response = mySession.send(request);
+        } catch (JSONRPC2SessionException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+
+        // Print response result / error
+        try {
+            if (response.indicatesSuccess()) {
+                //System.out.println(response.getResult().toString());
+                // Gets a JSONArray within a JSONArray
+                JSONArray sheeparr = getArrayOfJSONObjects(response.getResult());
+                //System.out.println(sheeparr);
+                for (int i = 0; i < sheeparr.size(); i++) {
+                    JSONObject obj = (JSONObject)sheeparr.get(i);
+                    System.out.println(obj);
+                    SheepUpdate update = new SheepUpdate(
+                            Integer.parseInt(obj.get("id").toString()),
+                            Double.parseDouble(obj.get("pos_x").toString()),
+                            Double.parseDouble(obj.get("pos_y").toString()),
+                            Integer.parseInt(obj.get("pulse").toString()),
+                            Double.parseDouble(obj.get("temp").toString()),
+                            Integer.parseInt(obj.get("alarm").toString()),
+                            Long.parseLong(obj.get("timestamp").toString())
+                            );
+                    updates.add(update);
+                }
+            } else {
+                System.err.println(response.getError().getMessage());
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            return updates;
         }
     }
 }

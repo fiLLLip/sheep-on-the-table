@@ -51,12 +51,21 @@ public class SheepPanel extends javax.swing.JFrame {
 
     /* to know what do to when you press the edit or save button */
     private boolean isEditingSheep = false;
+    
     /**
      *
      * @param sheep
      */
     public void addSheepToList(Sheep sheep) {
         sheepShow.addElement(sheep);
+    }
+    
+    /**
+     *
+     * @param update
+     */
+    public void addSheepUpdateToList(SheepUpdate update) {
+        sheepUpdatesShow.addElement(update);
     }
 
     /**
@@ -138,6 +147,8 @@ public class SheepPanel extends javax.swing.JFrame {
                             setBackground(Color.blue);
                     if (sheepList.get(list.getSelectedIndex()).isAlive())
                             setBackground(Color.green);*/
+                    sheepUpdatesShow.removeAllElements();
+                    sheepList.get(list.getSelectedIndex()).setUpdates(WebServiceClient.getSheepUpdate(Integer.toString(id), "100"));
                     if (!sheepList.get(list.getSelectedIndex()).getUpdates().isEmpty()) {
                         // Getting update index 0 because 0 is the latest (newest) update
                         double xpos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getX();
@@ -149,6 +160,11 @@ public class SheepPanel extends javax.swing.JFrame {
                         lblTemp.setText(Double.toString(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTemp()));
                         posX = xpos;
                         posY = ypos;
+                        for (int i = 0; i < sheepList.get(list.getSelectedIndex()).getUpdates().size(); i++) {
+                            SheepUpdate update = sheepList.get(list.getSelectedIndex()).getUpdates().get(i);
+                            Date formattedUpdateTimestamp = new Date(update.getTimeStamp()*1000);
+                            sheepUpdatesShow.addElement(formattedUpdateTimestamp.toLocaleString());
+                        }
                     }
                 }
             }
