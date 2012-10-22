@@ -4,7 +4,9 @@
  */
 package my.sheeponthetable.gui;
 
+import my.sheeponthetable.tools.map.RoutePainter;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.*;
 import javax.swing.*;
 import my.sheeponthetable.tools.*;
@@ -14,18 +16,30 @@ import java.text.DateFormat;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
+import my.sheeponthetable.tools.map.FancyWaypointRenderer;
+import my.sheeponthetable.tools.map.MyWaypoint;
+import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.OSMTileFactoryInfo;
 import org.jdesktop.swingx.input.CenterMapListener;
 import org.jdesktop.swingx.input.PanKeyListener;
 import org.jdesktop.swingx.input.PanMouseInputListener;
 import org.jdesktop.swingx.input.ZoomMouseWheelListenerCursor;
 import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
+import org.jdesktop.swingx.mapviewer.DefaultWaypoint;
+import org.jdesktop.swingx.mapviewer.DefaultWaypointRenderer;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.mapviewer.LocalResponseCache;
 import org.jdesktop.swingx.mapviewer.TileFactory;
 import org.jdesktop.swingx.mapviewer.TileFactoryInfo;
+import org.jdesktop.swingx.mapviewer.Waypoint;
+import org.jdesktop.swingx.mapviewer.WaypointPainter;
+import org.jdesktop.swingx.mapviewer.WaypointRenderer;
 import org.jdesktop.swingx.mapviewer.wms.WMSService;
 import org.jdesktop.swingx.mapviewer.wms.WMSTileFactory;
+import org.jdesktop.swingx.mapviewer.Waypoint;
+import org.jdesktop.swingx.mapviewer.WaypointPainter;
+import org.jdesktop.swingx.painter.CompoundPainter;
+import org.jdesktop.swingx.painter.Painter;
 
 /**
  *
@@ -161,11 +175,30 @@ public class SheepPanel extends javax.swing.JFrame {
                         lblTemp.setText(Double.toString(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTemp()));
                         posX = xpos;
                         posY = ypos;
+                        Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
+                        List<GeoPosition> track = new ArrayList();
                         for (int i = 0; i < sheepList.get(list.getSelectedIndex()).getUpdates().size(); i++) {
                             SheepUpdate update = sheepList.get(list.getSelectedIndex()).getUpdates().get(i);
                             Date formattedUpdateTimestamp = new Date(update.getTimeStamp() * 1000);
                             sheepUpdatesShow.addElement(formattedUpdateTimestamp.toLocaleString());
+                            track.add(new GeoPosition(update.getX(), update.getY()));
+                            Color color = Color.WHITE;
+                            if(i == 0) {
+                                color = Color.RED;
+                            }
+                            waypoints.add(new MyWaypoint(formattedUpdateTimestamp.toLocaleString(), color, new GeoPosition(update.getX(), update.getY())));
                         }
+                        RoutePainter routePainter = new RoutePainter(track);
+                        WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
+                        waypointPainter.setWaypoints(waypoints);
+                        waypointPainter.setRenderer(new FancyWaypointRenderer());
+                        
+                        List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
+                        painters.add(routePainter);
+                        painters.add(waypointPainter);
+                        
+                        CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
+                        jXSheepMap.setOverlayPainter(painter);
                     }
                 }
             }
@@ -637,6 +670,7 @@ public class SheepPanel extends javax.swing.JFrame {
         txtComment.setText("");
         lblPulse.setText("");
         lblTemp.setText("");
+        resetSelection();
     }//GEN-LAST:event_deSelectActionPerformed
 
     private void jMenuItemCloseProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCloseProgramActionPerformed
@@ -695,16 +729,34 @@ public class SheepPanel extends javax.swing.JFrame {
         //sheepList = connect.getSheepList();
         sheepList = WebServiceClient.getSheepList();
         jLabelLastUpdate.setText(new Date().toLocaleString());
+        resetSelection();
+    }
+    
+    public void resetSelection() {
         sheepShow.removeAllElements();
+                        Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
         if (sheepList != null) {
             for (int i = 0; i < sheepList.size(); i++) {
                 Sheep sheep;
                 sheep = sheepList.get(i);
                 sheepShow.addElement(sheep.getID() + " - " + sheep.getName());
-
+                if(!sheep.getUpdates().isEmpty()) {
+                    waypoints.add(new MyWaypoint(Integer.toString(sheep.getID()), Color.WHITE, new GeoPosition(sheep.getUpdates().get(0).getX(), sheep.getUpdates().get(0).getY())));
+                }
             }
         }
         sheepJList.setSelectedIndex(0);
+        
+        WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
+        waypointPainter.setWaypoints(waypoints);
+        waypointPainter.setRenderer(new FancyWaypointRenderer());
+        
+        List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
+        painters.add(waypointPainter);
+
+        CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
+        
+        jXSheepMap.setOverlayPainter(painter);
     }
 
     public void setVisible() {
