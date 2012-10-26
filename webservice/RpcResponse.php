@@ -1,4 +1,8 @@
 <?php
+/*
+ * Author: Pozo @ GitHub
+ * URL: https://github.com/Pozo/json-rpc-php
+ */
 
 class RpcResponse {
 	const VERSION = "2.0";

@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Pozo @ GitHub
+ * URL: https://github.com/Pozo/json-rpc-php
+ */
+ 
 function __autoload($className) {
     if(strstr($className,'Exception')) {
         include_once("JsonRpcExceptions.php");

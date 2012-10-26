@@ -1,4 +1,8 @@
 <?php
+/*
+ * Author: Pozo @ GitHub
+ * URL: https://github.com/Pozo/json-rpc-php
+ */
 
 class AuthenticatorJsonRpcServer extends JsonRpcServer {
 	private function isAuthenticatedRequest() {

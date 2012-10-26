@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Pozo @ GitHub
+ * URL: https://github.com/Pozo/json-rpc-php
+ */
+ 
 // Invalid JSON was received by the server.
 // An error occurred on the server while parsing the JSON text.
 class JsonRpcParseErrorException extends Exception {
