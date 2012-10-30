@@ -260,6 +260,7 @@ public class SheepPanel extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItemCloseProgram = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
         jMenuFarmTools = new javax.swing.JMenuItem();
         jMenuProperties = new javax.swing.JMenuItem();
 
@@ -402,24 +403,28 @@ public class SheepPanel extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
-        jMenuFarmTools.setText("Farm Tools");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Preferences");
+
+        jMenuFarmTools.setText("Farm");
         jMenuFarmTools.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuFarmToolsActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuFarmTools);
+        jMenu2.add(jMenuFarmTools);
 
-        jMenuProperties.setText("User Properties");
+        jMenuProperties.setText("User");
         jMenuProperties.setActionCommand("UserProperties");
         jMenuProperties.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuPropertiesActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuProperties);
+        jMenu2.add(jMenuProperties);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -432,7 +437,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jXSheepMap, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -503,8 +508,8 @@ public class SheepPanel extends javax.swing.JFrame {
                                 .addGap(10, 10, 10)
                                 .addComponent(editSheepBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(removeSheepBtn)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(removeSheepBtn)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -869,6 +874,7 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelLastUpdate;
     private javax.swing.JLabel jLabelUser;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuFarmTools;
     private javax.swing.JMenuItem jMenuItem2;
