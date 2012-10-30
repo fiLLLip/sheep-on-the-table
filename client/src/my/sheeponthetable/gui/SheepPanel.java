@@ -4,39 +4,27 @@
  */
 package my.sheeponthetable.gui;
 
-import my.sheeponthetable.tools.map.RoutePainter;
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.*;
 import javax.swing.*;
 import my.sheeponthetable.tools.*;
-import java.awt.event.*;
 import java.io.File;
-import java.text.DateFormat;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
 import my.sheeponthetable.tools.map.FancyWaypointRenderer;
 import my.sheeponthetable.tools.map.MyWaypoint;
+import my.sheeponthetable.tools.map.RoutePainter;
 import org.jdesktop.swingx.JXMapViewer;
-import org.jdesktop.swingx.OSMTileFactoryInfo;
 import org.jdesktop.swingx.input.CenterMapListener;
 import org.jdesktop.swingx.input.PanKeyListener;
 import org.jdesktop.swingx.input.PanMouseInputListener;
 import org.jdesktop.swingx.input.ZoomMouseWheelListenerCursor;
 import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
-import org.jdesktop.swingx.mapviewer.DefaultWaypoint;
-import org.jdesktop.swingx.mapviewer.DefaultWaypointRenderer;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.mapviewer.LocalResponseCache;
-import org.jdesktop.swingx.mapviewer.TileFactory;
-import org.jdesktop.swingx.mapviewer.TileFactoryInfo;
-import org.jdesktop.swingx.mapviewer.Waypoint;
-import org.jdesktop.swingx.mapviewer.WaypointPainter;
-import org.jdesktop.swingx.mapviewer.WaypointRenderer;
 import org.jdesktop.swingx.mapviewer.wms.WMSService;
 import org.jdesktop.swingx.mapviewer.wms.WMSTileFactory;
-import org.jdesktop.swingx.mapviewer.Waypoint;
 import org.jdesktop.swingx.mapviewer.WaypointPainter;
 import org.jdesktop.swingx.painter.CompoundPainter;
 import org.jdesktop.swingx.painter.Painter;
@@ -198,7 +186,7 @@ public class SheepPanel extends javax.swing.JFrame {
                         painters.add(waypointPainter);
                         
                         CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
-                        jXSheepMap.setOverlayPainter(painter);
+                        jXSheepMap.getMainMap().setOverlayPainter(painter);
                     }
                 }
             }
@@ -255,7 +243,6 @@ public class SheepPanel extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtComment = new javax.swing.JTextArea();
-        jXSheepMap = new org.jdesktop.swingx.JXMapViewer();
         jLabel6 = new javax.swing.JLabel();
         txtNick = new javax.swing.JTextField();
         lblBorn = new javax.swing.JLabel();
@@ -268,6 +255,7 @@ public class SheepPanel extends javax.swing.JFrame {
         txtBorn = new javax.swing.JTextField();
         txtDead = new javax.swing.JTextField();
         lblNick = new javax.swing.JLabel();
+        jXSheepMap = new org.jdesktop.swingx.JXMapKit();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemCloseProgram = new javax.swing.JMenuItem();
@@ -367,17 +355,6 @@ public class SheepPanel extends javax.swing.JFrame {
         txtComment.setWrapStyleWord(true);
         jScrollPane3.setViewportView(txtComment);
 
-        javax.swing.GroupLayout jXSheepMapLayout = new javax.swing.GroupLayout(jXSheepMap);
-        jXSheepMap.setLayout(jXSheepMapLayout);
-        jXSheepMapLayout.setHorizontalGroup(
-            jXSheepMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 613, Short.MAX_VALUE)
-        );
-        jXSheepMapLayout.setVerticalGroup(
-            jXSheepMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         jLabel6.setText("Right-click and drag to pan");
 
@@ -451,16 +428,16 @@ public class SheepPanel extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jXSheepMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jXSheepMap, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -523,7 +500,7 @@ public class SheepPanel extends javax.swing.JFrame {
                                                                 .addComponent(txtBorn, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                             .addGap(20, 20, 20)))))))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
+                                .addGap(10, 10, 10)
                                 .addComponent(editSheepBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(removeSheepBtn)))
@@ -756,7 +733,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
         CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
         
-        jXSheepMap.setOverlayPainter(painter);
+        jXSheepMap.getMainMap().setOverlayPainter(painter);
     }
 
     public void setVisible() {
@@ -862,17 +839,18 @@ public class SheepPanel extends javax.swing.JFrame {
 
         jXSheepMap.setZoom(10);
         jXSheepMap.setAddressLocation(trondheim);
-
+        jXSheepMap.getMiniMap().setVisible(false);
+        
         // Add interactions
-        MouseInputListener mia = new PanMouseInputListener(jXSheepMap);
+        MouseInputListener mia = new PanMouseInputListener(jXSheepMap.getMainMap());
         jXSheepMap.addMouseListener(mia);
         jXSheepMap.addMouseMotionListener(mia);
 
-        jXSheepMap.addMouseListener(new CenterMapListener(jXSheepMap));
+        jXSheepMap.addMouseListener(new CenterMapListener(jXSheepMap.getMainMap()));
 
-        jXSheepMap.addMouseWheelListener(new ZoomMouseWheelListenerCursor(jXSheepMap));
+        jXSheepMap.addMouseWheelListener(new ZoomMouseWheelListenerCursor(jXSheepMap.getMainMap()));
 
-        jXSheepMap.addKeyListener(new PanKeyListener(jXSheepMap));
+        jXSheepMap.addKeyListener(new PanKeyListener(jXSheepMap.getMainMap()));
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -901,7 +879,7 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private org.jdesktop.swingx.JXMapViewer jXSheepMap;
+    private org.jdesktop.swingx.JXMapKit jXSheepMap;
     private javax.swing.JLabel kordinateLbl;
     private javax.swing.JLabel lblBorn;
     private javax.swing.JLabel lblBornTxt;
