@@ -37,7 +37,7 @@ public class WebServiceClient {
     public static String hash;
     public static String userid;
     public static String farmid;
-    public static ArrayList<String> farmids = new ArrayList();
+    public static ArrayList<Object> farmids = new ArrayList();
     private static URL serverURL;
     private static JSONRPC2Session mySession;
     
@@ -105,7 +105,11 @@ public class WebServiceClient {
                     JSONArray JSONfarmid = (JSONArray)values.get(2);
                     for (int i = 0; i < JSONfarmid.size(); i++) {
                         JSONObject obj = (JSONObject)JSONfarmid.get(i);
-                        farmids.add(obj.get("farm_id").toString());
+                        Map<String,String> map = new HashMap<String,String>();
+                        map.put("id", obj.get("id").toString());
+                        map.put("name", obj.get("name").toString());
+                        map.put("address", obj.get("address").toString());
+                        farmids.add(map);
                     }
                     returnValue = true;
                 } else {
