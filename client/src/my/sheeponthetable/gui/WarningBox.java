@@ -4,7 +4,7 @@
  */
 package my.sheeponthetable.gui;
 
-import my.sheeponthetable.tools.ServerConnector;
+
 import my.sheeponthetable.tools.Sheep;
 
 /**
