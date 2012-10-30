@@ -37,7 +37,7 @@ public class WebServiceClient {
     public static String hash;
     public static String userid;
     public static String farmid;
-    public static ArrayList<String> farmids;
+    public static ArrayList<String> farmids = new ArrayList();
     private static URL serverURL;
     private static JSONRPC2Session mySession;
     
@@ -102,9 +102,9 @@ public class WebServiceClient {
                     hash = values.get(0).toString();
                     userid = values.get(1).toString();
                     farmid = values.get(2).toString();
-                    JSONArray farmids = (JSONArray)values.get(2);
-                    for (int i = 0; i < farmids.size(); i++) {
-                        JSONObject obj = (JSONObject)farmids.get(i);
+                    JSONArray JSONfarmid = (JSONArray)values.get(2);
+                    for (int i = 0; i < JSONfarmid.size(); i++) {
+                        JSONObject obj = (JSONObject)JSONfarmid.get(i);
                         farmids.add(obj.get("farm_id").toString());
                     }
                     returnValue = true;
@@ -115,9 +115,9 @@ public class WebServiceClient {
                 System.err.println("Error:" + response.getError().getMessage());
             }
         } catch (JSONRPC2SessionException e) {
-            System.err.println(e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         }catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         } finally {
             return returnValue;
         }
