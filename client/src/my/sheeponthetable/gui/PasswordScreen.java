@@ -208,8 +208,8 @@ public class PasswordScreen extends javax.swing.JFrame {
             this.config.setUsername("");
             this.config.setPassword("");
         }
-        //new SheepPanel(this.connect).setVisible(true);
-        new SheepPanel().setVisible(true);
+        
+        new ChooseFarm().setVisible(true);
         
         this.dispose();
     }

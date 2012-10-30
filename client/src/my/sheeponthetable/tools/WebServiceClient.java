@@ -102,6 +102,7 @@ public class WebServiceClient {
                     hash = values.get(0).toString();
                     userid = values.get(1).toString();
                     farmid = values.get(2).toString();
+                    farmids.clear();
                     JSONArray JSONfarmid = (JSONArray)values.get(2);
                     for (int i = 0; i < JSONfarmid.size(); i++) {
                         JSONObject obj = (JSONObject)JSONfarmid.get(i);
