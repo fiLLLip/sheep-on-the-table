@@ -370,4 +370,43 @@ public class WebServiceClient {
             return returnValue;
         }
     }
+    
+    /**
+     * Gets the name of the farm owner
+     *
+     * @param farmId 
+     * @return String value if successful or null if an error happened.
+     */
+    public static String getFarmOwner(int farmId) {
+        connect();
+        String farmOwner = "";
+        
+        // Construct new request
+        String method = "getFarmOwner";
+        int requestID = 1;
+        List<String> params=new ArrayList<String>();
+        params.add(Integer.toString(farmId));
+        params = hashParameters(params);
+        
+        JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
+
+        JSONRPC2Response response = null;
+
+        // Send request and print response result / error
+        try {
+            response = mySession.send(request);
+            if (response.indicatesSuccess()) {
+                System.out.println(response.getResult().toString());
+            } else {
+                System.err.println(response.getError().getMessage());
+            }
+        } catch (JSONRPC2SessionException e) {
+            System.err.println(e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            return farmOwner;
+        }
+    }
 }
