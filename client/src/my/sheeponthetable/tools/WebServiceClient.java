@@ -37,7 +37,7 @@ public class WebServiceClient {
     public static String hash;
     public static String userid;
     public static String farmid;
-    public static ArrayList<Object> farmids = new ArrayList();
+    public static ArrayList<Map> farmids = new ArrayList();
     private static URL serverURL;
     private static JSONRPC2Session mySession;
     
