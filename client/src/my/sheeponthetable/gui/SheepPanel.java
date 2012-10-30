@@ -714,12 +714,12 @@ public class SheepPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDeadActionPerformed
 
     private void jMenuFarmToolsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFarmToolsActionPerformed
-        this.setVisible(false);
+       // this.setVisible(false);
         new FarmTools(this).setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_jMenuFarmToolsActionPerformed
 
     private void jMenuPropertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPropertiesActionPerformed
-        this.setVisible(false);
+      //  this.setVisible(false);
         new UserProperties(this).setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_jMenuPropertiesActionPerformed
 
