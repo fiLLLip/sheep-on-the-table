@@ -33,8 +33,13 @@ public class FarmTools extends javax.swing.JFrame {
             @Override
             public void valueChanged(ListSelectionEvent lse) {
             JList list = (JList) lse.getSource();
-                
+            if (!lse.getValueIsAdjusting() && list.getSelectedIndex() != -1) {
+                setEnable();
+            
             }
+            else if(lse.getValueIsAdjusting() || list.getSelectedIndex() != -1){
+                setDisable();
+            }}
         
         
         };
@@ -197,7 +202,7 @@ public class FarmTools extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblName)
                             .addComponent(lblNameTxt))
@@ -221,7 +226,7 @@ public class FarmTools extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jAlertChkStationary2)
                             .addComponent(jAlertChkStationary1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSave)
                             .addComponent(btnCancel)))

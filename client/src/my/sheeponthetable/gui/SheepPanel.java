@@ -776,7 +776,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 x = i;
             }
         }
-        Sheep change = sheepList.get(x);
+        Sheep change = (Sheep)sheepList.get(x);
         /*String newComment, newName;
          int newDeceased;
          double newWeight;*/
