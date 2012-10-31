@@ -27,6 +27,10 @@ public class ChooseFarm extends javax.swing.JFrame {
             farmListModel.addElement(farmName.get("id") + " - " + farmName.get("name"));
         }
         farmList.setModel(farmListModel);
+        
+        if(farmListModel.size() > 0) {
+            farmList.setSelectedIndex(0);
+        }
     }
 
     /**
