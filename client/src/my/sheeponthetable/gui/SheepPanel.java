@@ -172,6 +172,7 @@ public class SheepPanel extends javax.swing.JFrame {
         sheepJList.addListSelectionListener(listSelectionListener);
        
         update();
+        setMapFocus();
     }
 
     /**
@@ -690,7 +691,7 @@ public class SheepPanel extends javax.swing.JFrame {
     
     public void resetSelection() {
         sheepShow.removeAllElements();
-                        Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
+        Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
         if (sheepList != null) {
             for (int i = 0; i < sheepList.size(); i++) {
                 Sheep sheep;
@@ -812,12 +813,12 @@ public class SheepPanel extends javax.swing.JFrame {
         // Setup local file cache
         File cacheDir = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
         LocalResponseCache.installResponseCache(fact.getInfo().getBaseURL(), cacheDir, false);
-
+        
         // Set the focus to Tronheim
-        GeoPosition trondheim = new GeoPosition(63.431935, 10.37899);
+        //GeoPosition trondheim = new GeoPosition(63.431935, 10.37899);
 
-        jXSheepMap.setZoom(10);
-        jXSheepMap.setAddressLocation(trondheim);
+        //jXSheepMap.setZoom(10);
+        //jXSheepMap.setAddressLocation(trondheim);
         jXSheepMap.getMiniMap().setVisible(false);
         
         // Add interactions
@@ -832,6 +833,29 @@ public class SheepPanel extends javax.swing.JFrame {
         jXSheepMap.addKeyListener(new PanKeyListener(jXSheepMap.getMainMap()));
 
     }
+    
+    /**
+     * Focuses the map on the centroid of all the sheep positions.
+     */
+    private void setMapFocus() {
+        
+        double x_sum = 0.0;
+        double y_sum = 0.0;
+        int sheepOnMap = 0;
+        
+        for (Sheep s : sheepList) {
+            if (s.getUpdates().size() > 0) {
+                sheepOnMap++;
+                x_sum += s.getUpdates().get(0).getX();
+                y_sum += s.getUpdates().get(0).getY();
+            }
+        }
+        
+        GeoPosition focus = new GeoPosition(x_sum / sheepOnMap, y_sum / sheepOnMap);
+        
+        jXSheepMap.setCenterPosition(focus);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheep;
     private javax.swing.JButton deSelect;
