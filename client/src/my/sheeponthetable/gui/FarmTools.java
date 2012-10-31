@@ -37,34 +37,32 @@ public class FarmTools extends javax.swing.JFrame {
                 setEnable();
             
             }
-            else if(lse.getValueIsAdjusting() || list.getSelectedIndex() != -1){
-                setDisable();
-            }}
+            }
         
         
         };
     }
     private void setDisable() {
-      ClearanceChoice.enable(false);
-      jAlertChkKilled1.enable(false);
-      jAlertChkKilled2.enable(false);
-      jAlertChkStationary1.enable(false);
-      jAlertChkStationary2.enable(false);
-      jAlertChkTemp1.enable(false);
-      jAlertChkTemp2.enable(false);
-      btnSave.enable(false);
+      ClearanceChoice.setEnabled(false);
+      jAlertChkKilled1.setEnabled(false);
+      jAlertChkKilled2.setEnabled(false);
+      jAlertChkStationary1.setEnabled(false);
+      jAlertChkStationary2.setEnabled(false);
+      jAlertChkTemp1.setEnabled(false);
+      jAlertChkTemp2.setEnabled(false);
+      btnSave.setEnabled(false);
       
     }
     
     private void setEnable() {
-      ClearanceChoice.enable(true);
-      jAlertChkKilled1.enable(true);
-      jAlertChkKilled2.enable(true);
-      jAlertChkStationary1.enable(true);
-      jAlertChkStationary2.enable(true);
-      jAlertChkTemp1.enable(true);
-      jAlertChkTemp2.enable(true);
-      btnSave.enable(true);
+      ClearanceChoice.setEnabled(true);
+      jAlertChkKilled1.setEnabled(true);
+      jAlertChkKilled2.setEnabled(true);
+      jAlertChkStationary1.setEnabled(true);
+      jAlertChkStationary2.setEnabled(true);
+      jAlertChkTemp1.setEnabled(true);
+      jAlertChkTemp2.setEnabled(true);
+      btnSave.setEnabled(true);
       
     }
     
