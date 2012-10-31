@@ -44,12 +44,11 @@ public class SheepPanel extends javax.swing.JFrame {
     private String password;
     private int farmID;
     private int userID;
-    //private ServerConnector connect;
-    //private ServerPinger serverPinger;
     // mye sheep info
     private String nickname, comment;
     private int globalId, pulse, temp;
     private double posY, posX;
+    ListSelectionListener listSelectionListener;
 
     /* to know what do to when you press the edit or save button */
     private boolean isEditingSheep = false;
@@ -88,24 +87,8 @@ public class SheepPanel extends javax.swing.JFrame {
         txtWeight.setVisible(false);
         mapInitialize();
 
-        ListSelectionListener listSelectionListener = new ListSelectionListener() {
-            /* public void mousePressed(MouseEvent e) {// dobbelclick
-
-             //tomme variabler
-             if( e.getClickCount() == 2){
-             String Nickname ="";        
-             String Comment ="";
-             int pulse = 0;
-             int Temp = 0;
-
-             //sett variabler
-
-             lblNickName.setText(Nickname);
-             lblComment.setText(Comment);
-             lblPulse.setText(Integer.toString(pulse));
-             lblTemp.setText(Integer.toString(Temp));
-             }
-             }*/
+        listSelectionListener = new ListSelectionListener() {
+            
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 // TODO add stuff to do when selected here
                 JList list = (JList) listSelectionEvent.getSource();
@@ -144,12 +127,7 @@ public class SheepPanel extends javax.swing.JFrame {
                         lblDeadTxt.setText("Not Dead");
                         lblDeadTxt.setBackground(Color.green);
                     }
-                    /*if (!sheepList.get(list.getSelectedIndex()).isAlive())
-                     setBackground(Color.red);
-                     if (sheepList.get(list.getSelectedIndex()).getDeceased()== -1)
-                     setBackground(Color.blue);
-                     if (sheepList.get(list.getSelectedIndex()).isAlive())
-                     setBackground(Color.green);*/
+                    
                     sheepUpdatesShow.removeAllElements();
                     sheepList.get(list.getSelectedIndex()).setUpdates(WebServiceClient.getSheepUpdate(Integer.toString(id), "100"));
                     if (!sheepList.get(list.getSelectedIndex()).getUpdates().isEmpty()) {
@@ -192,12 +170,9 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         };
         sheepJList.addListSelectionListener(listSelectionListener);
-        //jLabelUser.setText(this.connect.getUsername());
-        //jLabelFarm.setText(this.connect.getFarmName());
+       
         update();
-
-        //this.serverPinger = new ServerPinger(this);
-        //serverPinger.start();
+        setMapFocus();
     }
 
     /**
@@ -716,7 +691,7 @@ public class SheepPanel extends javax.swing.JFrame {
     
     public void resetSelection() {
         sheepShow.removeAllElements();
-                        Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
+        Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
         if (sheepList != null) {
             for (int i = 0; i < sheepList.size(); i++) {
                 Sheep sheep;
@@ -801,7 +776,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 x = i;
             }
         }
-        Sheep change = sheepList.get(x);
+        Sheep change = (Sheep)sheepList.get(x);
         /*String newComment, newName;
          int newDeceased;
          double newWeight;*/
@@ -838,12 +813,12 @@ public class SheepPanel extends javax.swing.JFrame {
         // Setup local file cache
         File cacheDir = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
         LocalResponseCache.installResponseCache(fact.getInfo().getBaseURL(), cacheDir, false);
-
+        
         // Set the focus to Tronheim
-        GeoPosition trondheim = new GeoPosition(63.431935, 10.37899);
+        //GeoPosition trondheim = new GeoPosition(63.431935, 10.37899);
 
-        jXSheepMap.setZoom(10);
-        jXSheepMap.setAddressLocation(trondheim);
+        //jXSheepMap.setZoom(10);
+        //jXSheepMap.setAddressLocation(trondheim);
         jXSheepMap.getMiniMap().setVisible(false);
         
         // Add interactions
@@ -858,6 +833,29 @@ public class SheepPanel extends javax.swing.JFrame {
         jXSheepMap.addKeyListener(new PanKeyListener(jXSheepMap.getMainMap()));
 
     }
+    
+    /**
+     * Focuses the map on the centroid of all the sheep positions.
+     */
+    private void setMapFocus() {
+        
+        double x_sum = 0.0;
+        double y_sum = 0.0;
+        int sheepOnMap = 0;
+        
+        for (Sheep s : sheepList) {
+            if (s.getUpdates().size() > 0) {
+                sheepOnMap++;
+                x_sum += s.getUpdates().get(0).getX();
+                y_sum += s.getUpdates().get(0).getY();
+            }
+        }
+        
+        GeoPosition focus = new GeoPosition(x_sum / sheepOnMap, y_sum / sheepOnMap);
+        
+        jXSheepMap.setCenterPosition(focus);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheep;
     private javax.swing.JButton deSelect;

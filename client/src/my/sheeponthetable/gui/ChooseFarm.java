@@ -17,7 +17,7 @@ public class ChooseFarm extends javax.swing.JFrame {
 
     private DefaultListModel farmListModel = new DefaultListModel();
     /**
-     * Creates new form ChooseFarm
+     * Creates new form ChooseFarm which lists all available Farms that the user who is logged in has access to.
      */
     public ChooseFarm() {
         initComponents();
@@ -27,6 +27,15 @@ public class ChooseFarm extends javax.swing.JFrame {
             farmListModel.addElement(farmName.get("id") + " - " + farmName.get("name"));
         }
         farmList.setModel(farmListModel);
+        
+        if(farmListModel.size() == 1) {
+            farmList.setSelectedIndex(0);
+            selectFarm();
+        } else if(farmListModel.size() > 0) {
+            farmList.setSelectedIndex(0);
+        } else {
+            new ErrorBox("You have no farms :/").setVisible(true);
+        }
     }
 
     /**
@@ -117,14 +126,22 @@ public class ChooseFarm extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonLogoutActionPerformed
 
     private void buttonSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectActionPerformed
-        // TODO add your handling code here:
+        
+        selectFarm();
+        
+    }//GEN-LAST:event_buttonSelectActionPerformed
+
+    /**
+     * opens sheepPanel with the selected farm
+     */
+    private void selectFarm() {
         if(farmList.getSelectedIndex() != -1) {
             WebServiceClient.farmid = WebServiceClient.farmids.get(farmList.getSelectedIndex()).get("id").toString();
             new SheepPanel().setVisible(true);
             dispose();
         }
-    }//GEN-LAST:event_buttonSelectActionPerformed
-
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonLogout;
     private javax.swing.JButton buttonSelect;
