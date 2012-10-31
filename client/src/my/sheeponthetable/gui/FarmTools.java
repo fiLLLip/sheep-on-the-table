@@ -4,6 +4,7 @@
  */
 package my.sheeponthetable.gui;
 
+import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -26,19 +27,42 @@ public class FarmTools extends javax.swing.JFrame {
         ClearanceChoice.add("viewer only");
         ClearanceChoice.add("-Not specified-");
         ClearanceChoice.select(4);
+        setDisable();
         ListSelectionListener userSelectList = new ListSelectionListener(){
-        public void userSelectValue(ListSelectionEvent listSelectionEvent){ 
-        }
 
             @Override
             public void valueChanged(ListSelectionEvent lse) {
- 
+            JList list = (JList) lse.getSource();
                 
             }
         
         
         };
     }
+    private void setDisable() {
+      ClearanceChoice.enable(false);
+      jAlertChkKilled1.enable(false);
+      jAlertChkKilled2.enable(false);
+      jAlertChkStationary1.enable(false);
+      jAlertChkStationary2.enable(false);
+      jAlertChkTemp1.enable(false);
+      jAlertChkTemp2.enable(false);
+      btnSave.enable(false);
+      
+    }
+    
+    private void setEnable() {
+      ClearanceChoice.enable(true);
+      jAlertChkKilled1.enable(true);
+      jAlertChkKilled2.enable(true);
+      jAlertChkStationary1.enable(true);
+      jAlertChkStationary2.enable(true);
+      jAlertChkTemp1.enable(true);
+      jAlertChkTemp2.enable(true);
+      btnSave.enable(true);
+      
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,17 +78,17 @@ public class FarmTools extends javax.swing.JFrame {
         jCheckBox9 = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListUser = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         lblFarmName = new javax.swing.JLabel();
         lblUserName = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
+        jAlertChkKilled1 = new javax.swing.JCheckBox();
+        jAlertChkKilled2 = new javax.swing.JCheckBox();
+        jAlertChkTemp1 = new javax.swing.JCheckBox();
+        jAlertChkTemp2 = new javax.swing.JCheckBox();
+        jAlertChkStationary2 = new javax.swing.JCheckBox();
+        jAlertChkStationary1 = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         lblClerance = new javax.swing.JLabel();
         ClearanceChoice = new java.awt.Choice();
@@ -83,12 +107,12 @@ public class FarmTools extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jListUser);
 
-        jButton1.setText("Save ");
+        btnSave.setText("Save ");
 
-        jButton2.setText("Cancel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCancelActionPerformed(evt);
             }
         });
 
@@ -98,17 +122,17 @@ public class FarmTools extends javax.swing.JFrame {
 
         jLabel6.setText("Alert by E-mail:");
 
-        jCheckBox1.setText("Sheep killed");
+        jAlertChkKilled1.setText("Sheep killed");
 
-        jCheckBox2.setText("Sheep killed");
+        jAlertChkKilled2.setText("Sheep killed");
 
-        jCheckBox3.setText("Temp changed");
+        jAlertChkTemp1.setText("Temp changed");
 
-        jCheckBox4.setText("Temp changed");
+        jAlertChkTemp2.setText("Temp changed");
 
-        jCheckBox5.setText("Stationary");
+        jAlertChkStationary2.setText("Stationary");
 
-        jCheckBox6.setText("Stationary");
+        jAlertChkStationary1.setText("Stationary");
 
         jLabel7.setText("Alert by phone:");
 
@@ -136,17 +160,17 @@ public class FarmTools extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox3)
-                            .addComponent(jCheckBox6)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jAlertChkKilled1)
+                            .addComponent(jAlertChkTemp1)
+                            .addComponent(jAlertChkStationary1)
+                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(jCheckBox2)
-                            .addComponent(jCheckBox5)
-                            .addComponent(jCheckBox4)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jAlertChkKilled2)
+                            .addComponent(jAlertChkStationary2)
+                            .addComponent(jAlertChkTemp2)
+                            .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblClerance)
@@ -187,20 +211,20 @@ public class FarmTools extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox2))
+                            .addComponent(jAlertChkKilled1)
+                            .addComponent(jAlertChkKilled2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCheckBox3)
-                            .addComponent(jCheckBox4))
+                            .addComponent(jAlertChkTemp1)
+                            .addComponent(jAlertChkTemp2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCheckBox5)
-                            .addComponent(jCheckBox6))
+                            .addComponent(jAlertChkStationary2)
+                            .addComponent(jAlertChkStationary1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)))
+                            .addComponent(btnSave)
+                            .addComponent(btnCancel)))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -208,9 +232,9 @@ public class FarmTools extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
     this.dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,16 +242,16 @@ public class FarmTools extends javax.swing.JFrame {
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Choice ClearanceChoice;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnSave;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JCheckBox jAlertChkKilled1;
+    private javax.swing.JCheckBox jAlertChkKilled2;
+    private javax.swing.JCheckBox jAlertChkStationary1;
+    private javax.swing.JCheckBox jAlertChkStationary2;
+    private javax.swing.JCheckBox jAlertChkTemp1;
+    private javax.swing.JCheckBox jAlertChkTemp2;
     private javax.swing.JCheckBox jCheckBox9;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -240,4 +264,6 @@ public class FarmTools extends javax.swing.JFrame {
     private javax.swing.JLabel lblNameTxt;
     private javax.swing.JLabel lblUserName;
     // End of variables declaration//GEN-END:variables
+
+    
 }
