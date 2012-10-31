@@ -18,6 +18,15 @@ public class ErrorBox extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
+    public ErrorBox(String errorMessage) {
+        this();
+        errorMessageLabel.setText(errorMessage);
+    }
+    public ErrorBox(String errorMessage, String errorTitle) {
+        this();
+        errorMessageLabel.setText(errorMessage);
+        titleLabel.setText(errorMessage);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
