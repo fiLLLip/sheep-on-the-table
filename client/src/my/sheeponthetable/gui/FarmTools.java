@@ -4,6 +4,9 @@
  */
 package my.sheeponthetable.gui;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 /**
  *
  * @author Alex
@@ -23,6 +26,12 @@ public class FarmTools extends javax.swing.JFrame {
         ClearanceChoice.add("viewer only");
         ClearanceChoice.add("-Not specified-");
         ClearanceChoice.select(4);
+        ListSelectionListener userSelectList = new ListSelectionListener(){
+        public void userSelectValue(ListSelectionEvent listSelectionEvent){ 
+        }
+        
+        
+        };
     }
 
     /**
@@ -38,7 +47,7 @@ public class FarmTools extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         jCheckBox9 = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jListU = new javax.swing.JList();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         lblFarmName = new javax.swing.JLabel();
@@ -61,12 +70,12 @@ public class FarmTools extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        jListU.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(jListU);
 
         jButton1.setText("Save ");
 
@@ -139,10 +148,11 @@ public class FarmTools extends javax.swing.JFrame {
                             .addComponent(lblName))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNameTxt)
                             .addComponent(ClearanceChoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblFarmNameTxt)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNameTxt)
+                                    .addComponent(lblFarmNameTxt))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(22, 22, 22))
         );
@@ -215,7 +225,7 @@ public class FarmTools extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox9;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JList jList1;
+    private javax.swing.JList jListU;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblClerance;
     private javax.swing.JLabel lblFarmName;
