@@ -44,12 +44,11 @@ public class SheepPanel extends javax.swing.JFrame {
     private String password;
     private int farmID;
     private int userID;
-    //private ServerConnector connect;
-    //private ServerPinger serverPinger;
     // mye sheep info
     private String nickname, comment;
     private int globalId, pulse, temp;
     private double posY, posX;
+    ListSelectionListener listSelectionListener;
 
     /* to know what do to when you press the edit or save button */
     private boolean isEditingSheep = false;
@@ -88,24 +87,8 @@ public class SheepPanel extends javax.swing.JFrame {
         txtWeight.setVisible(false);
         mapInitialize();
 
-        ListSelectionListener listSelectionListener = new ListSelectionListener() {
-            /* public void mousePressed(MouseEvent e) {// dobbelclick
-
-             //tomme variabler
-             if( e.getClickCount() == 2){
-             String Nickname ="";        
-             String Comment ="";
-             int pulse = 0;
-             int Temp = 0;
-
-             //sett variabler
-
-             lblNickName.setText(Nickname);
-             lblComment.setText(Comment);
-             lblPulse.setText(Integer.toString(pulse));
-             lblTemp.setText(Integer.toString(Temp));
-             }
-             }*/
+        listSelectionListener = new ListSelectionListener() {
+            
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 // TODO add stuff to do when selected here
                 JList list = (JList) listSelectionEvent.getSource();
@@ -144,12 +127,7 @@ public class SheepPanel extends javax.swing.JFrame {
                         lblDeadTxt.setText("Not Dead");
                         lblDeadTxt.setBackground(Color.green);
                     }
-                    /*if (!sheepList.get(list.getSelectedIndex()).isAlive())
-                     setBackground(Color.red);
-                     if (sheepList.get(list.getSelectedIndex()).getDeceased()== -1)
-                     setBackground(Color.blue);
-                     if (sheepList.get(list.getSelectedIndex()).isAlive())
-                     setBackground(Color.green);*/
+                    
                     sheepUpdatesShow.removeAllElements();
                     sheepList.get(list.getSelectedIndex()).setUpdates(WebServiceClient.getSheepUpdate(Integer.toString(id), "100"));
                     if (!sheepList.get(list.getSelectedIndex()).getUpdates().isEmpty()) {
@@ -192,12 +170,8 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         };
         sheepJList.addListSelectionListener(listSelectionListener);
-        //jLabelUser.setText(this.connect.getUsername());
-        //jLabelFarm.setText(this.connect.getFarmName());
+       
         update();
-
-        //this.serverPinger = new ServerPinger(this);
-        //serverPinger.start();
     }
 
     /**
