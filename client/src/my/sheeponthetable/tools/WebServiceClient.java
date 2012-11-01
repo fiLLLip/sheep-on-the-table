@@ -337,8 +337,12 @@ public class WebServiceClient {
             JSONArray res = getArrayOfJSONObjects(response);
             for (int i = 0; i < res.size(); i++) {
                 JSONObject obj = (JSONObject) res.get(i);
-                
-                returnArray.add(new User(obj.get("un").toString(), "", obj.get("email").toString(), obj.get("phone").toString(), Integer.parseInt(obj.get("level").toString())));
+                returnArray.add(new User(   Integer.parseInt(obj.get("user_id").toString()),
+                                            obj.get("un").toString(),
+                                            obj.get("name").toString(),
+                                            obj.get("email").toString(),
+                                            obj.get("phone").toString()
+                                            ));
             }
             return returnArray;
         } else {
