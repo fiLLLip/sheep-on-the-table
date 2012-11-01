@@ -381,10 +381,8 @@ public class WebServiceClient {
         Object response = doRequest("getUserDetails", params, true);
 
         if (response != null) {
-
-            JSONArray res = getArrayOfJSONObjects(response);
-
-            JSONObject obj = (JSONObject) res.get(0);
+            
+            JSONObject obj = (JSONObject) response;
             returnUser = new User(Integer.parseInt(obj.get("id").toString()),
                     obj.get("un").toString(),
                     obj.get("name").toString(),
