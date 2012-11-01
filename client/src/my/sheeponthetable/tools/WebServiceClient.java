@@ -8,10 +8,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.thetransactioncompany.jsonrpc2.client.*;
 import com.thetransactioncompany.jsonrpc2.*;
+import java.awt.Window;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import my.sheeponthetable.gui.PasswordScreen;
 import net.minidev.json.*;
 import net.minidev.json.parser.JSONParser;
 
@@ -104,6 +108,14 @@ public class WebServiceClient {
             response = mySession.send(request);
             if (response.indicatesSuccess()) {
                 returnValue = response.getResult();
+                if (returnValue.toString().equals("sessionTimeout")) {
+                    returnValue = null;
+                    JOptionPane.showMessageDialog(null, "Session timed out, please restart program.");
+                    for(Window window : java.awt.Window.getWindows()){
+                        window.dispose();
+                    }
+                    new PasswordScreen().setVisible(true);
+                }
             } else {
                 System.err.println(response.getError().getMessage());
             }
