@@ -133,25 +133,27 @@ public class WebServiceClient {
         
         Boolean returnValue = false;
         
-        List<Object> values = (List<Object>)response;
-        if (values.get(0).toString().length() == 40) {
-            System.out.println(values.toString());
-            hash = values.get(0).toString();
-            userid = values.get(1).toString();
-            farmid = values.get(2).toString();
-            farmids.clear();
-            JSONArray JSONfarmid = (JSONArray)values.get(2);
-            for (int i = 0; i < JSONfarmid.size(); i++) {
-                JSONObject obj = (JSONObject)JSONfarmid.get(i);
-                Map<String,String> map = new HashMap<>();
-                map.put("id", obj.get("id").toString());
-                map.put("name", obj.get("name").toString());
-                map.put("address", obj.get("address").toString());
-                farmids.add(map);
+        if (response != null) {
+            List<Object> values = (List<Object>)response;
+            if (values.get(0).toString().length() == 40) {
+                System.out.println(values.toString());
+                hash = values.get(0).toString();
+                userid = values.get(1).toString();
+                farmid = values.get(2).toString();
+                farmids.clear();
+                JSONArray JSONfarmid = (JSONArray)values.get(2);
+                for (int i = 0; i < JSONfarmid.size(); i++) {
+                    JSONObject obj = (JSONObject)JSONfarmid.get(i);
+                    Map<String,String> map = new HashMap<>();
+                    map.put("id", obj.get("id").toString());
+                    map.put("name", obj.get("name").toString());
+                    map.put("address", obj.get("address").toString());
+                    farmids.add(map);
+                }
+                returnValue = true;
+            } else {
+                System.out.println("Error:" + response);
             }
-            returnValue = true;
-        } else {
-            System.out.println("Error:" + response);
         }
         return returnValue;
     }
@@ -172,23 +174,24 @@ public class WebServiceClient {
         
         Object response = doRequest(method, params, true);
         
-        // Gets a JSONArray within a JSONArray
-        JSONArray sheeparr = getArrayOfJSONObjects(response);
-        for (int i = 0; i < sheeparr.size(); i++) {
-            JSONObject obj = (JSONObject)sheeparr.get(i);
-            Sheep sheep = new Sheep(
-                    Integer.parseInt(obj.get("id").toString()),
-                    Integer.parseInt(obj.get("farm_id").toString()),
-                    obj.get("name").toString(),
-                    Integer.parseInt(obj.get("born").toString()),
-                    Integer.parseInt(obj.get("deceased").toString()),
-                    obj.get("comment").toString(),
-                    WebServiceClient.getSheepUpdate(obj.get("id").toString(), "1"),
-                    Double.parseDouble(obj.get("weight").toString())
-                    );
-            sheeps.add(sheep);
+        if (response != null) {
+            // Gets a JSONArray within a JSONArray
+            JSONArray sheeparr = getArrayOfJSONObjects(response);
+            for (int i = 0; i < sheeparr.size(); i++) {
+                JSONObject obj = (JSONObject)sheeparr.get(i);
+                Sheep sheep = new Sheep(
+                        Integer.parseInt(obj.get("id").toString()),
+                        Integer.parseInt(obj.get("farm_id").toString()),
+                        obj.get("name").toString(),
+                        Integer.parseInt(obj.get("born").toString()),
+                        Integer.parseInt(obj.get("deceased").toString()),
+                        obj.get("comment").toString(),
+                        WebServiceClient.getSheepUpdate(obj.get("id").toString(), "1"),
+                        Double.parseDouble(obj.get("weight").toString())
+                        );
+                sheeps.add(sheep);
+            }
         }
-        
         return sheeps;
     }
     
@@ -211,23 +214,24 @@ public class WebServiceClient {
         
         Object response = doRequest(method, params, true);
         
-        //System.out.println(response.getResult().toString());
-        // Gets a JSONArray within a JSONArray
-        JSONArray sheeparr = getArrayOfJSONObjects(response);
-        //System.out.println(sheeparr);
-        for (int i = 0; i < sheeparr.size(); i++) {
-            JSONObject obj = (JSONObject)sheeparr.get(i);
-            //System.out.println(obj);
-            SheepUpdate update = new SheepUpdate(
-                    Integer.parseInt(obj.get("id").toString()),
-                    Double.parseDouble(obj.get("pos_x").toString()),
-                    Double.parseDouble(obj.get("pos_y").toString()),
-                    Integer.parseInt(obj.get("pulse").toString()),
-                    Double.parseDouble(obj.get("temp").toString()),
-                    Integer.parseInt(obj.get("alarm").toString()),
-                    Long.parseLong(obj.get("timestamp").toString())
-                    );
-            updates.add(update);
+        if (response != null) {
+            // Gets a JSONArray within a JSONArray
+            JSONArray sheeparr = getArrayOfJSONObjects(response);
+            //System.out.println(sheeparr);
+            for (int i = 0; i < sheeparr.size(); i++) {
+                JSONObject obj = (JSONObject)sheeparr.get(i);
+                //System.out.println(obj);
+                SheepUpdate update = new SheepUpdate(
+                        Integer.parseInt(obj.get("id").toString()),
+                        Double.parseDouble(obj.get("pos_x").toString()),
+                        Double.parseDouble(obj.get("pos_y").toString()),
+                        Integer.parseInt(obj.get("pulse").toString()),
+                        Double.parseDouble(obj.get("temp").toString()),
+                        Integer.parseInt(obj.get("alarm").toString()),
+                        Long.parseLong(obj.get("timestamp").toString())
+                        );
+                updates.add(update);
+            }
         }
         return updates;
     }
