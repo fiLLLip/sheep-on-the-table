@@ -15,6 +15,7 @@ import javax.swing.event.MouseInputListener;
 import my.sheeponthetable.tools.map.FancyWaypointRenderer;
 import my.sheeponthetable.tools.map.MyWaypoint;
 import my.sheeponthetable.tools.map.RoutePainter;
+import org.jdesktop.swingx.JXMapKit.DefaultProviders;
 import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.input.CenterMapListener;
 import org.jdesktop.swingx.input.PanKeyListener;
@@ -141,7 +142,7 @@ public class SheepPanel extends javax.swing.JFrame {
                         lblTemp.setText(Double.toString(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTemp()));
                         posX = xpos;
                         posY = ypos;
-                        Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
+                        Set<MyWaypoint> waypoints = new HashSet<>();
                         List<GeoPosition> track = new ArrayList();
                         for (int i = 0; i < sheepList.get(list.getSelectedIndex()).getUpdates().size(); i++) {
                             SheepUpdate update = sheepList.get(list.getSelectedIndex()).getUpdates().get(i);
@@ -155,16 +156,18 @@ public class SheepPanel extends javax.swing.JFrame {
                             waypoints.add(new MyWaypoint(formattedUpdateTimestamp.toLocaleString(), color, new GeoPosition(update.getX(), update.getY())));
                         }
                         RoutePainter routePainter = new RoutePainter(track);
-                        WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
+                        WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<>();
                         waypointPainter.setWaypoints(waypoints);
                         waypointPainter.setRenderer(new FancyWaypointRenderer());
                         
-                        List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
+                        List<Painter<JXMapViewer>> painters = new ArrayList<>();
                         painters.add(routePainter);
                         painters.add(waypointPainter);
                         
-                        CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
+                        CompoundPainter<JXMapViewer> painter = new CompoundPainter<>(painters);
                         jXSheepMap.getMainMap().setOverlayPainter(painter);
+                        
+                        focusAccordingToWaypoints(waypoints);
                     }
                 }
             }
@@ -172,7 +175,6 @@ public class SheepPanel extends javax.swing.JFrame {
         sheepJList.addListSelectionListener(listSelectionListener);
        
         update();
-        setMapFocus();
     }
 
     /**
@@ -691,31 +693,80 @@ public class SheepPanel extends javax.swing.JFrame {
     
     public void resetSelection() {
         sheepShow.removeAllElements();
-        Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
+        Set<MyWaypoint> waypoints = new HashSet<>();
         if (sheepList != null) {
             for (int i = 0; i < sheepList.size(); i++) {
                 Sheep sheep;
                 sheep = sheepList.get(i);
                 sheepShow.addElement(sheep.getID() + " - " + sheep.getName());
                 if(!sheep.getUpdates().isEmpty()) {
-                    waypoints.add(new MyWaypoint(Integer.toString(sheep.getID()), Color.WHITE, new GeoPosition(sheep.getUpdates().get(0).getX(), sheep.getUpdates().get(0).getY())));
+                    GeoPosition gp = new GeoPosition(sheep.getUpdates().get(0).getX(), sheep.getUpdates().get(0).getY());
+                    MyWaypoint wp = new MyWaypoint(Integer.toString(sheep.getID()), Color.WHITE, gp);
+                    waypoints.add(wp);
                 }
             }
         }
         sheepJList.setSelectedIndex(0);
         
-        WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
+        WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<>();
         waypointPainter.setWaypoints(waypoints);
         waypointPainter.setRenderer(new FancyWaypointRenderer());
         
-        List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
+        List<Painter<JXMapViewer>> painters = new ArrayList<>();
         painters.add(waypointPainter);
 
-        CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
+        CompoundPainter<JXMapViewer> painter = new CompoundPainter<>(painters);
         
         jXSheepMap.getMainMap().setOverlayPainter(painter);
+        
+        focusAccordingToWaypoints(waypoints);
     }
 
+    /**
+     * Focuses the map so that it shows all the WayPoints on the screen, by
+     * setting the focus point to the centroid of all the waypoints, and zooming
+     * to the appropriate level.
+     * 
+     * @param wp - a set of waypoints to focus on
+     */
+    private void focusAccordingToWaypoints(Set<MyWaypoint> wp) {
+        // If there are no waypoints to focus on, don't do anything.
+        if (wp.isEmpty()) {
+            return;
+        }
+        
+        // Otherwise, convert to set of geoPositions
+        Set<GeoPosition> gp = new HashSet<>();
+        
+        for (MyWaypoint w : wp) {
+            gp.add(w.getPosition());
+        }
+        
+        // Find and set the centre position by calculating the mean over all 
+        // the positions.
+        double x_sum = 0.0;
+        double y_sum = 0.0;
+        
+        for (GeoPosition g : gp) {
+            x_sum = g.getLongitude();
+            y_sum = g.getLatitude();
+        }
+        
+        GeoPosition focus = new GeoPosition(x_sum / gp.size(), y_sum / gp.size());
+
+        jXSheepMap.setAddressLocation(focus);
+        
+        // Find the correct zoom. Because calculateZoomFrom finds the minimal
+        // amount it has to zoom out before displaying all the geopositions, we 
+        // first set zoom to level 1, to make sure we get the minimal focused zoom.
+        jXSheepMap.getMainMap().setZoom(1);
+        jXSheepMap.getMainMap().calculateZoomFrom(gp);
+        // CalculateZoomFrom() finds a zoom level that barely touches upon all
+        // the waypoints. In order to make sure all the waypoints are places 
+        // well within the bounds of the map, zoom out one more level.
+        jXSheepMap.getMainMap().setZoom(jXSheepMap.getMainMap().getZoom()+1);
+    }
+    
     public void setVisible() {
         txtNick.setVisible(false);
         txtComment.setEditable(false);
@@ -805,7 +856,9 @@ public class SheepPanel extends javax.swing.JFrame {
         wms.setLayer("topo2_WMS");
         wms.setBaseUrl("http://openwms.statkart.no/skwms1/wms.topo2?");
         DefaultTileFactory fact = new WMSTileFactory(wms);
-        jXSheepMap.setTileFactory(fact);
+        
+        jXSheepMap.setDefaultProvider(DefaultProviders.OpenStreetMaps);
+   //     jXSheepMap.setTileFactory(fact);
 
         // Use 8 threads in parallel to load the tiles
         fact.setThreadPoolSize(8);
@@ -820,7 +873,7 @@ public class SheepPanel extends javax.swing.JFrame {
         //jXSheepMap.setZoom(10);
         //jXSheepMap.setAddressLocation(trondheim);
         jXSheepMap.getMiniMap().setVisible(false);
-        
+
         // Add interactions
         MouseInputListener mia = new PanMouseInputListener(jXSheepMap.getMainMap());
         jXSheepMap.addMouseListener(mia);
@@ -834,27 +887,6 @@ public class SheepPanel extends javax.swing.JFrame {
 
     }
     
-    /**
-     * Focuses the map on the centroid of all the sheep positions.
-     */
-    private void setMapFocus() {
-        
-        double x_sum = 0.0;
-        double y_sum = 0.0;
-        int sheepOnMap = 0;
-        
-        for (Sheep s : sheepList) {
-            if (s.getUpdates().size() > 0) {
-                sheepOnMap++;
-                x_sum += s.getUpdates().get(0).getX();
-                y_sum += s.getUpdates().get(0).getY();
-            }
-        }
-        
-        GeoPosition focus = new GeoPosition(x_sum / sheepOnMap, y_sum / sheepOnMap);
-        
-        jXSheepMap.setCenterPosition(focus);
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheep;
