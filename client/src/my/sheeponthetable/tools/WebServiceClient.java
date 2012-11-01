@@ -78,55 +78,82 @@ public class WebServiceClient {
         }
     }
     
-    public static boolean isLoggedIn () {
+    /**
+     * Does a request to the webservice. 
+     * 
+     * @param String which method to request from webservice
+     * @param List<String> parameters to send to webservice
+     * @param Boolean does this method require auth?
+     * @return Object 
+     */
+    private static Object doRequest (String method, List<String> parameters, Boolean reqAuth) {
+        long startTime = new Date().getTime();
         connect();
         // Construct new request
-        String method = "sheepLogon";
         int requestID = 1;
-        List<String> params=new ArrayList<String>();
-        params.add(username);
-        params.add(password);
+        if (reqAuth) {
+            parameters = hashParameters(parameters);
+        }
         
-        JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
+        JSONRPC2Request request = new JSONRPC2Request(method, parameters, requestID);
 
         JSONRPC2Response response = null;
-        
         // Send request and print response result / error
-        boolean returnValue = false;
+        Object returnValue = null;
         try {
             response = mySession.send(request);
             if (response.indicatesSuccess()) {
-                List<Object> values = (List<Object>)response.getResult();
-                if (values.get(0).toString().length() == 40) {
-                    System.out.println(values.toString());
-                    hash = values.get(0).toString();
-                    userid = values.get(1).toString();
-                    farmid = values.get(2).toString();
-                    farmids.clear();
-                    JSONArray JSONfarmid = (JSONArray)values.get(2);
-                    for (int i = 0; i < JSONfarmid.size(); i++) {
-                        JSONObject obj = (JSONObject)JSONfarmid.get(i);
-                        Map<String,String> map = new HashMap<String,String>();
-                        map.put("id", obj.get("id").toString());
-                        map.put("name", obj.get("name").toString());
-                        map.put("address", obj.get("address").toString());
-                        farmids.add(map);
-                    }
-                    returnValue = true;
-                } else {
-                    System.out.println("Error:" + response.getResult());
-                }
+                returnValue = response.getResult();
             } else {
-                System.err.println("Error:" + response.getError().getMessage());
+                System.err.println(response.getError().getMessage());
             }
         } catch (JSONRPC2SessionException e) {
-            System.err.println("Error: " + e.getMessage());
-        }catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println(e.getMessage());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         } finally {
+            System.out.println(method + " used: " + (new Date().getTime() - startTime) + "ms");
             return returnValue;
         }
-
+    }
+    
+    /**
+     * Logs into the webservice and fetches variables to use further on. 
+     * Required to run before anything else
+     *
+     * @return boolean
+     */
+    public static boolean isLoggedIn () {
+        String method = "sheepLogon";
+        List<String> params=new ArrayList<>();
+        params.add(username);
+        params.add(password);
+        
+        Object response = doRequest(method, params, false);
+        
+        Boolean returnValue = false;
+        
+        List<Object> values = (List<Object>)response;
+        if (values.get(0).toString().length() == 40) {
+            System.out.println(values.toString());
+            hash = values.get(0).toString();
+            userid = values.get(1).toString();
+            farmid = values.get(2).toString();
+            farmids.clear();
+            JSONArray JSONfarmid = (JSONArray)values.get(2);
+            for (int i = 0; i < JSONfarmid.size(); i++) {
+                JSONObject obj = (JSONObject)JSONfarmid.get(i);
+                Map<String,String> map = new HashMap<>();
+                map.put("id", obj.get("id").toString());
+                map.put("name", obj.get("name").toString());
+                map.put("address", obj.get("address").toString());
+                farmids.add(map);
+            }
+            returnValue = true;
+        } else {
+            System.out.println("Error:" + response);
+        }
+        return returnValue;
     }
     
     /**
@@ -138,53 +165,31 @@ public class WebServiceClient {
      * doesn't have any sheep in the database.
      */
     public static List<Sheep> getSheepList () {
-        long startTime = new Date().getTime();
-        connect();
         List<Sheep> sheeps = new ArrayList();
-        
-        // Construct new request
         String method = "getSheepList";
-        int requestID = 1;
-        List<String> params=new ArrayList<String>();
+        List<String> params=new ArrayList<>();
         params.add(farmid);
-        params = hashParameters(params);
         
-        JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
-
-        JSONRPC2Response response = null;
-        // Send request and print response result / error
-        try {
-            response = mySession.send(request);
-            if (response.indicatesSuccess()) {
-                //System.out.println(response.getResult().toString());
-                // Gets a JSONArray within a JSONArray
-                JSONArray sheeparr = getArrayOfJSONObjects(response.getResult());
-                for (int i = 0; i < sheeparr.size(); i++) {
-                    JSONObject obj = (JSONObject)sheeparr.get(i);
-                    //System.out.println(obj);
-                    Sheep sheep = new Sheep(
-                            Integer.parseInt(obj.get("id").toString()),
-                            Integer.parseInt(obj.get("farm_id").toString()),
-                            obj.get("name").toString(),
-                            Integer.parseInt(obj.get("born").toString()),
-                            Integer.parseInt(obj.get("deceased").toString()),
-                            obj.get("comment").toString(),
-                            WebServiceClient.getSheepUpdate(obj.get("id").toString(), "1"),
-                            Double.parseDouble(obj.get("weight").toString())
-                            );
-                    sheeps.add(sheep);
-                }
-            } else {
-                System.err.println(response.getError().getMessage());
-            }
-        } catch (JSONRPC2SessionException e) {
-            System.err.println(e.getMessage());
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        } finally {
-            System.out.println("GetSheepList used: " + (new Date().getTime() - startTime) + "ms");
-            return sheeps;
+        Object response = doRequest(method, params, true);
+        
+        // Gets a JSONArray within a JSONArray
+        JSONArray sheeparr = getArrayOfJSONObjects(response);
+        for (int i = 0; i < sheeparr.size(); i++) {
+            JSONObject obj = (JSONObject)sheeparr.get(i);
+            Sheep sheep = new Sheep(
+                    Integer.parseInt(obj.get("id").toString()),
+                    Integer.parseInt(obj.get("farm_id").toString()),
+                    obj.get("name").toString(),
+                    Integer.parseInt(obj.get("born").toString()),
+                    Integer.parseInt(obj.get("deceased").toString()),
+                    obj.get("comment").toString(),
+                    WebServiceClient.getSheepUpdate(obj.get("id").toString(), "1"),
+                    Double.parseDouble(obj.get("weight").toString())
+                    );
+            sheeps.add(sheep);
         }
+        
+        return sheeps;
     }
     
     /**
@@ -196,54 +201,35 @@ public class WebServiceClient {
      * doesn't have any sheep in the database.
      */
     public static List<SheepUpdate> getSheepUpdate (String sheepid, String limit) {
-        connect();
         List<SheepUpdate> updates = new ArrayList();
         
         // Construct new request
         String method = "getSheepUpdates";
-        int requestID = 1;
         List<String> params=new ArrayList<String>();
         params.add(sheepid);
         params.add(limit);
-        params = hashParameters(params);
         
-        JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
-
-        JSONRPC2Response response = null;
-
-        // Send request and print response result / error
-        try {
-            response = mySession.send(request);
-            if (response.indicatesSuccess()) {
-                //System.out.println(response.getResult().toString());
-                // Gets a JSONArray within a JSONArray
-                JSONArray sheeparr = getArrayOfJSONObjects(response.getResult());
-                //System.out.println(sheeparr);
-                for (int i = 0; i < sheeparr.size(); i++) {
-                    JSONObject obj = (JSONObject)sheeparr.get(i);
-                    //System.out.println(obj);
-                    SheepUpdate update = new SheepUpdate(
-                            Integer.parseInt(obj.get("id").toString()),
-                            Double.parseDouble(obj.get("pos_x").toString()),
-                            Double.parseDouble(obj.get("pos_y").toString()),
-                            Integer.parseInt(obj.get("pulse").toString()),
-                            Double.parseDouble(obj.get("temp").toString()),
-                            Integer.parseInt(obj.get("alarm").toString()),
-                            Long.parseLong(obj.get("timestamp").toString())
-                            );
-                    updates.add(update);
-                }
-            } else {
-                System.err.println(response.getError().getMessage());
-            }
-        } catch (JSONRPC2SessionException e) {
-            System.err.println(e.getMessage());
-            return null;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        } finally {
-            return updates;
+        Object response = doRequest(method, params, true);
+        
+        //System.out.println(response.getResult().toString());
+        // Gets a JSONArray within a JSONArray
+        JSONArray sheeparr = getArrayOfJSONObjects(response);
+        //System.out.println(sheeparr);
+        for (int i = 0; i < sheeparr.size(); i++) {
+            JSONObject obj = (JSONObject)sheeparr.get(i);
+            //System.out.println(obj);
+            SheepUpdate update = new SheepUpdate(
+                    Integer.parseInt(obj.get("id").toString()),
+                    Double.parseDouble(obj.get("pos_x").toString()),
+                    Double.parseDouble(obj.get("pos_y").toString()),
+                    Integer.parseInt(obj.get("pulse").toString()),
+                    Double.parseDouble(obj.get("temp").toString()),
+                    Integer.parseInt(obj.get("alarm").toString()),
+                    Long.parseLong(obj.get("timestamp").toString())
+                    );
+            updates.add(update);
         }
+        return updates;
     }
     
     /**
@@ -252,46 +238,24 @@ public class WebServiceClient {
      * @param sheep 
      * @return true if successful or false if an error happened.
      */
-    public static Boolean editSheep (Sheep sheep) {        
-        connect();
+    public static Boolean editSheep (Sheep sheep) {   
         boolean returnValue = false;
         // Construct new request
         String method = "newSheep";
-        int requestID = 1;
-        List<String> params=new ArrayList<String>();
+        List<String> params=new ArrayList<>();
         params.add(Integer.toString(sheep.getID()));
         params.add(sheep.getName());
         params.add(Integer.toString(sheep.getBorn()));
         params.add(Integer.toString(sheep.getDeceased()));
         params.add(sheep.getComment());
         params.add(Double.toString(sheep.getWeight()));
-        params = hashParameters(params);
-        System.out.println(params);
         
-        JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
-
-        JSONRPC2Response response = null;
-
-        // Send request and print response result / error
-        try {
-            response = mySession.send(request);
-            if (response.indicatesSuccess()) {
-                if(response.getResult() != null) {
-                    returnValue = true;
-                }
-                // Gets a JSONArray within a JSONArray
-                //JSONArray sheeparr = getArrayOfJSONObjects(response.getResult());
-                //System.out.println(sheeparr);
-            } else {
-                System.err.println(response.getError().getMessage());
-            }
-        } catch (JSONRPC2SessionException e) {
-            System.err.println(e.getMessage());
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        } finally {
-            return returnValue;
+        Object response = doRequest(method, params, true);
+        
+        if(response != null) {
+            returnValue = true;
         }
+        return returnValue;
     }
     
     /**
@@ -300,46 +264,24 @@ public class WebServiceClient {
      * @param sheep 
      * @return true if successful or false if an error happened.
      */
-    public static Boolean newSheep (Sheep sheep) {        
-        connect();
+    public static Boolean newSheep (Sheep sheep) {      
         boolean returnValue = false;
         // Construct new request
         String method = "newSheep";
-        int requestID = 1;
-        List<String> params=new ArrayList<String>();
+        List<String> params=new ArrayList<>();
         params.add(farmid);
         params.add(sheep.getName());
         params.add(Integer.toString(sheep.getBorn()));
         params.add(Integer.toString(sheep.getDeceased()));
         params.add(sheep.getComment());
         params.add(Double.toString(sheep.getWeight()));
-        params = hashParameters(params);
-        System.out.println(params);
         
-        JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
-
-        JSONRPC2Response response = null;
-
-        // Send request and print response result / error
-        try {
-            response = mySession.send(request);
-            if (response.indicatesSuccess()) {
-                if(response.getResult() != null) {
-                    returnValue = true;
-                }
-                // Gets a JSONArray within a JSONArray
-                //JSONArray sheeparr = getArrayOfJSONObjects(response.getResult());
-                //System.out.println(sheeparr);
-            } else {
-                System.err.println(response.getError().getMessage());
-            }
-        } catch (JSONRPC2SessionException e) {
-            System.err.println(e.getMessage());
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        } finally {
-            return returnValue;
+        Object response = doRequest(method, params, true);
+        
+        if(response != null) {
+            returnValue = true;
         }
+        return returnValue;
     }
     
     /**
@@ -348,72 +290,18 @@ public class WebServiceClient {
      * @param sheep 
      * @return true if successful or false if an error happened.
      */
-    public static Boolean removeSheep (Sheep sheep) {        
-        connect();
+    public static Boolean removeSheep (Sheep sheep) {    
         boolean returnValue = false;
         // Construct new request
         String method = "removeSheep";
-        int requestID = 1;
-        List<String> params=new ArrayList<String>();
+        List<String> params=new ArrayList<>();
         params.add(Integer.toString(sheep.getID()));
-        params = hashParameters(params);
-        System.out.println(params);
+        Object response = doRequest(method, params, true);
         
-        JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
-
-        JSONRPC2Response response = null;
-
-        // Send request and print response result / error
-        try {
-            response = mySession.send(request);
-            if (response.indicatesSuccess()) {
-                if(response.getResult() != null) {
-                    returnValue = true;
-                }
-            } else {
-                System.err.println(response.getError().getMessage());
-            }
-        } catch (JSONRPC2SessionException e) {
-            System.err.println(e.getMessage());
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        } finally {
-            return returnValue;
+        if(response != null) {
+            returnValue = true;
         }
-    }
-
-    /**
-     * Function to send request to the WebService
-     * @param method
-     * @param params
-     * @return a JSONRPC2Response on success or null if else
-     */
-    
-    public static JSONRPC2Response doRequest(String method, List<String> params) {
-        connect();
-        
-        int requestID = 1;
-        
-        params = hashParameters(params);
-        
-        JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
-
-        JSONRPC2Response response = null;
-        // Send request and print response result / error
-        try {
-            response = mySession.send(request);
-            if (response.indicatesSuccess()) {
-                // Success
-            } else {
-                System.err.println(response.getError().getMessage());
-            }
-        } catch (JSONRPC2SessionException e) {
-            System.err.println(e.getMessage());
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        } finally {
-            return response;
-        }
+        return returnValue;
     }
 
     /**
@@ -428,11 +316,11 @@ public class WebServiceClient {
         ArrayList<String> params = new ArrayList<>();
         params.add(Integer.toString(farm_id));
         
-        JSONRPC2Response response = WebServiceClient.doRequest("getUsersForFarm", params);
+        Object response = doRequest("getUsersForFarm", params, true);
         
         if (response != null) {
             
-            JSONArray userArray = getArrayOfJSONObjects(response.getResult());
+            JSONArray userArray = getArrayOfJSONObjects(response);
                 for (int i = 0; i < userArray.size(); i++) {
                     JSONObject obj = (JSONObject)userArray.get(i);
                     
@@ -457,10 +345,10 @@ public class WebServiceClient {
         params.add(Integer.toString(farm_id));
         params.add(Integer.toString(user_id));
         
-        JSONRPC2Response response = WebServiceClient.doRequest("getUserPermission", params);
+        Object response = doRequest("getUserPermission", params, true);
         
         if (response != null) {
-            return Integer.parseInt(response.getResult().toString());
+            return Integer.parseInt(response.toString());
         } else {
             return -1;
         }
@@ -478,10 +366,10 @@ public class WebServiceClient {
         params.add(Integer.toString(farm_id));
         params.add(Integer.toString(user_id));
         
-        JSONRPC2Response response = WebServiceClient.doRequest("getUserSettings", params);
+        Object response = WebServiceClient.doRequest("getUserSettings", params, true);
         
         if (response != null) {
-            System.out.println(response.getResult());
+            System.out.println(response);
             return null;
         } else {
             return null;
