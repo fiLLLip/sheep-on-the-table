@@ -381,43 +381,112 @@ public class WebServiceClient {
             return returnValue;
         }
     }
-    
+
     /**
-     * Gets the name of the farm owner
-     *
-     * @param farmId 
-     * @return String value if successful or null if an error happened.
+     * Function to send request to the WebService
+     * @param method
+     * @param params
+     * @return a JSONRPC2Response on success or null if else
      */
-    public static String getFarmOwner(int farmId) {
+    
+    public static JSONRPC2Response doRequest(String method, List<String> params) {
         connect();
-        String farmOwner = "";
         
-        // Construct new request
-        String method = "getFarmOwner";
         int requestID = 1;
-        List<String> params=new ArrayList<String>();
-        params.add(Integer.toString(farmId));
+        
         params = hashParameters(params);
         
         JSONRPC2Request request = new JSONRPC2Request(method, params, requestID);
 
         JSONRPC2Response response = null;
-
         // Send request and print response result / error
         try {
             response = mySession.send(request);
             if (response.indicatesSuccess()) {
-                System.out.println(response.getResult().toString());
+                // Success
             } else {
                 System.err.println(response.getError().getMessage());
             }
         } catch (JSONRPC2SessionException e) {
             System.err.println(e.getMessage());
-            return null;
         } catch (Exception e) {
             System.err.println(e.getMessage());
         } finally {
-            return farmOwner;
+            return response;
         }
     }
+
+    /**
+     * Returns the users connected to a specific farm
+     * @param farm_id
+     * @return ArrayList<String> with usernames
+     */
+    public static ArrayList<String> getUsersForFarm(int farm_id) {
+        
+        ArrayList<String> returnArray = new ArrayList();
+        
+        ArrayList<String> params = new ArrayList<>();
+        params.add(Integer.toString(farm_id));
+        
+        JSONRPC2Response response = WebServiceClient.doRequest("getUsersForFarm", params);
+        
+        if (response != null) {
+            
+            JSONArray userArray = getArrayOfJSONObjects(response.getResult());
+                for (int i = 0; i < userArray.size(); i++) {
+                    JSONObject obj = (JSONObject)userArray.get(i);
+                    
+                    returnArray.add(obj.toString());
+                }
+                
+                return returnArray;
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * Returns the user level of a specific user to a farm
+     * @param farm_id
+     * @param user_id
+     * @return integer level: -1: error, 0: view only, 1: Admin, 2: Owner
+     */
+    
+    public static int getUserLevel(int farm_id, int user_id) {
+        List<String> params = new ArrayList<String>();
+        params.add(Integer.toString(farm_id));
+        params.add(Integer.toString(user_id));
+        
+        JSONRPC2Response response = WebServiceClient.doRequest("getUserPermission", params);
+        
+        if (response != null) {
+            return Integer.parseInt(response.getResult().toString());
+        } else {
+            return -1;
+        }
+    }
+    
+    /**
+     * Returns the usersettings for a user for a specific farm
+     * @param farm_id
+     * @param user_id
+     * @return Array or Map.. whatever
+     */
+    
+    public static Map getUserSettings(int farm_id, int user_id) {
+        List<String> params = new ArrayList<String>();
+        params.add(Integer.toString(farm_id));
+        params.add(Integer.toString(user_id));
+        
+        JSONRPC2Response response = WebServiceClient.doRequest("getUserSettings", params);
+        
+        if (response != null) {
+            System.out.println(response.getResult());
+            return null;
+        } else {
+            return null;
+        }
+    }
+    
+    
 }
