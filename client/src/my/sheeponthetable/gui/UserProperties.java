@@ -148,14 +148,21 @@ public class UserProperties extends javax.swing.JFrame {
         else if(!this.mailTxt.getText().contains("@")){
             System.out.println("Error should now show up...");
            // final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
-            JOptionPane.showMessageDialog(null, "Please fill in all the required fields.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please enter a correct e-mail address.", "Information", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         else if(this.PhoneTxt.getText().length() != 8){
             System.out.println("Error should now show up...");
-            JOptionPane.showMessageDialog(null, "Please fill in a correct phone number", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please enter a phone number consisting of 8 numbers!", "Information", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        else 
+            try{
+                int phoneNumber = Integer.parseInt(this.PhoneTxt.getText());
+            }
+            catch(Exception ex){
+                JOptionPane.showMessageDialog(null, "Please enter a phone number consisting of numbers only!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     /**
