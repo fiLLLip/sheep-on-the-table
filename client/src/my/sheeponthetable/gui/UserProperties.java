@@ -16,7 +16,7 @@ import my.sheeponthetable.tools.WebServiceClient;
 public class UserProperties extends javax.swing.JFrame {
 
     SheepPanel sheepPanel;
-
+    User user;
     /**
      * Creates new form AddNewSheep
      */
@@ -24,6 +24,7 @@ public class UserProperties extends javax.swing.JFrame {
         initComponents();
         this.sheepPanel = sp;
         UsernameLabel.setText(WebServiceClient.username);
+        user = WebServiceClient.getUserDetails();
         
     }
 
@@ -142,47 +143,38 @@ public class UserProperties extends javax.swing.JFrame {
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
         if (this.NameTxt.getText().equals("")
                 || this.mailTxt.getText().equals("")
-                || this.PhoneTxt.getText().equals("")){
+                || this.PhoneTxt.getText().equals("")) {
             System.out.println("Error should now show up...");
-           // final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
+            // final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
             JOptionPane.showMessageDialog(null, "Please fill in all the required fields.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            
+
             return;
-        }
-        else if(!this.mailTxt.getText().contains("@")){
+        } else if (!this.mailTxt.getText().contains("@")) {
             System.out.println("Error should now show up...");
-           // final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
+            // final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
             JOptionPane.showMessageDialog(null, "Please enter a correct e-mail address.", "Information", JOptionPane.INFORMATION_MESSAGE);
             return;
-        }
-        else if(this.PhoneTxt.getText().length() != 8){
+        } else if (this.PhoneTxt.getText().length() != 8) {
             System.out.println("Error should now show up...");
             JOptionPane.showMessageDialog(null, "Please enter a phone number consisting of 8 numbers!", "Information", JOptionPane.INFORMATION_MESSAGE);
             return;
-        }
-        else 
-            try{
-                int phoneNumber = Integer.parseInt(this.PhoneTxt.getText());
-                User user = WebServiceClient.getUserDetails();
+        } else {
+            
+                
                 user.setName(this.NameTxt.getText());
                 user.setEmail(this.mailTxt.getText());
                 user.setTelephone(this.PhoneTxt.getText());
-                if(WebServiceClient.setUserDetails(user)){
-                  this.dispose();
-                }
-                else
+                if (WebServiceClient.setUserDetails(user)) {
+                    this.dispose();
+                } else {
                     JOptionPane.showMessageDialog(null, "Failed to edit user!", "Information", JOptionPane.ERROR_MESSAGE);
-                
-            }
-            catch(Exception ex){
-                JOptionPane.showMessageDialog(null, "Please enter a phone number consisting of numbers only!", "Information", JOptionPane.INFORMATION_MESSAGE);
-            }
-    }//GEN-LAST:event_SaveButtonActionPerformed
+                }
 
+        }
+    }//GEN-LAST:event_SaveButtonActionPerformed
     /**
      * @param args the command line arguments
      */
-  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton CancelButton;
     private javax.swing.JTextField NameTxt;

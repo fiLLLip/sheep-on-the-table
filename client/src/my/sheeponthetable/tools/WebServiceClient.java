@@ -111,7 +111,7 @@ public class WebServiceClient {
                 if (returnValue.toString().equals("sessionTimeout")) {
                     returnValue = null;
                     JOptionPane.showMessageDialog(null, "Session timed out, please log in again.");
-                    for(Window window : java.awt.Window.getWindows()){
+                    for (Window window : java.awt.Window.getWindows()) {
                         window.dispose();
                     }
                     new PasswordScreen().setVisible(true);
@@ -357,15 +357,14 @@ public class WebServiceClient {
                         obj.get("SMSAlarmTemperature").toString().equals("1"),
                         obj.get("EmailAlarmStationary").toString().equals("1"),
                         obj.get("EmailAlarmAttack").toString().equals("1"),
-                        obj.get("EmailAlarmTemperature").toString().equals("1")
-                        ));
+                        obj.get("EmailAlarmTemperature").toString().equals("1")));
             }
             return returnArray;
         } else {
             return null;
         }
     }
-    
+
     /**
      * Returns the User object of the user logged in
      *
@@ -377,44 +376,43 @@ public class WebServiceClient {
         User returnUser = null;
 
         ArrayList<String> params = new ArrayList<>();
-        
+
 
         Object response = doRequest("getUserDetails", params, true);
-        
+
         if (response != null) {
 
             JSONArray res = getArrayOfJSONObjects(response);
-            for (int i = 0; i < res.size(); i++) {
-                JSONObject obj = (JSONObject) res.get(i);
-                returnUser = new User(Integer.parseInt(obj.get("user_id").toString()),
-                        obj.get("un").toString(),
-                        obj.get("name").toString(),
-                        obj.get("email").toString(),
-                        obj.get("phone").toString()
-                        );
-            }
+
+            JSONObject obj = (JSONObject) res.get(0);
+            returnUser = new User(Integer.parseInt(obj.get("id").toString()),
+                    obj.get("un").toString(),
+                    obj.get("name").toString(),
+                    obj.get("email").toString(),
+                    obj.get("phone").toString());
+
             return returnUser;
         } else {
             return null;
         }
     }
-    
- 
+
     /**
      * Updates the user details in the database
+     *
      * @param user
      * @return true if success else false
      */
     public static boolean setUserDetails(User user) {
 
-        
+
         ArrayList<String> params = new ArrayList<>();
         params.add(user.getName());
         params.add(user.getEmail());
         params.add(user.getTelephone());
 
         Object response = doRequest("setUserDetails", params, true);
-        
+
         if (response != null) {
             return true;
         } else {
