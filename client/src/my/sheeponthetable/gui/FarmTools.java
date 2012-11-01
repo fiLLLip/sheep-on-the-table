@@ -4,16 +4,21 @@
  */
 package my.sheeponthetable.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import my.sheeponthetable.tools.WebServiceClient;
 
 /**
  *
  * @author Alex
  */
 public class FarmTools extends javax.swing.JFrame {
-   SheepPanel sheepPanel;
+   private SheepPanel sheepPanel;
+   private List users = new ArrayList();
+   
 
     /**
      * Creates new form AddNewSheep
@@ -28,6 +33,8 @@ public class FarmTools extends javax.swing.JFrame {
         ClearanceChoice.add("-Not specified-");
         ClearanceChoice.select(4);
         setDisable();
+        getUsers();
+        update();
         ListSelectionListener userSelectList = new ListSelectionListener(){
 
             @Override
@@ -66,6 +73,16 @@ public class FarmTools extends javax.swing.JFrame {
       
     }
     
+    public void getUsers(){
+        int teller = 0;
+        while(WebServiceClient.getUsersForFarm(teller) != null){
+        users = WebServiceClient.getUsersForFarm(teller);
+        teller++;}
+    }
+    public void update(){
+        
+    for (int i = 0; i < users.size();i++){
+    }}
 
     /**
      * This method is called from within the constructor to initialize the form.
