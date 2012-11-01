@@ -5,6 +5,7 @@
 package my.sheeponthetable.gui;
 
 import java.awt.Color;
+import java.awt.event.MouseListener;
 import java.util.*;
 import javax.swing.*;
 import my.sheeponthetable.tools.*;
@@ -15,6 +16,7 @@ import javax.swing.event.MouseInputListener;
 import my.sheeponthetable.tools.map.FancyWaypointRenderer;
 import my.sheeponthetable.tools.map.MyWaypoint;
 import my.sheeponthetable.tools.map.RoutePainter;
+import org.jdesktop.swingx.JXMapKit;
 import org.jdesktop.swingx.JXMapKit.DefaultProviders;
 import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.input.CenterMapListener;
@@ -24,6 +26,7 @@ import org.jdesktop.swingx.input.ZoomMouseWheelListenerCursor;
 import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.mapviewer.LocalResponseCache;
+import org.jdesktop.swingx.mapviewer.Waypoint;
 import org.jdesktop.swingx.mapviewer.wms.WMSService;
 import org.jdesktop.swingx.mapviewer.wms.WMSTileFactory;
 import org.jdesktop.swingx.mapviewer.WaypointPainter;
@@ -39,6 +42,7 @@ public class SheepPanel extends javax.swing.JFrame {
     private DefaultListModel sheepShow = new DefaultListModel();
     private DefaultListModel sheepUpdatesShow = new DefaultListModel();
     private List<Sheep> sheepList = new ArrayList();
+    private Set<MyWaypoint> wayPointSet = new HashSet<>();
     private String serverURL;
     private int serverPort;
     private String username;
@@ -54,6 +58,14 @@ public class SheepPanel extends javax.swing.JFrame {
     /* to know what do to when you press the edit or save button */
     private boolean isEditingSheep = false;
 
+    public JXMapKit getMapKit()  {
+        return jXSheepMap;
+    }
+    
+    public Set<MyWaypoint> getWayPoints() {
+        return wayPointSet;
+    }
+    
     /**
      *
      * @param sheep
@@ -91,84 +103,11 @@ public class SheepPanel extends javax.swing.JFrame {
         listSelectionListener = new ListSelectionListener() {
             
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
-                // TODO add stuff to do when selected here
+
                 JList list = (JList) listSelectionEvent.getSource();
-                if (!listSelectionEvent.getValueIsAdjusting() && list.getSelectedIndex() != -1) {
-                    // Settings textfields to "Not available" before update
-                    // because there may be no updates for selected Sheep
-                    editSheepBtn.setEnabled(true);
-                    removeSheepBtn.setEnabled(true);
-                    lblIDtxt.setText("Not available");
-                    lblPosTxt.setText("Not available");
-                    lblUpdateTxt.setText("Not available");
-                    lblNick.setText("Not available");
-                    txtComment.setText("Not available");
-                    lblPulse.setText("Not available");
-                    lblTemp.setText("Not available");
-                    lblBornTxt.setText("Not available");
-                    lblWeightTxt.setText("Not available");
-                    lblDeadTxt.setText("Not available");
-
-
-                    lblDeadTxt.setText(Integer.toString(sheepList.get(list.getSelectedIndex()).getDeceased()));
-                    lblBornTxt.setText(Integer.toString(sheepList.get(list.getSelectedIndex()).getBorn()));
-                    lblWeightTxt.setText(Double.toString((sheepList.get(list.getSelectedIndex()).getWeight())));
-                    int id = sheepList.get(list.getSelectedIndex()).getID();
-                    lblIDtxt.setText(Integer.toString(id));
-
-                    txtComment.setText(sheepList.get(list.getSelectedIndex()).getComment());
-                    globalId = id;
-                    nickname = sheepList.get(list.getSelectedIndex()).getName();
-                    comment = sheepList.get(list.getSelectedIndex()).getComment();
-                    lblNick.setText(nickname);
-                    System.out.println(nickname);
-                    if (sheepList.get(list.getSelectedIndex()).getDeceased() == 0) {
-                        txtDead.setText("Not Dead");
-                        txtDead.setBackground(Color.green);
-                        lblDeadTxt.setText("Not Dead");
-                        lblDeadTxt.setBackground(Color.green);
-                    }
-                    
-                    sheepUpdatesShow.removeAllElements();
-                    sheepList.get(list.getSelectedIndex()).setUpdates(WebServiceClient.getSheepUpdate(Integer.toString(id), "100"));
-                    if (!sheepList.get(list.getSelectedIndex()).getUpdates().isEmpty()) {
-                        // Getting update index 0 because 0 is the latest (newest) update
-                        double xpos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getX();
-                        double ypos = sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getY();
-                        lblPosTxt.setText(xpos + ", " + ypos);
-                        Date formattedTimestamp = new Date(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTimeStamp() * 1000);
-                        lblUpdateTxt.setText(formattedTimestamp.toLocaleString());
-                        lblPulse.setText(Integer.toString(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getPulse()));
-                        lblTemp.setText(Double.toString(sheepList.get(list.getSelectedIndex()).getUpdates().get(0).getTemp()));
-                        posX = xpos;
-                        posY = ypos;
-                        Set<MyWaypoint> waypoints = new HashSet<>();
-                        List<GeoPosition> track = new ArrayList();
-                        for (int i = 0; i < sheepList.get(list.getSelectedIndex()).getUpdates().size(); i++) {
-                            SheepUpdate update = sheepList.get(list.getSelectedIndex()).getUpdates().get(i);
-                            Date formattedUpdateTimestamp = new Date(update.getTimeStamp() * 1000);
-                            sheepUpdatesShow.addElement(formattedUpdateTimestamp.toLocaleString());
-                            track.add(new GeoPosition(update.getX(), update.getY()));
-                            Color color = Color.WHITE;
-                            if(i == 0) {
-                                color = Color.RED;
-                            }
-                            waypoints.add(new MyWaypoint(formattedUpdateTimestamp.toLocaleString(), color, new GeoPosition(update.getX(), update.getY())));
-                        }
-                        RoutePainter routePainter = new RoutePainter(track);
-                        WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<>();
-                        waypointPainter.setWaypoints(waypoints);
-                        waypointPainter.setRenderer(new FancyWaypointRenderer());
-                        
-                        List<Painter<JXMapViewer>> painters = new ArrayList<>();
-                        painters.add(routePainter);
-                        painters.add(waypointPainter);
-                        
-                        CompoundPainter<JXMapViewer> painter = new CompoundPainter<>(painters);
-                        jXSheepMap.getMainMap().setOverlayPainter(painter);
-                        
-                        focusAccordingToWaypoints(waypoints);
-                    }
+                int selectedIndex = list.getSelectedIndex();
+                if (!listSelectionEvent.getValueIsAdjusting() && selectedIndex != -1) {
+                    selectSheep(selectedIndex);
                 }
             }
         };
@@ -177,6 +116,86 @@ public class SheepPanel extends javax.swing.JFrame {
         update();
     }
 
+    public void selectSheep(int index) {
+        // Settings textfields to "Not available" before update
+        // because there may be no updates for selected Sheep
+        editSheepBtn.setEnabled(true);
+        removeSheepBtn.setEnabled(true);
+        lblIDtxt.setText("Not available");
+        lblPosTxt.setText("Not available");
+        lblUpdateTxt.setText("Not available");
+        lblNick.setText("Not available");
+        txtComment.setText("Not available");
+        lblPulse.setText("Not available");
+        lblTemp.setText("Not available");
+        lblBornTxt.setText("Not available");
+        lblWeightTxt.setText("Not available");
+        lblDeadTxt.setText("Not available");
+        
+        Sheep s = sheepList.get(index);
+        
+        lblDeadTxt.setText(Integer.toString(s.getDeceased()));
+        lblBornTxt.setText(Integer.toString(s.getBorn()));
+        lblWeightTxt.setText(Double.toString((s.getWeight())));
+        int id = s.getID();
+        lblIDtxt.setText(Integer.toString(id));
+
+        txtComment.setText(s.getComment());
+        globalId = id;
+        nickname = s.getName();
+        comment = s.getComment();
+        lblNick.setText(nickname);
+        System.out.println(nickname);
+        if (s.getDeceased() == 0) {
+            txtDead.setText("Not Dead");
+            txtDead.setBackground(Color.green);
+            lblDeadTxt.setText("Not Dead");
+            lblDeadTxt.setBackground(Color.green);
+        }
+
+        sheepUpdatesShow.removeAllElements();
+        s.setUpdates(WebServiceClient.getSheepUpdate(Integer.toString(id), "100"));
+        if (!s.getUpdates().isEmpty()) {
+            // Getting update index 0 because 0 is the latest (newest) update
+            double xpos = s.getUpdates().get(0).getX();
+            double ypos = s.getUpdates().get(0).getY();
+            lblPosTxt.setText(xpos + ", " + ypos);
+            Date formattedTimestamp = new Date(s.getUpdates().get(0).getTimeStamp() * 1000);
+            lblUpdateTxt.setText(formattedTimestamp.toLocaleString());
+            lblPulse.setText(Integer.toString(s.getUpdates().get(0).getPulse()));
+            lblTemp.setText(Double.toString(s.getUpdates().get(0).getTemp()));
+            posX = xpos;
+            posY = ypos;
+            Set<MyWaypoint> waypoints = new HashSet<>();
+            List<GeoPosition> track = new ArrayList();
+            for (int i = 0; i < s.getUpdates().size(); i++) {
+                SheepUpdate update = s.getUpdates().get(i);
+                Date formattedUpdateTimestamp = new Date(update.getTimeStamp() * 1000);
+                sheepUpdatesShow.addElement(formattedUpdateTimestamp.toLocaleString());
+                track.add(new GeoPosition(update.getX(), update.getY()));
+                Color color = Color.WHITE;
+                if (i == 0) {
+                    color = Color.RED;
+                }
+                waypoints.add(new MyWaypoint(formattedUpdateTimestamp.toLocaleString(), color, new GeoPosition(update.getX(), update.getY()), i, false));
+            }
+            RoutePainter routePainter = new RoutePainter(track);
+            WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<>();
+            waypointPainter.setWaypoints(waypoints);
+            waypointPainter.setRenderer(new FancyWaypointRenderer());
+
+            List<Painter<JXMapViewer>> painters = new ArrayList<>();
+            painters.add(routePainter);
+            painters.add(waypointPainter);
+
+            CompoundPainter<JXMapViewer> painter = new CompoundPainter<>(painters);
+            jXSheepMap.getMainMap().setOverlayPainter(painter);
+
+            wayPointSet = waypoints;
+            focusAccordingToWaypoints();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -701,7 +720,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 sheepShow.addElement(sheep.getID() + " - " + sheep.getName());
                 if(!sheep.getUpdates().isEmpty()) {
                     GeoPosition gp = new GeoPosition(sheep.getUpdates().get(0).getX(), sheep.getUpdates().get(0).getY());
-                    MyWaypoint wp = new MyWaypoint(Integer.toString(sheep.getID()), Color.WHITE, gp);
+                    MyWaypoint wp = new MyWaypoint(Integer.toString(sheep.getID()), Color.WHITE, gp, i, true);
                     waypoints.add(wp);
                 }
             }
@@ -719,7 +738,8 @@ public class SheepPanel extends javax.swing.JFrame {
         
         jXSheepMap.getMainMap().setOverlayPainter(painter);
         
-        focusAccordingToWaypoints(waypoints);
+        wayPointSet = waypoints;
+        focusAccordingToWaypoints();
     }
 
     /**
@@ -729,16 +749,16 @@ public class SheepPanel extends javax.swing.JFrame {
      * 
      * @param wp - a set of waypoints to focus on
      */
-    private void focusAccordingToWaypoints(Set<MyWaypoint> wp) {
+    private void focusAccordingToWaypoints() {
         // If there are no waypoints to focus on, don't do anything.
-        if (wp.isEmpty()) {
+        if (wayPointSet.isEmpty()) {
             return;
         }
         
         // Otherwise, convert to set of geoPositions
         Set<GeoPosition> gp = new HashSet<>();
         
-        for (MyWaypoint w : wp) {
+        for (MyWaypoint w : wayPointSet) {
             gp.add(w.getPosition());
         }
         
@@ -867,11 +887,7 @@ public class SheepPanel extends javax.swing.JFrame {
         File cacheDir = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
         LocalResponseCache.installResponseCache(fact.getInfo().getBaseURL(), cacheDir, false);
         
-        // Set the focus to Tronheim
-        //GeoPosition trondheim = new GeoPosition(63.431935, 10.37899);
 
-        //jXSheepMap.setZoom(10);
-        //jXSheepMap.setAddressLocation(trondheim);
         jXSheepMap.getMiniMap().setVisible(false);
 
         // Add interactions
@@ -884,6 +900,8 @@ public class SheepPanel extends javax.swing.JFrame {
         jXSheepMap.addMouseWheelListener(new ZoomMouseWheelListenerCursor(jXSheepMap.getMainMap()));
 
         jXSheepMap.addKeyListener(new PanKeyListener(jXSheepMap.getMainMap()));
+        
+        jXSheepMap.addMouseListener(new MouseClickOnWayPointListener(this));
 
     }
     
