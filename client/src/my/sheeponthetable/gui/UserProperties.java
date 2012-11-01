@@ -167,7 +167,11 @@ public class UserProperties extends javax.swing.JFrame {
                 user.setName(this.NameTxt.getText());
                 user.setEmail(this.mailTxt.getText());
                 user.setTelephone(this.PhoneTxt.getText());
-                this.dispose();
+                if(WebServiceClient.setUserDetails(user)){
+                  this.dispose();
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Failed to edit user!", "Information", JOptionPane.ERROR_MESSAGE);
                 
             }
             catch(Exception ex){
