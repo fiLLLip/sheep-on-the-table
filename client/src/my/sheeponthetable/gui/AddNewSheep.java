@@ -180,9 +180,9 @@ public class AddNewSheep extends javax.swing.JFrame {
     private void addSheepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepButtonActionPerformed
        // sjekker om alle felt er fylt ut
         if (this.txtBorn.getText().equals("")
-                && this.txtNick.getText().equals("")
-                && this.txtWeight.getText().equals("")
-                && this.txtComment.getText().equals("")) {
+                || this.txtNick.getText().equals("")
+                || this.txtWeight.getText().equals("")
+                || this.txtComment.getText().equals("")) {
             System.out.println("Error should now show up...");
             final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
             JOptionPane.showMessageDialog(null, "Please fill in all the required fields.", "Information", JOptionPane.INFORMATION_MESSAGE);
