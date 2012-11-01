@@ -19,23 +19,7 @@ public class MainUI extends javax.swing.JFrame {
      */
     public MainUI() {
         initComponents();
-        this.setTitle("Sheep Finder");
-        /* MAC OS X LOOK AND FEEL */
-        try {
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
-            System.setProperty("com.apple.mrj.application.apple.menu.about.name", "AppName");
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException e) {
-            System.out.println("ClassNotFoundException: " + e.getMessage());
-        } catch (InstantiationException e) {
-            System.out.println("InstantiationException: " + e.getMessage());
-        } catch (IllegalAccessException e) {
-            System.out.println("IllegalAccessException: " + e.getMessage());
-        } catch (UnsupportedLookAndFeelException e) {
-            System.out.println("UnsupportedLookAndFeelException: " + e.getMessage());
-        }
         
-        /* End Mac OS X Look and feel */
     }
 
     /**
@@ -78,6 +62,21 @@ public class MainUI extends javax.swing.JFrame {
      */
     public static void main(String args[]) throws UnsupportedLookAndFeelException {
         
+        /* MAC OS X LOOK AND FEEL */
+        try {
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            System.out.println("ClassNotFoundException: " + e.getMessage());
+        } catch (InstantiationException e) {
+            System.out.println("InstantiationException: " + e.getMessage());
+        } catch (IllegalAccessException e) {
+            System.out.println("IllegalAccessException: " + e.getMessage());
+        } catch (UnsupportedLookAndFeelException e) {
+            System.out.println("UnsupportedLookAndFeelException: " + e.getMessage());
+        }
+        
+        /* End Mac OS X Look and feel */
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
