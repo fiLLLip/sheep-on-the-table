@@ -145,6 +145,17 @@ public class UserProperties extends javax.swing.JFrame {
             
             return;
         }
+        else if(!this.mailTxt.getText().contains("@")){
+            System.out.println("Error should now show up...");
+           // final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
+            JOptionPane.showMessageDialog(null, "Please fill in all the required fields.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        else if(this.PhoneTxt.getText().length() != 8){
+            System.out.println("Error should now show up...");
+            JOptionPane.showMessageDialog(null, "Please fill in a correct phone number", "Information", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     /**
