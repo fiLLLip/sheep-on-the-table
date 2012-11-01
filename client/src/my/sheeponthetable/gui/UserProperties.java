@@ -141,6 +141,9 @@ public class UserProperties extends javax.swing.JFrame {
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
+       /*
+        * Checks if all fields are filled in
+        */
         if (this.NameTxt.getText().equals("")
                 || this.mailTxt.getText().equals("")
                 || this.PhoneTxt.getText().equals("")) {
@@ -149,18 +152,23 @@ public class UserProperties extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please fill in all the required fields.", "Information", JOptionPane.INFORMATION_MESSAGE);
 
             return;
+            /*
+             * Checks if email contains "@"
+             */
         } else if (!this.mailTxt.getText().contains("@")) {
             System.out.println("Error should now show up...");
             // final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
             JOptionPane.showMessageDialog(null, "Please enter a correct e-mail address.", "Information", JOptionPane.INFORMATION_MESSAGE);
             return;
+            /*
+             * Checks if 
+             */
         } else if (this.PhoneTxt.getText().length() != 8) {
             System.out.println("Error should now show up...");
             JOptionPane.showMessageDialog(null, "Please enter a phone number consisting of 8 numbers!", "Information", JOptionPane.INFORMATION_MESSAGE);
             return;
         } else {
-            
-                
+                          
                 user.setName(this.NameTxt.getText());
                 user.setEmail(this.mailTxt.getText());
                 user.setTelephone(this.PhoneTxt.getText());
