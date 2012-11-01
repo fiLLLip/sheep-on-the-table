@@ -163,7 +163,7 @@ public class SheepPanel extends javax.swing.JFrame {
             // Getting update index 0 because 0 is the latest (newest) update
             double xpos = s.getUpdates().get(0).getX();
             double ypos = s.getUpdates().get(0).getY();
-            lblPosTxt.setText(xpos + ", " + ypos);
+            lblPosTxt.setText(ypos + ", " + xpos);
             Date formattedTimestamp = new Date(s.getUpdates().get(0).getTimeStamp() * 1000);
             lblUpdateTxt.setText(formattedTimestamp.toLocaleString());
             lblPulse.setText(Integer.toString(s.getUpdates().get(0).getPulse()));
@@ -176,12 +176,12 @@ public class SheepPanel extends javax.swing.JFrame {
                 SheepUpdate update = s.getUpdates().get(i);
                 Date formattedUpdateTimestamp = new Date(update.getTimeStamp() * 1000);
                 sheepUpdatesShow.addElement(formattedUpdateTimestamp.toLocaleString());
-                track.add(new GeoPosition(update.getX(), update.getY()));
+                track.add(new GeoPosition(update.getY(), update.getX()));
                 Color color = Color.WHITE;
                 if (i == 0) {
                     color = Color.RED;
                 }
-                waypoints.add(new MyWaypoint(formattedUpdateTimestamp.toLocaleString(), color, new GeoPosition(update.getX(), update.getY()), i, false));
+                waypoints.add(new MyWaypoint(formattedUpdateTimestamp.toLocaleString(), color, new GeoPosition(update.getY(), update.getX()), i, false));
             }
             RoutePainter routePainter = new RoutePainter(track);
             WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<>();
@@ -723,7 +723,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 sheep = sheepList.get(i);
                 sheepShow.addElement(sheep.getID() + " - " + sheep.getName());
                 if(!sheep.getUpdates().isEmpty()) {
-                    GeoPosition gp = new GeoPosition(sheep.getUpdates().get(0).getX(), sheep.getUpdates().get(0).getY());
+                    GeoPosition gp = new GeoPosition(sheep.getUpdates().get(0).getY(), sheep.getUpdates().get(0).getX());
                     MyWaypoint wp = new MyWaypoint(Integer.toString(sheep.getID()), Color.WHITE, gp, i, true);
                     waypoints.add(wp);
                 }
@@ -772,12 +772,12 @@ public class SheepPanel extends javax.swing.JFrame {
         double y_sum = 0.0;
         
         for (GeoPosition g : gp) {
-            x_sum = g.getLongitude();
-            y_sum = g.getLatitude();
+            x_sum += g.getLongitude();
+            y_sum += g.getLatitude();
         }
         
-        GeoPosition focus = new GeoPosition(x_sum / gp.size(), y_sum / gp.size());
-
+        GeoPosition focus = new GeoPosition(y_sum / gp.size(), x_sum / gp.size());
+        System.out.println(focus);
         jXSheepMap.setAddressLocation(focus);
         
         // Find the correct zoom. Because calculateZoomFrom finds the minimal
@@ -882,7 +882,7 @@ public class SheepPanel extends javax.swing.JFrame {
         DefaultTileFactory fact = new WMSTileFactory(wms);
         
         jXSheepMap.setDefaultProvider(DefaultProviders.OpenStreetMaps);
-   //     jXSheepMap.setTileFactory(fact);
+        jXSheepMap.getMainMap().setTileFactory(fact);
 
         // Use 8 threads in parallel to load the tiles
         fact.setThreadPoolSize(8);
