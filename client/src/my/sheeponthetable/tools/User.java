@@ -11,7 +11,7 @@ package my.sheeponthetable.tools;
 public class User {
 
     private String username, name, email, telephone;
-    private int userId;
+    private int userId; 
 
     public User(int userId, String username, String name, String email, String telephone) {
         this.userId = userId;
@@ -45,5 +45,17 @@ public class User {
     
     public int getUserId() {
         return this.userId;
+    }
+    
+    public void setName(String name){
+        this.name = name;
+    }
+    
+    public void setEmail(String mail){
+        this.email = mail;
+    }
+    
+    public void setTelephone(String number){
+        this.telephone = number;
     }
 }
