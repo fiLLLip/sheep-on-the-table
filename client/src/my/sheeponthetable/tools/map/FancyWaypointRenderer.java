@@ -35,7 +35,7 @@ public class FancyWaypointRenderer implements WaypointRenderer<MyWaypoint>
 {
 	private static final Log log = LogFactory.getLog(FancyWaypointRenderer.class);
 	
-	private final Map<Color, BufferedImage> map = new HashMap<Color, BufferedImage>();
+	private final Map<Color, BufferedImage> map = new HashMap<>();
 	
 //	private final Font font = new Font("Lucida Sans", Font.BOLD, 10);
 	

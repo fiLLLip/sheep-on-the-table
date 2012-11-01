@@ -6,9 +6,11 @@ package my.sheeponthetable.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import my.sheeponthetable.tools.User;
 import my.sheeponthetable.tools.WebServiceClient;
 
 /**
@@ -17,14 +19,16 @@ import my.sheeponthetable.tools.WebServiceClient;
  */
 public class FarmTools extends javax.swing.JFrame {
    private SheepPanel sheepPanel;
-   private List users = new ArrayList();
-   
+   private List<User> users = new ArrayList();
+   private DefaultListModel listModel = new DefaultListModel();
+   private int farmID;
 
     /**
      * Creates new form AddNewSheep
      */
-    public FarmTools(SheepPanel sp) {
+    public FarmTools(SheepPanel sp, int id) {
         initComponents();
+        this.farmID = id;
         this.sheepPanel = sp;
         ClearanceChoice.add("Admin");
         ClearanceChoice.add("owner");
@@ -35,11 +39,12 @@ public class FarmTools extends javax.swing.JFrame {
         setDisable();
         getUsers();
         update();
+        
         ListSelectionListener userSelectList = new ListSelectionListener(){
 
             @Override
             public void valueChanged(ListSelectionEvent lse) {
-            JList list = (JList) lse.getSource();
+            JList list = (JList)lse.getSource();
             if (!lse.getValueIsAdjusting() && list.getSelectedIndex() != -1) {
                 setEnable();
             
@@ -74,15 +79,22 @@ public class FarmTools extends javax.swing.JFrame {
     }
     
     public void getUsers(){
-        int teller = 0;
-        while(WebServiceClient.getUsersForFarm(teller) != null){
-        users = WebServiceClient.getUsersForFarm(teller);
-        teller++;}
+        
+      if(WebServiceClient.getUsersForFarm(farmID) != null){  
+     users = WebServiceClient.getUsersForFarm(farmID);}
+      
+      else{listModel.addElement("Troll");
+            listModel.addElement("sold");
+            listModel.addElement("old");
+            listModel.addElement("cold");
+      }
     }
     public void update(){
-        
-    for (int i = 0; i < users.size();i++){
-    }}
+        System.out.println(users.size());
+    for(int i= 0; i< users.size();i++)
+    {listModel.addElement(users.get(i).getName());
+    }
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,11 +132,7 @@ public class FarmTools extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jListUser.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        jListUser.setModel(listModel);
         jScrollPane1.setViewportView(jListUser);
 
         btnSave.setText("Save ");
