@@ -80,7 +80,7 @@ public class FarmTools extends javax.swing.JFrame {
     
     public void getUsers(){
         
-      if(WebServiceClient.getUsersForFarm(farmID) != null){  
+     if(WebServiceClient.getUsersForFarm(farmID) != null){  
      users = WebServiceClient.getUsersForFarm(farmID);}
       
       else{listModel.addElement("Troll");
