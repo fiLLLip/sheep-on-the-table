@@ -674,7 +674,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
     private void jMenuFarmToolsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFarmToolsActionPerformed
        // this.setVisible(false);
-        new FarmTools(this, farmID).setVisible(true);// TODO add your handling code here:
+        new FarmTools(this, Integer.parseInt(WebServiceClient.farmid)).setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_jMenuFarmToolsActionPerformed
 
     private void jMenuPropertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPropertiesActionPerformed

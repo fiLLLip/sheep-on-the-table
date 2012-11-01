@@ -44,7 +44,7 @@ public class FarmTools extends javax.swing.JFrame {
 
             @Override
             public void valueChanged(ListSelectionEvent lse) {
-            JList list = (JList) lse.getSource();
+            JList list = (JList)lse.getSource();
             if (!lse.getValueIsAdjusting() && list.getSelectedIndex() != -1) {
                 setEnable();
             
@@ -90,6 +90,7 @@ public class FarmTools extends javax.swing.JFrame {
       }
     }
     public void update(){
+        System.out.println(users.size());
     for(int i= 0; i< users.size();i++)
     {listModel.addElement(users.get(i).getName());
     }
