@@ -380,7 +380,7 @@ public class WebServiceClient {
         
 
         Object response = doRequest("getUserDetails", params, true);
-        System.out.println(response);
+        
         if (response != null) {
 
             JSONArray res = getArrayOfJSONObjects(response);
@@ -396,6 +396,29 @@ public class WebServiceClient {
             return returnUser;
         } else {
             return null;
+        }
+    }
+    
+    /**
+     * Returns the User object of the user logged in
+     *
+     * @param farm_id
+     * @return User on success, null if else
+     */
+    public static boolean setUserDetails(String name, String email, String phone) {
+
+        
+        ArrayList<String> params = new ArrayList<>();
+        params.add(name);
+        params.add(email);
+        params.add(phone);
+
+        Object response = doRequest("setUserDetails", params, true);
+        
+        if (response != null) {
+            return true;
+        } else {
+            return false;
         }
     }
 
