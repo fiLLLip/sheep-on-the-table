@@ -110,7 +110,7 @@ public class WebServiceClient {
                 returnValue = response.getResult();
                 if (returnValue.toString().equals("sessionTimeout")) {
                     returnValue = null;
-                    JOptionPane.showMessageDialog(null, "Session timed out, please restart program.");
+                    JOptionPane.showMessageDialog(null, "Session timed out, please log in again.");
                     for(Window window : java.awt.Window.getWindows()){
                         window.dispose();
                     }
