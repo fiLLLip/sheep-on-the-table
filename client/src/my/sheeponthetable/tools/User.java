@@ -19,6 +19,54 @@ public class User {
             EmailAlarmAttack,
             EmailAlarmTemperature;
 
+    public boolean getSMSAlarmStationary() {
+        return SMSAlarmStationary;
+    }
+
+    public void setSMSAlarmStationary(boolean SMSAlarmStationary) {
+        this.SMSAlarmStationary = SMSAlarmStationary;
+    }
+
+    public boolean getSMSAlarmAttack() {
+        return SMSAlarmAttack;
+    }
+
+    public void setSMSAlarmAttack(boolean SMSAlarmAttack) {
+        this.SMSAlarmAttack = SMSAlarmAttack;
+    }
+
+    public boolean getSMSAlarmTemperature() {
+        return SMSAlarmTemperature;
+    }
+
+    public void setSMSAlarmTemperature(boolean SMSAlarmTemperature) {
+        this.SMSAlarmTemperature = SMSAlarmTemperature;
+    }
+
+    public boolean getEmailAlarmStationary() {
+        return EmailAlarmStationary;
+    }
+
+    public void setEmailAlarmStationary(boolean EmailAlarmStationary) {
+        this.EmailAlarmStationary = EmailAlarmStationary;
+    }
+
+    public boolean getEmailAlarmAttack() {
+        return EmailAlarmAttack;
+    }
+
+    public void setEmailAlarmAttack(boolean EmailAlarmAttack) {
+        this.EmailAlarmAttack = EmailAlarmAttack;
+    }
+
+    public boolean getEmailAlarmTemperature() {
+        return EmailAlarmTemperature;
+    }
+
+    public void setEmailAlarmTemperature(boolean EmailAlarmTemperature) {
+        this.EmailAlarmTemperature = EmailAlarmTemperature;
+    }
+
     public User(int userId, String username, String name, String email, String telephone) {
         this.userId = userId;
         this.username = username;
