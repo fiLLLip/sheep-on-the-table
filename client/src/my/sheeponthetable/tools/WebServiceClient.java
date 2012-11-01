@@ -399,19 +399,19 @@ public class WebServiceClient {
         }
     }
     
+ 
     /**
-     * Returns the User object of the user logged in
-     *
-     * @param farm_id
-     * @return User on success, null if else
+     * Updates the user details in the database
+     * @param user
+     * @return true if success else false
      */
-    public static boolean setUserDetails(String name, String email, String phone) {
+    public static boolean setUserDetails(User user) {
 
         
         ArrayList<String> params = new ArrayList<>();
-        params.add(name);
-        params.add(email);
-        params.add(phone);
+        params.add(user.getName());
+        params.add(user.getEmail());
+        params.add(user.getTelephone());
 
         Object response = doRequest("setUserDetails", params, true);
         
