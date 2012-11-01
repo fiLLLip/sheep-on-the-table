@@ -6,7 +6,7 @@
  */
 class Sheep extends JsonRpcService{
 
-	private function checkSession ($hash) {
+	private function checkSession ($hash, $userid) {
 		if (!isset($hash)) {
 			return null;
 		}
@@ -16,8 +16,8 @@ class Sheep extends JsonRpcService{
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$result = $DB->getResults('SELECT id FROM sheep_user WHERE hash = \'' . $hash . '\' AND ip = \'' . $ip . '\' LIMIT 1');
 		$DB->disconnect();
-		$userid = $result[0]['id'];
-		if ($userid >= 1) {
+		$returnid = $result[0]['id'];
+		if ($userid == $returnid) {
 			return $userid;
 		}
 		else {
@@ -68,13 +68,14 @@ class Sheep extends JsonRpcService{
 	public function getSheepList ($hash, $userid, $farmid) {
 		if (!isset($hash)) {
 			return null;
-		}
-		if ($this->checkSession($hash) == null) {
-			return null;
-		}
+		}	
 		if (!isset($userid)) {
 			return null;
 		}
+		if ($this->checkSession($hash, $userid) == null) {
+			return null;
+		}
+	
 		if (!isset($farmid)) {
 			return null;
 		}
@@ -105,13 +106,14 @@ class Sheep extends JsonRpcService{
 	public function getSheepUpdates ($hash, $userid, $sheepid, $limit) {
 		if (!isset($hash)) {
 			return null;
-		}
-		if ($this->checkSession($hash) == null) {
-			return null;
-		}
+		}	
 		if (!isset($userid)) {
 			return null;
 		}
+		if ($this->checkSession($hash, $userid) == null) {
+			return null;
+		}
+	
 		if (!isset($sheepid)) {
 			return null;
 		}
@@ -138,7 +140,10 @@ class Sheep extends JsonRpcService{
 		if (!isset($hash)) {
 			return null;
 		}
-		if ($this->checkSession($hash) == null) {
+		if (!isset($userid)) {
+			return null;
+		}
+		if ($this->checkSession($hash, $userid) == null) {
 			return null;
 		}
 		if (!isset($id)) {
@@ -193,13 +198,14 @@ class Sheep extends JsonRpcService{
 	public function getUserPermission ($hash, $userid, $farmid, $checkid) {
 		if (!isset($hash)) {
 			return null;
-		}
-		if ($this->checkSession($hash) == null) {
-			return null;
-		}
+		}	
 		if (!isset($userid)) {
 			return null;
 		}
+		if ($this->checkSession($hash, $userid) == null) {
+			return null;
+		}
+	
 		if (!isset($farmid)) {
 			return null;
 		}
@@ -234,7 +240,10 @@ class Sheep extends JsonRpcService{
 		if (!isset($hash)) {
 			return null;
 		}
-		if ($this->checkSession($hash) == null) {
+		if (!isset($userid)) {
+			return null;
+		}
+		if ($this->checkSession($hash, $userid) == null) {
 			return null;
 		}
 		if (!isset($farmid)) {
@@ -274,13 +283,14 @@ class Sheep extends JsonRpcService{
 	public function getUsersForFarm ($hash, $userid, $farmid) {
 		if (!isset($hash)) {
 			return null;
-		}
-		if ($this->checkSession($hash) == null) {
-			return null;
-		}
+		}	
 		if (!isset($userid)) {
 			return null;
 		}
+		if ($this->checkSession($hash, $userid) == null) {
+			return null;
+		}
+	
 		if (!isset($farmid)) {
 			return null;
 		}
@@ -308,13 +318,14 @@ class Sheep extends JsonRpcService{
 	public function getUserSettings ($hash, $userid, $farmid, $checkid) {
 		if (!isset($hash)) {
 			return null;
-		}
-		if ($this->checkSession($hash) == null) {
-			return null;
-		}
+		}	
 		if (!isset($userid)) {
 			return null;
 		}
+		if ($this->checkSession($hash, $userid) == null) {
+			return null;
+		}
+	
 		if (!isset($farmid)) {
 			return null;
 		}
@@ -354,7 +365,10 @@ class Sheep extends JsonRpcService{
 		if (!isset($hash)) {
 			return null;
 		}
-		if ($this->checkSession($hash) == null) {
+		if (!isset($userid)) {
+			return null;
+		}
+		if ($this->checkSession($hash, $userid) == null) {
 			return null;
 		}
 		if (!isset($farmid)) {
@@ -415,6 +429,92 @@ class Sheep extends JsonRpcService{
 		$DB->disconnect();
 		return $return;
 	}
+
+	/** @JsonRpcMethod
+	 * Method that receives all detail values of logged in user to update
+	 * in the database
+	 *
+	 * @return mixed
+	 */	 
+	public function setUserDetails ($hash, $userid, $name, $email, $phone) {
+		if (!isset($hash)) {
+			return null;
+		}
+		if (!isset($userid)) {
+			return null;
+		}
+		if ($this->checkSession($hash, $userid) == null) {
+			return null;
+		}
+		if (!isset($name)) {
+			return null;
+		}
+		if (!isset($email)) {
+			return null;
+		}
+		if (!isset($phone)) {
+			return null;
+		}
+		$DB = new Database();
+		$DB->connect();
+		$name = $DB->escapeStrings($name);
+		$email = $DB->escapeStrings($email);
+		$phone = $DB->escapeStrings($phone);
+		$numrows = $DB->getNumRows('SELECT id FROM sheep_user WHERE id = \'' . $userid . '\'');
+		if ($numrows >= 1) {
+			$result = $DB->setFields('UPDATE sheep_user
+				SET name=\'' . $name . '\',
+				email=\'' . $email . '\',
+				phone=\'' . $phone . '\'
+				WHERE id=\'' . $setid . '\'');
+			$return = $result;
+		}
+		else {
+			$return = null;
+		}
+		$DB->disconnect();
+		return $return;
+	}
+
+	/** @JsonRpcMethod
+	 * Method that receives new password for logged in user to update
+	 * in the database
+	 *
+	 * @return mixed
+	 */	 
+	public function setUserNewPassword ($hash, $userid, $oldpw, $newpw) {
+		if (!isset($hash)) {
+			return null;
+		}
+		if (!isset($userid)) {
+			return null;
+		}
+		if ($this->checkSession($hash, $userid) == null) {
+			return null;
+		}
+		if (!isset($oldpw)) {
+			return null;
+		}
+		if (!isset($newpw)) {
+			return null;
+		}
+		$DB = new Database();
+		$DB->connect();
+		$oldpw = $DB->escapeStrings($oldpw);
+		$newpw = $DB->escapeStrings($newpw);
+		$numrows = $DB->getNumRows('SELECT id FROM sheep_user WHERE id = \'' . $userid . '\' AND pw = \'' . $oldpw . '\'');
+		if ($numrows >= 1) {
+			$result = $DB->setFields('UPDATE sheep_user
+				SET pw=\'' . $newpw . '\'
+				WHERE id=\'' . $setid . '\'');
+			$return = $result;
+		}
+		else {
+			$return = null;
+		}
+		$DB->disconnect();
+		return $return;
+	}
 	
 	/** @JsonRpcMethod
 	 * Method that receives var for a "new sheep" and stores it in 
@@ -426,7 +526,10 @@ class Sheep extends JsonRpcService{
 		if (!isset($hash)) {
 			return "nohash";
 		}
-		if ($this->checkSession($hash) == null) {
+		if (!isset($userid)) {
+			return null;
+		}
+		if ($this->checkSession($hash, $userid) == null) {
 			return "hashwat?";
 		}
 		if (!isset($farmid)) {
@@ -474,7 +577,10 @@ class Sheep extends JsonRpcService{
 		if (!isset($hash)) {
 			return null;
 		}
-		if ($this->checkSession($hash) == null) {
+		if (!isset($userid)) {
+			return null;
+		}
+		if ($this->checkSession($hash, $userid) == null) {
 			return null;
 		}
 		if (!isset($farmid)) {
@@ -515,7 +621,10 @@ class Sheep extends JsonRpcService{
 		if (!isset($hash)) {
 			return null;
 		}
-		if ($this->checkSession($hash) == null) {
+		if (!isset($userid)) {
+			return null;
+		}
+		if ($this->checkSession($hash, $userid) == null) {
 			return null;
 		}
 		if (!isset($farmid)) {
@@ -599,7 +708,10 @@ class Sheep extends JsonRpcService{
 		if (!isset($hash)) {
 			return null;
 		}
-		if ($this->checkSession($hash) == null) {
+		if (!isset($userid)) {
+			return null;
+		}
+		if ($this->checkSession($hash, $userid) == null) {
 			return null;
 		}
 		if (!isset($id)) {
