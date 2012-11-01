@@ -290,7 +290,7 @@ class Sheep extends JsonRpcService{
 		$farmid = $DB->escapeStrings($farmid);
 		$numrows = $DB->getNumRows('SELECT user_id FROM sheep_permissions WHERE user_id = \'' . $userid . '\' AND farm_id = \'' . $farmid . '\'');
 		if ($numrows >= 1) {
-			$returnarr = $DB->getResults('SELECT s.user_id, s.level, u.un, u.name, u.phone FROM sheep_permissions p, sheep_users u WHERE u.id=s.user_id AND s.farm_id = \''. $farmid .'\'');
+			$returnarr = $DB->getResults('SELECT p.user_id, s.level, u.un, u.name, u.phone FROM sheep_permissions p, sheep_user u WHERE u.id=p.user_id AND p.farm_id = \''. $farmid .'\'');
 			$DB->disconnect();
 			return $returnarr;
 		}
