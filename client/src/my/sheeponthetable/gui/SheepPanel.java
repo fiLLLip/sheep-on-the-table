@@ -45,7 +45,7 @@ public class SheepPanel extends javax.swing.JFrame {
     private int serverPort;
     private String username;
     private String password;
-    private int farmID;
+    private int farmID = Integer.parseInt(WebServiceClient.farmid);
     private int userID;
     // mye sheep info
     private String nickname, comment;
@@ -697,7 +697,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
     private void jMenuFarmToolsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFarmToolsActionPerformed
        // this.setVisible(false);
-        new FarmTools(this, Integer.parseInt(WebServiceClient.farmid)).setVisible(true);// TODO add your handling code here:
+        new FarmTools(this, farmID).setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_jMenuFarmToolsActionPerformed
 
     private void jMenuPropertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPropertiesActionPerformed
