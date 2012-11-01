@@ -137,8 +137,8 @@ public class UserProperties extends javax.swing.JFrame {
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
         if (this.NameTxt.getText().equals("")
-                && this.mailTxt.getText().equals("")
-                && this.PhoneTxt.getText().equals("")){
+                || this.mailTxt.getText().equals("")
+                || this.PhoneTxt.getText().equals("")){
             System.out.println("Error should now show up...");
            // final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
             JOptionPane.showMessageDialog(null, "Please fill in all the required fields.", "Information", JOptionPane.INFORMATION_MESSAGE);
