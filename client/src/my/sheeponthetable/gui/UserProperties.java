@@ -6,6 +6,8 @@ package my.sheeponthetable.gui;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import my.sheeponthetable.tools.User;
+import my.sheeponthetable.tools.WebServiceClient;
 
 /**
  *
@@ -21,6 +23,8 @@ public class UserProperties extends javax.swing.JFrame {
     public UserProperties(SheepPanel sp) {
         initComponents();
         this.sheepPanel = sp;
+        UsernameLabel.setText(WebServiceClient.username);
+        
     }
 
     /**
@@ -159,6 +163,12 @@ public class UserProperties extends javax.swing.JFrame {
         else 
             try{
                 int phoneNumber = Integer.parseInt(this.PhoneTxt.getText());
+                User user = WebServiceClient.getUserDetails();
+                user.setName(this.NameTxt.getText());
+                user.setEmail(this.mailTxt.getText());
+                user.setTelephone(this.PhoneTxt.getText());
+                this.dispose();
+                
             }
             catch(Exception ex){
                 JOptionPane.showMessageDialog(null, "Please enter a phone number consisting of numbers only!", "Information", JOptionPane.INFORMATION_MESSAGE);
