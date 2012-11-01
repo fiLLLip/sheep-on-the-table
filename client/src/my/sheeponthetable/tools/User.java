@@ -11,6 +11,7 @@ package my.sheeponthetable.tools;
 public class User {
 
     private String username, name, email, telephone;
+<<<<<<< HEAD
     private int userId;
     private boolean SMSAlarmStationary,
                     SMSAlarmAttack,
@@ -19,6 +20,10 @@ public class User {
                     EmailAlarmAttack,
                     EmailAlarmTemperature;
     
+=======
+    private int userId; 
+
+>>>>>>> 1d056b028ee6c48dc4291e0363b4319d0db2d7db
     public User(int userId, String username, String name, String email, String telephone) {
         this.userId = userId;
         this.username = username;
@@ -77,5 +82,17 @@ public class User {
     
     public int getUserId() {
         return this.userId;
+    }
+    
+    public void setName(String name){
+        this.name = name;
+    }
+    
+    public void setEmail(String mail){
+        this.email = mail;
+    }
+    
+    public void setTelephone(String number){
+        this.telephone = number;
     }
 }
