@@ -5,7 +5,6 @@
 package my.sheeponthetable.gui;
 
 import java.awt.Color;
-import java.awt.event.MouseListener;
 import java.util.*;
 import javax.swing.*;
 import my.sheeponthetable.tools.*;
@@ -26,7 +25,6 @@ import org.jdesktop.swingx.input.ZoomMouseWheelListenerCursor;
 import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.mapviewer.LocalResponseCache;
-import org.jdesktop.swingx.mapviewer.Waypoint;
 import org.jdesktop.swingx.mapviewer.wms.WMSService;
 import org.jdesktop.swingx.mapviewer.wms.WMSTileFactory;
 import org.jdesktop.swingx.mapviewer.WaypointPainter;
@@ -116,6 +114,12 @@ public class SheepPanel extends javax.swing.JFrame {
         update();
     }
 
+    
+    /**
+     * Called by event listeners to handle what happens when a sheep is seleced
+     * 
+     * @param index 
+     */
     public void selectSheep(int index) {
         // Settings textfields to "Not available" before update
         // because there may be no updates for selected Sheep
