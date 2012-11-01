@@ -11,54 +11,49 @@ package my.sheeponthetable.tools;
 public class User {
 
     private String username, name, email, telephone;
-<<<<<<< HEAD
     private int userId;
     private boolean SMSAlarmStationary,
-                    SMSAlarmAttack,
-                    SMSAlarmTemperature,
-                    EmailAlarmStationary,
-                    EmailAlarmAttack,
-                    EmailAlarmTemperature;
-    
-=======
-    private int userId; 
+            SMSAlarmAttack,
+            SMSAlarmTemperature,
+            EmailAlarmStationary,
+            EmailAlarmAttack,
+            EmailAlarmTemperature;
 
->>>>>>> 1d056b028ee6c48dc4291e0363b4319d0db2d7db
     public User(int userId, String username, String name, String email, String telephone) {
         this.userId = userId;
         this.username = username;
         this.name = name;
         this.email = email;
         this.telephone = telephone;
-        
+
     }
-    public User(    int userId,
-                    String username,
-                    String name,
-                    String email,
-                    String telephone,
-                    boolean SMSAlarmStationary,
-                    boolean SMSAlarmAttack,
-                    boolean SMSAlarmTemperature,
-                    boolean EmailAlarmStationary,
-                    boolean EmailAlarmAttack,
-                    boolean EmailAlarmTemperature) {
-        
+
+    public User(int userId,
+            String username,
+            String name,
+            String email,
+            String telephone,
+            boolean SMSAlarmStationary,
+            boolean SMSAlarmAttack,
+            boolean SMSAlarmTemperature,
+            boolean EmailAlarmStationary,
+            boolean EmailAlarmAttack,
+            boolean EmailAlarmTemperature) {
+
         this.userId = userId;
         this.username = username;
         this.name = name;
         this.email = email;
         this.telephone = telephone;
-        
+
         this.SMSAlarmAttack = SMSAlarmAttack;
         this.SMSAlarmStationary = SMSAlarmStationary;
         this.SMSAlarmTemperature = SMSAlarmTemperature;
         this.EmailAlarmAttack = EmailAlarmAttack;
         this.EmailAlarmStationary = EmailAlarmStationary;
         this.EmailAlarmTemperature = EmailAlarmTemperature;
-        
-    }
 
+    }
 
     public int getClearance(int farmId) {
         return WebServiceClient.getUserLevel(farmId, this.userId);
@@ -75,24 +70,24 @@ public class User {
     public String getName() {
         return this.name;
     }
-    
+
     public String getUsername() {
         return this.username;
     }
-    
+
     public int getUserId() {
         return this.userId;
     }
-    
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
-    
-    public void setEmail(String mail){
+
+    public void setEmail(String mail) {
         this.email = mail;
     }
-    
-    public void setTelephone(String number){
+
+    public void setTelephone(String number) {
         this.telephone = number;
     }
 }
