@@ -365,6 +365,39 @@ public class WebServiceClient {
             return null;
         }
     }
+    
+    /**
+     * Returns the User object of the user logged in
+     *
+     * @param farm_id
+     * @return User on success, null if else
+     */
+    public static User getUserDetails() {
+
+        User returnUser = null;
+
+        ArrayList<String> params = new ArrayList<>();
+        
+
+        Object response = doRequest("getUserDetails", params, true);
+        System.out.println(response);
+        if (response != null) {
+
+            JSONArray res = getArrayOfJSONObjects(response);
+            for (int i = 0; i < res.size(); i++) {
+                JSONObject obj = (JSONObject) res.get(i);
+                returnUser = new User(Integer.parseInt(obj.get("user_id").toString()),
+                        obj.get("un").toString(),
+                        obj.get("name").toString(),
+                        obj.get("email").toString(),
+                        obj.get("phone").toString()
+                        );
+            }
+            return returnUser;
+        } else {
+            return null;
+        }
+    }
 
     /**
      * Returns the user level of a specific user to a farm
