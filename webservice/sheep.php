@@ -73,7 +73,7 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
+			return "sessionTimeout";
 		}
 	
 		if (!isset($farmid)) {
@@ -85,8 +85,14 @@ class Sheep extends JsonRpcService{
 		$farmid = $DB->escapeStrings($farmid);
 		$numrows = $DB->getNumRows('SELECT user_id FROM sheep_permissions WHERE user_id = \'' . $userid . '\' AND farm_id = \'' . $farmid . '\'');
 		if ($numrows >= 1) {
-			$returnarr = $DB->getResults('SELECT id, farm_id, name, UNIX_TIMESTAMP(born) as born, UNIX_TIMESTAMP(deceased) as deceased, comment, weight 
-				FROM sheep_sheep WHERE farm_id = \''. $farmid .'\'');
+			$returnarr = $DB->getResults('SELECT s.id, s.farm_id, s.name, UNIX_TIMESTAMP(s.born) as born, UNIX_TIMESTAMP(s.deceased) as deceased, s.comment, s.weight,
+				u.id as updateid, UNIX_TIMESTAMP(u.timestamp) as updatetimestamp, u.pos_x as updateposx, u.pos_y as updateposy, u.pulse as updatepulse,
+				u.temp as updatetemp, u.alarm as updatealarm
+				FROM sheep_sheep s, sheep_updates u
+				WHERE s.farm_id = \''. $farmid .'\'
+				AND s.id=u.sheep_id
+				GROUP BY s.id
+				');
 			$DB->disconnect();
 			return array($returnarr);
 		}
@@ -111,7 +117,7 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
+			return "sessionTimeout";
 		}
 	
 		if (!isset($sheepid)) {
@@ -144,7 +150,7 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
+			return "sessionTimeout";
 		}
 		if (!isset($id)) {
 			return null;
@@ -203,7 +209,7 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
+			return "sessionTimeout";
 		}
 	
 		if (!isset($farmid)) {
@@ -244,7 +250,7 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
+			return "sessionTimeout";
 		}
 		if (!isset($farmid)) {
 			return null;
@@ -288,7 +294,7 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
+			return "sessionTimeout";
 		}
 	
 		if (!isset($farmid)) {
@@ -300,9 +306,10 @@ class Sheep extends JsonRpcService{
 		$farmid = $DB->escapeStrings($farmid);
 		$numrows = $DB->getNumRows('SELECT user_id FROM sheep_permissions WHERE user_id = \'' . $userid . '\' AND farm_id = \'' . $farmid . '\'');
 		if ($numrows >= 1) {
-			$returnarr = $DB->getResults('SELECT p.user_id, s.level, u.un, u.name, u.phone FROM sheep_permissions p, sheep_user u WHERE u.id=p.user_id AND p.farm_id = \''. $farmid .'\'');
+			$returnarr = $DB->getResults('SELECT p.user_id, p.level, u.un, u.name, u.email, u.phone, p.SMSAlarmAttack, p.SMSAlarmTemperature, p.SMSAlarmStationary, p.EmailAlarmAttack, p.EmailAlarmTemperature, 
+				p.EmailAlarmStationary FROM sheep_permissions p, sheep_user u WHERE u.id=p.user_id AND p.farm_id = \''. $farmid .'\'');
 			$DB->disconnect();
-			return $returnarr;
+			return array($returnarr);
 		}
 		else {
 			$DB->disconnect();
@@ -311,11 +318,11 @@ class Sheep extends JsonRpcService{
 	}
 
 	/** @JsonRpcMethod
-	 * Method that receives a userid and farmid and returns all settings for user
+	 * Method that receives a farmid and returns all farms
 	 *
 	 * @return mixed
 	 */	 
-	public function getUserSettings ($hash, $userid, $farmid, $checkid) {
+	public function getUserDetails ($hash, $userid) {
 		if (!isset($hash)) {
 			return null;
 		}	
@@ -323,36 +330,14 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
-		}
-	
-		if (!isset($farmid)) {
-			return null;
-		}
-		if (!isset($checkid)) {
-			return null;
+			return "sessionTimeout";
 		}
 		$DB = new Database();
 		$DB->connect();
 		$userid = $DB->escapeStrings($userid);
-		$farmid = $DB->escapeStrings($farmid);
-		$checkid = $DB->escapeStrings($checkid);
-		if ($userid == $checkid) {
-			$numrows = $DB->getNumRows('SELECT user_id FROM sheep_permissions WHERE user_id = \'' . $userid . '\' AND farm_id = \'' . $farmid . '\'');
-		}
-		else {
-			$numrows = $DB->getNumRows('SELECT user_id FROM sheep_permissions WHERE user_id = \'' . $userid . '\' AND farm_id = \'' . $farmid . '\' AND level=\'2\'');
-		}
-		if ($numrows >= 1) {
-			$returnarr = $DB->getResults('SELECT SMSAlarmAttack, SMSAlarmTemperature, SMSAlarmStationary, EmailAlarmAttack, EmailAlarmTemperature, 
-				EmailAlarmStationary FROM sheep_permissions WHERE user_id = \''. $checkid .'\' AND farm_id = \''. $farmid .'\'');
-			$DB->disconnect();
-			return $returnarr;
-		}
-		else {
-			$DB->disconnect();
-			return null;
-		}
+		$returnarr = $DB->getResults('SELECT id, un, name, email, phone FROM sheep_user WHERE id = \''. $userid .'\'');
+		$DB->disconnect();
+		return array($returnarr);
 	}
 
 	/** @JsonRpcMethod
@@ -369,7 +354,7 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
+			return "sessionTimeout";
 		}
 		if (!isset($farmid)) {
 			return null;
@@ -444,7 +429,7 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
+			return "sessionTimeout";
 		}
 		if (!isset($name)) {
 			return null;
@@ -490,7 +475,7 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
+			return "sessionTimeout";
 		}
 		if (!isset($oldpw)) {
 			return null;
@@ -581,7 +566,7 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
+			return "sessionTimeout";
 		}
 		if (!isset($farmid)) {
 			return null;
@@ -625,7 +610,7 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
+			return "sessionTimeout";
 		}
 		if (!isset($farmid)) {
 			return null;
@@ -693,8 +678,15 @@ class Sheep extends JsonRpcService{
 		');
 		$return = $result;
 		$DB->disconnect();
+		
+		if (intval($pulse) > 200 || intval($pulse) < 40) {
+			// TODO: Implement alarm
+		}
+		if (intval($temp) > 42 || intval($temp) < 30) {
+			// TODO: Implement alarm
+		}
 		if ($alarm == '1') {
-			// TODO: Implement here
+			// TODO: Implement alarm
 		}
 		return 1;
 	}
@@ -712,7 +704,7 @@ class Sheep extends JsonRpcService{
 			return null;
 		}
 		if ($this->checkSession($hash, $userid) == null) {
-			return null;
+			return "sessionTimeout";
 		}
 		if (!isset($id)) {
 			return null;
