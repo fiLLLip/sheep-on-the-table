@@ -9,33 +9,41 @@ package my.sheeponthetable.tools;
  * @author Alex
  */
 public class User {
-    private String name, password, email;
-    private int telephone, clearance;
-    
-    public User(String name,String password, String email, int telephone,int clearance){
+
+    private String username, name, email, telephone;
+    private int userId;
+
+    public User(int userId, String username, String name, String email, String telephone) {
+        this.userId = userId;
+        this.username = username;
         this.name = name;
-        this.password = password;
-        if(telephone == 12) {this.telephone = telephone;}
-        if (clearance > -1 && clearance < 5) {this.clearance = clearance;}
-        if(email.contains("@")){this.email = email;}
+        this.email = email;
+        this.telephone = telephone;
+        
     }
-    public User(String name,String password, int clearance){
-    if (clearance > -1 && clearance < 5) {this.clearance = clearance;}
-    this.name = name;
-    this.password = password;
+
+
+    public int getClearance(int farmId) {
+        return WebServiceClient.getUserLevel(farmId, this.userId);
     }
-    public int getClearance(){
-    return this.clearance;}
+
+    public String getTelephone() {
+        return this.telephone;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getName() {
+        return this.name;
+    }
     
-    public int getTelephone(){
-    return this.telephone;}
+    public String getUsername() {
+        return this.username;
+    }
     
-    public String getEmail(){
-    return this.email;}
-    
-    public String getName(){
-    return this.name;}
-    
-    public String getPassword(){
-    return this.password;}
+    public int getUserId() {
+        return this.userId;
+    }
 }
