@@ -313,25 +313,24 @@ public class WebServiceClient {
      * @param farm_id
      * @return ArrayList<String> with usernames
      */
-    public static ArrayList<String> getUsersForFarm(int farm_id) {
-        
-        ArrayList<String> returnArray = new ArrayList();
-        
+    public static ArrayList<User> getUsersForFarm(int farm_id) {
+
+        ArrayList<User> returnArray = new ArrayList();
+
         ArrayList<String> params = new ArrayList<>();
         params.add(Integer.toString(farm_id));
-        
+
         Object response = doRequest("getUsersForFarm", params, true);
-        
+        System.out.println(response);
         if (response != null) {
-            
-            JSONArray userArray = getArrayOfJSONObjects(response);
-                for (int i = 0; i < userArray.size(); i++) {
-                    JSONObject obj = (JSONObject)userArray.get(i);
-                    
-                    returnArray.add(obj.toString());
-                }
+
+            JSONArray res = getArrayOfJSONObjects(response);
+            for (int i = 0; i < res.size(); i++) {
+                JSONObject obj = (JSONObject) res.get(i);
                 
-                return returnArray;
+                returnArray.add(new User(obj.get("un").toString(), "", obj.get("email").toString(), obj.get("phone").toString(), Integer.parseInt(obj.get("level").toString())));
+            }
+            return returnArray;
         } else {
             return null;
         }
