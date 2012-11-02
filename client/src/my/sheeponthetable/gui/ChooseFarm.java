@@ -4,10 +4,11 @@
  */
 package my.sheeponthetable.gui;
 
+import java.awt.Rectangle;
 import java.util.Map;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import my.sheeponthetable.tools.WebServiceClient;
-
 
 /**
  *
@@ -16,22 +17,24 @@ import my.sheeponthetable.tools.WebServiceClient;
 public class ChooseFarm extends javax.swing.JFrame {
 
     private DefaultListModel farmListModel = new DefaultListModel();
+
     /**
-     * Creates new form ChooseFarm which lists all available Farms that the user who is logged in has access to.
+     * Creates new form ChooseFarm which lists all available Farms that the user
+     * who is logged in has access to.
      */
     public ChooseFarm() {
         initComponents();
         this.setLocationRelativeTo(null);
         farmListModel.clear();
-        for(Map farmName : WebServiceClient.farmids) {
+        for (Map farmName : WebServiceClient.farmids) {
             farmListModel.addElement(farmName.get("id") + " - " + farmName.get("name"));
         }
         farmList.setModel(farmListModel);
-        
-        if(farmListModel.size() == 1) {
+
+        if (farmListModel.size() == 1) {
             farmList.setSelectedIndex(0);
             selectFarm();
-        } else if(farmListModel.size() > 0) {
+        } else if (farmListModel.size() > 0) {
             farmList.setSelectedIndex(0);
         } else {
             new ErrorBox("You have no farms :/").setVisible(true);
@@ -131,15 +134,19 @@ public class ChooseFarm extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonLogoutActionPerformed
 
     private void buttonSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectActionPerformed
-        
+
         selectFarm();
-        
+
     }//GEN-LAST:event_buttonSelectActionPerformed
 
     private void farmListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_farmListMouseClicked
         // TODO add your handling code here:
-        if (evt.getClickCount() >= 2) {
-            selectFarm();
+        JList list = (JList) evt.getSource();
+        Rectangle r = list.getCellBounds(0, list.getLastVisibleIndex());
+        if (r != null && r.contains(evt.getPoint())) {
+            if (evt.getClickCount() == 2 || evt.getClickCount() == 3) {
+                selectFarm();
+            }
         }
     }//GEN-LAST:event_farmListMouseClicked
 
@@ -147,13 +154,12 @@ public class ChooseFarm extends javax.swing.JFrame {
      * opens sheepPanel with the selected farm
      */
     private void selectFarm() {
-        if(farmList.getSelectedIndex() != -1) {
+        if (farmList.getSelectedIndex() != -1) {
             WebServiceClient.farmid = WebServiceClient.farmids.get(farmList.getSelectedIndex()).get("id").toString();
             new SheepPanel().setVisible(true);
             dispose();
         }
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonLogout;
     private javax.swing.JButton buttonSelect;
