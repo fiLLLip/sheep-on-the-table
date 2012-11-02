@@ -112,6 +112,7 @@ public class SheepPanel extends javax.swing.JFrame {
         sheepJList.addListSelectionListener(listSelectionListener);
        
         update();
+        
     }
 
     
@@ -717,6 +718,7 @@ public class SheepPanel extends javax.swing.JFrame {
     public void resetSelection() {
         sheepShow.removeAllElements();
         Set<MyWaypoint> waypoints = new HashSet<>();
+        
         if (sheepList != null) {
             for (int i = 0; i < sheepList.size(); i++) {
                 Sheep sheep;
@@ -729,7 +731,6 @@ public class SheepPanel extends javax.swing.JFrame {
                 }
             }
         }
-        sheepJList.setSelectedIndex(0);
         
         WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<>();
         waypointPainter.setWaypoints(waypoints);
@@ -777,7 +778,6 @@ public class SheepPanel extends javax.swing.JFrame {
         }
         
         GeoPosition focus = new GeoPosition(y_sum / gp.size(), x_sum / gp.size());
-        System.out.println(focus);
         jXSheepMap.setAddressLocation(focus);
         
         // Find the correct zoom. Because calculateZoomFrom finds the minimal
@@ -882,7 +882,7 @@ public class SheepPanel extends javax.swing.JFrame {
         DefaultTileFactory fact = new WMSTileFactory(wms);
         
         jXSheepMap.setDefaultProvider(DefaultProviders.OpenStreetMaps);
-        jXSheepMap.getMainMap().setTileFactory(fact);
+        //jXSheepMap.getMainMap().setTileFactory(fact);
 
         // Use 8 threads in parallel to load the tiles
         fact.setThreadPoolSize(8);
