@@ -61,6 +61,11 @@ public class ChooseFarm extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        farmList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                farmListMouseClicked(evt);
+            }
+        });
         jScrollPane.setViewportView(farmList);
 
         buttonSelect.setText("Log on to selected farm");
@@ -130,6 +135,13 @@ public class ChooseFarm extends javax.swing.JFrame {
         selectFarm();
         
     }//GEN-LAST:event_buttonSelectActionPerformed
+
+    private void farmListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_farmListMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() >= 2) {
+            selectFarm();
+        }
+    }//GEN-LAST:event_farmListMouseClicked
 
     /**
      * opens sheepPanel with the selected farm
