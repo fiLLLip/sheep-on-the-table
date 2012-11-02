@@ -646,13 +646,13 @@ public class SheepPanel extends javax.swing.JFrame {
 
     private void deSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deSelectActionPerformed
         sheepJList.clearSelection();  // TODO add your handling code here:
-        lblIDtxt.setText("");
-        lblPosTxt.setText("");
-        lblUpdateTxt.setText("");
-        lblNick.setText("");
-        txtComment.setText("");
-        lblPulse.setText("");
-        lblTemp.setText("");
+        lblIDtxt.setText("-");
+        lblPosTxt.setText("-");
+        lblUpdateTxt.setText("-");
+        lblNick.setText("-");
+        txtComment.setText("-");
+        lblPulse.setText("-");
+        lblTemp.setText("-");
         resetSelection();
     }//GEN-LAST:event_deSelectActionPerformed
 
