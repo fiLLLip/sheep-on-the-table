@@ -1,4 +1,4 @@
 sheep-on-the-table
 ==================
 
-School project
+The best school project in the history of man. And woman. And sheep.
