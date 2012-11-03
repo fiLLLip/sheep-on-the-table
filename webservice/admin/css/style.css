@@ -1,0 +1,30 @@
+.stats {
+	width: 800px;
+	margin: auto;
+	font-size: 30px;
+	font-weight: bold;
+	height: 250px;
+	text-align: center;
+}
+
+.staticon {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.row {
+	margin-left: 0px;
+}
+
+#datatable tbody tr {
+	cursor: pointer;
+	cursor: hand;
+}
+
+#datatable {
+    width: 100% !Important;
+}
+
+#updatetable {
+    width: 100% !Important;
+}
