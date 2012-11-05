@@ -42,15 +42,10 @@ public class SheepPanel extends javax.swing.JFrame {
     private List<Sheep> sheepList = new ArrayList();
     private List<SheepUpdate> sheepUpdateList;
     private Set<MyWaypoint> wayPointSet = new HashSet<>();
-    private String serverURL;
-    private int serverPort;
-    private String username;
-    private String password;
     private int farmID = Integer.parseInt(WebServiceClient.farmid);
-    private int userID;
     // mye sheep info
-    private String nickname, comment;
-    private int globalId, pulse, temp;
+    private String nickname;
+    private int globalId;
     ListSelectionListener sheepListSelectionListener;
     ListSelectionListener updateListSelectionListener;
 
@@ -125,14 +120,13 @@ public class SheepPanel extends javax.swing.JFrame {
         update();
         
     }
-
     
     /**
      * Called by event listeners to handle what happens when a sheep is seleced
      * 
      * @param index 
      */
-    public void selectSheep(int index) {
+    private void selectSheep(int index) {
         // Settings textfields to "Not available" before update
         // because there may be no updates for selected Sheep
         editSheepBtn.setEnabled(true);
@@ -159,7 +153,6 @@ public class SheepPanel extends javax.swing.JFrame {
         txtComment.setText(s.getComment());
         globalId = id;
         nickname = s.getName();
-        comment = s.getComment();
         lblNick.setText(nickname);
         System.out.println(nickname);
         if (s.getDeceased() == 0) {
@@ -210,7 +203,20 @@ public class SheepPanel extends javax.swing.JFrame {
         }
         sheepUpdateList = s.getUpdates();
     }
-
+    
+    /**
+     * This method is called by the mouse listeners on the map, to handle these
+     * events. What this method does is to select the shep on the list with 
+     * the index corresponding to the input value. This selection then fires
+     * the list event listeners which call the selectSheep method.
+     * 
+     * @param index 
+     */
+    public void mapSelectSheep(int index) {
+        sheepJList.setSelectedIndex(index);
+        sheepJList.ensureIndexIsVisible(index);
+    }
+    
     /**
      * Called by the select event listeners to handle what happens when a SU is 
      * seleced.
@@ -218,13 +224,43 @@ public class SheepPanel extends javax.swing.JFrame {
      * @param index 
      */
     private void selectUpdate(int index) {
-        System.out.println("Thar she blows!");
         SheepUpdate su = sheepUpdateList.get(index);
         Date formattedTimestamp = new Date(su.getTimeStamp() * 1000);
         lblUpdateTxt.setText(formattedTimestamp.toLocaleString());
         lblPulse.setText(Integer.toString(su.getPulse()));
         lblTemp.setText(Double.toString(su.getTemp()));
         lblPosTxt.setText(su.getY() + ", " + su.getX());
+        
+        Set<MyWaypoint> waypoints = new HashSet<>();
+        List<GeoPosition> track = new ArrayList();
+        for (int i = 0; i < sheepUpdateList.size(); i++) {
+            SheepUpdate update = sheepUpdateList.get(i);
+            Date fmtTimestamp = new Date(update.getTimeStamp() * 1000);
+            GeoPosition gp = new GeoPosition(update.getY(), update.getX());
+            Color color = Color.WHITE;
+            if (i == 0) {
+                color = Color.RED;
+            }
+            if (i == index) {
+                color = Color.BLUE;
+            }
+            MyWaypoint wp = new MyWaypoint(fmtTimestamp.toLocaleString(), color, gp, i, false);
+            waypoints.add(wp);
+            track.add(gp);
+
+            RoutePainter routePainter = new RoutePainter(track);
+            WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<>();
+            waypointPainter.setWaypoints(waypoints);
+            waypointPainter.setRenderer(new FancyWaypointRenderer());
+
+            List<Painter<JXMapViewer>> painters = new ArrayList<>();
+            painters.add(routePainter);
+            painters.add(waypointPainter);
+
+            CompoundPainter<JXMapViewer> painter = new CompoundPainter<>(painters);
+            jXSheepMap.getMainMap().setOverlayPainter(painter);
+            
+        }
     }
     
     /**
@@ -235,7 +271,7 @@ public class SheepPanel extends javax.swing.JFrame {
      * 
      * @param index 
      */
-    public void mouseSelectUpdate(int index) {
+    public void mapSelectUpdate(int index) {
         sheepUpdateJList.setSelectedIndex(index);
         sheepUpdateJList.ensureIndexIsVisible(index);
     }
@@ -896,9 +932,7 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         }
         Sheep change = (Sheep)sheepList.get(x);
-        /*String newComment, newName;
-         int newDeceased;
-         double newWeight;*/
+
         if (!txtNick.getText().equals(change.getName())) {
             change.setName(txtNick.getText());
         }

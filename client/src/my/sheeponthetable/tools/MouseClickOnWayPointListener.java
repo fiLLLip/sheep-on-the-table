@@ -49,10 +49,10 @@ public class MouseClickOnWayPointListener implements MouseListener {
             
             if (vorBounds.contains(e.getPoint())) {
                 if (w.isSheepWaypoint()) {
-                    sp.selectSheep(w.getIndex());
+                    sp.mapSelectSheep(w.getIndex());
                 }
                 else {
-                     sp.mouseSelectUpdate(w.getIndex());
+                     sp.mapSelectUpdate(w.getIndex());
                 }
                 // If there are more waypoints on this location, only care about
                 // one of them, to make things simpler for everyone.
