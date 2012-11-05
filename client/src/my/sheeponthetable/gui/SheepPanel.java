@@ -33,13 +33,14 @@ import org.jdesktop.swingx.painter.Painter;
 
 /**
  *
- * @author Alex
+ * @author Gruppe 7
  */
 public class SheepPanel extends javax.swing.JFrame {
 
     private DefaultListModel sheepShow = new DefaultListModel();
     private DefaultListModel sheepUpdatesShow = new DefaultListModel();
     private List<Sheep> sheepList = new ArrayList();
+    private List<SheepUpdate> sheepUpdateList;
     private Set<MyWaypoint> wayPointSet = new HashSet<>();
     private String serverURL;
     private int serverPort;
@@ -50,8 +51,8 @@ public class SheepPanel extends javax.swing.JFrame {
     // mye sheep info
     private String nickname, comment;
     private int globalId, pulse, temp;
-    private double posY, posX;
-    ListSelectionListener listSelectionListener;
+    ListSelectionListener sheepListSelectionListener;
+    ListSelectionListener updateListSelectionListener;
 
     /* to know what do to when you press the edit or save button */
     private boolean isEditingSheep = false;
@@ -98,8 +99,7 @@ public class SheepPanel extends javax.swing.JFrame {
         txtWeight.setVisible(false);
         mapInitialize();
 
-        listSelectionListener = new ListSelectionListener() {
-            
+        sheepListSelectionListener = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
 
                 JList list = (JList) listSelectionEvent.getSource();
@@ -109,8 +109,19 @@ public class SheepPanel extends javax.swing.JFrame {
                 }
             }
         };
-        sheepJList.addListSelectionListener(listSelectionListener);
+        sheepJList.addListSelectionListener(sheepListSelectionListener);
        
+        updateListSelectionListener = new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                JList list = (JList) e.getSource();
+                int selectedIndex = list.getSelectedIndex();
+                if (!e.getValueIsAdjusting() && selectedIndex != -1) {
+                    selectUpdate(selectedIndex);
+                }
+            }
+        };
+        sheepUpdateJList.addListSelectionListener(updateListSelectionListener);
+        
         update();
         
     }
@@ -169,8 +180,6 @@ public class SheepPanel extends javax.swing.JFrame {
             lblUpdateTxt.setText(formattedTimestamp.toLocaleString());
             lblPulse.setText(Integer.toString(s.getUpdates().get(0).getPulse()));
             lblTemp.setText(Double.toString(s.getUpdates().get(0).getTemp()));
-            posX = xpos;
-            posY = ypos;
             Set<MyWaypoint> waypoints = new HashSet<>();
             List<GeoPosition> track = new ArrayList();
             for (int i = 0; i < s.getUpdates().size(); i++) {
@@ -199,6 +208,36 @@ public class SheepPanel extends javax.swing.JFrame {
             wayPointSet = waypoints;
             focusAccordingToWaypoints();
         }
+        sheepUpdateList = s.getUpdates();
+    }
+
+    /**
+     * Called by the select event listeners to handle what happens when a SU is 
+     * seleced.
+     * 
+     * @param index 
+     */
+    private void selectUpdate(int index) {
+        System.out.println("Thar she blows!");
+        SheepUpdate su = sheepUpdateList.get(index);
+        Date formattedTimestamp = new Date(su.getTimeStamp() * 1000);
+        lblUpdateTxt.setText(formattedTimestamp.toLocaleString());
+        lblPulse.setText(Integer.toString(su.getPulse()));
+        lblTemp.setText(Double.toString(su.getTemp()));
+        lblPosTxt.setText(su.getY() + ", " + su.getX());
+    }
+    
+    /**
+     * This method is called by the mouse listeners on the map, to handle these
+     * events. What this method does is to select the update on the list with 
+     * the index corresponding to the input value. This selection then fires
+     * the list event listeners which call the selectUpdate method.
+     * 
+     * @param index 
+     */
+    public void mouseSelectUpdate(int index) {
+        sheepUpdateJList.setSelectedIndex(index);
+        sheepUpdateJList.ensureIndexIsVisible(index);
     }
     
     /**
@@ -645,7 +684,8 @@ public class SheepPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshbtnActionPerformed
 
     private void deSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deSelectActionPerformed
-        sheepJList.clearSelection();  // TODO add your handling code here:
+        sheepJList.clearSelection();
+        sheepUpdateJList.clearSelection();
         lblIDtxt.setText("-");
         lblPosTxt.setText("-");
         lblUpdateTxt.setText("-");
@@ -705,8 +745,7 @@ public class SheepPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuFarmToolsActionPerformed
 
     private void jMenuPropertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPropertiesActionPerformed
-      //  this.setVisible(false);
-        new UserProperties(this).setVisible(true);// TODO add your handling code here:
+        new UserProperties(this).setVisible(true);
     }//GEN-LAST:event_jMenuPropertiesActionPerformed
 
     /**
@@ -720,6 +759,8 @@ public class SheepPanel extends javax.swing.JFrame {
     
     public void resetSelection() {
         sheepShow.removeAllElements();
+        sheepUpdatesShow.removeAllElements();
+        
         Set<MyWaypoint> waypoints = new HashSet<>();
         
         if (sheepList != null) {

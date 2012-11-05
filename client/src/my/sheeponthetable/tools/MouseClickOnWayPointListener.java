@@ -48,12 +48,11 @@ public class MouseClickOnWayPointListener implements MouseListener {
             Rectangle vorBounds = new Rectangle(x-10, y-34, 20, 34);
             
             if (vorBounds.contains(e.getPoint())) {
-                // Add handling code
                 if (w.isSheepWaypoint()) {
                     sp.selectSheep(w.getIndex());
                 }
                 else {
-                     
+                     sp.mouseSelectUpdate(w.getIndex());
                 }
                 // If there are more waypoints on this location, only care about
                 // one of them, to make things simpler for everyone.
