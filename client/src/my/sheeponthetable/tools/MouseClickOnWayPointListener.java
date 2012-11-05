@@ -45,7 +45,7 @@ public class MouseClickOnWayPointListener implements MouseListener {
             x = (int) (vorPoint.getX() - bounds.getX());
             y = (int) (vorPoint.getY() - bounds.getY());            
         
-            Rectangle vorBounds = new Rectangle(x-10, y-10, 20, 20);
+            Rectangle vorBounds = new Rectangle(x-10, y-34, 20, 34);
             
             if (vorBounds.contains(e.getPoint())) {
                 // Add handling code
