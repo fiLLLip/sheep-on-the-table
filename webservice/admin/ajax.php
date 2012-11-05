@@ -37,8 +37,22 @@
 		case 'update':
 			$aColumns = array( 'id', 'sheep_id', 'timestamp', 'pos_x', 'pos_y', 'pulse', 'temp', 'alarm' );
 			$whereID = $_GET['id'];
-			$sIndexColumn = "id";
+			$sIndexColumn = "sheep_id";
 			$sTable = "sheep_updates";
+			break;
+		
+		case 'permissions':
+			$aColumns = array( 'farm_id', 'level', 'SMSAlarmAttack', 'SMSAlarmTemperature', 'SMSAlarmStationary', 'EmailAlarmAttack', 'EmailAlarmTemperature', 'EmailAlarmStationary' );
+			$whereID = $_GET['id'];
+			$sIndexColumn = "user_id";
+			$sTable = "sheep_permissions";
+			break;
+			
+		case 'farmpermissions':
+			$aColumns = array( 'user_id', 'level' );
+			$whereID = $_GET['id'];
+			$sIndexColumn = "farm_id";
+			$sTable = "sheep_permissions";
 			break;
 			
 		default:
@@ -98,7 +112,16 @@
 	if ( (isset($_GET['sSearch']) && $_GET['sSearch'] != "") || isset($whereID))
 	{
 		if (isset($whereID) && isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
-			$sWhere = "WHERE sheep_id = '$whereID' AND (";
+			$sWhere = "WHERE $sIndexColumn = '$whereID' AND (";
+			for ( $i=0 ; $i<count($aColumns) ; $i++ )
+			{
+				$sWhere .= "`".$aColumns[$i]."` LIKE '%".$DB->escapeStrings( $_GET['sSearch'] )."%' OR ";
+			}
+			$sWhere = substr_replace( $sWhere, "", -3 );
+			$sWhere .= ')';
+		}
+		elseif (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
+			$sWhere = "WHERE (";
 			for ( $i=0 ; $i<count($aColumns) ; $i++ )
 			{
 				$sWhere .= "`".$aColumns[$i]."` LIKE '%".$DB->escapeStrings( $_GET['sSearch'] )."%' OR ";
@@ -107,7 +130,7 @@
 			$sWhere .= ')';
 		}
 		elseif (isset($whereID)) {
-			$sWhere = "WHERE sheep_id = '$whereID'";
+			$sWhere = "WHERE $sIndexColumn = '$whereID'";
 		}
 	}
 	

@@ -4,7 +4,7 @@
 		if ($loginArr != null) {
 			?>
 	<script>
-		window.location.replace('?p=stats');
+		window.location.reload();
 	</script>
 			<?php
 		}
@@ -46,31 +46,12 @@
 <h1 style="text-align:center;">
 	Sheep finder admin panel
 </h1><br />
-<form class="form-signin" method="post" action="?">
+<form class="form-signin" method="post" action="">
 	<h2 class="form-signin-heading">Please sign in</h2>
-	<input name="username" type="text" class="input-block-level" placeholder="Email address">
+	<input name="username" type="text" class="input-block-level" placeholder="Username">
 	<input name="password" type="password" class="input-block-level" placeholder="Password">
 	<!--<label class="checkbox">
 		<input type="checkbox" value="remember-me"> Remember me
 	</label>-->
 	<button name="loginSubmit" class="btn btn-large btn-primary" type="submit">Sign in</button>
 </form>
-
-<!--<div class="ui-widget ui-widget-content ui-corner-all" style="width:250px;margin:auto;">
-	<div class="ui-widget-header header">
-		Log in
-	</div>
-	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom content">
-		<form method="post" action="?">
-			<div class="field">
-				<label>Username:</label><input name="username" type="text">
-			</div>
-			<div class="field">
-				<label>Password:</label><input name="password" type="password">
-			</div>
-			<div class="field" style="height:30px;">
-				<label>&nbsp;</label><input name="loginSubmit" type="submit" value="Log in" style="width:100px" />
-			</div>
-		</form>
-	</div>
-</div>-->
