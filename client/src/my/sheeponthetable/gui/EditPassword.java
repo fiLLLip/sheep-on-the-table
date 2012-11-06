@@ -4,6 +4,9 @@
  */
 package my.sheeponthetable.gui;
 
+import javax.swing.JOptionPane;
+import my.sheeponthetable.tools.WebServiceClient;
+
 /**
  *
  * @author Håkon
@@ -44,6 +47,11 @@ public class EditPassword extends javax.swing.JFrame {
         jLabel3.setText("Confirm new password");
 
         SaveButton.setText("Save");
+        SaveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveButtonActionPerformed(evt);
+            }
+        });
 
         CancelButton.setText("Cancel");
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -104,6 +112,14 @@ public class EditPassword extends javax.swing.JFrame {
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
+
+    private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
+        if(WebServiceClient.newPassword(this.CurrentPasswordtxt.getText(), this.NewPasswordtxt.getText(), this.ConfirmPasswordtxt.getText())){
+            dispose();
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Failed to create new password!", "Information", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_SaveButtonActionPerformed
 
     /**
      * @param args the command line arguments
