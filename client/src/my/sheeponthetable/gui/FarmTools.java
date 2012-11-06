@@ -39,19 +39,18 @@ public class FarmTools extends javax.swing.JFrame {
         setDisable();
         getUsers();
         update();
-        
+        System.out.println("Major Fail");
         ListSelectionListener userSelectList = new ListSelectionListener(){
-
             @Override
-            public void valueChanged(ListSelectionEvent lse) {
-            JList list = (JList)lse.getSource();
-            if (!lse.getValueIsAdjusting() && list.getSelectedIndex() != -1) {
-                setEnable();
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+            JList list = (JList)listSelectionEvent.getSource();
+            int selectedIndex = list.getSelectedIndex();
+            System.out.println("Major mabyeFail");
+            if (!listSelectionEvent.getValueIsAdjusting() && selectedIndex != -1) {
+                selectedUser(selectedIndex);
+                System.out.println("Major not Fail");
             
-            }
-            }
-        
-        
+            }}
         };
     }
     private void setDisable() {
@@ -95,6 +94,10 @@ public class FarmTools extends javax.swing.JFrame {
     {listModel.addElement(users.get(i).getName());
     }
         }
+    public void selectedUser(int selectedIndex){
+    setEnable();
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
