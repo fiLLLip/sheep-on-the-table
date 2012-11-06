@@ -792,7 +792,6 @@ public class SheepPanel extends javax.swing.JFrame {
     /**
      */
     public void update() {
-        //sheepList = connect.getSheepList();
         sheepList = WebServiceClient.getSheepList();
         jLabelLastUpdate.setText(new Date().toLocaleString());
         resetSelection();
