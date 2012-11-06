@@ -191,15 +191,17 @@ public class WebServiceClient {
             JSONArray sheeparr = getArrayOfJSONObjects(response);
             for (int i = 0; i < sheeparr.size(); i++) {
                 JSONObject obj = (JSONObject) sheeparr.get(i);
-                SheepUpdate update = new SheepUpdate(Integer.parseInt(obj.get("updateid").toString()),
-                        Double.parseDouble(obj.get("updateposx").toString()),
-                        Double.parseDouble(obj.get("updateposy").toString()),
-                        Integer.parseInt(obj.get("updatepulse").toString()),
-                        Double.parseDouble(obj.get("updatepulse").toString()),
-                        Integer.parseInt(obj.get("updatealarm").toString()),
-                        Long.parseLong(obj.get("updatetimestamp").toString()));
                 List<SheepUpdate> updates = new ArrayList();
-                updates.add(update);
+                if (obj.get("updateid") != null) {
+                SheepUpdate update = new SheepUpdate(Integer.parseInt(obj.get("updateid").toString()),
+                    Double.parseDouble(obj.get("updateposx").toString()),
+                    Double.parseDouble(obj.get("updateposy").toString()),
+                    Integer.parseInt(obj.get("updatepulse").toString()),
+                    Double.parseDouble(obj.get("updatepulse").toString()),
+                    Integer.parseInt(obj.get("updatealarm").toString()),
+                    Long.parseLong(obj.get("updatetimestamp").toString()));
+                    updates.add(update);
+                }
                 Sheep sheep = new Sheep(
                         Integer.parseInt(obj.get("id").toString()),
                         Integer.parseInt(obj.get("farm_id").toString()),
