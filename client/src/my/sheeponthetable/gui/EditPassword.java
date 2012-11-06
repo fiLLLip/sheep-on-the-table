@@ -4,6 +4,9 @@
  */
 package my.sheeponthetable.gui;
 
+import javax.swing.JOptionPane;
+import my.sheeponthetable.tools.WebServiceClient;
+
 /**
  *
  * @author Håkon
@@ -44,6 +47,11 @@ public class EditPassword extends javax.swing.JFrame {
         jLabel3.setText("Confirm new password");
 
         SaveButton.setText("Save");
+        SaveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveButtonActionPerformed(evt);
+            }
+        });
 
         CancelButton.setText("Cancel");
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -105,40 +113,15 @@ public class EditPassword extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
+        if(WebServiceClient.newPassword(this.CurrentPasswordtxt.getText(), this.NewPasswordtxt.getText(), this.ConfirmPasswordtxt.getText())){
+            JOptionPane.showMessageDialog(null, "Succeede to save password!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
         }
-        //</editor-fold>
+        else
+            JOptionPane.showMessageDialog(null, "Failed to save new password!\r\nMake sure they match.", "Information", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_SaveButtonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditPassword().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton CancelButton;
     private javax.swing.JPasswordField ConfirmPasswordtxt;

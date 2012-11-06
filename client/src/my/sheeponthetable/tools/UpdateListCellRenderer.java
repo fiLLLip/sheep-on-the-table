@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.sheeponthetable.tools;
 
 import java.awt.Color;
@@ -11,7 +7,9 @@ import javax.swing.JList;
 import my.sheeponthetable.gui.SheepPanel;
 
 /**
- *
+ * Cell Renderer responsible for giving the cells in the Update List the correct
+ * colours.
+ * 
  * @author elias
  */
 public class UpdateListCellRenderer extends DefaultListCellRenderer {
@@ -31,10 +29,10 @@ public class UpdateListCellRenderer extends DefaultListCellRenderer {
         if (su.isAlarm()) {
             colour = Color.RED;
         }
-        // If the sheep is sick, make it cyan
+        // If the sheep is sick, make it blue
         else if (su.getPulse() >  90 || su.getPulse() < 60 ||
                 su.getTemp() < 35 || su.getTemp() > 45 ) {
-            colour = Color.CYAN;
+            colour = Color.BLUE;
         }
         else {
             colour = Color.BLACK;
