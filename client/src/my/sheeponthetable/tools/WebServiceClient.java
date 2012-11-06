@@ -197,7 +197,7 @@ public class WebServiceClient {
                     Double.parseDouble(obj.get("updateposx").toString()),
                     Double.parseDouble(obj.get("updateposy").toString()),
                     Integer.parseInt(obj.get("updatepulse").toString()),
-                    Double.parseDouble(obj.get("updatepulse").toString()),
+                    Double.parseDouble(obj.get("updatetemp").toString()),
                     Integer.parseInt(obj.get("updatealarm").toString()),
                     Long.parseLong(obj.get("updatetimestamp").toString()));
                     updates.add(update);
