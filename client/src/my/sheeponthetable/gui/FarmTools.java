@@ -13,8 +13,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import my.sheeponthetable.tools.User;
 import my.sheeponthetable.tools.WebServiceClient;
-import sun.awt.resources.awt;
-import java.awt.event.*;
 /**
  *
  * @author Alex
