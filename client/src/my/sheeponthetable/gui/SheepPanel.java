@@ -105,6 +105,7 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         };
         sheepJList.addListSelectionListener(sheepListSelectionListener);
+        sheepJList.setCellRenderer(new CellListRenderer());
        
         updateListSelectionListener = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
@@ -200,6 +201,10 @@ public class SheepPanel extends javax.swing.JFrame {
 
             wayPointSet = waypoints;
             focusAccordingToWaypoints();
+        }
+        else {
+            CompoundPainter<JXMapViewer> painter = new CompoundPainter<>();
+            jXSheepMap.getMainMap().setOverlayPainter(painter);
         }
         sheepUpdateList = s.getUpdates();
     }
@@ -787,7 +792,6 @@ public class SheepPanel extends javax.swing.JFrame {
     /**
      */
     public void update() {
-        //sheepList = connect.getSheepList();
         sheepList = WebServiceClient.getSheepList();
         jLabelLastUpdate.setText(new Date().toLocaleString());
         resetSelection();
@@ -835,8 +839,10 @@ public class SheepPanel extends javax.swing.JFrame {
      * @param wp - a set of waypoints to focus on
      */
     private void focusAccordingToWaypoints() {
-        // If there are no waypoints to focus on, don't do anything.
+        // If there are no waypoints to focus on, go to Oppdal
         if (wayPointSet.isEmpty()) {
+            GeoPosition oppdal = new GeoPosition(62.573611,9.608889);
+            jXSheepMap.setAddressLocation(oppdal);            
             return;
         }
         
