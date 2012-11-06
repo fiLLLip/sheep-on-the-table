@@ -105,7 +105,7 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         };
         sheepJList.addListSelectionListener(sheepListSelectionListener);
-        sheepJList.setCellRenderer(new CellListRenderer());
+        sheepJList.setCellRenderer(new CellListRenderer(this));
        
         updateListSelectionListener = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
@@ -993,6 +993,9 @@ public class SheepPanel extends javax.swing.JFrame {
 
     }
     
+    public List<Sheep> getSheepList() {
+        return sheepList;
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheep;
