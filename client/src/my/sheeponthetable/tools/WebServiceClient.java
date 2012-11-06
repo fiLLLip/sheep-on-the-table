@@ -356,10 +356,10 @@ public class WebServiceClient {
                         obj.get("phone").toString(),
                         obj.get("SMSAlarmStationary").toString().equals("1"),
                         obj.get("SMSAlarmAttack").toString().equals("1"),
-                        obj.get("SMSAlarmTemperature").toString().equals("1"),
+                        obj.get("SMSAlarmHealth").toString().equals("1"),
                         obj.get("EmailAlarmStationary").toString().equals("1"),
                         obj.get("EmailAlarmAttack").toString().equals("1"),
-                        obj.get("EmailAlarmTemperature").toString().equals("1")));
+                        obj.get("EmailAlarmHealth").toString().equals("1")));
             }
             return returnArray;
         } else {
