@@ -45,7 +45,8 @@ public class FarmTools extends javax.swing.JFrame {
         update();
         System.out.println("Major Fail");
         System.out.println(jListUser.getSelectedValue());
-        /* userSelect = new ListSelectionListener(){
+        
+        userSelect = new ListSelectionListener(){
 
             public void valueChanged(ListSelectionEvent lse) {
                  System.out.println("Major Fail");
@@ -55,7 +56,8 @@ public class FarmTools extends javax.swing.JFrame {
                 if (!lse.getValueIsAdjusting() && selectedIndex != -1) {
                     System.out.println("Major Fail");
                     selectedUser(selectedIndex);
-                }}};*/
+                }}};
+        jListUser.addListSelectionListener(userSelect);
     }
     
     private void setDisable() {
