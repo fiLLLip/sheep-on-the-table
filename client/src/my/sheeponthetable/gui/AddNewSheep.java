@@ -4,9 +4,15 @@
  */
 package my.sheeponthetable.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import my.sheeponthetable.tools.*;
 
 /**
@@ -24,6 +30,7 @@ public class AddNewSheep extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         initComponents();
         this.sheepPanel = sp;
+       
     }
 
     /**
@@ -57,7 +64,7 @@ public class AddNewSheep extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Register new Sheep");
-        setAutoRequestFocus(false);
+        setAlwaysOnTop(true);
         setPreferredSize(new java.awt.Dimension(409, 305));
         setResizable(false);
 
@@ -160,7 +167,7 @@ public class AddNewSheep extends javax.swing.JFrame {
                     .addComponent(cancel)
                     .addComponent(clearbtn)
                     .addComponent(addSheepButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -178,7 +185,7 @@ public class AddNewSheep extends javax.swing.JFrame {
     }//GEN-LAST:event_clearbtnActionPerformed
 
     private void addSheepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepButtonActionPerformed
-       // sjekker om alle felt er fylt ut
+        // sjekker om alle felt er fylt ut
         if (this.txtBorn.getText().equals("")
                 || this.txtNick.getText().equals("")
                 || this.txtWeight.getText().equals("")
@@ -186,7 +193,7 @@ public class AddNewSheep extends javax.swing.JFrame {
             System.out.println("Error should now show up...");
             final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
             JOptionPane.showMessageDialog(null, "Please fill in all the required fields.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            
+
             return;
         }
         // alle felt er fylt ut, opprett sau
@@ -204,8 +211,9 @@ public class AddNewSheep extends javax.swing.JFrame {
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
-        
+
     }//GEN-LAST:event_addSheepButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheepButton;
     private javax.swing.JToggleButton cancel;

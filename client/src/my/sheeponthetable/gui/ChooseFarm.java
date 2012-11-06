@@ -4,10 +4,13 @@
  */
 package my.sheeponthetable.gui;
 
+import java.awt.AWTKeyStroke;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.KeyStroke;
 import my.sheeponthetable.tools.WebServiceClient;
 
 /**
@@ -58,6 +61,7 @@ public class ChooseFarm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
 
         farmList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -67,6 +71,11 @@ public class ChooseFarm extends javax.swing.JFrame {
         farmList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 farmListMouseClicked(evt);
+            }
+        });
+        farmList.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ChooseFarm.this.keyPressed(evt);
             }
         });
         jScrollPane.setViewportView(farmList);
@@ -149,6 +158,18 @@ public class ChooseFarm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_farmListMouseClicked
+
+    /**
+     * Selects the selected farm if the ENTER key is pressed. Fires everytime a
+     * key is pressed in the farmlist.
+     *
+     * @param evt
+     */
+    private void keyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            selectFarm();
+        }
+    }//GEN-LAST:event_keyPressed
 
     /**
      * opens sheepPanel with the selected farm

@@ -225,9 +225,19 @@ public class Sheep implements Serializable {
      * @return a Boolean parsed from 
      */
     public Boolean isAlive() {
-        if(this.deceased == 0)
-                return true;
-        return false;
+        if(this.deceased <= this.born)
+                return false;
+        return true;
+    }
+    
+    /**
+     *
+     * @return a Boolean parsed from 
+     */
+    public Boolean isDead() {
+        if(isAlive())
+                return false;
+        return true;
     }
 
     /**
