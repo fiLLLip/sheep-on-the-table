@@ -264,7 +264,7 @@ public class WebServiceClient {
     public static Boolean editSheep(Sheep sheep) {
         boolean returnValue = false;
         // Construct new request
-        String method = "newSheep";
+        String method = "editSheep";
         List<String> params = new ArrayList<>();
         params.add(Integer.toString(sheep.getID()));
         params.add(sheep.getName());
