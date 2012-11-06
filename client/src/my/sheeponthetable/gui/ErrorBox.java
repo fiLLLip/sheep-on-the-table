@@ -22,11 +22,13 @@ public class ErrorBox extends javax.swing.JFrame {
         this();
         errorMessageLabel.setText(errorMessage);
     }
+
     public ErrorBox(String errorMessage, String errorTitle) {
         this();
         errorMessageLabel.setText(errorMessage);
         titleLabel.setText(errorMessage);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,7 +124,6 @@ public class ErrorBox extends javax.swing.JFrame {
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton closeButton;
     public javax.swing.JLabel errorMessageLabel;

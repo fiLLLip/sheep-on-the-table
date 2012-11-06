@@ -857,7 +857,7 @@ public class SheepPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_menuRefreshActionPerformed
 
     private void menuEditSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditSheepActionPerformed
-        if(!isEditingSheep && sheepJList.getSelectedIndex() != -1) {
+        if (!isEditingSheep && sheepJList.getSelectedIndex() != -1) {
             // Sets the proper values of the textboxes in the Edit Sheep Panel
             setEditPanelInfo();
             panelSheepInfo.setVisible(false);
@@ -876,23 +876,19 @@ public class SheepPanel extends javax.swing.JFrame {
 
     /**
      * Save the changes to the sheep
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void btnSheepEditSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSheepEditSaveActionPerformed
-        
-        
-        
     }//GEN-LAST:event_btnSheepEditSaveActionPerformed
 
     private void btnSheepEditCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSheepEditCancelActionPerformed
 
         // call the menuEdit keystroke action
         menuEditSheepActionPerformed(null);
-        
+
     }//GEN-LAST:event_btnSheepEditCancelActionPerformed
 
-  
     /**
      * Deselects the selection of sheep
      */
@@ -917,8 +913,6 @@ public class SheepPanel extends javax.swing.JFrame {
         jLabelLastUpdate.setText(new Date().toLocaleString());
         resetSelection();
     }
-
-    
 
     public void resetSelection() {
         sheepShow.removeAllElements();
@@ -999,7 +993,6 @@ public class SheepPanel extends javax.swing.JFrame {
         // well within the bounds of the map, zoom out one more level.
         jXSheepMap.getMainMap().setZoom(jXSheepMap.getMainMap().getZoom() + 1);
     }
-
 
     private void mapInitialize() {
         // Map test
@@ -1107,18 +1100,18 @@ public class SheepPanel extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void setEditPanelInfo() {
-        
+
         Sheep selectedSheep = sheepList.get(sheepJList.getSelectedIndex());
-        
+
         txtSheepEditId.setText(Integer.toString(selectedSheep.getID()));
         txtSheepEditNickname.setText(selectedSheep.getName());
         txtSheepEditWeight.setText(Double.toString(selectedSheep.getWeight()));
-        
-        if(selectedSheep.isDead()) {
+
+        if (selectedSheep.isDead()) {
             cbxSheepEditDead.setSelected(true);
             cbxSheepEditDead.setEnabled(false);
         }
-        
+
         taSheepEditComment.setText(selectedSheep.getComment());
     }
 }

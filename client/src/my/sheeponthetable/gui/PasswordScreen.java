@@ -19,22 +19,22 @@ public class PasswordScreen extends javax.swing.JFrame {
     private String username;
     private String password;
     //private ServerConnector connect;
-    
+
     /**
      * Creates new form PasswordScreen
      */
     public PasswordScreen() {
         initComponents();
-        
+
         this.setLocationRelativeTo(null);
-        
+
         this.config = new Config();
-        if(!this.config.getUsername().equals("")) {
+        if (!this.config.getUsername().equals("")) {
             this.usernameField.setText(this.config.getUsername());
             this.passwordField.setText(this.config.getPassword());
             this.rememberMeCheckbox.setSelected(true);
         }
-        
+
         setTitle("Log in");
     }
 
@@ -177,18 +177,18 @@ public class PasswordScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginAction () {
+    private void loginAction() {
         this.username = this.usernameField.getText();
         this.password = this.passwordField.getText(); // Possible security threat
-        
+
         if (this.username.isEmpty() || this.password.isEmpty()) {
             System.out.println("Warning: Username or password not set");
             return;
         }
-        
+
         WebServiceClient.username = this.username;
         WebServiceClient.password = this.password;
-        
+
         if (!WebServiceClient.isLoggedIn()) {
             // Login failed
             this.config.setUsername("");
@@ -198,8 +198,8 @@ public class PasswordScreen extends javax.swing.JFrame {
         }
 
         // If you have made it to this point, you have a successfull login
-        
-        if(this.rememberMeCheckbox.isSelected()) {
+
+        if (this.rememberMeCheckbox.isSelected()) {
             // Checkbox is checked, saving username and password to file.
             this.config.setUsername(this.username);
             this.config.setPassword(this.password);
@@ -208,12 +208,12 @@ public class PasswordScreen extends javax.swing.JFrame {
             this.config.setUsername("");
             this.config.setPassword("");
         }
-        
+
         new ChooseFarm().setVisible(true);
-        
+
         this.dispose();
     }
-    
+
     private void rememberMeCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rememberMeCheckboxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rememberMeCheckboxActionPerformed
@@ -226,13 +226,12 @@ public class PasswordScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_onEnterLogon
 
     private void logOnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOnButtonActionPerformed
-       loginAction();
+        loginAction();
     }//GEN-LAST:event_logOnButtonActionPerformed
 
     private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_quitButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton logOnButton;
     private javax.swing.JPanel loginPanel;

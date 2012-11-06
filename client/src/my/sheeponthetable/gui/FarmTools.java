@@ -4,7 +4,6 @@
  */
 package my.sheeponthetable.gui;
 
-//import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Import;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -13,17 +12,18 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import my.sheeponthetable.tools.User;
 import my.sheeponthetable.tools.WebServiceClient;
+
 /**
  *
  * @author Alex
  */
 public class FarmTools extends javax.swing.JFrame {
-   private SheepPanel sheepPanel;
-   private List<User> users = new ArrayList();
-   private DefaultListModel listModel = new DefaultListModel();
-   private int farmID;
-   private ListSelectionListener userSelect;
-   
+
+    private SheepPanel sheepPanel;
+    private List<User> users = new ArrayList();
+    private DefaultListModel listModel = new DefaultListModel();
+    private int farmID;
+    private ListSelectionListener userSelect;
 
     /**
      * Creates new form AddNewSheep
@@ -43,65 +43,68 @@ public class FarmTools extends javax.swing.JFrame {
         update();
         System.out.println("Major Fail");
         System.out.println(jListUser.getSelectedValue());
-        
-        userSelect = new ListSelectionListener(){
 
+        userSelect = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent lse) {
-                 System.out.println("Major Fail");
+                System.out.println("Major Fail");
 
                 JList list = (JList) lse.getSource();
                 int selectedIndex = list.getSelectedIndex();
                 if (!lse.getValueIsAdjusting() && selectedIndex != -1) {
                     System.out.println("Major Fail");
                     selectedUser(selectedIndex);
-                }}};
+                }
+            }
+        };
         jListUser.addListSelectionListener(userSelect);
     }
-    
+
     private void setDisable() {
-      ClearanceChoice.setEnabled(false);
-      jAlertChkKilled1.setEnabled(false);
-      jAlertChkKilled2.setEnabled(false);
-      jAlertChkStationary1.setEnabled(false);
-      jAlertChkStationary2.setEnabled(false);
-      jAlertChkTemp1.setEnabled(false);
-      jAlertChkTemp2.setEnabled(false);
-      btnSave.setEnabled(false);
-      
+        ClearanceChoice.setEnabled(false);
+        jAlertChkKilled1.setEnabled(false);
+        jAlertChkKilled2.setEnabled(false);
+        jAlertChkStationary1.setEnabled(false);
+        jAlertChkStationary2.setEnabled(false);
+        jAlertChkTemp1.setEnabled(false);
+        jAlertChkTemp2.setEnabled(false);
+        btnSave.setEnabled(false);
+
     }
-    
+
     private void setEnable() {
-      ClearanceChoice.setEnabled(true);
-      jAlertChkKilled1.setEnabled(true);
-      jAlertChkKilled2.setEnabled(true);
-      jAlertChkStationary1.setEnabled(true);
-      jAlertChkStationary2.setEnabled(true);
-      jAlertChkTemp1.setEnabled(true);
-      jAlertChkTemp2.setEnabled(true);
-      btnSave.setEnabled(true);
-      
+        ClearanceChoice.setEnabled(true);
+        jAlertChkKilled1.setEnabled(true);
+        jAlertChkKilled2.setEnabled(true);
+        jAlertChkStationary1.setEnabled(true);
+        jAlertChkStationary2.setEnabled(true);
+        jAlertChkTemp1.setEnabled(true);
+        jAlertChkTemp2.setEnabled(true);
+        btnSave.setEnabled(true);
+
     }
-    
-    public void getUsers(){
-        
-     if(WebServiceClient.getUsersForFarm(farmID) != null){  
-     users = WebServiceClient.getUsersForFarm(farmID);}
-      
-      else{listModel.addElement("Troll");
+
+    public void getUsers() {
+
+        if (WebServiceClient.getUsersForFarm(farmID) != null) {
+            users = WebServiceClient.getUsersForFarm(farmID);
+        } else {
+            listModel.addElement("Troll");
             listModel.addElement("sold");
             listModel.addElement("old");
             listModel.addElement("cold");
-      }
-    }
-    public void update(){
-        System.out.println(users.size());
-    for(int i= 0; i< users.size();i++)
-    {listModel.addElement(users.get(i).getName());
-    }
         }
-    public void selectedUser(int selectedIndex){
-    setEnable();
-        
+    }
+
+    public void update() {
+        System.out.println(users.size());
+        for (int i = 0; i < users.size(); i++) {
+            listModel.addElement(users.get(i).getName());
+        }
+    }
+
+    public void selectedUser(int selectedIndex) {
+        setEnable();
+
     }
 
     /**
@@ -269,13 +272,11 @@ public class FarmTools extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-    this.dispose();        // TODO add your handling code here:
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelActionPerformed
-
     /**
      * @param args the command line arguments
      */
-  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Choice ClearanceChoice;
     private javax.swing.JButton btnCancel;
@@ -300,6 +301,4 @@ public class FarmTools extends javax.swing.JFrame {
     private javax.swing.JLabel lblNameTxt;
     private javax.swing.JLabel lblUserName;
     // End of variables declaration//GEN-END:variables
-
-    
 }

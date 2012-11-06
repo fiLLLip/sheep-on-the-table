@@ -20,39 +20,38 @@ public class MouseClickOnWayPointListener implements MouseListener {
 
     JXMapViewer map;
     SheepPanel sp;
-    
+
     public MouseClickOnWayPointListener(SheepPanel sp) {
         map = sp.getMapKit().getMainMap();
         this.sp = sp;
     }
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
         // Only care about left mouse clicks on this listener
         if (e.getButton() != 1) {
             return;
         }
-        
+
         // Listen for clicks on waypoints
         Rectangle bounds = map.getViewportBounds();
-        
+
         Point2D vorPoint;
-        int x, y;  
-        
+        int x, y;
+
         for (MyWaypoint w : sp.getWayPoints()) {
-            vorPoint =  map.getTileFactory().geoToPixel(w.getPosition(), map.getZoom());
+            vorPoint = map.getTileFactory().geoToPixel(w.getPosition(), map.getZoom());
             x = (int) (vorPoint.getX() - bounds.getX());
-            y = (int) (vorPoint.getY() - bounds.getY());            
-        
-            Rectangle vorBounds = new Rectangle(x-10, y-34, 20, 34);
-            
+            y = (int) (vorPoint.getY() - bounds.getY());
+
+            Rectangle vorBounds = new Rectangle(x - 10, y - 34, 20, 34);
+
             if (vorBounds.contains(e.getPoint())) {
                 if (w.isSheepWaypoint()) {
                     sp.mapSelectSheep(w.getIndex());
-                }
-                else {
-                     sp.mapSelectUpdate(w.getIndex());
+                } else {
+                    sp.mapSelectUpdate(w.getIndex());
                 }
                 // If there are more waypoints on this location, only care about
                 // one of them, to make things simpler for everyone.
@@ -76,5 +75,4 @@ public class MouseClickOnWayPointListener implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
     }
-    
 }

@@ -114,14 +114,13 @@ public class EditPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-        if(WebServiceClient.newPassword(this.CurrentPasswordtxt.getText(), this.NewPasswordtxt.getText(), this.ConfirmPasswordtxt.getText())){
+        if (WebServiceClient.newPassword(this.CurrentPasswordtxt.getText(), this.NewPasswordtxt.getText(), this.ConfirmPasswordtxt.getText())) {
             JOptionPane.showMessageDialog(null, "Succeede to save password!", "Information", JOptionPane.INFORMATION_MESSAGE);
             dispose();
-        }
-        else
+        } else {
             JOptionPane.showMessageDialog(null, "Failed to save new password!\r\nMake sure they match.", "Information", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_SaveButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton CancelButton;
     private javax.swing.JPasswordField ConfirmPasswordtxt;

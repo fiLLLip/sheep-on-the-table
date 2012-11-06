@@ -4,7 +4,6 @@
  */
 package my.sheeponthetable.tools;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,8 @@ import java.util.List;
  *
  * @author Filip
  */
-public class Sheep implements Serializable {
+public class Sheep {
+
     private int id;
     private int farmId;
     private String name;
@@ -21,47 +21,24 @@ public class Sheep implements Serializable {
     private int deceased;
     private double weight;
     private List<SheepUpdate> updates;
-    
+
     /**
      *
      */
-    
     public Sheep() {
         this.id = -1;
         this.farmId = -1;
         this.name = "n0ll";
         this.comment = "n0ll";
         this.born = -1;
-	this.deceased = -1;
+        this.deceased = -1;
         this.updates = null;
         this.weight = -1;
     }
 
     /**
-     * Parses the parameter string and initializes Sheep.
-     * 
-     * @param String string: Expects @-splittet string
-     */
-    public Sheep(String string) {
-        String[] parseString = string.split("@");
-        try {
-            id = Integer.parseInt(parseString[1]);
-            farmId = Integer.parseInt(parseString[2]);
-            name = parseString[3];
-            comment = parseString[4];
-            born = Integer.parseInt(parseString[5]);
-            deceased = Integer.parseInt(parseString[6]);
-            weight = Double.parseDouble(parseString[7]);
-            updates = new ArrayList();
-        } catch (Exception e) {
-            System.err.println("Could not convert this string to a sheep object!");
-            e.printStackTrace();
-        }
-    }
-    
-    /**
      * Initializes class Sheep
-     * 
+     *
      * @param int id
      * @param int farmId
      * @param String name
@@ -71,7 +48,7 @@ public class Sheep implements Serializable {
      * @param List<SheepUpdate> updates
      * @param double weight
      */
-    public Sheep (int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates, double weight) {
+    public Sheep(int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates, double weight) {
         this.id = id;
         this.farmId = farmId;
         this.name = name;
@@ -121,7 +98,7 @@ public class Sheep implements Serializable {
     public int getBorn() {
         return born;
     }
-    
+
     /**
      *
      * @return the unix timestamp of when sheep was born
@@ -129,8 +106,8 @@ public class Sheep implements Serializable {
     public double getWeight() {
         return weight;
     }
-	
-	/**
+
+    /**
      *
      * @return the unix timestamp of when sheep was deceased
      */
@@ -145,7 +122,7 @@ public class Sheep implements Serializable {
     public List<SheepUpdate> getUpdates() {
         return updates;
     }
-    
+
     /**
      *
      * @param d
@@ -175,7 +152,7 @@ public class Sheep implements Serializable {
      * @param k
      */
     public void setKommentar(String k) {
-         this.comment = k;
+        this.comment = k;
     }
 
     /**
@@ -185,18 +162,19 @@ public class Sheep implements Serializable {
     public void setBornYear(int i) {
         this.born = i;
     }
-     /**
+
+    /**
      *
      * @param w
      */
     public void setWeight(double w) {
         this.weight = w;
     }
-    
+
     /**
-    *
-    * @param d
-    */
+     *
+     * @param d
+     */
     public void setDeceaced(int d) {
         this.deceased = d;
     }
@@ -205,7 +183,7 @@ public class Sheep implements Serializable {
      *
      * @param updates
      */
-    public void setUpdates (List<SheepUpdate> updates) {
+    public void setUpdates(List<SheepUpdate> updates) {
         this.updates = updates;
     }
 
@@ -219,24 +197,26 @@ public class Sheep implements Serializable {
         }
         updates.add(su);
     }
-	
+
     /**
      *
-     * @return a Boolean parsed from 
+     * @return a Boolean parsed from
      */
     public Boolean isAlive() {
-        if(this.deceased <= this.born)
-                return false;
+        if (this.deceased <= this.born) {
+            return false;
+        }
         return true;
     }
-    
+
     /**
      *
-     * @return a Boolean parsed from 
+     * @return a Boolean parsed from
      */
     public Boolean isDead() {
-        if(isAlive())
-                return false;
+        if (isAlive()) {
+            return false;
+        }
         return true;
     }
 
@@ -253,5 +233,10 @@ public class Sheep implements Serializable {
             }
         }
         return s;
+    }
+
+    @Override
+    public String toString() {
+        return toString(false);
     }
 }

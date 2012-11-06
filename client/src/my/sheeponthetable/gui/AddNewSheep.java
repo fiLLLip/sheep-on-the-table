@@ -23,7 +23,7 @@ public class AddNewSheep extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         initComponents();
         this.sheepPanel = sp;
-       
+
     }
 
     /**
@@ -206,7 +206,6 @@ public class AddNewSheep extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_addSheepButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSheepButton;
     private javax.swing.JToggleButton cancel;

@@ -4,7 +4,6 @@
  */
 package my.sheeponthetable.gui;
 
-
 import my.sheeponthetable.tools.Sheep;
 
 /**
@@ -15,13 +14,14 @@ public class WarningBox extends javax.swing.JFrame {
 
     SheepPanel sheepPanel;
     Sheep sheepToRemove;
+
     /**
      * Creates new form WarningBox
      */
     public WarningBox() {
         initComponents();
     }
-    
+
     public WarningBox(Sheep sheep, SheepPanel sp) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -30,6 +30,7 @@ public class WarningBox extends javax.swing.JFrame {
         this.sheepPanel = sp;
         this.sheepToRemove = sheep;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -134,7 +135,7 @@ public class WarningBox extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
-        
+
         sheepPanel.update();
         dispose();
     }//GEN-LAST:event_confirmButtonActionPerformed
@@ -142,7 +143,6 @@ public class WarningBox extends javax.swing.JFrame {
     private void abortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abortButtonActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_abortButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton abortButton;
     private javax.swing.JButton confirmButton;

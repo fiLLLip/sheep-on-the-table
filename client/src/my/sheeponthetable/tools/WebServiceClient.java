@@ -187,13 +187,13 @@ public class WebServiceClient {
                 JSONObject obj = (JSONObject) sheeparr.get(i);
                 List<SheepUpdate> updates = new ArrayList();
                 if (obj.get("updateid") != null) {
-                SheepUpdate update = new SheepUpdate(Integer.parseInt(obj.get("updateid").toString()),
-                    Double.parseDouble(obj.get("updateposx").toString()),
-                    Double.parseDouble(obj.get("updateposy").toString()),
-                    Integer.parseInt(obj.get("updatepulse").toString()),
-                    Double.parseDouble(obj.get("updatetemp").toString()),
-                    Integer.parseInt(obj.get("updatealarm").toString()),
-                    Long.parseLong(obj.get("updatetimestamp").toString()));
+                    SheepUpdate update = new SheepUpdate(Integer.parseInt(obj.get("updateid").toString()),
+                            Double.parseDouble(obj.get("updateposx").toString()),
+                            Double.parseDouble(obj.get("updateposy").toString()),
+                            Integer.parseInt(obj.get("updatepulse").toString()),
+                            Double.parseDouble(obj.get("updatetemp").toString()),
+                            Integer.parseInt(obj.get("updatealarm").toString()),
+                            Long.parseLong(obj.get("updatetimestamp").toString()));
                     updates.add(update);
                 }
                 Sheep sheep = new Sheep(
@@ -401,7 +401,7 @@ public class WebServiceClient {
         Object response = doRequest("getUserDetails", params, true);
 
         if (response != null) {
-            
+
             JSONObject obj = (JSONObject) response;
             returnUser = new User(Integer.parseInt(obj.get("id").toString()),
                     obj.get("un").toString(),
