@@ -4,7 +4,6 @@
  */
 package my.sheeponthetable.gui;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import my.sheeponthetable.tools.User;
 import my.sheeponthetable.tools.WebServiceClient;

@@ -4,15 +4,8 @@
  */
 package my.sheeponthetable.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.text.NumberFormat;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
 import my.sheeponthetable.tools.*;
 
 /**

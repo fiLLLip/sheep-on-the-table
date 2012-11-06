@@ -5,13 +5,13 @@
 package my.sheeponthetable.gui;
 
 import java.awt.Color;
+import java.io.File;
 import java.util.*;
 import javax.swing.*;
-import my.sheeponthetable.tools.*;
-import java.io.File;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
+import my.sheeponthetable.tools.*;
 import my.sheeponthetable.tools.map.FancyWaypointRenderer;
 import my.sheeponthetable.tools.map.MyWaypoint;
 import my.sheeponthetable.tools.map.RoutePainter;
@@ -25,9 +25,9 @@ import org.jdesktop.swingx.input.ZoomMouseWheelListenerCursor;
 import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.mapviewer.LocalResponseCache;
+import org.jdesktop.swingx.mapviewer.WaypointPainter;
 import org.jdesktop.swingx.mapviewer.wms.WMSService;
 import org.jdesktop.swingx.mapviewer.wms.WMSTileFactory;
-import org.jdesktop.swingx.mapviewer.WaypointPainter;
 import org.jdesktop.swingx.painter.CompoundPainter;
 import org.jdesktop.swingx.painter.Painter;
 

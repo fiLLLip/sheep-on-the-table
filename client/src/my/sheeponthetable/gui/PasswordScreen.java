@@ -5,14 +5,8 @@
 package my.sheeponthetable.gui;
 
 import java.awt.event.KeyEvent;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import my.sheeponthetable.tools.Config;
-//import my.sheeponthetable.tools.ServerConnector;
 import my.sheeponthetable.tools.WebServiceClient;
 
 /**

@@ -4,13 +4,11 @@
  */
 package my.sheeponthetable.gui;
 
-import java.awt.AWTKeyStroke;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.swing.KeyStroke;
 import my.sheeponthetable.tools.WebServiceClient;
 
 /**
