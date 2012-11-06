@@ -4,6 +4,7 @@
  */
 package my.sheeponthetable.gui;
 
+//import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Import;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -12,7 +13,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import my.sheeponthetable.tools.User;
 import my.sheeponthetable.tools.WebServiceClient;
-
+import sun.awt.resources.awt;
+import java.awt.event.*;
 /**
  *
  * @author Alex
@@ -22,6 +24,8 @@ public class FarmTools extends javax.swing.JFrame {
    private List<User> users = new ArrayList();
    private DefaultListModel listModel = new DefaultListModel();
    private int farmID;
+   private ListSelectionListener userSelect;
+   
 
     /**
      * Creates new form AddNewSheep
@@ -40,19 +44,20 @@ public class FarmTools extends javax.swing.JFrame {
         getUsers();
         update();
         System.out.println("Major Fail");
-        ListSelectionListener userSelectList = new ListSelectionListener(){
-            @Override
-            public void valueChanged(ListSelectionEvent listSelectionEvent) {
-            JList list = (JList)listSelectionEvent.getSource();
-            int selectedIndex = list.getSelectedIndex();
-            System.out.println("Major mabyeFail");
-            if (!listSelectionEvent.getValueIsAdjusting() && selectedIndex != -1) {
-                selectedUser(selectedIndex);
-                System.out.println("Major not Fail");
-            
-            }}
-        };
+        System.out.println(jListUser.getSelectedValue());
+        /* userSelect = new ListSelectionListener(){
+
+            public void valueChanged(ListSelectionEvent lse) {
+                 System.out.println("Major Fail");
+
+                JList list = (JList) lse.getSource();
+                int selectedIndex = list.getSelectedIndex();
+                if (!lse.getValueIsAdjusting() && selectedIndex != -1) {
+                    System.out.println("Major Fail");
+                    selectedUser(selectedIndex);
+                }}};*/
     }
+    
     private void setDisable() {
       ClearanceChoice.setEnabled(false);
       jAlertChkKilled1.setEnabled(false);
