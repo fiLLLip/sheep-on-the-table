@@ -52,6 +52,10 @@ public class SheepPanel extends javax.swing.JFrame {
     /* to know what do to when you press the edit or save button */
     private boolean isEditingSheep = false;
 
+    public List<SheepUpdate> getUpdateList() {
+        return sheepUpdateList;
+    }
+    
     public JXMapKit getMapKit()  {
         return jXSheepMap;
     }
@@ -99,7 +103,7 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         };
         sheepJList.addListSelectionListener(sheepListSelectionListener);
-        //sheepJList.setCellRenderer(new SheepListCellRenderer(this));
+        sheepJList.setCellRenderer(new SheepListCellRenderer(this));
        
         updateListSelectionListener = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
@@ -111,6 +115,7 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         };
         sheepUpdateJList.addListSelectionListener(updateListSelectionListener);
+        sheepUpdateJList.setCellRenderer(new UpdateListCellRenderer(this));
         
         update();
         
@@ -927,4 +932,5 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JList sheepUpdateJList;
     private javax.swing.JTextArea taSheepComment;
     // End of variables declaration//GEN-END:variables
+
 }
