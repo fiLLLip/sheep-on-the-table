@@ -105,7 +105,7 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         };
         sheepJList.addListSelectionListener(sheepListSelectionListener);
-        sheepJList.setCellRenderer(new CellListRenderer(this));
+        sheepJList.setCellRenderer(new SheepListCellRenderer(this));
        
         updateListSelectionListener = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
