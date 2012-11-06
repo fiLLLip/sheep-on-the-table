@@ -18,7 +18,7 @@ import my.sheeponthetable.tools.WebServiceClient;
 public class ChooseFarm extends javax.swing.JFrame {
 
     private DefaultListModel farmListModel = new DefaultListModel();
-
+    private boolean doSelect = false;
     /**
      * Creates new form ChooseFarm which lists all available Farms that the user
      * who is logged in has access to.
@@ -34,8 +34,8 @@ public class ChooseFarm extends javax.swing.JFrame {
 
         if (farmListModel.size() == 1) {
             farmList.setSelectedIndex(0);
-            selectFarm();
-        } else if (farmListModel.size() > 0) {
+            doSelect = true;
+        } else if (farmListModel.size() > 1) {
             farmList.setSelectedIndex(0);
         } else {
             new ErrorBox("You have no farms :/").setVisible(true);
@@ -60,6 +60,11 @@ public class ChooseFarm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                onOpened(evt);
+            }
+        });
 
         farmList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -136,8 +141,8 @@ public class ChooseFarm extends javax.swing.JFrame {
 
     private void buttonLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLogoutActionPerformed
         // TODO add your handling code here:
+        this.dispose();
         new PasswordScreen().setVisible(true);
-        dispose();
     }//GEN-LAST:event_buttonLogoutActionPerformed
 
     private void buttonSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectActionPerformed
@@ -169,14 +174,21 @@ public class ChooseFarm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_keyPressed
 
+    private void onOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_onOpened
+        // TODO add your handling code here:
+        if (doSelect) {
+            selectFarm();
+        }
+    }//GEN-LAST:event_onOpened
+
     /**
      * opens sheepPanel with the selected farm
      */
     private void selectFarm() {
         if (farmList.getSelectedIndex() != -1) {
             WebServiceClient.farmid = WebServiceClient.farmids.get(farmList.getSelectedIndex()).get("id").toString();
+            this.dispose();
             new SheepPanel().setVisible(true);
-            dispose();
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
