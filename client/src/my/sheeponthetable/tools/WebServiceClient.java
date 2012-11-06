@@ -1,23 +1,17 @@
 package my.sheeponthetable.tools;
 
-import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import com.thetransactioncompany.jsonrpc2.client.*;
 import com.thetransactioncompany.jsonrpc2.*;
 import java.awt.Window;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import my.sheeponthetable.gui.PasswordScreen;
 import net.minidev.json.*;
-import net.minidev.json.parser.JSONParser;
 
 /**
  * This object works as a backend, managing the communication with the server on
