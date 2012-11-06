@@ -284,6 +284,30 @@ public class WebServiceClient {
     }
 
     /**
+     * Registers new password supplied from GUI
+     *
+     * @param String Old Password
+     * @param String New Password
+     * @return true if successful or false if an error happened.
+     */
+    public static Boolean newPassword(String oldPassword, String newPassword, String newConfirmedPassword) {
+        boolean returnValue = false;
+        // Construct new request
+        String method = "editSheep";
+        List<String> params = new ArrayList<>();
+        params.add(oldPassword);
+        params.add(newPassword);
+        params.add(newConfirmedPassword);
+
+        Object response = doRequest(method, params, true);
+
+        if (response != null) {
+            returnValue = true;
+        }
+        return returnValue;
+    }
+
+    /**
      * Creates a new sheep in the database
      *
      * @param sheep
