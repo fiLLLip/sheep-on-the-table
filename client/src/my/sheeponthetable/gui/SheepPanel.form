@@ -768,7 +768,7 @@
                 <Property name="text" type="java.lang.String" value="Save changes"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSheepEditSaveActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSheepEditSaveClicked"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnSheepEditCancel">

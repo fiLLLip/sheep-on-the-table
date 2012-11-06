@@ -599,7 +599,7 @@ public class SheepPanel extends javax.swing.JFrame {
         btnSheepEditSave.setText("Save changes");
         btnSheepEditSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSheepEditSaveActionPerformed(evt);
+                btnSheepEditSaveClicked(evt);
             }
         });
 
@@ -862,8 +862,10 @@ public class SheepPanel extends javax.swing.JFrame {
             setEditPanelInfo();
             panelSheepInfo.setVisible(false);
             panelSheepEdit.setVisible(true);
+            sheepJList.setEnabled(false);
             isEditingSheep = true;
         } else {
+            sheepJList.setEnabled(true);
             panelSheepEdit.setVisible(false);
             panelSheepInfo.setVisible(true);
             isEditingSheep = false;
@@ -874,20 +876,22 @@ public class SheepPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxSheepEditDeadActionPerformed
 
-    /**
-     * Save the changes to the sheep
-     *
-     * @param evt
-     */
-    private void btnSheepEditSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSheepEditSaveActionPerformed
-    }//GEN-LAST:event_btnSheepEditSaveActionPerformed
-
     private void btnSheepEditCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSheepEditCancelActionPerformed
 
         // call the menuEdit keystroke action
         menuEditSheepActionPerformed(null);
 
     }//GEN-LAST:event_btnSheepEditCancelActionPerformed
+
+    /**
+     * Saves the changes made to the sheep
+     * @param evt 
+     */
+    private void btnSheepEditSaveClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSheepEditSaveClicked
+        
+        String errors = checkEditFields();
+        menuEditSheepActionPerformed(null);
+    }//GEN-LAST:event_btnSheepEditSaveClicked
 
     /**
      * Deselects the selection of sheep
@@ -1113,5 +1117,16 @@ public class SheepPanel extends javax.swing.JFrame {
         }
 
         taSheepEditComment.setText(selectedSheep.getComment());
+    }
+
+    private String checkEditFields() {
+        
+        if(Double.parseDouble(txtSheepEditWeight.getText()) < 0.0) {
+            return "Weight has to be more than 0.0 kg";
+        }
+        
+        
+        
+        return null;
     }
 }

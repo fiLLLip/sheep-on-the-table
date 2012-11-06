@@ -204,9 +204,9 @@ public class Sheep {
      */
     public Boolean isAlive() {
         if (this.deceased <= this.born) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**
