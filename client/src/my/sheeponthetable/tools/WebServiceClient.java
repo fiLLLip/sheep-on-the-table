@@ -287,7 +287,7 @@ public class WebServiceClient {
     public static Boolean newPassword(String oldPassword, String newPassword, String newConfirmedPassword) {
         boolean returnValue = false;
         // Construct new request
-        String method = "editSheep";
+        String method = "setUserNewPassword";
         List<String> params = new ArrayList<>();
         params.add(oldPassword);
         params.add(newPassword);
