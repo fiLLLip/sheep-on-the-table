@@ -30,7 +30,7 @@ public class SheepListCellRenderer extends DefaultListCellRenderer {
         if (s.getUpdates().isEmpty()) {
             colour = Color.GRAY;
         } // If the sheep is dead, make it red
-        else if (s.getDeceased() > 100000) {
+        else if (s.isDead()) {
             colour = Color.RED;
         } // If the sheep is sick, make it blue
         else if (s.getUpdates().get(0).getPulse() > 90

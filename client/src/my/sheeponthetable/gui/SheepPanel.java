@@ -6,6 +6,7 @@ package my.sheeponthetable.gui;
 
 import java.awt.Color;
 import java.io.File;
+import java.text.DateFormat;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -43,6 +44,7 @@ public class SheepPanel extends javax.swing.JFrame {
     private List<SheepUpdate> sheepUpdateList;
     private Set<MyWaypoint> wayPointSet = new HashSet<>();
     private int farmID = Integer.parseInt(WebServiceClient.farmid);
+    private Sheep selectedSheep;
     // mye sheep info
     private String nickname;
     private int globalId;
@@ -94,6 +96,7 @@ public class SheepPanel extends javax.swing.JFrame {
         mapInitialize();
 
         sheepListSelectionListener = new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
 
                 JList list = (JList) listSelectionEvent.getSource();
@@ -107,6 +110,7 @@ public class SheepPanel extends javax.swing.JFrame {
         sheepJList.setCellRenderer(new SheepListCellRenderer(this));
 
         updateListSelectionListener = new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 JList list = (JList) e.getSource();
                 int selectedIndex = list.getSelectedIndex();
@@ -173,8 +177,9 @@ public class SheepPanel extends javax.swing.JFrame {
 
         Sheep s = sheepList.get(index);
 
-        lblSheepDeceased.setText(Integer.toString(s.getDeceased()));
-        lblSheepBorn.setText(Integer.toString(s.getBorn()));
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN);
+        lblSheepDeceased.setText(df.format(s.getDeceased()));
+        lblSheepBorn.setText(df.format(s.getBorn()));
         lblSheepWeight.setText(Double.toString((s.getWeight())) + " kg");
         int id = s.getID();
         lblSheepId.setText(Integer.toString(id));
@@ -184,7 +189,7 @@ public class SheepPanel extends javax.swing.JFrame {
         nickname = s.getName();
         lblSheepNickname.setText(nickname);
         System.out.println(nickname);
-        if (s.getDeceased() <= 86400) {
+        if (s.isAlive()) {
             lblSheepDeceased.setText("Not Dead");
             lblSheepDeceased.setBackground(Color.green);
         }
@@ -364,10 +369,11 @@ public class SheepPanel extends javax.swing.JFrame {
         txtSheepEditId = new javax.swing.JTextField();
         txtSheepEditNickname = new javax.swing.JTextField();
         txtSheepEditWeight = new javax.swing.JTextField();
-        txtSheepEditBorn = new javax.swing.JTextField();
-        cbxSheepEditDead = new javax.swing.JCheckBox();
         btnSheepEditSave = new javax.swing.JButton();
         btnSheepEditCancel = new javax.swing.JButton();
+        dcSheepEditBorn = new com.toedter.calendar.JDateChooser();
+        jLabel25 = new javax.swing.JLabel();
+        dcSheepEditDead = new com.toedter.calendar.JDateChooser();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuLogout = new javax.swing.JMenuItem();
@@ -590,13 +596,6 @@ public class SheepPanel extends javax.swing.JFrame {
 
         txtSheepEditId.setEditable(false);
 
-        cbxSheepEditDead.setText("Check this box if the sheep is dead.");
-        cbxSheepEditDead.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxSheepEditDeadActionPerformed(evt);
-            }
-        });
-
         btnSheepEditSave.setText("Save changes");
         btnSheepEditSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -611,6 +610,13 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         });
 
+        dcSheepEditBorn.setDateFormatString("dd.MM.yyyy");
+
+        jLabel25.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel25.setText("Date of death:");
+
+        dcSheepEditDead.setDateFormatString("dd.MM.yyyy");
+
         javax.swing.GroupLayout panelSheepEditLayout = new javax.swing.GroupLayout(panelSheepEdit);
         panelSheepEdit.setLayout(panelSheepEditLayout);
         panelSheepEditLayout.setHorizontalGroup(
@@ -618,25 +624,26 @@ public class SheepPanel extends javax.swing.JFrame {
             .addGroup(panelSheepEditLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbxSheepEditDead, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
                     .addGroup(panelSheepEditLayout.createSequentialGroup()
-                        .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnSheepEditSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSheepEditCancel))
+                    .addGroup(panelSheepEditLayout.createSequentialGroup()
+                        .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtSheepEditId)
                             .addComponent(txtSheepEditNickname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                             .addComponent(txtSheepEditWeight, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                            .addComponent(txtSheepEditBorn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)))
-                    .addGroup(panelSheepEditLayout.createSequentialGroup()
-                        .addComponent(btnSheepEditSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSheepEditCancel)))
+                            .addComponent(dcSheepEditBorn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dcSheepEditDead, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         panelSheepEditLayout.setVerticalGroup(
@@ -655,12 +662,14 @@ public class SheepPanel extends javax.swing.JFrame {
                     .addComponent(jLabel21)
                     .addComponent(txtSheepEditWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel24)
-                    .addComponent(txtSheepEditBorn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dcSheepEditBorn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxSheepEditDead)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel25)
+                    .addComponent(dcSheepEditDead, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
                 .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -668,7 +677,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSheepEditSave)
                     .addComponent(btnSheepEditCancel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelMainLayout = new javax.swing.GroupLayout(panelMain);
@@ -881,10 +890,6 @@ public class SheepPanel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuEditSheepActionPerformed
 
-    private void cbxSheepEditDeadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxSheepEditDeadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxSheepEditDeadActionPerformed
-
     private void btnSheepEditCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSheepEditCancelActionPerformed
 
         // call the menuEdit keystroke action
@@ -894,16 +899,41 @@ public class SheepPanel extends javax.swing.JFrame {
 
     /**
      * Saves the changes made to the sheep
-     * @param evt 
+     *
+     * @param evt
      */
     private void btnSheepEditSaveClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSheepEditSaveClicked
-        
-        String errors = checkEditFields();
-        menuEditSheepActionPerformed(null);
+        boolean errors = false;
+        String errorMessage = "";
+        try {
+            if (Double.parseDouble(txtSheepEditWeight.getText()) > 0.0) {
+                selectedSheep.setName(txtSheepEditNickname.getText());
+                selectedSheep.setWeight(Double.parseDouble(txtSheepEditWeight.getText()));
+                selectedSheep.setBorn(dcSheepEditBorn.getDate());
+                selectedSheep.setDeceaced(dcSheepEditDead.getDate());
+                selectedSheep.setComment(taSheepEditComment.getText());
+                if (!WebServiceClient.editSheep(selectedSheep)) {
+                    errors = true;
+                    errorMessage = "Could not update this sheep!";
+                }
+            } else {
+                errors = true;
+                errorMessage = "Weight can not be negative! Please correct this.";
+            }
+        } catch (Exception ex) {
+            errors = true;
+            errorMessage = "Weight is not a number! Please correct this.";
+        }
+        if (!errors) {
+            update();
+            menuEditSheepActionPerformed(null);
+        } else {
+            JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnSheepEditSaveClicked
 
     private void menuEditPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditPasswordActionPerformed
-         new EditPassword().setVisible(true);
+        new EditPassword().setVisible(true);
     }//GEN-LAST:event_menuEditPasswordActionPerformed
 
     /**
@@ -1052,7 +1082,8 @@ public class SheepPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSheepEditCancel;
     private javax.swing.JButton btnSheepEditSave;
-    private javax.swing.JCheckBox cbxSheepEditDead;
+    private com.toedter.calendar.JDateChooser dcSheepEditBorn;
+    private com.toedter.calendar.JDateChooser dcSheepEditDead;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1069,6 +1100,7 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1111,7 +1143,6 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JList sheepUpdateJList;
     private javax.swing.JTextArea taSheepComment;
     private javax.swing.JTextArea taSheepEditComment;
-    private javax.swing.JTextField txtSheepEditBorn;
     private javax.swing.JTextField txtSheepEditId;
     private javax.swing.JTextField txtSheepEditNickname;
     private javax.swing.JTextField txtSheepEditWeight;
@@ -1119,28 +1150,13 @@ public class SheepPanel extends javax.swing.JFrame {
 
     private void setEditPanelInfo() {
 
-        Sheep selectedSheep = sheepList.get(sheepJList.getSelectedIndex());
+        selectedSheep = sheepList.get(sheepJList.getSelectedIndex());
 
         txtSheepEditId.setText(Integer.toString(selectedSheep.getID()));
         txtSheepEditNickname.setText(selectedSheep.getName());
         txtSheepEditWeight.setText(Double.toString(selectedSheep.getWeight()));
-
-        if (selectedSheep.isDead()) {
-            cbxSheepEditDead.setSelected(true);
-            cbxSheepEditDead.setEnabled(false);
-        }
-
+        dcSheepEditBorn.setDate(selectedSheep.getBorn());
+        dcSheepEditDead.setDate(selectedSheep.getDeceased());
         taSheepEditComment.setText(selectedSheep.getComment());
-    }
-
-    private String checkEditFields() {
-        
-        if(Double.parseDouble(txtSheepEditWeight.getText()) < 0.0) {
-            return "Weight has to be more than 0.0 kg";
-        }
-        
-        
-        
-        return null;
     }
 }

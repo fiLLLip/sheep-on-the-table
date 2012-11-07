@@ -200,8 +200,8 @@ public class WebServiceClient {
                         Integer.parseInt(obj.get("id").toString()),
                         Integer.parseInt(obj.get("farm_id").toString()),
                         obj.get("name").toString(),
-                        Integer.parseInt(obj.get("born").toString()),
-                        Integer.parseInt(obj.get("deceased").toString()),
+                        Long.parseLong(obj.get("born").toString()),
+                        Long.parseLong(obj.get("deceased").toString()),
                         obj.get("comment").toString(),
                         updates,
                         Double.parseDouble(obj.get("weight").toString()));
@@ -264,8 +264,8 @@ public class WebServiceClient {
         List<String> params = new ArrayList<>();
         params.add(Integer.toString(sheep.getID()));
         params.add(sheep.getName());
-        params.add(Integer.toString(sheep.getBorn()));
-        params.add(Integer.toString(sheep.getDeceased()));
+        params.add(Long.toString(sheep.getBorn().getTime() / 1000));
+        params.add(Long.toString(sheep.getDeceased().getTime() / 1000));
         params.add(sheep.getComment());
         params.add(Double.toString(sheep.getWeight()));
 
@@ -314,8 +314,8 @@ public class WebServiceClient {
         List<String> params = new ArrayList<>();
         params.add(farmid);
         params.add(sheep.getName());
-        params.add(Integer.toString(sheep.getBorn()));
-        params.add(Integer.toString(sheep.getDeceased()));
+        params.add(Long.toString(sheep.getBorn().getTime() / 1000));
+        params.add(Long.toString(sheep.getDeceased().getTime() / 1000));
         params.add(sheep.getComment());
         params.add(Double.toString(sheep.getWeight()));
 

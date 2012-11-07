@@ -5,6 +5,7 @@
 package my.sheeponthetable.tools;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,8 +18,8 @@ public class Sheep {
     private int farmId;
     private String name;
     private String comment;
-    private int born;
-    private int deceased;
+    private long born;
+    private long deceased;
     private double weight;
     private List<SheepUpdate> updates;
 
@@ -48,7 +49,7 @@ public class Sheep {
      * @param List<SheepUpdate> updates
      * @param double weight
      */
-    public Sheep(int id, int farmId, String name, int born, int deceased, String comment, List<SheepUpdate> updates, double weight) {
+    public Sheep(int id, int farmId, String name, long born, long deceased, String comment, List<SheepUpdate> updates, double weight) {
         this.id = id;
         this.farmId = farmId;
         this.name = name;
@@ -95,8 +96,9 @@ public class Sheep {
      *
      * @return the unix timestamp of when sheep was born
      */
-    public int getBorn() {
-        return born;
+    public Date getBorn() {
+        Date formattedBorn = new Date(born * 1000);
+        return formattedBorn;
     }
 
     /**
@@ -111,8 +113,9 @@ public class Sheep {
      *
      * @return the unix timestamp of when sheep was deceased
      */
-    public int getDeceased() {
-        return deceased;
+    public Date getDeceased() {
+        Date formattedDeceased = new Date(deceased * 1000);
+        return formattedDeceased;
     }
 
     /**
@@ -151,7 +154,7 @@ public class Sheep {
      *
      * @param k
      */
-    public void setKommentar(String k) {
+    public void setComment(String k) {
         this.comment = k;
     }
 
@@ -159,8 +162,8 @@ public class Sheep {
      *
      * @param i
      */
-    public void setBornYear(int i) {
-        this.born = i;
+    public void setBorn(Date date) {
+        this.born = date.getTime() / 1000;
     }
 
     /**
@@ -175,8 +178,8 @@ public class Sheep {
      *
      * @param d
      */
-    public void setDeceaced(int d) {
-        this.deceased = d;
+    public void setDeceaced(Date date) {
+        this.deceased = date.getTime() / 1000;
     }
 
     /**
