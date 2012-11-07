@@ -375,6 +375,7 @@ public class SheepPanel extends javax.swing.JFrame {
         menuPreferences = new javax.swing.JMenu();
         menuPrefFarm = new javax.swing.JMenuItem();
         menuPrefUser = new javax.swing.JMenuItem();
+        menuEditPassword = new javax.swing.JMenuItem();
         menuSheep = new javax.swing.JMenu();
         menuAddSheep = new javax.swing.JMenuItem();
         menuEditSheep = new javax.swing.JMenuItem();
@@ -667,7 +668,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSheepEditSave)
                     .addComponent(btnSheepEditCancel))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelMainLayout = new javax.swing.GroupLayout(panelMain);
@@ -727,7 +728,7 @@ public class SheepPanel extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(panelSheepEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
                             .addComponent(jScrollPane1))))
                 .addGap(14, 14, 14))
         );
@@ -774,6 +775,14 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         });
         menuPreferences.add(menuPrefUser);
+
+        menuEditPassword.setText("Edit Password");
+        menuEditPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuEditPasswordActionPerformed(evt);
+            }
+        });
+        menuPreferences.add(menuEditPassword);
 
         jMenuBar1.add(menuPreferences);
 
@@ -892,6 +901,10 @@ public class SheepPanel extends javax.swing.JFrame {
         String errors = checkEditFields();
         menuEditSheepActionPerformed(null);
     }//GEN-LAST:event_btnSheepEditSaveClicked
+
+    private void menuEditPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditPasswordActionPerformed
+         new EditPassword().setVisible(true);
+    }//GEN-LAST:event_menuEditPasswordActionPerformed
 
     /**
      * Deselects the selection of sheep
@@ -1082,6 +1095,7 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JLabel lblUsername;
     private javax.swing.JMenuItem menuAddSheep;
     private javax.swing.JMenuItem menuCloseProgram;
+    private javax.swing.JMenuItem menuEditPassword;
     private javax.swing.JMenuItem menuEditSheep;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenuItem menuLogout;
