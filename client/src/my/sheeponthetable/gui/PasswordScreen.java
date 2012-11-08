@@ -18,7 +18,6 @@ public class PasswordScreen extends javax.swing.JFrame {
     private Config config;
     private String username;
     private String password;
-    //private ServerConnector connect;
 
     /**
      * Creates new form PasswordScreen
@@ -179,7 +178,7 @@ public class PasswordScreen extends javax.swing.JFrame {
 
     private void loginAction() {
         username = this.usernameField.getText();
-        password = this.passwordField.getText(); // Possible security threat
+        password = this.passwordField.getText();
 
         if (this.username.isEmpty() || this.password.isEmpty()) {
             System.out.println("Warning: Username or password not set");

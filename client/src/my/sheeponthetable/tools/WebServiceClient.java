@@ -132,8 +132,8 @@ public class WebServiceClient {
     public static boolean isLoggedIn() {
         String method = "sheepLogon";
         List<String> params = new ArrayList<>();
-        System.out.println(username);
-        System.out.println(password);
+        params.add(username);
+        params.add(password);
 
         Object response = doRequest(method, params, false);
 
