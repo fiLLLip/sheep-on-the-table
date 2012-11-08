@@ -246,7 +246,7 @@ public class PasswordScreen extends javax.swing.JFrame {
      * Called when the quite button is pressed.
      */
     private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
-        dispose;
+        dispose();
     }//GEN-LAST:event_quitButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton logOnButton;
