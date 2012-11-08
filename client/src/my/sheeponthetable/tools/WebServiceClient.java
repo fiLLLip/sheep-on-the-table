@@ -458,4 +458,19 @@ public class WebServiceClient {
             return -1;
         }
     }
+    
+    /**
+     * Returns the name of the selected farm
+     * @return String with farm name - empty string if it fails to find the selected farm
+     */
+    public static String getFarmName() {
+                
+        for(Map farm : WebServiceClient.farmids) {
+            if(farm.get("id").equals(WebServiceClient.farmid)) {
+                return (String)farm.get("name");
+            }
+        }
+        
+        return "";
+    }
 }

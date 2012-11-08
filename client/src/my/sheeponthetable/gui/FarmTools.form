@@ -37,24 +37,38 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" min="-2" pref="132" max="-2" attributes="0"/>
-                  <Component id="lblUserName" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblUserNameListLabel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
                           <Component id="lblAlertEmail" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jAlertChkKilled1" min="-2" max="-2" attributes="0"/>
                           <Component id="jAlertChkTemp1" min="-2" max="-2" attributes="0"/>
                           <Component id="jAlertChkStationary1" min="-2" max="-2" attributes="0"/>
+=======
+                          <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxAlertEmailAttack" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxAlertEmailHealth" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxAlertEmailStationary" min="-2" max="-2" attributes="0"/>
+>>>>>>> 01e0ab037d82b8790cec6788c9eb5e21e6b4a376
                           <Component id="btnSave" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="33" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
                           <Component id="lblAlertPhone" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jAlertChkKilled2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jAlertChkStationary2" min="-2" max="-2" attributes="0"/>
                           <Component id="jAlertChkTemp2" min="-2" max="-2" attributes="0"/>
+=======
+                          <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxAlertSMSAttack" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxAlertSMSStationary" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxAlertSMSHealth" min="-2" max="-2" attributes="0"/>
+>>>>>>> 01e0ab037d82b8790cec6788c9eb5e21e6b4a376
                           <Component id="btnCancel" min="-2" pref="95" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -69,7 +83,7 @@
                           <Component id="ClearanceChoice" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblNameTxt" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblSelectedUserName" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblFarmNameTxt" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -87,7 +101,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblFarmName" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblUserName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblUserNameListLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblFarmNameTxt" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -96,7 +110,7 @@
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNameTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSelectedUserName" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -110,18 +124,18 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jAlertChkKilled1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jAlertChkKilled2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxAlertEmailAttack" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxAlertSMSAttack" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jAlertChkTemp1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jAlertChkTemp2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxAlertEmailHealth" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxAlertSMSHealth" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jAlertChkStationary2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jAlertChkStationary1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxAlertSMSStationary" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxAlertEmailStationary" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="29" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -150,6 +164,9 @@
               <Connection code="listModel" type="code"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="valueChanged"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -171,11 +188,17 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblFarmName">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="11" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Farm name:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblUserName">
+    <Component class="javax.swing.JLabel" name="lblUserNameListLabel">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="11" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Username:"/>
       </Properties>
     </Component>
@@ -184,32 +207,32 @@
         <Property name="text" type="java.lang.String" value="Alert by E-mail:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jAlertChkKilled1">
+    <Component class="javax.swing.JCheckBox" name="cbxAlertEmailAttack">
       <Properties>
         <Property name="text" type="java.lang.String" value="Sheep killed"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jAlertChkKilled2">
+    <Component class="javax.swing.JCheckBox" name="cbxAlertSMSAttack">
       <Properties>
         <Property name="text" type="java.lang.String" value="Sheep killed"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jAlertChkTemp1">
+    <Component class="javax.swing.JCheckBox" name="cbxAlertEmailHealth">
       <Properties>
         <Property name="text" type="java.lang.String" value="Temp changed"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jAlertChkTemp2">
+    <Component class="javax.swing.JCheckBox" name="cbxAlertSMSHealth">
       <Properties>
         <Property name="text" type="java.lang.String" value="Temp changed"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jAlertChkStationary2">
+    <Component class="javax.swing.JCheckBox" name="cbxAlertSMSStationary">
       <Properties>
         <Property name="text" type="java.lang.String" value="Stationary"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jAlertChkStationary1">
+    <Component class="javax.swing.JCheckBox" name="cbxAlertEmailStationary">
       <Properties>
         <Property name="text" type="java.lang.String" value="Stationary"/>
       </Properties>
@@ -234,7 +257,7 @@
         <Property name="text" type="java.lang.String" value="Name:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblNameTxt">
+    <Component class="javax.swing.JLabel" name="lblSelectedUserName">
       <Properties>
         <Property name="text" type="java.lang.String" value="            "/>
         <Property name="inheritsPopupMenu" type="boolean" value="false"/>
