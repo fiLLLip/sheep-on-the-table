@@ -14,10 +14,10 @@ public class User {
     private int userId;
     private boolean SMSAlarmStationary,
             SMSAlarmAttack,
-            SMSAlarmTemperature,
+            SMSAlarmHealth,
             EmailAlarmStationary,
             EmailAlarmAttack,
-            EmailAlarmTemperature;
+            EmailAlarmHealth;
 
     public boolean getSMSAlarmStationary() {
         return SMSAlarmStationary;
@@ -35,12 +35,12 @@ public class User {
         this.SMSAlarmAttack = SMSAlarmAttack;
     }
 
-    public boolean getSMSAlarmTemperature() {
-        return SMSAlarmTemperature;
+    public boolean getSMSAlarmHealth() {
+        return SMSAlarmHealth;
     }
 
-    public void setSMSAlarmTemperature(boolean SMSAlarmTemperature) {
-        this.SMSAlarmTemperature = SMSAlarmTemperature;
+    public void setSMSAlarmHealth(boolean SMSAlarmHealth) {
+        this.SMSAlarmHealth = SMSAlarmHealth;
     }
 
     public boolean getEmailAlarmStationary() {
@@ -59,12 +59,12 @@ public class User {
         this.EmailAlarmAttack = EmailAlarmAttack;
     }
 
-    public boolean getEmailAlarmTemperature() {
-        return EmailAlarmTemperature;
+    public boolean getEmailAlarmHealth() {
+        return EmailAlarmHealth;
     }
 
-    public void setEmailAlarmTemperature(boolean EmailAlarmTemperature) {
-        this.EmailAlarmTemperature = EmailAlarmTemperature;
+    public void setEmailAlarmHealth(boolean EmailAlarmHealth) {
+        this.EmailAlarmHealth = EmailAlarmHealth;
     }
 
     public User(int userId, String username, String name, String email, String telephone) {

@@ -7,8 +7,7 @@ package my.sheeponthetable.gui;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.event.ListSelectionEvent;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionListener;
 import my.sheeponthetable.tools.User;
 import my.sheeponthetable.tools.WebServiceClient;
@@ -22,89 +21,89 @@ public class FarmTools extends javax.swing.JFrame {
     private SheepPanel sheepPanel;
     private List<User> users = new ArrayList();
     private DefaultListModel listModel = new DefaultListModel();
-    private int farmID;
+    private int farmID = Integer.parseInt(WebServiceClient.getFarmId());
     private ListSelectionListener userSelect;
+    private User selectedUser;
+    private boolean hasDoneChangesToSelectedUser = false; // used to determine if we should alert the user of unsaved changes
+    private boolean dontShowConfirm = false; // so the popup doesnt come twice
 
     /**
      * Creates new form AddNewSheep
      */
     public FarmTools(SheepPanel sp, int id) {
         initComponents();
-        this.farmID = id;
-        this.sheepPanel = sp;
-        ClearanceChoice.add("Admin");
-        ClearanceChoice.add("owner");
-        ClearanceChoice.add("viewer/restricted");
-        ClearanceChoice.add("viewer only");
-        ClearanceChoice.add("-Not specified-");
-        ClearanceChoice.select(4);
+
+        this.setTitle("Preferences for " + WebServiceClient.getFarmName());
+
+        ClearanceChoice.add("Owner");
+        ClearanceChoice.add("Administrator");
+        ClearanceChoice.add("View Access only");
+        ClearanceChoice.select(2);
         setDisable();
         getUsers();
-        update();
-        System.out.println("Major Fail");
-        System.out.println(jListUser.getSelectedValue());
+        refreshUserList();
 
-        userSelect = new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent lse) {
-                System.out.println("Major Fail");
 
-                JList list = (JList) lse.getSource();
-                int selectedIndex = list.getSelectedIndex();
-                if (!lse.getValueIsAdjusting() && selectedIndex != -1) {
-                    System.out.println("Major Fail");
-                    selectedUser(selectedIndex);
-                }
-            }
-        };
-        jListUser.addListSelectionListener(userSelect);
+
     }
 
+    /**
+     * Disables input from the user
+     */
     private void setDisable() {
         ClearanceChoice.setEnabled(false);
-        jAlertChkKilled1.setEnabled(false);
-        jAlertChkKilled2.setEnabled(false);
-        jAlertChkStationary1.setEnabled(false);
-        jAlertChkStationary2.setEnabled(false);
-        jAlertChkTemp1.setEnabled(false);
-        jAlertChkTemp2.setEnabled(false);
+        cbxEmailAlertAttack.setEnabled(false);
+        cbxSMSAlertAttack.setEnabled(false);
+        cbxEmailAlertStationary.setEnabled(false);
+        cbxSMSAlertStationary.setEnabled(false);
+        cbxEmailAlertHealth.setEnabled(false);
+        cbxSMSAlertHealth.setEnabled(false);
         btnSave.setEnabled(false);
 
     }
 
+    /**
+     * Enables input from user
+     */
     private void setEnable() {
-        ClearanceChoice.setEnabled(true);
-        jAlertChkKilled1.setEnabled(true);
-        jAlertChkKilled2.setEnabled(true);
-        jAlertChkStationary1.setEnabled(true);
-        jAlertChkStationary2.setEnabled(true);
-        jAlertChkTemp1.setEnabled(true);
-        jAlertChkTemp2.setEnabled(true);
+        cbxEmailAlertAttack.setEnabled(true);
+        cbxSMSAlertAttack.setEnabled(true);
+        cbxEmailAlertStationary.setEnabled(true);
+        cbxSMSAlertStationary.setEnabled(true);
+        cbxEmailAlertHealth.setEnabled(true);
+        cbxSMSAlertHealth.setEnabled(true);
         btnSave.setEnabled(true);
 
     }
 
-    public void getUsers() {
+    /**
+     * Sets the users variable with the user array from the WebService
+     */
+    private void getUsers() {
 
         if (WebServiceClient.getUsersForFarm(farmID) != null) {
             users = WebServiceClient.getUsersForFarm(farmID);
         } else {
-            listModel.addElement("Troll");
-            listModel.addElement("sold");
-            listModel.addElement("old");
-            listModel.addElement("cold");
+            listModel.addElement("No users found.");
         }
     }
 
-    public void update() {
-        System.out.println(users.size());
-        for (int i = 0; i < users.size(); i++) {
-            listModel.addElement(users.get(i).getName());
+    /**
+     * Populates the userlist
+     */
+    private void refreshUserList() {
+        if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserId())) == 2) {
+
+            for (User user : users) {
+                listModel.addElement(user.getUsername());
+            }
+        } else {
+            for (User user : users) {
+                if (user.getUserId() == Integer.parseInt(WebServiceClient.getUserId)) {
+                    listModel.addElement(user.getUsername());
+                }
+            }
         }
-    }
-
-    public void selectedUser(int selectedIndex) {
-        setEnable();
-
     }
 
     /**
@@ -124,19 +123,19 @@ public class FarmTools extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         lblFarmName = new javax.swing.JLabel();
-        lblUserName = new javax.swing.JLabel();
+        lblUserNameListLabel = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jAlertChkKilled1 = new javax.swing.JCheckBox();
-        jAlertChkKilled2 = new javax.swing.JCheckBox();
-        jAlertChkTemp1 = new javax.swing.JCheckBox();
-        jAlertChkTemp2 = new javax.swing.JCheckBox();
-        jAlertChkStationary2 = new javax.swing.JCheckBox();
-        jAlertChkStationary1 = new javax.swing.JCheckBox();
+        cbxEmailAlertAttack = new javax.swing.JCheckBox();
+        cbxSMSAlertAttack = new javax.swing.JCheckBox();
+        cbxEmailAlertHealth = new javax.swing.JCheckBox();
+        cbxSMSAlertHealth = new javax.swing.JCheckBox();
+        cbxSMSAlertStationary = new javax.swing.JCheckBox();
+        cbxEmailAlertStationary = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         lblClerance = new javax.swing.JLabel();
         ClearanceChoice = new java.awt.Choice();
         lblName = new javax.swing.JLabel();
-        lblNameTxt = new javax.swing.JLabel();
+        lblSelectedUserName = new javax.swing.JLabel();
         lblFarmNameTxt = new javax.swing.JLabel();
 
         jCheckBox9.setText("jCheckBox9");
@@ -144,9 +143,19 @@ public class FarmTools extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jListUser.setModel(listModel);
+        jListUser.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                FarmTools.this.valueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(jListUser);
 
         btnSave.setText("Save ");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -155,23 +164,30 @@ public class FarmTools extends javax.swing.JFrame {
             }
         });
 
+        lblFarmName.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblFarmName.setText("Farm name:");
 
-        lblUserName.setText("Username:");
+        lblUserNameListLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblUserNameListLabel.setText("Username:");
 
         jLabel6.setText("Alert by E-mail:");
 
-        jAlertChkKilled1.setText("Sheep killed");
+        cbxEmailAlertAttack.setText("Sheep killed");
+        cbxEmailAlertAttack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userSettingsChanged(evt);
+            }
+        });
 
-        jAlertChkKilled2.setText("Sheep killed");
+        cbxSMSAlertAttack.setText("Sheep killed");
 
-        jAlertChkTemp1.setText("Temp changed");
+        cbxEmailAlertHealth.setText("Health");
 
-        jAlertChkTemp2.setText("Temp changed");
+        cbxSMSAlertHealth.setText("Health");
 
-        jAlertChkStationary2.setText("Stationary");
+        cbxSMSAlertStationary.setText("Stationary");
 
-        jAlertChkStationary1.setText("Stationary");
+        cbxEmailAlertStationary.setText("Stationary");
 
         jLabel7.setText("Alert by phone:");
 
@@ -181,7 +197,7 @@ public class FarmTools extends javax.swing.JFrame {
 
         lblName.setText("Name:");
 
-        lblNameTxt.setText("            ");
+        lblSelectedUserName.setText("            ");
 
         lblFarmNameTxt.setText("               ");
 
@@ -193,22 +209,22 @@ public class FarmTools extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUserName))
+                    .addComponent(lblUserNameListLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jAlertChkKilled1)
-                            .addComponent(jAlertChkTemp1)
-                            .addComponent(jAlertChkStationary1)
+                            .addComponent(cbxEmailAlertAttack)
+                            .addComponent(cbxEmailAlertHealth)
+                            .addComponent(cbxEmailAlertStationary)
                             .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(jAlertChkKilled2)
-                            .addComponent(jAlertChkStationary2)
-                            .addComponent(jAlertChkTemp2)
+                            .addComponent(cbxSMSAlertAttack)
+                            .addComponent(cbxSMSAlertStationary)
+                            .addComponent(cbxSMSAlertHealth)
                             .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,10 +235,9 @@ public class FarmTools extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ClearanceChoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNameTxt)
-                                    .addComponent(lblFarmNameTxt))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(lblFarmNameTxt)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(lblSelectedUserName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
@@ -231,7 +246,7 @@ public class FarmTools extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFarmName)
-                    .addComponent(lblUserName)
+                    .addComponent(lblUserNameListLabel)
                     .addComponent(lblFarmNameTxt))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,7 +254,7 @@ public class FarmTools extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblName)
-                            .addComponent(lblNameTxt))
+                            .addComponent(lblSelectedUserName))
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblClerance)
@@ -250,16 +265,16 @@ public class FarmTools extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jAlertChkKilled1)
-                            .addComponent(jAlertChkKilled2))
+                            .addComponent(cbxEmailAlertAttack)
+                            .addComponent(cbxSMSAlertAttack))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jAlertChkTemp1)
-                            .addComponent(jAlertChkTemp2))
+                            .addComponent(cbxEmailAlertHealth)
+                            .addComponent(cbxSMSAlertHealth))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jAlertChkStationary2)
-                            .addComponent(jAlertChkStationary1))
+                            .addComponent(cbxSMSAlertStationary)
+                            .addComponent(cbxEmailAlertStationary))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSave)
@@ -274,6 +289,93 @@ public class FarmTools extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    /**
+     * Fires everytime a user clicks on a user in the list
+     *
+     * @param evt
+     */
+    private void valueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_valueChanged
+        if (this.hasDoneChangesToSelectedUser && this.dontShowConfirm) {
+            // make sure that the confirm button doesnt show up again if we press no or cancel
+            this.dontShowConfirm = true;
+            
+            // show confirmation popup
+            int confirm = JOptionPane.showConfirmDialog(null, "You have unsaved changes, are you sure you want to discard them?");
+
+            // if user chooses no/cancel
+            if (confirm != 0) {
+                jListUser.setSelectedIndex(evt.getLastIndex());
+                return;
+            } else {
+                // the user has discareded the changes
+                this.hasDoneChangesToSelectedUser = false;
+            }
+
+        } else {
+            this.dontShowConfirm = false;
+        }
+
+        if (jListUser.getSelectedIndex() != -1) {
+
+            // If user is not a farm owner - (s)he can only change own info
+            if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserId())) == 2) {
+                this.selectedUser = users.get(jListUser.getSelectedIndex());
+                ClearanceChoice.setEnabled(true); // owners can set levels
+            } else {
+                for (User user : users) {
+                    if (user.getUserId() == Integer.parseInt(WebServiceClient.getUserId())) {
+                        selectedUser = user;
+                    }
+                }
+            }
+
+            // enable input components
+            setEnable();
+
+            // set info
+            lblSelectedUserName.setText(selectedUser.getName());
+            ClearanceChoice.select(Math.abs(this.selectedUser.getClearance(this.farmID) - 2));
+
+            cbxEmailAlertAttack.setSelected(selectedUser.getEmailAlarmAttack());
+            cbxEmailAlertHealth.setSelected(selectedUser.getEmailAlarmHealth());
+            cbxEmailAlertStationary.setSelected(selectedUser.getEmailAlarmStationary());
+
+            cbxSMSAlertAttack.setSelected(selectedUser.getSMSAlarmAttack());
+            cbxSMSAlertHealth.setSelected(selectedUser.getSMSAlarmHealth());
+            cbxSMSAlertStationary.setSelected(selectedUser.getSMSAlarmStationary());
+
+        }
+    }//GEN-LAST:event_valueChanged
+
+    private void userSettingsChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userSettingsChanged
+        
+        
+        this.hasDoneChangesToSelectedUser = true;
+
+        selectedUser.setEmailAlarmAttack(cbxEmailAlertAttack.isSelected());
+        selectedUser.setEmailAlarmHealth(cbxEmailAlertHealth.isSelected());
+        selectedUser.setEmailAlarmStationary(cbxEmailAlertStationary.isSelected());
+
+        selectedUser.setSMSAlarmAttack(cbxSMSAlertAttack.isSelected());
+        selectedUser.setSMSAlarmHealth(cbxSMSAlertHealth.isSelected());
+        selectedUser.setSMSAlarmStationary(cbxSMSAlertStationary.isSelected());
+
+    }//GEN-LAST:event_userSettingsChanged
+
+    /**
+     * Triggered when the Save-button is clicked. Sends the selectedUser object to the WebServiceClient and saves the changes.
+     * @param evt 
+     */
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+       /* if(WebServiceClient.setUserPermissions(selectedUser)) {
+            // success
+            this.hadDoneChangesToSelectedUser = false;
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to save settings.");
+        }
+        */
+    }//GEN-LAST:event_btnSaveActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -283,12 +385,12 @@ public class FarmTools extends javax.swing.JFrame {
     private javax.swing.JButton btnSave;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JCheckBox jAlertChkKilled1;
-    private javax.swing.JCheckBox jAlertChkKilled2;
-    private javax.swing.JCheckBox jAlertChkStationary1;
-    private javax.swing.JCheckBox jAlertChkStationary2;
-    private javax.swing.JCheckBox jAlertChkTemp1;
-    private javax.swing.JCheckBox jAlertChkTemp2;
+    private javax.swing.JCheckBox cbxEmailAlertAttack;
+    private javax.swing.JCheckBox cbxEmailAlertHealth;
+    private javax.swing.JCheckBox cbxEmailAlertStationary;
+    private javax.swing.JCheckBox cbxSMSAlertAttack;
+    private javax.swing.JCheckBox cbxSMSAlertHealth;
+    private javax.swing.JCheckBox cbxSMSAlertStationary;
     private javax.swing.JCheckBox jCheckBox9;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -298,7 +400,7 @@ public class FarmTools extends javax.swing.JFrame {
     private javax.swing.JLabel lblFarmName;
     private javax.swing.JLabel lblFarmNameTxt;
     private javax.swing.JLabel lblName;
-    private javax.swing.JLabel lblNameTxt;
-    private javax.swing.JLabel lblUserName;
+    private javax.swing.JLabel lblSelectedUserName;
+    private javax.swing.JLabel lblUserNameListLabel;
     // End of variables declaration//GEN-END:variables
 }
