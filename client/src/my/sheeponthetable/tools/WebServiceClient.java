@@ -1,13 +1,13 @@
 package my.sheeponthetable.tools;
 
+import com.thetransactioncompany.jsonrpc2.*;
+import com.thetransactioncompany.jsonrpc2.client.*;
+import java.awt.Window;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.List;
-import com.thetransactioncompany.jsonrpc2.client.*;
-import com.thetransactioncompany.jsonrpc2.*;
-import java.awt.Window;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import my.sheeponthetable.gui.PasswordScreen;
@@ -38,6 +38,7 @@ public class WebServiceClient {
     private static ArrayList<Map> farmids = new ArrayList();
     private static URL serverURL;
     private static JSONRPC2Session mySession;
+    public static String errorMessage;
 
     /**
      * Connects to the server.
@@ -112,11 +113,14 @@ public class WebServiceClient {
                 }
             } else {
                 System.err.println(response.getError().getMessage());
+                setErrorMessage(response.getError().getMessage());
             }
         } catch (JSONRPC2SessionException e) {
             System.err.println(e.getMessage());
+            setErrorMessage(e.getMessage());
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            setErrorMessage(e.getMessage());
         } finally {
             System.out.println(method + " used: " + (new Date().getTime() - startTime) + "ms");
             return returnValue;
@@ -158,9 +162,10 @@ public class WebServiceClient {
                 }
                 returnValue = true;
             } else {
-                System.out.println("Error:" + response);
+                setErrorMessage("Something went wrong.");
             }
         }
+        
         return returnValue;
     }
 
@@ -458,43 +463,63 @@ public class WebServiceClient {
             return -1;
         }
     }
-    
+
     public static String getUsername() {
         return username;
     }
-    
+
     public static ArrayList<Map> getFarmIds() {
         return farmids;
     }
-    
+
     public static void setFarmId(String fid) {
         farmid = fid;
     }
-    
+
     public static void setUsername(String un) {
         username = un;
     }
-    
+
     public static void setPassword(String pw) {
         password = pw;
     }
-    
+
     public static String getFarmId() {
         return farmid;
     }
-    
+
+    public static void setErrorMessage(String message) {
+        errorMessage = message;
+    }
+
+    public static String getErrorMessage() {
+        String temp = errorMessage;
+        setErrorMessage("");
+        return temp;
+    }
+
+    public static boolean isErrorMessage() {
+        if (errorMessage != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Returns the name of the selected farm
-     * @return String with farm name - empty string if it fails to find the selected farm
+     *
+     * @return String with farm name - empty string if it fails to find the
+     * selected farm
      */
     public static String getFarmName() {
-                
-        for(Map farm : WebServiceClient.farmids) {
-            if(farm.get("id").equals(WebServiceClient.farmid)) {
-                return (String)farm.get("name");
+
+        for (Map farm : WebServiceClient.farmids) {
+            if (farm.get("id").equals(WebServiceClient.farmid)) {
+                return (String) farm.get("name");
             }
         }
-        
+
         return "";
     }
 }

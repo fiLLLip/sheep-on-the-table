@@ -205,7 +205,12 @@ public class PasswordScreen extends javax.swing.JFrame {
             // Login failed
             config.setUsername("");
             config.setPassword("");
-            new ErrorBox("Wrong username or password!");
+            if(WebServiceClient.isErrorMessage()) {
+                new ErrorBox(WebServiceClient.getErrorMessage());
+            }
+            else {
+                new ErrorBox("Wrong username or password!");    
+            }
             return;
         }
 
