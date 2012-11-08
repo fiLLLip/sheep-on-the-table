@@ -196,7 +196,7 @@ public class SheepPanel extends javax.swing.JFrame {
             
             for (int i = 0; i < s.getUpdates().size(); i++) {
                 SheepUpdate update = s.getUpdates().get(i);
-                Date formattedUpdateTimestamp = new Date(update.getTimeStamp() * 1000);
+                Date formattedUpdateTimestamp = new Date(update.getTimeStamp());
                 String timestring = formattedUpdateTimestamp.toLocaleString();
                 sheepUpdatesShow.addElement(timestring);
                 
@@ -253,7 +253,7 @@ public class SheepPanel extends javax.swing.JFrame {
         // This method is largely parallell to the selectSheep()-method
         SheepUpdate su = sheepUpdateList.get(index);
         
-        Date formattedTimestamp = new Date(su.getTimeStamp() * 1000);
+        Date formattedTimestamp = new Date(su.getTimeStamp());
         String timestring = formattedTimestamp.toLocaleString();
         
         lblSheepUpdate.setText(timestring);
@@ -266,7 +266,7 @@ public class SheepPanel extends javax.swing.JFrame {
         
         for (int i = 0; i < sheepUpdateList.size(); i++) {
             SheepUpdate update = sheepUpdateList.get(i);
-            Date fmtTimestamp = new Date(update.getTimeStamp() * 1000);
+            Date fmtTimestamp = new Date(update.getTimeStamp());
             String updTimestring = fmtTimestamp.toLocaleString();
             
             // Make the selected update blue, the last update red, and the other

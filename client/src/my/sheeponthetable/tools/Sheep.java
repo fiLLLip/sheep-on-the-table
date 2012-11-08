@@ -97,7 +97,7 @@ public class Sheep {
      * @return the unix timestamp of when sheep was born
      */
     public Date getBorn() {
-        Date formattedBorn = new Date(born * 1000);
+        Date formattedBorn = new Date(born);
         return formattedBorn;
     }
 
@@ -114,7 +114,7 @@ public class Sheep {
      * @return the unix timestamp of when sheep was deceased
      */
     public Date getDeceased() {
-        Date formattedDeceased = new Date(deceased * 1000);
+        Date formattedDeceased = new Date(deceased);
         return formattedDeceased;
     }
 
@@ -163,7 +163,7 @@ public class Sheep {
      * @param i
      */
     public void setBorn(Date date) {
-        this.born = date.getTime() / 1000;
+        this.born = date.getTime();
     }
 
     /**
@@ -179,7 +179,7 @@ public class Sheep {
      * @param d
      */
     public void setDeceaced(Date date) {
-        this.deceased = date.getTime() / 1000;
+        this.deceased = date.getTime();
     }
 
     /**

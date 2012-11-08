@@ -187,9 +187,10 @@ public class AddNewSheep extends javax.swing.JFrame {
      */
     private void addSheepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepButtonActionPerformed
         // Make sure all the fields are filled
-        if (txtNick.getText().equals("") || txtWeight.getText().equals("")
+        if (txtNick.getText().equals("") 
+                || txtWeight.getText().equals("")
                 || txtComment.getText().equals("")
-                || dcSheepAddBorn.getDate().before(new Date(1970, 1, 2))
+                || dcSheepAddBorn.getDate().before(new Date(84600000))
                 ) {
 
             // If some fields where not filled, ask the user to fill them
@@ -201,7 +202,7 @@ public class AddNewSheep extends javax.swing.JFrame {
 
         // If all fields are filled correctly, add the sheep
             Double weight = Double.parseDouble(txtWeight.getText().replace(",", "."));
-            Sheep newSheep = new Sheep(-1, -1, txtNick.getText(), dcSheepAddBorn.getDate().getTime(), 0, txtComment.getText(), null, weight);
+            Sheep newSheep = new Sheep(-1, -1, txtNick.getText(), dcSheepAddBorn.getDate().getTime(), 84600000, txtComment.getText(), null, weight);
             if (WebServiceClient.newSheep(newSheep)) {
                 this.setVisible(false);
                 sheepPanel.update();

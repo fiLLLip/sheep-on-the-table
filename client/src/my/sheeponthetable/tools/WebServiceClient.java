@@ -198,15 +198,15 @@ public class WebServiceClient {
                             Integer.parseInt(obj.get("updatepulse").toString()),
                             Double.parseDouble(obj.get("updatetemp").toString()),
                             Integer.parseInt(obj.get("updatealarm").toString()),
-                            Long.parseLong(obj.get("updatetimestamp").toString()));
+                            Long.parseLong(obj.get("updatetimestamp").toString()) * 1000);
                     updates.add(update);
                 }
                 Sheep sheep = new Sheep(
                         Integer.parseInt(obj.get("id").toString()),
                         Integer.parseInt(obj.get("farm_id").toString()),
                         obj.get("name").toString(),
-                        Long.parseLong(obj.get("born").toString()),
-                        Long.parseLong(obj.get("deceased").toString()),
+                        Long.parseLong(obj.get("born").toString()) * 1000,
+                        Long.parseLong(obj.get("deceased").toString()) * 1000,
                         obj.get("comment").toString(),
                         updates,
                         Double.parseDouble(obj.get("weight").toString()));
@@ -249,7 +249,7 @@ public class WebServiceClient {
                         Integer.parseInt(obj.get("pulse").toString()),
                         Double.parseDouble(obj.get("temp").toString()),
                         Integer.parseInt(obj.get("alarm").toString()),
-                        Long.parseLong(obj.get("timestamp").toString()));
+                        Long.parseLong(obj.get("timestamp").toString()) * 1000);
                 updates.add(update);
             }
         }
@@ -325,10 +325,11 @@ public class WebServiceClient {
         params.add(Double.toString(sheep.getWeight()));
 
         Object response = doRequest(method, params, true);
-
-        if (response != null) {
+        
+        if (response != null && (long)response >= 1) {
             returnValue = true;
         }
+        
         return returnValue;
     }
 
