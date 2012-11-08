@@ -276,7 +276,7 @@ public class WebServiceClient {
 
         Object response = doRequest(method, params, true);
 
-        if (response != null) {
+        if (response != null && Integer.parseInt(response.toString()) >= 1) {
             returnValue = true;
         }
         return returnValue;
@@ -300,7 +300,7 @@ public class WebServiceClient {
 
         Object response = doRequest(method, params, true);
 
-        if (response != null) {
+        if (response != null && Integer.parseInt(response.toString()) >= 1) {
             returnValue = true;
         }
         return returnValue;
@@ -326,7 +326,7 @@ public class WebServiceClient {
 
         Object response = doRequest(method, params, true);
 
-        if (response != null && (long) response >= 1) {
+        if (response != null && Integer.parseInt(response.toString()) >= 1) {
             returnValue = true;
         }
 
@@ -347,7 +347,7 @@ public class WebServiceClient {
         params.add(Integer.toString(sheep.getID()));
         Object response = doRequest(method, params, true);
 
-        if (response != null) {
+        if (response != null && Integer.parseInt(response.toString()) >= 1) {
             returnValue = true;
         }
         return returnValue;
