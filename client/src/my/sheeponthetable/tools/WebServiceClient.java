@@ -165,7 +165,7 @@ public class WebServiceClient {
                 setErrorMessage("Something went wrong.");
             }
         }
-        
+
         return returnValue;
     }
 
@@ -325,11 +325,11 @@ public class WebServiceClient {
         params.add(Double.toString(sheep.getWeight()));
 
         Object response = doRequest(method, params, true);
-        
-        if (response != null && (long)response >= 1) {
+
+        if (response != null && (long) response >= 1) {
             returnValue = true;
         }
-        
+
         return returnValue;
     }
 
@@ -388,6 +388,35 @@ public class WebServiceClient {
             return returnArray;
         } else {
             return null;
+        }
+    }
+
+    /**
+     * Returns the users connected to a specific farm
+     *
+     * @param farm_id
+     * @return ArrayList<String> with usernames
+     */
+    public static boolean setUserOptions(User user) {
+
+        ArrayList<User> returnArray = new ArrayList();
+
+        ArrayList<String> params = new ArrayList<>();
+        params.add(Integer.toString(user.getUserId()));
+        params.add(farmid);
+        params.add(getStringFromBoolean(user.getSMSAlarmAttack()));
+        params.add(getStringFromBoolean(user.getSMSAlarmHealth()));
+        params.add(getStringFromBoolean(user.getSMSAlarmStationary()));
+        params.add(getStringFromBoolean(user.getEmailAlarmAttack()));
+        params.add(getStringFromBoolean(user.getEmailAlarmHealth()));
+        params.add(getStringFromBoolean(user.getEmailAlarmStationary()));
+
+        Object response = doRequest("setUserSettings", params, true);
+        System.out.println(response);
+        if (response != null && Integer.parseInt(response.toString()) >= 1) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -465,8 +494,34 @@ public class WebServiceClient {
         }
     }
 
+    /**
+     * Returns the user level of a specific user to a farm
+     *
+     * @param farm_id
+     * @param user_id
+     * @return integer level: -1: error, 0: view only, 1: Admin, 2: Owner
+     */
+    public static boolean setUserLevel(int farm_id, int user_id, int level) {
+        List<String> params = new ArrayList<String>();
+        params.add(Integer.toString(farm_id));
+        params.add(Integer.toString(user_id));
+        params.add(Integer.toString(level));
+
+        Object response = doRequest("setUserPermission", params, true);
+
+        if (response != null && Integer.parseInt(response.toString()) >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static String getUsername() {
         return username;
+    }
+
+    public static String getUserID() {
+        return userid;
     }
 
     public static ArrayList<Map> getFarmIds() {
@@ -522,5 +577,13 @@ public class WebServiceClient {
         }
 
         return "";
+    }
+
+    private static String getStringFromBoolean(boolean bool) {
+        if (bool) {
+            return "1";
+        } else {
+            return "0";
+        }
     }
 }

@@ -92,14 +92,14 @@ public class FarmTools extends javax.swing.JFrame {
      * Populates the userlist
      */
     private void refreshUserList() {
-        if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserId())) == 2) {
+        if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserID())) == 2) {
 
             for (User user : users) {
                 listModel.addElement(user.getUsername());
             }
         } else {
             for (User user : users) {
-                if (user.getUserId() == Integer.parseInt(WebServiceClient.getUserId)) {
+                if (user.getUserId() == Integer.parseInt(WebServiceClient.getUserID())) {
                     listModel.addElement(user.getUsername());
                 }
             }
@@ -319,12 +319,12 @@ public class FarmTools extends javax.swing.JFrame {
         if (jListUser.getSelectedIndex() != -1) {
 
             // If user is not a farm owner - (s)he can only change own info
-            if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserId())) == 2) {
+            if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserID())) == 2) {
                 this.selectedUser = users.get(jListUser.getSelectedIndex());
                 ClearanceChoice.setEnabled(true); // owners can set levels
             } else {
                 for (User user : users) {
-                    if (user.getUserId() == Integer.parseInt(WebServiceClient.getUserId())) {
+                    if (user.getUserId() == Integer.parseInt(WebServiceClient.getUserID())) {
                         selectedUser = user;
                     }
                 }
