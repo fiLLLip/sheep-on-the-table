@@ -368,13 +368,13 @@ public class FarmTools extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-       /* if(WebServiceClient.setUserPermissions(selectedUser)) {
+       if(WebServiceClient.setUserOptions(selectedUser)) {
             // success
-            this.hadDoneChangesToSelectedUser = false;
+            this.hasDoneChangesToSelectedUser = false;
         } else {
             JOptionPane.showMessageDialog(null, "Failed to save settings.");
         }
-        */
+        
     }//GEN-LAST:event_btnSaveActionPerformed
     /**
      * @param args the command line arguments
