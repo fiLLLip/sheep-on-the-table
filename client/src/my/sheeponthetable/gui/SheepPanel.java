@@ -45,96 +45,66 @@ public class SheepPanel extends javax.swing.JFrame {
     private Set<MyWaypoint> wayPointSet = new HashSet<>();
     private int farmID = Integer.parseInt(WebServiceClient.farmid);
     private Sheep selectedSheep;
-    // mye sheep info
     private String nickname;
-    private int globalId;
     ListSelectionListener sheepListSelectionListener;
     ListSelectionListener updateListSelectionListener;
 
     /* to know what do to when you press the edit or save button */
     private boolean isEditingSheep = false;
 
-    public List<SheepUpdate> getUpdateList() {
-        return sheepUpdateList;
-    }
-
-    public JXMapKit getMapKit() {
-        return jXSheepMap;
-    }
-
-    public Set<MyWaypoint> getWayPoints() {
-        return wayPointSet;
-    }
-
     /**
-     *
-     * @param sheep
+     * Constructs a SheepPanel with all associated patterns.    
      */
-    public void addSheepToList(Sheep sheep) {
-        sheepShow.addElement(sheep);
-    }
-
-    /**
-     *
-     * @param update
-     */
-    public void addSheepUpdateToList(SheepUpdate update) {
-        sheepUpdatesShow.addElement(update);
-    }
-
-    /**
-     * Creates new form SheepPanelfail
-     *
-     * @param connect
-     */
-    //public SheepPanel(ServerConnector connect) {
     public SheepPanel() {
         initComponents();
+        initListSelectionListeners();
+        
         panelSheepEdit.setVisible(false);
         this.setLocationRelativeTo(null);
 
         mapInitialize();
-
-        sheepListSelectionListener = new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent listSelectionEvent) {
-
-                JList list = (JList) listSelectionEvent.getSource();
-                int selectedIndex = list.getSelectedIndex();
-                if (!listSelectionEvent.getValueIsAdjusting() && selectedIndex != -1) {
-                    selectSheep(selectedIndex);
-                }
-            }
-        };
-        sheepJList.addListSelectionListener(sheepListSelectionListener);
-        sheepJList.setCellRenderer(new SheepListCellRenderer(this));
-
-        updateListSelectionListener = new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                JList list = (JList) e.getSource();
-                int selectedIndex = list.getSelectedIndex();
-                if (!e.getValueIsAdjusting() && selectedIndex != -1) {
-                    selectUpdate(selectedIndex);
-                }
-            }
-        };
-        sheepUpdateJList.addListSelectionListener(updateListSelectionListener);
-        sheepUpdateJList.setCellRenderer(new UpdateListCellRenderer(this));
-
         update();
+        establishFarmId();
+        buildKeyboardShortcuts();
+    }
 
-        for (Map farm : WebServiceClient.farmids) {
-            if (farm.get("id").equals(WebServiceClient.farmid)) {
-                lblFarmName.setText(farm.get("name").toString());
-            }
-        }
+    /**
+     * Returns the list of Sheep Updates associated with the selected sheep.
+     * To get the update list of a given sheep, use getSheepList() to get the
+     * full list of sheep, and call getUpdates() on the desired sheep.
+     */
+    public List<SheepUpdate> getUpdateList() {
+        return sheepUpdateList;
+    }
+    
+    /**
+     * Returns the list of sheep associated with the given farm.
+     */
+    public List<Sheep> getSheepList() {
+        return sheepList;
+    }
 
+    /**
+     *  Returns the mapKit-object used to draw the map. 
+     */
+    public JXMapKit getMapKit() {
+        return jXSheepMap;
+    }
 
-        /**
-         * ***************
-         */
-        /* MENU SHORTCUTS */
+    /*
+     * Returns the set of MyWaypoints that are currently being used to draw
+     * waypoints on the map. Used by the map's mouse listener.
+     */
+    public Set<MyWaypoint> getWayPoints() {
+        return wayPointSet;
+    }
+
+   /**
+    * Called by the constructor to build the keyboard shortcuts for the menu. 
+    * Has to be done differently on Mac OS and the other OS's because of the 
+    * keyboard layout.
+    */
+    private void buildKeyboardShortcuts() {
         if (System.getProperty("os.name").equals("Mac OS X")) {
             menuLogout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.META_MASK));
             menuCloseProgram.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.META_MASK));
@@ -152,18 +122,19 @@ public class SheepPanel extends javax.swing.JFrame {
             menuEditSheep.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
             menuRefresh.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         }
-
     }
-
+    
     /**
-     * Called by event listeners to handle what happens when a sheep is seleced
+     * Called by event listeners to handle what happens when a sheep is seleced.
+     * It updates the information in the display area, as well as prints waypoints
+     * on the map corresponding to the sheep's position history. 
      *
-     * @param index
+     * @param Index: The index of the selected sheep
      */
     private void selectSheep(int index) {
+        
         // Settings textfields to "Not available" before update
         // because there may be no updates for selected Sheep
-
         lblSheepId.setText("Not available");
         lblSheepPosition.setText("Not available");
         lblSheepUpdate.setText("Not available");
@@ -175,77 +146,96 @@ public class SheepPanel extends javax.swing.JFrame {
         lblSheepWeight.setText("Not available");
         lblSheepDeceased.setText("Not available");
 
+        // Get the correct sheep form the sheep list
         Sheep s = sheepList.get(index);
-
-        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN);
-        lblSheepDeceased.setText(df.format(s.getDeceased()));
-        lblSheepBorn.setText(df.format(s.getBorn()));
-        lblSheepWeight.setText(Double.toString((s.getWeight())) + " kg");
+        
+        // Set the value of the display fields
         int id = s.getID();
+        DateFormat sdf = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN);
+        
+        lblSheepBorn.setText(sdf.format(s.getBorn()));
+        
+        lblSheepWeight.setText(Double.toString((s.getWeight())) + " kg");
         lblSheepId.setText(Integer.toString(id));
 
         taSheepComment.setText(s.getComment());
-        globalId = id;
-        nickname = s.getName();
-        lblSheepNickname.setText(nickname);
-        System.out.println(nickname);
+        lblSheepNickname.setText(s.getName());
+        
         if (s.isAlive()) {
             lblSheepDeceased.setText("Not Dead");
             lblSheepDeceased.setBackground(Color.green);
+        } else {
+            lblSheepDeceased.setText(sdf.format(s.getDeceased()));
         }
 
+        // Fill the SheepUpdate-list with the sheepUpdates corresponding to the
+        // selected sheep, and at the same time, build a list of waypoints for
+        // the sheep updates.
         sheepUpdatesShow.removeAllElements();
-        s.setUpdates(WebServiceClient.getSheepUpdate(Integer.toString(id), "100"));
+        
+        List<SheepUpdate> updates = WebServiceClient.getSheepUpdate(Integer.toString(id), "100");
+        s.setUpdates(updates);
+        
         if (!s.getUpdates().isEmpty()) {
-            // Getting update index 0 because 0 is the latest (newest) update
+            // The first update is the newest one, so fill the display fields
+            // with information from this update.
             double xpos = s.getUpdates().get(0).getX();
             double ypos = s.getUpdates().get(0).getY();
             lblSheepPosition.setText(ypos + ", " + xpos);
-            Date formattedTimestamp = new Date(s.getUpdates().get(0).getTimeStamp() * 1000);
-            lblSheepUpdate.setText(formattedTimestamp.toLocaleString());
+            
+            Date timestamp = new Date(s.getUpdates().get(0).getTimeStamp()*1000);
+            lblSheepUpdate.setText(timestamp.toLocaleString());
+            
             lblSheepPulse.setText(Integer.toString(s.getUpdates().get(0).getPulse()) + " BPM");
             lblSheepTemperature.setText(Double.toString(s.getUpdates().get(0).getTemp()) + "C" + "\u00B0");
+            
+            // Iterate over the sheep updates, filling the SU-list and building
+            // waypoints.
             Set<MyWaypoint> waypoints = new HashSet<>();
             List<GeoPosition> track = new ArrayList();
+            
             for (int i = 0; i < s.getUpdates().size(); i++) {
                 SheepUpdate update = s.getUpdates().get(i);
                 Date formattedUpdateTimestamp = new Date(update.getTimeStamp() * 1000);
-                sheepUpdatesShow.addElement(formattedUpdateTimestamp.toLocaleString());
-                track.add(new GeoPosition(update.getY(), update.getX()));
-                Color color = Color.WHITE;
+                String timestring = formattedUpdateTimestamp.toLocaleString();
+                sheepUpdatesShow.addElement(timestring);
+                
+                // Make the newest update waypoint red, and the others white.
+                Color colour;
                 if (i == 0) {
-                    color = Color.RED;
+                    colour = Color.RED;
                 }
-                waypoints.add(new MyWaypoint(formattedUpdateTimestamp.toLocaleString(), color, new GeoPosition(update.getY(), update.getX()), i, false));
+                else {
+                    colour = Color.WHITE;
+                }
+                
+                GeoPosition gp = new GeoPosition(update.getY(), update.getX());
+                MyWaypoint wp = new MyWaypoint(timestring, colour, gp, i, false);
+                waypoints.add(wp);
+                track.add(gp);
             }
-            RoutePainter routePainter = new RoutePainter(track);
-            WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<>();
-            waypointPainter.setWaypoints(waypoints);
-            waypointPainter.setRenderer(new FancyWaypointRenderer());
-
-            List<Painter<JXMapViewer>> painters = new ArrayList<>();
-            painters.add(routePainter);
-            painters.add(waypointPainter);
-
-            CompoundPainter<JXMapViewer> painter = new CompoundPainter<>(painters);
-            jXSheepMap.getMainMap().setOverlayPainter(painter);
-
-            wayPointSet = waypoints;
-            focusAccordingToWaypoints();
-        } else {
+            
+            paintWaypoints(track, waypoints);
+        }
+        // If there are no updates associated with the sheep, clear the map of
+        // all waypoints.
+        else {
             CompoundPainter<JXMapViewer> painter = new CompoundPainter<>();
             jXSheepMap.getMainMap().setOverlayPainter(painter);
         }
+        
         sheepUpdateList = s.getUpdates();
     }
 
     /**
-     * This method is called by the mouse listeners on the map, to handle these
-     * events. What this method does is to select the shep on the list with the
-     * index corresponding to the input value. This selection then fires the
-     * list event listeners which call the selectSheep method.
+     * This method is called by the mouse listeners on the map, to handle what 
+     * happens then the user clicks on a waypoint. What this method does is to 
+     * select the shep on the list with the index corresponding to the input 
+     * value. This selection then fires the list event listeners which call the 
+     * selectSheep method.
      *
-     * @param index
+     * @param Index in the sheep list of the sheep corresponding to the selected
+     * waypoint.
      */
     public void mapSelectSheep(int index) {
         sheepJList.setSelectedIndex(index);
@@ -253,58 +243,63 @@ public class SheepPanel extends javax.swing.JFrame {
     }
 
     /**
-     * Called by the select event listeners to handle what happens when a SU is
-     * seleced.
+     * 
+     * Called by event listeners to handle what happens when a sheep update is 
+     * seleced. It updates the information in the display area.
      *
-     * @param index
+     * @param Index of the selected sheep.
      */
     private void selectUpdate(int index) {
+        // This method is largely parallell to the selectSheep()-method
         SheepUpdate su = sheepUpdateList.get(index);
+        
         Date formattedTimestamp = new Date(su.getTimeStamp() * 1000);
-        lblSheepUpdate.setText(formattedTimestamp.toLocaleString());
+        String timestring = formattedTimestamp.toLocaleString();
+        
+        lblSheepUpdate.setText(timestring);
         lblSheepPulse.setText(Integer.toString(su.getPulse()) + " BPM");
         lblSheepTemperature.setText(Double.toString(su.getTemp()) + " C" + "\u00B0");
         lblSheepPosition.setText(su.getY() + ", " + su.getX());
 
         Set<MyWaypoint> waypoints = new HashSet<>();
         List<GeoPosition> track = new ArrayList();
+        
         for (int i = 0; i < sheepUpdateList.size(); i++) {
             SheepUpdate update = sheepUpdateList.get(i);
             Date fmtTimestamp = new Date(update.getTimeStamp() * 1000);
-            GeoPosition gp = new GeoPosition(update.getY(), update.getX());
-            Color color = Color.WHITE;
-            if (i == 0) {
-                color = Color.RED;
-            }
+            String updTimestring = fmtTimestamp.toLocaleString();
+            
+            // Make the selected update blue, the last update red, and the other
+            // updates white;
+            Color colour;
             if (i == index) {
-                color = Color.BLUE;
+                colour = Color.BLUE;
             }
-            MyWaypoint wp = new MyWaypoint(fmtTimestamp.toLocaleString(), color, gp, i, false);
+            else if (i == 0) {
+                colour = Color.RED;
+            }
+            else {
+                colour = Color.WHITE;
+            }
+            
+            GeoPosition gp = new GeoPosition(update.getY(), update.getX());
+            MyWaypoint wp= new MyWaypoint(updTimestring, colour, gp, i, false);
             waypoints.add(wp);
             track.add(gp);
-
-            RoutePainter routePainter = new RoutePainter(track);
-            WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<>();
-            waypointPainter.setWaypoints(waypoints);
-            waypointPainter.setRenderer(new FancyWaypointRenderer());
-
-            List<Painter<JXMapViewer>> painters = new ArrayList<>();
-            painters.add(routePainter);
-            painters.add(waypointPainter);
-
-            CompoundPainter<JXMapViewer> painter = new CompoundPainter<>(painters);
-            jXSheepMap.getMainMap().setOverlayPainter(painter);
-
         }
+        
+        paintWaypoints(track, waypoints);
     }
 
     /**
-     * This method is called by the mouse listeners on the map, to handle these
-     * events. What this method does is to select the update on the list with
-     * the index corresponding to the input value. This selection then fires the
-     * list event listeners which call the selectUpdate method.
+     * This method is called by the mouse listeners on the map, to when a sheep
+     * update waypoint is clicked on on the map. What this method does is to 
+     * select the update on the list with the index corresponding to the input 
+     * value. This selection then fires the list event listeners which call the
+     * selectUpdate method.
      *
-     * @param index
+     * @param Index in the sheep update list of the update corresponding to the 
+     * selected waypoint.
      */
     public void mapSelectUpdate(int index) {
         sheepUpdateJList.setSelectedIndex(index);
@@ -312,9 +307,7 @@ public class SheepPanel extends javax.swing.JFrame {
     }
 
     /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * Autogenerated code. If you read it, your head will hurt.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -845,39 +838,104 @@ public class SheepPanel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    /**
+     * Called by the constructor to initialize the list selection listeners.
+     */
+    private void initListSelectionListeners() {
+        
+        // Make one listener for the sheep list
+        sheepListSelectionListener = new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+
+                JList list = (JList) listSelectionEvent.getSource();
+                int selectedIndex = list.getSelectedIndex();
+                if (!listSelectionEvent.getValueIsAdjusting() && selectedIndex != -1) {
+                    selectSheep(selectedIndex);
+                }
+            }
+        };
+        sheepJList.addListSelectionListener(sheepListSelectionListener);
+        SheepListCellRenderer slcr = new SheepListCellRenderer(this);
+        sheepJList.setCellRenderer(slcr);
+
+        // Make another listener for the update lists
+        updateListSelectionListener = new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                JList list = (JList) e.getSource();
+                int selectedIndex = list.getSelectedIndex();
+                if (!e.getValueIsAdjusting() && selectedIndex != -1) {
+                    selectUpdate(selectedIndex);
+                }
+            }
+        };
+        sheepUpdateJList.addListSelectionListener(updateListSelectionListener);
+        UpdateListCellRenderer ulcr = new UpdateListCellRenderer(this);
+        sheepUpdateJList.setCellRenderer(ulcr);
+    }
+    
+    /**
+     * Called when the logout-option in selected from the menu.
+     */
     private void menuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLogoutActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
         new PasswordScreen().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menuLogoutActionPerformed
 
+    /**
+     * Called when the close program-option is selected from the menu.
+     */
     private void menuCloseProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCloseProgramActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_menuCloseProgramActionPerformed
 
+    /**
+     * Called when the edit farm-option is selected from the menu.
+     */
     private void menuPrefFarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPrefFarmActionPerformed
-        // this.setVisible(false);
-        new FarmTools(this, farmID).setVisible(true);// TODO add your handling code here:
+        new FarmTools(this, farmID).setVisible(true);
     }//GEN-LAST:event_menuPrefFarmActionPerformed
 
+    /**
+     * Called when the edit user-option is selected from the menu.
+     */
     private void menuPrefUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPrefUserActionPerformed
         new UserProperties(this).setVisible(true);
     }//GEN-LAST:event_menuPrefUserActionPerformed
 
+    /**
+     * Called when the add sheep-option is selected from the menu.
+     */
     private void menuAddSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAddSheepActionPerformed
         new AddNewSheep(this).setVisible(true);
     }//GEN-LAST:event_menuAddSheepActionPerformed
 
+    /**
+     * Called when the refresh sheep list-option is selected from the menu.
+     */
     private void menuRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRefreshActionPerformed
         update();
     }//GEN-LAST:event_menuRefreshActionPerformed
 
+
+    /**
+     * Called when the edit sheep list-option is selected from the menu. Makes 
+     * a range of fields editable so that the user can edit the sheep.
+     */
     private void menuEditSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditSheepActionPerformed
         if (!isEditingSheep && sheepJList.getSelectedIndex() != -1) {
             // Sets the proper values of the textboxes in the Edit Sheep Panel
-            setEditPanelInfo();
+            selectedSheep = sheepList.get(sheepJList.getSelectedIndex());
+
+            txtSheepEditId.setText(Integer.toString(selectedSheep.getID()));
+            txtSheepEditNickname.setText(selectedSheep.getName());
+            txtSheepEditWeight.setText(Double.toString(selectedSheep.getWeight()));
+            dcSheepEditBorn.setDate(selectedSheep.getBorn());
+            dcSheepEditDead.setDate(selectedSheep.getDeceased());
+            taSheepEditComment.setText(selectedSheep.getComment());
             panelSheepInfo.setVisible(false);
             panelSheepEdit.setVisible(true);
             sheepJList.setEnabled(false);
@@ -890,40 +948,45 @@ public class SheepPanel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuEditSheepActionPerformed
 
+    /**
+     * Called when the "cancel edit" button is pressed.
+     */
     private void btnSheepEditCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSheepEditCancelActionPerformed
-
         // call the menuEdit keystroke action
         menuEditSheepActionPerformed(null);
-
     }//GEN-LAST:event_btnSheepEditCancelActionPerformed
 
     /**
-     * Saves the changes made to the sheep
+     * Called when the "Saves changes" button is pressed while editing the sheep
      *
-     * @param evt
      */
     private void btnSheepEditSaveClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSheepEditSaveClicked
         boolean errors = false;
         String errorMessage = "";
         try {
-            if (Double.parseDouble(txtSheepEditWeight.getText()) > 0.0) {
+            if (Double.parseDouble(txtSheepEditWeight.getText()) >= 0.0) {
+                
                 selectedSheep.setName(txtSheepEditNickname.getText());
                 selectedSheep.setWeight(Double.parseDouble(txtSheepEditWeight.getText()));
                 selectedSheep.setBorn(dcSheepEditBorn.getDate());
                 selectedSheep.setDeceaced(dcSheepEditDead.getDate());
                 selectedSheep.setComment(taSheepEditComment.getText());
+                
                 if (!WebServiceClient.editSheep(selectedSheep)) {
                     errors = true;
                     errorMessage = "Could not update this sheep!";
                 }
+                
             } else {
                 errors = true;
-                errorMessage = "Weight can not be negative! Please correct this.";
+                errorMessage = "Weight cannot be negative! Please correct this.";
             }
+            
         } catch (Exception ex) {
             errors = true;
-            errorMessage = "Weight is not a number! Please correct this.";
+            errorMessage = "An error occured. Please check that all the fields are correct.";
         }
+        
         if (!errors) {
             update();
             menuEditSheepActionPerformed(null);
@@ -932,14 +995,17 @@ public class SheepPanel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSheepEditSaveClicked
 
+    /**
+     * Called when the edit password-option is selected from the menu.
+     */
     private void menuEditPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditPasswordActionPerformed
         new EditPassword().setVisible(true);
     }//GEN-LAST:event_menuEditPasswordActionPerformed
 
     /**
-     * Deselects the selection of sheep
+     * Called when a deselect option is called.
      */
-    private void deSelect() {
+    private void deselect() {
         sheepJList.clearSelection();
         sheepUpdateJList.clearSelection();
         lblSheepId.setText("-");
@@ -952,8 +1018,18 @@ public class SheepPanel extends javax.swing.JFrame {
         resetSelection();
     }
 
+    
     /**
-     * updates the sheep list
+     * Called by the constructor to get and print the farm id.
+     */
+    private void establishFarmId() {
+        setTitle("Sheep Finder - " + WebServiceClient.getFarmName());
+        lblFarmName.setText(WebServiceClient.getFarmName());
+    }
+
+    
+    /**
+     * Queries the server for a refreshed sheep list.
      */
     public void update() {
         sheepList = WebServiceClient.getSheepList();
@@ -961,12 +1037,15 @@ public class SheepPanel extends javax.swing.JFrame {
         resetSelection();
     }
 
-    public void resetSelection() {
+    /**
+     * Display the sheep and update list, draw the sheep on the map.
+     */
+    private void resetSelection() {
         sheepShow.removeAllElements();
         sheepUpdatesShow.removeAllElements();
 
         Set<MyWaypoint> waypoints = new HashSet<>();
-
+        
         if (sheepList != null) {
             for (int i = 0; i < sheepList.size(); i++) {
                 Sheep sheep;
@@ -980,19 +1059,7 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         }
 
-        WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<>();
-        waypointPainter.setWaypoints(waypoints);
-        waypointPainter.setRenderer(new FancyWaypointRenderer());
-
-        List<Painter<JXMapViewer>> painters = new ArrayList<>();
-        painters.add(waypointPainter);
-
-        CompoundPainter<JXMapViewer> painter = new CompoundPainter<>(painters);
-
-        jXSheepMap.getMainMap().setOverlayPainter(painter);
-
-        wayPointSet = waypoints;
-        focusAccordingToWaypoints();
+        paintWaypoints(null, waypoints);
     }
 
     /**
@@ -1041,15 +1108,17 @@ public class SheepPanel extends javax.swing.JFrame {
         jXSheepMap.getMainMap().setZoom(jXSheepMap.getMainMap().getZoom() + 1);
     }
 
+    /**
+     * Called by the constructor to initialize the map.
+     */
     private void mapInitialize() {
-        // Map test
         WMSService wms = new WMSService();
         wms.setLayer("topo2_WMS");
         wms.setBaseUrl("http://openwms.statkart.no/skwms1/wms.topo2?");
         DefaultTileFactory fact = new WMSTileFactory(wms);
 
-        jXSheepMap.setDefaultProvider(DefaultProviders.OpenStreetMaps);
-        //jXSheepMap.getMainMap().setTileFactory(fact);
+        //jXSheepMap.setDefaultProvider(DefaultProviders.OpenStreetMaps);
+        jXSheepMap.getMainMap().setTileFactory(fact);
 
         // Use 8 threads in parallel to load the tiles
         fact.setThreadPoolSize(8);
@@ -1058,27 +1127,43 @@ public class SheepPanel extends javax.swing.JFrame {
         File cacheDir = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
         LocalResponseCache.installResponseCache(fact.getInfo().getBaseURL(), cacheDir, false);
 
-
         jXSheepMap.getMiniMap().setVisible(false);
 
-        // Add interactions
+        // Add listeners to enable input
         MouseInputListener mia = new PanMouseInputListener(jXSheepMap.getMainMap());
         jXSheepMap.addMouseListener(mia);
         jXSheepMap.addMouseMotionListener(mia);
-
         jXSheepMap.addMouseListener(new CenterMapListener(jXSheepMap.getMainMap()));
-
         jXSheepMap.addMouseWheelListener(new ZoomMouseWheelListenerCursor(jXSheepMap.getMainMap()));
-
         jXSheepMap.addKeyListener(new PanKeyListener(jXSheepMap.getMainMap()));
-
         jXSheepMap.addMouseListener(new MouseClickOnWayPointListener(this));
 
     }
 
-    public List<Sheep> getSheepList() {
-        return sheepList;
+        /**
+     * Paints the set of waypoints to the map. If the list of tracks is not null,
+     * it also prints a line between the waypoints, according to the track list.
+     */
+    private void paintWaypoints(List<GeoPosition> track, Set<MyWaypoint> waypoints) {
+        List<Painter<JXMapViewer>> painters = new ArrayList<>();
+        
+        if (track != null) {
+            RoutePainter routePainter = new RoutePainter(track);
+            painters.add(routePainter);
+        }
+        
+        WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<>();
+        waypointPainter.setWaypoints(waypoints);
+        waypointPainter.setRenderer(new FancyWaypointRenderer());
+        painters.add(waypointPainter);
+
+        CompoundPainter<JXMapViewer> painter = new CompoundPainter<>(painters);
+        jXSheepMap.getMainMap().setOverlayPainter(painter);
+
+        wayPointSet = waypoints;
+        focusAccordingToWaypoints();
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSheepEditCancel;
     private javax.swing.JButton btnSheepEditSave;
@@ -1147,16 +1232,4 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JTextField txtSheepEditNickname;
     private javax.swing.JTextField txtSheepEditWeight;
     // End of variables declaration//GEN-END:variables
-
-    private void setEditPanelInfo() {
-
-        selectedSheep = sheepList.get(sheepJList.getSelectedIndex());
-
-        txtSheepEditId.setText(Integer.toString(selectedSheep.getID()));
-        txtSheepEditNickname.setText(selectedSheep.getName());
-        txtSheepEditWeight.setText(Double.toString(selectedSheep.getWeight()));
-        dcSheepEditBorn.setDate(selectedSheep.getBorn());
-        dcSheepEditDead.setDate(selectedSheep.getDeceased());
-        taSheepEditComment.setText(selectedSheep.getComment());
-    }
 }
