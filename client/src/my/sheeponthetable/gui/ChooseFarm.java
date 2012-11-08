@@ -22,10 +22,11 @@ public class ChooseFarm extends javax.swing.JFrame {
      * who is logged in has access to.
      */
     public ChooseFarm() {
+        
         initComponents();
         this.setLocationRelativeTo(null);
-        farmListModel = new DefaultListModel();
         
+        farmListModel = new DefaultListModel();
         for (Map farmName : WebServiceClient.getFarmIds()) {
             farmListModel.addElement(farmName.get("id") + " - " + farmName.get("name"));
         }
@@ -185,7 +186,8 @@ public class ChooseFarm extends javax.swing.JFrame {
      */
     private void selectFarm() {
         if (farmList.getSelectedIndex() != -1) {
-            WebServiceClient.farmid = WebServiceClient.farmids.get(farmList.getSelectedIndex()).get("id").toString();
+            String farmId = WebServiceClient.getFarmIds().get(farmList.getSelectedIndex()).get("id").toString();
+            WebServiceClient.setFarmId(farmId);
             this.dispose();
             new SheepPanel().setVisible(true);
         }

@@ -43,7 +43,7 @@ public class SheepPanel extends javax.swing.JFrame {
     private List<Sheep> sheepList = new ArrayList();
     private List<SheepUpdate> sheepUpdateList;
     private Set<MyWaypoint> wayPointSet = new HashSet<>();
-    private int farmID = Integer.parseInt(WebServiceClient.farmid);
+    private int farmID = Integer.parseInt(WebServiceClient.getFarmId());
     private Sheep selectedSheep;
     private String nickname;
     ListSelectionListener sheepListSelectionListener;

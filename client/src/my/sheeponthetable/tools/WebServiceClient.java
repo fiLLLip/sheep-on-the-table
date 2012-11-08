@@ -132,8 +132,8 @@ public class WebServiceClient {
     public static boolean isLoggedIn() {
         String method = "sheepLogon";
         List<String> params = new ArrayList<>();
-        params.add(username);
-        params.add(password);
+        System.out.println(username);
+        System.out.println(password);
 
         Object response = doRequest(method, params, false);
 
@@ -459,8 +459,28 @@ public class WebServiceClient {
         }
     }
     
+    public static String getUsername() {
+        return username;
+    }
+    
     public static ArrayList<Map> getFarmIds() {
         return farmids;
+    }
+    
+    public static void setFarmId(String fid) {
+        farmid = fid;
+    }
+    
+    public static void setUsername(String un) {
+        username = un;
+    }
+    
+    public static void setPassword(String pw) {
+        password = pw;
+    }
+    
+    public static String getFarmId() {
+        return farmid;
     }
     
     /**

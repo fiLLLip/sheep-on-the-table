@@ -178,16 +178,16 @@ public class PasswordScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginAction() {
-        this.username = this.usernameField.getText();
-        this.password = this.passwordField.getText(); // Possible security threat
+        username = this.usernameField.getText();
+        password = this.passwordField.getText(); // Possible security threat
 
         if (this.username.isEmpty() || this.password.isEmpty()) {
             System.out.println("Warning: Username or password not set");
             return;
         }
 
-        WebServiceClient.username = this.username;
-        WebServiceClient.password = this.password;
+        WebServiceClient.setUsername(username);
+        WebServiceClient.setPassword(password);
 
         if (!WebServiceClient.isLoggedIn()) {
             // Login failed

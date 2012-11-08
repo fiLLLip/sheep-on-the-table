@@ -24,7 +24,7 @@ public class UserProperties extends javax.swing.JFrame {
         initComponents();
         this.sheepPanel = sp;
         user = WebServiceClient.getUserDetails();
-        lblUsername.setText(WebServiceClient.username);
+        lblUsername.setText(WebServiceClient.getUsername());
         txtName.setText(user.getName());
         txtEmail.setText(user.getEmail());
         txtPhone.setText(user.getTelephone());
