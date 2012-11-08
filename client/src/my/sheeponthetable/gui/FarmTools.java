@@ -22,9 +22,8 @@ public class FarmTools extends javax.swing.JFrame {
     private SheepPanel sheepPanel;
     private List<User> users = new ArrayList();
     private DefaultListModel listModel = new DefaultListModel();
-    private int farmID,selectedIndex;
+    private int farmID;
     private ListSelectionListener userSelect;
-    private User current;
 
     /**
      * Creates new form AddNewSheep
@@ -42,16 +41,18 @@ public class FarmTools extends javax.swing.JFrame {
         setDisable();
         getUsers();
         update();
-        
+        System.out.println("Major Fail");
+        System.out.println(jListUser.getSelectedValue());
 
         userSelect = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent lse) {
-               
+                System.out.println("Major Fail");
+
                 JList list = (JList) lse.getSource();
-                selectedIndex = list.getSelectedIndex();
+                int selectedIndex = list.getSelectedIndex();
                 if (!lse.getValueIsAdjusting() && selectedIndex != -1) {
-                   
-                    selectedUser();
+                    System.out.println("Major Fail");
+                    selectedUser(selectedIndex);
                 }
             }
         };
@@ -85,7 +86,13 @@ public class FarmTools extends javax.swing.JFrame {
     public void getUsers() {
 
         if (WebServiceClient.getUsersForFarm(farmID) != null) {
-            users = WebServiceClient.getUsersForFarm(farmID);}
+            users = WebServiceClient.getUsersForFarm(farmID);
+        } else {
+            listModel.addElement("Troll");
+            listModel.addElement("sold");
+            listModel.addElement("old");
+            listModel.addElement("cold");
+        }
     }
 
     public void update() {
@@ -95,38 +102,9 @@ public class FarmTools extends javax.swing.JFrame {
         }
     }
 
-    public void selectedUser() {
+    public void selectedUser(int selectedIndex) {
         setEnable();
-        lblNameTxt.setText(users.get(selectedIndex).getName());
-        
-        if(users.get(selectedIndex).getEmailAlarmAttack()){jAlertChkKilled1.setSelected(true);}
-           if(users.get(selectedIndex).getEmailAlarmTemperature()){jAlertChkTemp1.setSelected(true);}
-              if(users.get(selectedIndex).getEmailAlarmStationary()){jAlertChkStationary1.setSelected(true);}
-              
-              if(users.get(selectedIndex).getSMSAlarmAttack()){jAlertChkKilled2.setSelected(true);}
-           if(users.get(selectedIndex).getSMSAlarmTemperature()){jAlertChkTemp2.setSelected(true);}
-        if(users.get(selectedIndex).getSMSAlarmStationary()){jAlertChkStationary2.setSelected(true);}
-    }
-    /**
-     * Returns the user preferences
-     *
-     * 
-     * @return User with new preferences
-     */
-    public void savingUserPreferences(){
-        if(jAlertChkKilled1.isSelected()){users.get(selectedIndex).setEmailAlarmAttack(true);}
-            else{users.get(selectedIndex).setEmailAlarmAttack(false);}
-                if(jAlertChkTemp1.isSelected()){users.get(selectedIndex).setEmailAlarmTemperature(true);}
-                    else{users.get(selectedIndex).setEmailAlarmTemperature(false);}
-                        if(jAlertChkStationary1.isSelected()){users.get(selectedIndex).setEmailAlarmTemperature(true);}
-                            else{users.get(selectedIndex).setEmailAlarmTemperature(false);}
-        
-                            if(jAlertChkKilled2.isSelected()){users.get(selectedIndex).setSMSAlarmAttack(true);}
-                        else{users.get(selectedIndex).setSMSAlarmAttack(false);}
-                    if(jAlertChkTemp2.isSelected()){users.get(selectedIndex).setSMSAlarmTemperature(true);}
-                else{users.get(selectedIndex).setSMSAlarmTemperature(false);}
-            if(jAlertChkStationary2.isSelected()){users.get(selectedIndex).setSMSAlarmStationary(true);}
-        else{users.get(selectedIndex).setSMSAlarmStationary(false);}
+
     }
 
     /**
@@ -147,14 +125,14 @@ public class FarmTools extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         lblFarmName = new javax.swing.JLabel();
         lblUserName = new javax.swing.JLabel();
-        lblAlertEmail = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jAlertChkKilled1 = new javax.swing.JCheckBox();
         jAlertChkKilled2 = new javax.swing.JCheckBox();
         jAlertChkTemp1 = new javax.swing.JCheckBox();
         jAlertChkTemp2 = new javax.swing.JCheckBox();
         jAlertChkStationary2 = new javax.swing.JCheckBox();
         jAlertChkStationary1 = new javax.swing.JCheckBox();
-        lblAlertPhone = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         lblClerance = new javax.swing.JLabel();
         ClearanceChoice = new java.awt.Choice();
         lblName = new javax.swing.JLabel();
@@ -169,11 +147,6 @@ public class FarmTools extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jListUser);
 
         btnSave.setText("Save ");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
 
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -186,7 +159,7 @@ public class FarmTools extends javax.swing.JFrame {
 
         lblUserName.setText("Username:");
 
-        lblAlertEmail.setText("Alert by E-mail:");
+        jLabel6.setText("Alert by E-mail:");
 
         jAlertChkKilled1.setText("Sheep killed");
 
@@ -200,7 +173,7 @@ public class FarmTools extends javax.swing.JFrame {
 
         jAlertChkStationary1.setText("Stationary");
 
-        lblAlertPhone.setText("Alert by phone:");
+        jLabel7.setText("Alert by phone:");
 
         lblClerance.setText("Clearance:");
 
@@ -209,7 +182,6 @@ public class FarmTools extends javax.swing.JFrame {
         lblName.setText("Name:");
 
         lblNameTxt.setText("            ");
-        lblNameTxt.setInheritsPopupMenu(false);
 
         lblFarmNameTxt.setText("               ");
 
@@ -226,14 +198,14 @@ public class FarmTools extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblAlertEmail)
+                            .addComponent(jLabel6)
                             .addComponent(jAlertChkKilled1)
                             .addComponent(jAlertChkTemp1)
                             .addComponent(jAlertChkStationary1)
                             .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblAlertPhone)
+                            .addComponent(jLabel7)
                             .addComponent(jAlertChkKilled2)
                             .addComponent(jAlertChkStationary2)
                             .addComponent(jAlertChkTemp2)
@@ -274,8 +246,8 @@ public class FarmTools extends javax.swing.JFrame {
                             .addComponent(ClearanceChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblAlertEmail)
-                            .addComponent(lblAlertPhone))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jAlertChkKilled1)
@@ -302,12 +274,6 @@ public class FarmTools extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelActionPerformed
-
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        savingUserPreferences();
-        WebServiceClient.setUserDetails(users.get(selectedIndex));    
-        this.dispose();// TODO add your handling code here:
-    }//GEN-LAST:event_btnSaveActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -324,10 +290,10 @@ public class FarmTools extends javax.swing.JFrame {
     private javax.swing.JCheckBox jAlertChkTemp1;
     private javax.swing.JCheckBox jAlertChkTemp2;
     private javax.swing.JCheckBox jCheckBox9;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JList jListUser;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblAlertEmail;
-    private javax.swing.JLabel lblAlertPhone;
     private javax.swing.JLabel lblClerance;
     private javax.swing.JLabel lblFarmName;
     private javax.swing.JLabel lblFarmNameTxt;

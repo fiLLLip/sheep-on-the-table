@@ -43,7 +43,7 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblAlertEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jAlertChkKilled1" min="-2" max="-2" attributes="0"/>
                           <Component id="jAlertChkTemp1" min="-2" max="-2" attributes="0"/>
                           <Component id="jAlertChkStationary1" min="-2" max="-2" attributes="0"/>
@@ -51,7 +51,7 @@
                       </Group>
                       <EmptySpace pref="33" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblAlertPhone" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jAlertChkKilled2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jAlertChkStationary2" min="-2" max="-2" attributes="0"/>
                           <Component id="jAlertChkTemp2" min="-2" max="-2" attributes="0"/>
@@ -105,8 +105,8 @@
                       </Group>
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblAlertEmail" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblAlertPhone" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -157,9 +157,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Save "/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCancel">
       <Properties>
@@ -179,7 +176,7 @@
         <Property name="text" type="java.lang.String" value="Username:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblAlertEmail">
+    <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
         <Property name="text" type="java.lang.String" value="Alert by E-mail:"/>
       </Properties>
@@ -214,7 +211,7 @@
         <Property name="text" type="java.lang.String" value="Stationary"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblAlertPhone">
+    <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
         <Property name="text" type="java.lang.String" value="Alert by phone:"/>
       </Properties>
@@ -237,7 +234,6 @@
     <Component class="javax.swing.JLabel" name="lblNameTxt">
       <Properties>
         <Property name="text" type="java.lang.String" value="            "/>
-        <Property name="inheritsPopupMenu" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFarmNameTxt">

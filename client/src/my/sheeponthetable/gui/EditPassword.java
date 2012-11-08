@@ -38,7 +38,7 @@ public class EditPassword extends javax.swing.JFrame {
         SaveButton = new javax.swing.JToggleButton();
         CancelButton = new javax.swing.JToggleButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Current password:");
 
