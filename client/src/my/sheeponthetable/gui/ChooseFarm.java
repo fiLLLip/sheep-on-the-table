@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.sheeponthetable.gui;
 
 import java.awt.Rectangle;
@@ -12,13 +8,15 @@ import javax.swing.JList;
 import my.sheeponthetable.tools.WebServiceClient;
 
 /**
- *
+ * Dialogue box to let the user pick which farm (s)he belongs to.
+ * 
  * @author Håkon
  */
 public class ChooseFarm extends javax.swing.JFrame {
 
-    private DefaultListModel farmListModel = new DefaultListModel();
+    private DefaultListModel farmListModel;
     private boolean doSelect = false;
+    
     /**
      * Creates new form ChooseFarm which lists all available Farms that the user
      * who is logged in has access to.
@@ -26,8 +24,9 @@ public class ChooseFarm extends javax.swing.JFrame {
     public ChooseFarm() {
         initComponents();
         this.setLocationRelativeTo(null);
-        farmListModel.clear();
-        for (Map farmName : WebServiceClient.farmids) {
+        farmListModel = new DefaultListModel();
+        
+        for (Map farmName : WebServiceClient.getFarmIds()) {
             farmListModel.addElement(farmName.get("id") + " - " + farmName.get("name"));
         }
         farmList.setModel(farmListModel);
@@ -191,6 +190,7 @@ public class ChooseFarm extends javax.swing.JFrame {
             new SheepPanel().setVisible(true);
         }
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonLogout;
     private javax.swing.JButton buttonSelect;

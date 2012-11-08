@@ -30,12 +30,12 @@ public class WebServiceClient {
      */
     private static Config config = new Config();
     private static String url;
-    public static String username;
-    public static String password;
-    public static String hash;
-    public static String userid;
-    public static String farmid;
-    public static ArrayList<Map> farmids = new ArrayList();
+    private static String username;
+    private static String password;
+    private static String hash;
+    private static String userid;
+    private static String farmid;
+    private static ArrayList<Map> farmids = new ArrayList();
     private static URL serverURL;
     private static JSONRPC2Session mySession;
 
@@ -457,6 +457,10 @@ public class WebServiceClient {
         } else {
             return -1;
         }
+    }
+    
+    public static ArrayList<Map> getFarmIds() {
+        return farmids;
     }
     
     /**
