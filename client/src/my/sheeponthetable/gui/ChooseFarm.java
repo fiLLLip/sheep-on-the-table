@@ -15,6 +15,7 @@ import my.sheeponthetable.tools.WebServiceClient;
 public class ChooseFarm extends javax.swing.JFrame {
 
     private DefaultListModel farmListModel;
+    private boolean doSelect = false;
     
     /**
      * Creates new form ChooseFarm which lists all available Farms that the user
@@ -35,7 +36,7 @@ public class ChooseFarm extends javax.swing.JFrame {
             // If the user only has a single farm, choose it directly, without
             // showing this dialog screen to him/her.
             farmList.setSelectedIndex(0);
-            selectFarm();
+            doSelect = true;
         } else if (farmListModel.size() > 1) {
             farmList.setSelectedIndex(0);
         } else {
@@ -179,10 +180,12 @@ public class ChooseFarm extends javax.swing.JFrame {
     }//GEN-LAST:event_keyPressed
 
     /**
-     * Not used. 
+     *  
      */
     private void onOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_onOpened
-
+        if(doSelect) {
+            selectFarm();
+        }
     }//GEN-LAST:event_onOpened
 
     /**
