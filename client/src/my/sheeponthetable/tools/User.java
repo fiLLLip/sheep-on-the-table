@@ -83,10 +83,10 @@ public class User {
             String telephone,
             boolean SMSAlarmStationary,
             boolean SMSAlarmAttack,
-            boolean SMSAlarmTemperature,
+            boolean SMSAlarmHealth,
             boolean EmailAlarmStationary,
             boolean EmailAlarmAttack,
-            boolean EmailAlarmTemperature) {
+            boolean EmailAlarmHealth) {
 
         this.userId = userId;
         this.username = username;
@@ -96,10 +96,10 @@ public class User {
 
         this.SMSAlarmAttack = SMSAlarmAttack;
         this.SMSAlarmStationary = SMSAlarmStationary;
-        this.SMSAlarmTemperature = SMSAlarmTemperature;
+        this.SMSAlarmHealth = SMSAlarmHealth;
         this.EmailAlarmAttack = EmailAlarmAttack;
         this.EmailAlarmStationary = EmailAlarmStationary;
-        this.EmailAlarmTemperature = EmailAlarmTemperature;
+        this.EmailAlarmHealth = EmailAlarmHealth;
 
     }
 
