@@ -67,15 +67,6 @@ public class WebServiceClient {
         return true;
     }
 
-    /**
-     * KVIFOR TRENG VI AA GJERA DETTE?
-     */
-    private static List<String> hashParameters(List<String> parameters) {
-        parameters.add(0, userid);
-        parameters.add(0, hash);
-        return parameters;
-    }
-
     private static JSONArray getArrayOfJSONObjects(Object json) {
         try {
             JSONArray arr1 = (JSONArray) json;
@@ -101,7 +92,8 @@ public class WebServiceClient {
         // Construct new request
         int requestID = 1;
         if (reqAuth) {
-            parameters = hashParameters(parameters);
+            parameters.add(0, userid);
+            parameters.add(0, hash);
         }
 
         JSONRPC2Request request = new JSONRPC2Request(method, parameters, requestID);
@@ -336,6 +328,53 @@ public class WebServiceClient {
         params.add(sheep.getComment());
         params.add(Double.toString(sheep.getWeight()));
 
+        Object response = doRequest(method, params, true);
+
+        if (response != null && Integer.parseInt(response.toString()) >= 1) {
+            returnValue = true;
+        }
+
+        return returnValue;
+    }
+
+    /**
+     * Adds permission for a user to current farm.
+     * Sets default level to 0 (read only)
+     *
+     * @param String
+     * @return true if successful or false if an error happened.
+     */
+    public static Boolean addNewUserToFarm(String username) {
+        boolean returnValue = false;
+        // Construct new request
+        String method = "addNewUserToFarm";
+        List<String> params = new ArrayList<>();
+        params.add(farmid);
+        params.add(username);
+
+        Object response = doRequest(method, params, true);
+
+        if (response != null && Integer.parseInt(response.toString()) >= 1) {
+            returnValue = true;
+        }
+
+        return returnValue;
+    }
+
+    /**
+     * Removes permission for a user from current farm.
+     *
+     * @param User
+     * @return true if successful or false if an error happened.
+     */
+    public static Boolean removeUserFromFarm(User user) {
+        boolean returnValue = false;
+        // Construct new request
+        String method = "removeUserFromFarm";
+        List<String> params = new ArrayList<>();
+        params.add(farmid);
+        params.add(Integer.toString(user.getUserId()));
+                
         Object response = doRequest(method, params, true);
 
         if (response != null && Integer.parseInt(response.toString()) >= 1) {
