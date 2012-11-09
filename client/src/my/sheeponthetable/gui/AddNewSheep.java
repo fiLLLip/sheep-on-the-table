@@ -208,7 +208,7 @@ public class AddNewSheep extends javax.swing.JFrame {
                 sheepPanel.update();
                 this.dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "Sheep creation failed. Please contact SysAdmin", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Sheep creation failed. Make sure you have the neccessary access level. \nIf the problem persists, please contact SysAdmin.", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
     }//GEN-LAST:event_addSheepButtonActionPerformed

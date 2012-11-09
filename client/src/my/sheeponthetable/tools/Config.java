@@ -6,6 +6,8 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 
 /**
+ * The Config class reads the config file, and stores the information found in
+ * the file.
  * 
  * @author gruppe 7
  */
@@ -16,38 +18,52 @@ public final class Config {
     private String password = null;
 
     /**
-     *
+     * Creates the object. This makes the object start reading the config file.
      */
     public Config() {
         loadSettingsFile();
     }
 
     /**
-     *
-     * @return
+     * Gets the URL field.
      */
     public String getServerURL() {
-        return this.serverURL;
+        return serverURL;
     }
 
+    /**
+     * Gets the username field.
+     */
     public String getUsername() {
-        return this.username;
+        return username;
     }
-
+    
+    /**
+     * Gets the password field.
+     */
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
+    /**
+     * Sets the username, and which also stores this in the config file.
+     */
     public void setUsername(String username) {
         this.username = username;
-        this.saveSettingsFile();
+        saveSettingsFile();
     }
 
+    /**
+     * Sets the password, and which also stores this in the config file.
+     */
     public void setPassword(String password) {
         this.password = password;
-        this.saveSettingsFile();
+        saveSettingsFile();
     }
 
+    /**
+     * Reads the config file.
+     */
     public void loadSettingsFile() {
 
         Properties properties = new Properties();
@@ -67,6 +83,9 @@ public final class Config {
         }
     }
 
+    /**
+     *  Stores the current settings into the config file.
+     */
     private void saveSettingsFile() {
 
         Properties properties = new Properties();
