@@ -1,7 +1,6 @@
 package my.sheeponthetable.gui;
 
 import java.awt.event.KeyEvent;
-import javax.swing.JOptionPane;
 import my.sheeponthetable.tools.Config;
 import my.sheeponthetable.tools.WebServiceClient;
 
@@ -203,8 +202,6 @@ public class PasswordScreen extends javax.swing.JFrame {
 
         if (!WebServiceClient.isLoggedIn()) {
             // Login failed
-            config.setUsername("");
-            config.setPassword("");
             if(WebServiceClient.isErrorMessage()) {
                 new ErrorBox(WebServiceClient.getErrorMessage());
             }
@@ -215,8 +212,21 @@ public class PasswordScreen extends javax.swing.JFrame {
         }
 
         // If you have made it to this point, you have a successfull login.
-        // Therefor we open a ChooseFarm instance, and delete this form.
-        new ChooseFarm().setVisible(true);
+        // If the user has more than one farm, open a ChooseFarm dialogue window,
+        // otherwise, go directly to the SheepPanel.
+        if (WebServiceClient.getFarmIds().size() == 1) {
+            String farmId = WebServiceClient.getFarmIds().get(0).get("id").toString();
+            WebServiceClient.setFarmId(farmId);
+            dispose();
+            new SheepPanel().setVisible(true);
+        }
+        else if (WebServiceClient.getFarmIds().isEmpty()) {
+            new ErrorBox("You have no farms!").setVisible(true);
+            return;
+        }   
+        else {
+            new ChooseFarm().setVisible(true);
+        }
         dispose();
     }
 

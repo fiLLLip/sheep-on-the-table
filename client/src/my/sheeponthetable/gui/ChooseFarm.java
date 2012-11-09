@@ -15,7 +15,6 @@ import my.sheeponthetable.tools.WebServiceClient;
 public class ChooseFarm extends javax.swing.JFrame {
 
     private DefaultListModel farmListModel;
-    private boolean doSelect = false;
     
     /**
      * Creates new form ChooseFarm which lists all available Farms that the user
@@ -32,16 +31,7 @@ public class ChooseFarm extends javax.swing.JFrame {
         }
         farmList.setModel(farmListModel);
 
-        if (farmListModel.size() == 1) {
-            // If the user only has a single farm, choose it directly, without
-            // showing this dialog screen to him/her.
-            farmList.setSelectedIndex(0);
-            doSelect = true;
-        } else if (farmListModel.size() > 1) {
-            farmList.setSelectedIndex(0);
-        } else {
-            new ErrorBox("You have no farms :/").setVisible(true);
-        }
+        farmList.setSelectedIndex(0);
     }
 
     /**
@@ -60,11 +50,6 @@ public class ChooseFarm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                onOpened(evt);
-            }
-        });
 
         farmList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -143,7 +128,7 @@ public class ChooseFarm extends javax.swing.JFrame {
      * Called if the user presses the logout-button. Go back to password screen.
      */
     private void buttonLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLogoutActionPerformed
-        this.dispose();
+        dispose();
         new PasswordScreen().setVisible(true);
     }//GEN-LAST:event_buttonLogoutActionPerformed
 
@@ -171,7 +156,6 @@ public class ChooseFarm extends javax.swing.JFrame {
     /**
      * Selects the selected farm if the ENTER key is pressed. Fires everytime a
      * key is pressed in the farmlist.
-     *
      */
     private void keyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -180,22 +164,13 @@ public class ChooseFarm extends javax.swing.JFrame {
     }//GEN-LAST:event_keyPressed
 
     /**
-     *  
-     */
-    private void onOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_onOpened
-        if(doSelect) {
-            selectFarm();
-        }
-    }//GEN-LAST:event_onOpened
-
-    /**
      * Opens sheepPanel with the selected farm
      */
     private void selectFarm() {
         if (farmList.getSelectedIndex() != -1) {
             String farmId = WebServiceClient.getFarmIds().get(farmList.getSelectedIndex()).get("id").toString();
             WebServiceClient.setFarmId(farmId);
-            this.dispose();
+            dispose();
             new SheepPanel().setVisible(true);
         }
     }
