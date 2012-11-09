@@ -277,7 +277,9 @@ public class WebServiceClient {
 
         Object response = doRequest(method, params, true);
 
-        if (response != null && Integer.parseInt(response.toString()) >= 1) {
+        // Uses >= 0 because you don't want the error if they clicked save and 
+        // nothing is updated
+        if (response != null && Integer.parseInt(response.toString()) >= 0) {
             returnValue = true;
         }
         return returnValue;
