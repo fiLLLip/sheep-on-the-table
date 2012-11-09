@@ -16,12 +16,22 @@ public class SheepListCellRenderer extends DefaultListCellRenderer {
 
     SheepPanel sp;
 
+    /**
+     * Creates a new SheepListCellRenderer
+     * 
+     * @param The SheepPanel on which the list we want to render is displayed.
+     */
     public SheepListCellRenderer(SheepPanel sp) {
         super();
         this.sp = sp;
     }
 
     @Override
+    /**
+     * Called when displaying the elements in the list. Basically it does what
+     * a generic listCellRendererComponent would do, but adds some colour 
+     * depending on the status of the sheep.
+     */
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         Sheep s = sp.getSheepList().get(index);
@@ -30,7 +40,7 @@ public class SheepListCellRenderer extends DefaultListCellRenderer {
         if (s.getUpdates().isEmpty()) {
             colour = Color.GRAY;
         } // If the sheep is dead, make it red
-        else if (s.isDead()) {
+        else if (!s.isAlive()) {
             colour = Color.RED;
         } // If the sheep is sick, make it blue
         else if (s.getUpdates().get(0).getPulse() > 90
@@ -38,7 +48,8 @@ public class SheepListCellRenderer extends DefaultListCellRenderer {
                 || s.getUpdates().get(0).getTemp() < 35
                 || s.getUpdates().get(0).getTemp() > 45) {
             colour = Color.BLUE;
-        } else {
+        } // If nothing is weird about this sheep, make it normal, i.e. black.
+        else {
             colour = Color.BLACK;
         }
         c.setForeground(colour);

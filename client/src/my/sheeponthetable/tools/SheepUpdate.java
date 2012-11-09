@@ -1,11 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.sheeponthetable.tools;
 
 /**
- *
+ * A SheepUpdate is a data structure storing the chunk of information that a 
+ * single real-world sheep would send at one time. That is the position of the
+ * sheep and the physical conditions of the sheep at the time. Also is signalled
+ * whether this update is an alarm or not. 
+ * 
+ * Finally, the server also attaches a timestamp to every update, so that the
+ * client can know which updates is the newest, and use that information to plot
+ * the sheep on the map.
+ * 
+ * Also note that the SheepUpdate object does not contain any information about
+ * which sheep it belongs to. The Sheep objects, on the other hand, contain 
+ * references to the SheepUpdates associated with it.
+ * 
  * @author Filip
  */
 public class SheepUpdate {
@@ -19,26 +27,8 @@ public class SheepUpdate {
     private int alarm;
 
     /**
-     *
-     */
-    public SheepUpdate() {
-        this.id = -1;
-        this.pos_x = -1;
-        this.pos_y = -1;
-        this.pulse = -1;
-        this.temperature = -1.0;
-        this.timestamp = 0;
-        this.alarm = -1;
-    }
-
-    /**
-     *
-     * @param id
-     * @param pos_x
-     * @param pos_y
-     * @param pulse
-     * @param temperature
-     * @param timestamp
+     * Creates a new SheepUpdate by specifying all the information associated 
+     * with it.
      */
     public SheepUpdate(int id, double pos_x, double pos_y, int pulse, double temperature, int alarm, long timestamp) {
         this.id = id;
@@ -50,44 +40,70 @@ public class SheepUpdate {
         this.alarm = alarm;
     }
 
+    /**
+     * Gets the database ID of the SheepUpdate
+     */
     public int getID() {
         return id;
     }
 
+    /**
+     * Gets the timestamp. 
+     */
     public Long getTimeStamp() {
         return timestamp;
     }
 
+    /**
+     * Gets the longitudinal position.
+     */
     public double getX() {
         return pos_x;
     }
 
+    /**
+     * Gets the latitudinal position.
+     */
     public double getY() {
         return pos_y;
     }
 
+    /**
+     * Gets the pulse value of the update.
+     */
     public int getPulse() {
         return pulse;
     }
 
+    /**
+     * Gets the temperature value of the update.
+     */
     public double getTemp() {
         return temperature;
     }
 
+    /**
+     * Returns true if this update was an alarm, false otherwise. For information
+     * about which kind of alarm it is, use getAlarm().
+     */
     public boolean isAlarm() {
         return (alarm > 0);
     }
 
+    /**
+     * Returns the alarm value of the update. This is more fine-grained than
+     * isAlarm() as it states the alarm type. To only check whether the update
+     * is an alarm or not, use isAlarm().
+     */
     public int getAlarm() {
         return alarm;
     }
 
+    /**
+     * Sets that alarm field of the update. 0 is no alarm, while different 
+     * positive integers correspond to different kinds of alarms.
+     */
     public void setAlarm(int alarm) {
         this.alarm = alarm;
-    }
-
-    @Override
-    public String toString() {
-        return "U@" + id + "@" + pos_x + "@" + pos_y + "@" + pulse + "@" + temperature + "@" + alarm + "@" + timestamp;
     }
 }

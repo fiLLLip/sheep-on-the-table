@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.sheeponthetable.tools;
 
 import java.awt.Rectangle;
@@ -13,7 +9,9 @@ import my.sheeponthetable.tools.map.MyWaypoint;
 import org.jdesktop.swingx.JXMapViewer;
 
 /**
- *
+ * Mouse Listener to handle clicking events on the map. To be precise, this 
+ * listener checks whether left mouse clicks hits any waypoint.
+ * 
  * @author elias
  */
 public class MouseClickOnWayPointListener implements MouseListener {
@@ -21,20 +19,27 @@ public class MouseClickOnWayPointListener implements MouseListener {
     JXMapViewer map;
     SheepPanel sp;
 
+    /**
+     * Create a new MouseClickOnWayPointListener
+     * 
+     * @param the sheepPanel whose map the listener is supposed to be used on.
+     */
     public MouseClickOnWayPointListener(SheepPanel sp) {
         map = sp.getMapKit().getMainMap();
         this.sp = sp;
     }
 
     @Override
+    /**
+     * Fired when any mouse button is clicked on the map
+     */
     public void mouseClicked(MouseEvent e) {
-
-        // Only care about left mouse clicks on this listener
+        // This listener only cares about left mouse clicks. 
         if (e.getButton() != 1) {
             return;
         }
 
-        // Listen for clicks on waypoints
+        // Check whether the click hits a waypoint
         Rectangle bounds = map.getViewportBounds();
 
         Point2D vorPoint;
@@ -54,25 +59,38 @@ public class MouseClickOnWayPointListener implements MouseListener {
                     sp.mapSelectUpdate(w.getIndex());
                 }
                 // If there are more waypoints on this location, only care about
-                // one of them, to make things simpler for everyone.
+                // one of them, to make things simpler for everyone. You can't
+                // have multiple sheep selected at any given time, anyhow.
                 break;
             }
         }
     }
 
     @Override
+    /**
+     * Ignore mousePressed events
+     */
     public void mousePressed(MouseEvent e) {
     }
 
     @Override
+    /**
+     * Ignore mouseReleased events
+     */
     public void mouseReleased(MouseEvent e) {
     }
 
     @Override
+    /**
+     * Ignore mouseEntered events
+     */
     public void mouseEntered(MouseEvent e) {
     }
 
     @Override
+    /**
+     * Ignore mouseExited events
+     */
     public void mouseExited(MouseEvent e) {
     }
 }

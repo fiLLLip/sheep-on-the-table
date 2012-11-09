@@ -963,7 +963,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 selectedSheep.setName(txtSheepEditNickname.getText());
                 selectedSheep.setWeight(Double.parseDouble(txtSheepEditWeight.getText()));
                 selectedSheep.setBorn(dcSheepEditBorn.getDate());
-                selectedSheep.setDeceaced(dcSheepEditDead.getDate());
+                selectedSheep.setDeceased(dcSheepEditDead.getDate());
                 selectedSheep.setComment(taSheepEditComment.getText());
 
                 if (!WebServiceClient.editSheep(selectedSheep)) {

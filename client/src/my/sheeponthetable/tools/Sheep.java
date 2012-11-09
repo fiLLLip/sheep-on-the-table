@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.sheeponthetable.tools;
 
 import java.util.ArrayList;
@@ -9,7 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
+ * The Sheep class implements the program-internal representation of a sheep.
+ * 
  * @author Filip
  */
 public class Sheep {
@@ -24,30 +21,8 @@ public class Sheep {
     private List<SheepUpdate> updates;
 
     /**
-     *
-     */
-    public Sheep() {
-        this.id = -1;
-        this.farmId = -1;
-        this.name = "n0ll";
-        this.comment = "n0ll";
-        this.born = -1;
-        this.deceased = -1;
-        this.updates = null;
-        this.weight = -1;
-    }
-
-    /**
-     * Initializes class Sheep
-     *
-     * @param int id
-     * @param int farmId
-     * @param String name
-     * @param int born
-     * @param int deceased
-     * @param String comment
-     * @param List<SheepUpdate> updates
-     * @param double weight
+     * Creates a new instance of the class sheep by specifying the information
+     * about the sheep.
      */
     public Sheep(int id, int farmId, String name, long born, long deceased, String comment, List<SheepUpdate> updates, double weight) {
         this.id = id;
@@ -61,40 +36,35 @@ public class Sheep {
     }
 
     /**
-     *
-     * @return sheep id
+     * Get the ID field.
      */
     public int getID() {
         return id;
     }
 
     /**
-     *
-     * @return the farm id where the sheep belongs
+     * Gets the FarmID field.
      */
     public int getFarmId() {
         return farmId;
     }
 
     /**
-     *
-     * @return the name of the sheep, if any
+     * Gets the name of the sheep.
      */
     public String getName() {
         return name;
     }
 
     /**
-     *
-     * @return the comment (if it's pregnant, or hurt, or something)
+     * Gets the comment field.
      */
     public String getComment() {
         return comment;
     }
 
     /**
-     *
-     * @return the unix timestamp of when sheep was born
+     * Gets the unix timestamp of when sheep was born.
      */
     public Date getBorn() {
         Date formattedBorn = new Date(born);
@@ -102,16 +72,14 @@ public class Sheep {
     }
 
     /**
-     *
-     * @return the unix timestamp of when sheep was born
+     * Gets the weight field.
      */
     public double getWeight() {
         return weight;
     }
 
     /**
-     *
-     * @return the unix timestamp of when sheep was deceased
+     * Gets the unix timestamp of when sheep was deceased.
      */
     public Date getDeceased() {
         Date formattedDeceased = new Date(deceased);
@@ -119,80 +87,82 @@ public class Sheep {
     }
 
     /**
-     *
-     * @return the list of updates for the sheep.
+     * Gets the list of updates associated with this sheep.
      */
     public List<SheepUpdate> getUpdates() {
         return updates;
     }
 
     /**
-     *
-     * @param d
+     * Sets the id field.
      */
-    public void setID(int d) {
-        this.id = d;
+    public void setID(int id) {
+        this.id = id;
     }
 
     /**
-     *
-     * @param e
+     * Sets the farm ID field
      */
-    public void setEierID(int e) {
-        this.farmId = e;
+    public void setFarmID(int id) {
+        farmId = id;
     }
 
     /**
-     *
-     * @param n
+     * Sets the name field.
      */
-    public void setName(String n) {
-        this.name = n;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
-     *
-     * @param k
+     * Sets the comment field.
      */
-    public void setComment(String k) {
-        this.comment = k;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     /**
-     *
-     * @param i
+     * Sets the born date of the sheep. Make sure that the sheep is not given a
+     * value that is older than it's deceased field, otherwise it will be 
+     * registered as dead.
      */
     public void setBorn(Date date) {
-        this.born = date.getTime();
+        born = date.getTime();
     }
 
     /**
-     *
-     * @param w
+     * Sets the weight of the sheep
      */
     public void setWeight(double w) {
         this.weight = w;
     }
 
     /**
-     *
-     * @param d
+     * Set the deceased value of the sheep. If the sheep is to be registered as
+     * alive, set the deceased value to "1st Jan 1970 00:00:00"
      */
-    public void setDeceaced(Date date) {
-        this.deceased = date.getTime();
+    public void setDeceased(Date date) {
+        deceased = date.getTime();
     }
 
     /**
-     *
-     * @param updates
+     * Sets the SheepUpdate list in the sheep object. The program depends in 
+     * many places on the fact that this list is sorted by timestamp, with the 
+     * newest update having the lowest index. Therefore: Make sure that the 
+     * list is sorted before calling this method.
      */
     public void setUpdates(List<SheepUpdate> updates) {
         this.updates = updates;
     }
 
     /**
-     *
-     * @param su
+     * Store an additional sheep update in the sheep's update list. This method
+     * should only be called if it can be guaranteed that the new update has a
+     * newer timestamp than the previous newest update, thus making sure that 
+     * the update list remains sorted.
+     * 
+     * If this cannot be guaranteed, use getUpdates(), add the update to the 
+     * list, sort the list, and then use setUpdates()
      */
     public void addUpdate(SheepUpdate su) {
         if (updates == null) {
@@ -202,44 +172,14 @@ public class Sheep {
     }
 
     /**
-     *
-     * @return a Boolean parsed from
+     * Returns true if the sheep is dead. In terms of data specifications, this 
+     * is when the deceased time is set to be after the born time. Living sheep
+     * should normally have their deceased field set to "1st Jan 1970 00:00:00"
      */
     public Boolean isAlive() {
-        if (this.deceased <= this.born) {
+        if (deceased <= born) {
             return true;
         }
         return false;
-    }
-
-    /**
-     *
-     * @return a Boolean parsed from
-     */
-    public Boolean isDead() {
-        if (isAlive()) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     *
-     * @param includeUpdates
-     * @return
-     */
-    public String toString(boolean includeUpdates) {
-        String s = "S@" + id + "@" + farmId + "@" + name + "@" + comment + "@" + born + "@" + deceased + "@" + weight;
-        if (includeUpdates) {
-            for (SheepUpdate su : updates) {
-                s += "\n" + su.toString();
-            }
-        }
-        return s;
-    }
-
-    @Override
-    public String toString() {
-        return toString(false);
     }
 }
