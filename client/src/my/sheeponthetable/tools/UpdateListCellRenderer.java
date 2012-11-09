@@ -15,13 +15,23 @@ import my.sheeponthetable.gui.SheepPanel;
 public class UpdateListCellRenderer extends DefaultListCellRenderer {
 
     SheepPanel sp;
-
+    
+    /**
+     * Creates a new UpdateListCellRenderer
+     * 
+     * @param The SheepPanel on which the list we want to render is displayed.
+     */
     public UpdateListCellRenderer(SheepPanel sp) {
         super();
         this.sp = sp;
     }
 
     @Override
+    /**
+     * Called when displaying the elements in the list. Basically it does what
+     * a generic listCellRendererComponent would do, but adds some colour 
+     * depending on the status of the sheep in the given update.
+     */
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         SheepUpdate su = sp.getUpdateList().get(index);
