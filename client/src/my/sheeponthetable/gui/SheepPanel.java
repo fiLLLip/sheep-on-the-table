@@ -64,7 +64,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
         mapInitialize();
         update();
-        establishFarmId();
+        populateFarmAndName();
         buildKeyboardShortcuts();
     }
 
@@ -317,7 +317,7 @@ public class SheepPanel extends javax.swing.JFrame {
         panelMain = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
         jLabelLastUpdate = new javax.swing.JLabel();
-        lblUsername = new javax.swing.JLabel();
+        lblName = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         sheepJList = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
@@ -389,7 +389,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
         jLabelLastUpdate.setText("Not Available");
 
-        lblUsername.setText("username");
+        lblName.setText("username");
 
         sheepJList.setModel(sheepShow);
         jScrollPane1.setViewportView(sheepJList);
@@ -690,7 +690,7 @@ public class SheepPanel extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabelLastUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)))
                     .addComponent(panelSheepInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -718,7 +718,7 @@ public class SheepPanel extends javax.swing.JFrame {
                             .addGroup(panelMainLayout.createSequentialGroup()
                                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel1)
-                                    .addComponent(lblUsername))
+                                    .addComponent(lblName))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel2)
@@ -1022,9 +1022,10 @@ public class SheepPanel extends javax.swing.JFrame {
     /**
      * Called by the constructor to get and print the farm id.
      */
-    private void establishFarmId() {
+    private void populateFarmAndName() {
         setTitle("Sheep Finder - " + WebServiceClient.getFarmName());
         lblFarmName.setText(WebServiceClient.getFarmName());
+        lblName.setText(WebServiceClient.getName());
     }
 
     
@@ -1199,6 +1200,7 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private org.jdesktop.swingx.JXMapKit jXSheepMap;
     private javax.swing.JLabel lblFarmName;
+    private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblSheepAlarm;
     private javax.swing.JLabel lblSheepBorn;
     private javax.swing.JLabel lblSheepDeceased;
@@ -1209,7 +1211,6 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JLabel lblSheepTemperature;
     private javax.swing.JLabel lblSheepUpdate;
     private javax.swing.JLabel lblSheepWeight;
-    private javax.swing.JLabel lblUsername;
     private javax.swing.JMenuItem menuAddSheep;
     private javax.swing.JMenuItem menuCloseProgram;
     private javax.swing.JMenuItem menuEditPassword;

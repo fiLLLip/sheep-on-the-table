@@ -31,6 +31,7 @@ public class WebServiceClient {
     private static Config config = new Config();
     private static String url;
     private static String username;
+    private static String name;
     private static String password;
     private static String hash;
     private static String userid;
@@ -149,9 +150,9 @@ public class WebServiceClient {
                 System.out.println(values.toString());
                 hash = values.get(0).toString();
                 userid = values.get(1).toString();
-                farmid = values.get(2).toString();
+                name = values.get(2).toString();
                 farmids.clear();
-                JSONArray JSONfarmid = (JSONArray) values.get(2);
+                JSONArray JSONfarmid = (JSONArray) values.get(3);
                 for (int i = 0; i < JSONfarmid.size(); i++) {
                     JSONObject obj = (JSONObject) JSONfarmid.get(i);
                     Map<String, String> map = new HashMap<>();
@@ -518,6 +519,10 @@ public class WebServiceClient {
 
     public static String getUsername() {
         return username;
+    }
+
+    public static String getName() {
+        return name;
     }
 
     public static String getUserID() {

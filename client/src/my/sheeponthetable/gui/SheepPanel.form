@@ -183,7 +183,7 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblUsername" max="32767" attributes="0"/>
+                              <Component id="lblName" max="32767" attributes="0"/>
                               <Component id="jLabelLastUpdate" pref="211" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -218,7 +218,7 @@
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblUsername" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblName" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
@@ -251,7 +251,7 @@
             <Property name="text" type="java.lang.String" value="Not Available"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblUsername">
+        <Component class="javax.swing.JLabel" name="lblName">
           <Properties>
             <Property name="text" type="java.lang.String" value="username"/>
           </Properties>
