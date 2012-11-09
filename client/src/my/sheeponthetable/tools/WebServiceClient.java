@@ -239,7 +239,7 @@ public class WebServiceClient {
 
         // Construct new request
         String method = "getSheepUpdates";
-        List<String> params = new ArrayList<String>();
+        List<String> params = new ArrayList<>();
         params.add(sheepid);
         params.add(limit);
 

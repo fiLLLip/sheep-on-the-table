@@ -371,8 +371,10 @@ public class SheepPanel extends javax.swing.JFrame {
         menuEditPassword = new javax.swing.JMenuItem();
         menuSheep = new javax.swing.JMenu();
         menuAddSheep = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         menuEditSheep = new javax.swing.JMenuItem();
         menuRefresh = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -388,31 +390,31 @@ public class SheepPanel extends javax.swing.JFrame {
         sheepJList.setModel(sheepShow);
         jScrollPane1.setViewportView(sheepJList);
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel2.setText("Last update:");
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel1.setText("Logged in as:");
 
         panelSheepInfo.setBackground(new java.awt.Color(255, 255, 255));
         panelSheepInfo.setMaximumSize(new java.awt.Dimension(310, 350));
 
-        jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel7.setText("ID:");
 
-        jLabel8.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel8.setText("Nickname:");
 
-        jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel9.setText("Weight:");
 
-        jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel10.setText("Date of death:");
 
-        jLabel11.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel11.setText("Comment:");
 
-        jLabel12.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel12.setText("Date of birth:");
 
         taSheepComment.setEditable(false);
@@ -423,19 +425,19 @@ public class SheepPanel extends javax.swing.JFrame {
         taSheepComment.setMinimumSize(new java.awt.Dimension(240, 80));
         jScrollPane3.setViewportView(taSheepComment);
 
-        jLabel13.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel13.setText("Position:");
 
-        jLabel14.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel14.setText("Temperature:");
 
-        jLabel15.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel15.setText("Selected Update:");
 
-        jLabel16.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel16.setText("Hearth Rate:");
 
-        jLabel17.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel17.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel17.setText("Status:");
 
         lblSheepId.setText("No sheep selected");
@@ -474,7 +476,7 @@ public class SheepPanel extends javax.swing.JFrame {
                             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -491,9 +493,9 @@ public class SheepPanel extends javax.swing.JFrame {
                                     .addComponent(lblSheepTemperature)
                                     .addComponent(lblSheepPulse)
                                     .addComponent(lblSheepAlarm))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(lblSheepPosition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblSheepUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(0, 44, Short.MAX_VALUE))
+                            .addComponent(lblSheepPosition, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                            .addComponent(lblSheepUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         panelSheepInfoLayout.setVerticalGroup(
@@ -546,10 +548,10 @@ public class SheepPanel extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        lblFarmName.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        lblFarmName.setFont(new java.awt.Font("Lucida Grande", 1, 18));
         lblFarmName.setText("Navnet til Sauefarmen");
 
-        jLabel19.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel19.setFont(new java.awt.Font("Lucida Grande", 1, 14));
         jLabel19.setText("Sheeps:");
 
         sheepUpdateJList.setModel(sheepUpdatesShow);
@@ -559,19 +561,19 @@ public class SheepPanel extends javax.swing.JFrame {
         panelSheepEdit.setMaximumSize(new java.awt.Dimension(323, 350));
         panelSheepEdit.setMinimumSize(new java.awt.Dimension(323, 350));
 
-        jLabel18.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel18.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel18.setText("ID:");
 
-        jLabel20.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel20.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel20.setText("Nickname:");
 
-        jLabel21.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel21.setText("Weight:");
 
-        jLabel23.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel23.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel23.setText("Comment:");
 
-        jLabel24.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel24.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel24.setText("Date of birth:");
 
         taSheepEditComment.setColumns(20);
@@ -599,7 +601,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
         dcSheepEditBorn.setDateFormatString("dd.MM.yyyy");
 
-        jLabel25.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel25.setFont(new java.awt.Font("Lucida Grande", 1, 13));
         jLabel25.setText("Date of death:");
 
         dcSheepEditDead.setDateFormatString("dd.MM.yyyy");
@@ -611,10 +613,10 @@ public class SheepPanel extends javax.swing.JFrame {
             .addGroup(panelSheepEditLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                     .addGroup(panelSheepEditLayout.createSequentialGroup()
                         .addComponent(btnSheepEditSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                         .addComponent(btnSheepEditCancel))
                     .addGroup(panelSheepEditLayout.createSequentialGroup()
                         .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -626,11 +628,11 @@ public class SheepPanel extends javax.swing.JFrame {
                             .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSheepEditId)
+                            .addComponent(txtSheepEditId, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                             .addComponent(txtSheepEditNickname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                             .addComponent(txtSheepEditWeight, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                            .addComponent(dcSheepEditBorn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dcSheepEditDead, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(dcSheepEditBorn, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                            .addComponent(dcSheepEditDead, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         panelSheepEditLayout.setVerticalGroup(
@@ -702,7 +704,7 @@ public class SheepPanel extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jXSheepMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jXSheepMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
                     .addGroup(panelMainLayout.createSequentialGroup()
                         .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFarmName)
@@ -725,7 +727,7 @@ public class SheepPanel extends javax.swing.JFrame {
                                 .addComponent(panelSheepEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 892, Short.MAX_VALUE))))
                 .addGap(14, 14, 14))
         );
 
@@ -794,6 +796,14 @@ public class SheepPanel extends javax.swing.JFrame {
         });
         menuSheep.add(menuAddSheep);
 
+        jMenuItem3.setText("Deselect sheep");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDeselectSheepActionPerformed(evt);
+            }
+        });
+        menuSheep.add(jMenuItem3);
+
         menuEditSheep.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.META_MASK));
         menuEditSheep.setText("Edit sheep");
         menuEditSheep.addActionListener(new java.awt.event.ActionListener() {
@@ -811,6 +821,9 @@ public class SheepPanel extends javax.swing.JFrame {
             }
         });
         menuSheep.add(menuRefresh);
+
+        jMenuItem2.setText("Remove Sheep");
+        menuSheep.add(jMenuItem2);
 
         jMenuBar1.add(menuSheep);
 
@@ -997,20 +1010,21 @@ public class SheepPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_menuEditPasswordActionPerformed
 
     /**
-     * Called when a deselect option is called.
+     * Called when the deselect sheep-option is selected from the menu.
      */
-    private void deselect() {
-        sheepJList.clearSelection();
-        sheepUpdateJList.clearSelection();
-        lblSheepId.setText("-");
-        lblSheepPosition.setText("-");
-        lblSheepUpdate.setText("-");
-        lblSheepNickname.setText("-");
-        taSheepComment.setText("-");
-        lblSheepPulse.setText("-");
-        lblSheepTemperature.setText("-");
-        resetSelection();
-    }
+private void menuDeselectSheepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDeselectSheepActionPerformed
+
+    sheepJList.clearSelection();
+    sheepUpdateJList.clearSelection();
+    lblSheepId.setText("-");
+    lblSheepPosition.setText("-");
+    lblSheepUpdate.setText("-");
+    lblSheepNickname.setText("-");
+    taSheepComment.setText("-");
+    lblSheepPulse.setText("-");
+    lblSheepTemperature.setText("-");
+    resetSelection();
+}//GEN-LAST:event_menuDeselectSheepActionPerformed
 
     /**
      * Called by the constructor to get and print the farm id.
@@ -1184,6 +1198,8 @@ public class SheepPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelLastUpdate;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
