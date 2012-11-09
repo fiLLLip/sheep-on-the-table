@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.sheeponthetable.tools.map;
 
 import java.awt.Composite;
@@ -13,7 +9,9 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 
 /**
- * Multiplies two images
+ * Multiplies two images.
+ * 
+ * This entire class has been found as part of an open source project.
  *
  * @author Martin Steiger
  */

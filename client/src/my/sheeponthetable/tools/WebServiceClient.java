@@ -14,13 +14,18 @@ import my.sheeponthetable.gui.PasswordScreen;
 import net.minidev.json.*;
 
 /**
- * This object works as a backend, managing the communication with the server on
+ * This class works as a backend, managing the communication with the server on
  * behalf of the client application.
  *
  * Upon creation, it tries to open a socket to the server. Using the socket, it
  * reads and writes information to and from the server when the appropriate
  * methods are called.
  *
+ * Also, note that this class is a static class, not an object class. This is 
+ * because the entire application only needs a single WebServiceClient, so there
+ * is no benefit to forcing the programmer to create a object that would work
+ * exactly like a static class.
+ * 
  * @author Gruppe 7
  */
 public class WebServiceClient {
@@ -36,7 +41,7 @@ public class WebServiceClient {
     private static String hash;
     private static String userid;
     private static String farmid;
-    private static ArrayList<Map> farmids = new ArrayList();
+    private static ArrayList<Map> farmids;
     private static URL serverURL;
     private static JSONRPC2Session mySession;
     public static String errorMessage;
@@ -47,6 +52,8 @@ public class WebServiceClient {
      * @return true if successfully connected, or false otherwise
      */
     private static boolean connect() {
+        farmids = new ArrayList<>();
+        
         config.loadSettingsFile();
         url = config.getServerURL();
 
@@ -61,6 +68,9 @@ public class WebServiceClient {
         return true;
     }
 
+    /**
+     * KVIFOR TRENG VI AA GJERA DETTE?
+     */
     private static List<String> hashParameters(List<String> parameters) {
         parameters.add(0, userid);
         parameters.add(0, hash);
@@ -83,7 +93,7 @@ public class WebServiceClient {
      *
      * @param String which method to request from webservice
      * @param List<String> parameters to send to webservice
-     * @param Boolean does this method require auth?
+     * @param Boolean - does this method require authentication
      * @return Object
      */
     private static Object doRequest(String method, List<String> parameters, Boolean reqAuth) {

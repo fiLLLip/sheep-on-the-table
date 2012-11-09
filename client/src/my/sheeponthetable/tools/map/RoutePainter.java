@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.sheeponthetable.tools.map;
 
 import java.awt.BasicStroke;
@@ -17,7 +13,8 @@ import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.painter.Painter;
 
 /**
- * Paints a route
+ * Paints a route. This entire class has been found as part of an open source
+ * project.
  *
  * @author Martin Steiger
  */

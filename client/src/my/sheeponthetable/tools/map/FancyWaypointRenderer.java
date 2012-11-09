@@ -1,11 +1,3 @@
-/*
- * WaypointRenderer.java
- *
- * Created on March 30, 2006, 5:24 PM
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
 package my.sheeponthetable.tools.map;
 
 import java.awt.Color;
@@ -23,7 +15,9 @@ import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.WaypointRenderer;
 
 /**
- * A fancy waypoint painter
+ * A fancy waypoint painter. 
+ * 
+ * This entire class has been found as part of an open source project.
  *
  * @author Martin Steiger
  */

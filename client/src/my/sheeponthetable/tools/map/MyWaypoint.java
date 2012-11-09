@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.sheeponthetable.tools.map;
 
 import java.awt.Color;
@@ -9,9 +5,12 @@ import org.jdesktop.swingx.mapviewer.DefaultWaypoint;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 
 /**
- * A waypoint that also has a color and a label
+ * A waypoint that also has a color and a label.
+ * 
+ * This class is based on the Waypoint implementation used by Martin Steiger in
+ * an open source mapping application.
  *
- * @author Martin Steiger
+ * @author Gruppe7
  */
 public class MyWaypoint extends DefaultWaypoint {
 
@@ -22,7 +21,6 @@ public class MyWaypoint extends DefaultWaypoint {
 
     /**
      * Constructor for Waypoints
-     *
      */
     public MyWaypoint(String label, Color color, GeoPosition coord, int index, boolean sheep) {
         super(coord);
@@ -33,21 +31,21 @@ public class MyWaypoint extends DefaultWaypoint {
     }
 
     /**
-     * @return the label text
+     * Returns the label text
      */
     public String getLabel() {
         return label;
     }
 
     /**
-     * @return the color
+     * Returns the color
      */
     public Color getColor() {
         return color;
     }
 
     /**
-     * @return True if this is a sheep waypoint, false if it is a update
+     * Returns true if this is a sheep waypoint, false if it is a update
      * waypoint
      */
     public boolean isSheepWaypoint() {
@@ -55,7 +53,7 @@ public class MyWaypoint extends DefaultWaypoint {
     }
 
     /**
-     * @return index of corresponding sheep or sheep update
+     * Returns the index of corresponding sheep or sheep update
      */
     public int getIndex() {
         return index;
