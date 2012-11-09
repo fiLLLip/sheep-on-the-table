@@ -6,7 +6,7 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * 
  * @author gruppe 7
  */
 public final class Config {
