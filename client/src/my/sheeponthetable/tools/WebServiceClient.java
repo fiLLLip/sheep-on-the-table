@@ -41,7 +41,7 @@ public class WebServiceClient {
     private static String hash;
     private static String userid;
     private static String farmid;
-    private static ArrayList<Map> farmids;
+    private static ArrayList<Map> farmids = new ArrayList<>();
     private static URL serverURL;
     private static JSONRPC2Session mySession;
     public static String errorMessage;
@@ -52,7 +52,6 @@ public class WebServiceClient {
      * @return true if successfully connected, or false otherwise
      */
     private static boolean connect() {
-        farmids = new ArrayList<>();
         
         config.loadSettingsFile();
         url = config.getServerURL();
