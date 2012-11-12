@@ -106,4 +106,28 @@ public class SheepUpdate {
     public void setAlarm(int alarm) {
         this.alarm = alarm;
     }
+    
+        
+    /**
+     * Gets the status of the update. The status is found accordingly:
+     * 
+     *  0 - this update is an alarm, and the sheep is therefore dead
+     *  1 - the sheep is alive and healthy in this update
+     *  2 - the sheep is alive, but sick (abnormal pulse or temperature)
+     */
+    public int getStatus() {
+        // First check for death
+        if (isAlarm()) {
+            return 0;
+        }
+        // Then check for disease
+        else if (getPulse() > 90 || getPulse() < 60
+                || getTemp() < 35 || getTemp() > 45) {
+            return 2;
+        }
+        // Otherwise, the sheep is safe and sound. 
+        else {
+            return 1;
+        }
+    }
 }

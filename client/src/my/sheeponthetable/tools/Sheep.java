@@ -182,4 +182,27 @@ public class Sheep {
         }
         return false;
     }
+    
+    /**
+     * Get status of the sheep. If the sheeps has any updates, it returns the
+     * status of the newest update, as this gives the best description of the
+     * sheep at the moment. The update's getStatus() function returns an int 
+     * value according to the following scheme:
+     * 
+     *  * 0 - this update is an alarm, and the sheep is therefore dead
+     *  * 1 - the sheep is alive and healthy in this update
+     *  * 2 - the sheep is alive, but sick (abnormal pulse or temperature)
+     * 
+     * If the sheep doesn't have any updates, this function returns 
+     * 
+     *  3 - The sheep doesn't have any updates
+     */
+    public int getStatus() {
+        if (getUpdates().isEmpty()) {
+            return 3;
+        }
+        else {
+            return getUpdates().get(0).getStatus();
+        }
+    }
 }

@@ -131,19 +131,6 @@ public class SheepPanel extends javax.swing.JFrame {
      * @param Index: The index of the selected sheep
      */
     private void selectSheep(int index) {
-        // Settings textfields to "Not available" before update
-        // because there may be no updates for selected Sheep
-        lblSheepId.setText("Not available");
-        lblSheepPosition.setText("Not available");
-        lblSheepUpdate.setText("Not available");
-        lblSheepNickname.setText("Not available");
-        taSheepComment.setText("Not available");
-        lblSheepPulse.setText("Not available");
-        lblSheepTemperature.setText("Not available");
-        lblSheepBorn.setText("Not available");
-        lblSheepWeight.setText("Not available");
-        lblSheepDeceased.setText("Not available");
-
         // Get the correct sheep form the sheep list
         Sheep s = sheepList.get(index);
 
@@ -161,11 +148,24 @@ public class SheepPanel extends javax.swing.JFrame {
 
         if (s.isAlive()) {
             lblSheepDeceased.setText("Not Dead");
-            lblSheepDeceased.setBackground(Color.green);
         } else {
             lblSheepDeceased.setText(sdf.format(s.getDeceased()));
         }
 
+        // Set the status label according to status
+        int status = s.getStatus();
+        String lblText = "";
+        if (status == 0) {
+            lblText = "Dead";
+        }
+        else if (status == 1) {
+            lblText = "Healthy";
+        }
+        else if (status == 2) {
+            lblText = "Sick";
+        }       
+        lblSheepAlarm.setText(lblText);
+        
         // Fill the SheepUpdate-list with the sheepUpdates corresponding to the
         // selected sheep, and at the same time, build a list of waypoints for
         // the sheep updates.
@@ -186,7 +186,6 @@ public class SheepPanel extends javax.swing.JFrame {
 
             lblSheepPulse.setText(Integer.toString(s.getUpdates().get(0).getPulse()) + " BPM");
             lblSheepTemperature.setText(Double.toString(s.getUpdates().get(0).getTemp()) + "C" + "\u00B0");
-
             // Iterate over the sheep updates, filling the SU-list and building
             // waypoints.
             Set<MyWaypoint> waypoints = new HashSet<>();
@@ -213,9 +212,22 @@ public class SheepPanel extends javax.swing.JFrame {
             }
 
             paintWaypoints(track, waypoints);
-        } // If there are no updates associated with the sheep, clear the map of
-        // all waypoints.
+        } 
+        // If there are no updates associated with the sheep, clear the map of
+        // all waypoints, and set the label information as n/a
         else {
+            lblSheepId.setText("Not available");
+            lblSheepPosition.setText("Not available");
+            lblSheepUpdate.setText("Not available");
+            lblSheepNickname.setText("Not available");
+            taSheepComment.setText("Not available");
+            lblSheepPulse.setText("Not available");
+            lblSheepTemperature.setText("Not available");
+            lblSheepBorn.setText("Not available");
+            lblSheepWeight.setText("Not available");
+            lblSheepDeceased.setText("Not available");
+            lblSheepAlarm.setText("Not available");
+            
             CompoundPainter<JXMapViewer> painter = new CompoundPainter<>();
             jXSheepMap.getMainMap().setOverlayPainter(painter);
         }
@@ -257,6 +269,20 @@ public class SheepPanel extends javax.swing.JFrame {
         lblSheepTemperature.setText(Double.toString(su.getTemp()) + " C" + "\u00B0");
         lblSheepPosition.setText(su.getY() + ", " + su.getX());
 
+        // Set the status label according to status
+        int status = su.getStatus();
+        String lblText = "";
+        if (status == 0) {
+            lblText = "Dead";
+        }
+        else if (status == 1) {
+            lblText = "Healthy";
+        }
+        else if (status == 2) {
+            lblText = "Sick";
+        }       
+        lblSheepAlarm.setText(lblText);
+        
         Set<MyWaypoint> waypoints = new HashSet<>();
         List<GeoPosition> track = new ArrayList();
 

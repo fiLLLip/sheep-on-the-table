@@ -35,18 +35,16 @@ public class SheepListCellRenderer extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         Sheep s = sp.getSheepList().get(index);
+        int status = s.getStatus();
         Color colour;
         // If there are no updates, make it grey
-        if (s.getUpdates().isEmpty()) {
+        if (status == 3) {
             colour = Color.GRAY;
         } // If the sheep is dead, make it red
-        else if (!s.isAlive()) {
+        else if (status == 0) {
             colour = Color.RED;
         } // If the sheep is sick, make it blue
-        else if (s.getUpdates().get(0).getPulse() > 90
-                || s.getUpdates().get(0).getPulse() < 60
-                || s.getUpdates().get(0).getTemp() < 35
-                || s.getUpdates().get(0).getTemp() > 45) {
+        else if (status == 2) {
             colour = Color.BLUE;
         } // If nothing is weird about this sheep, make it normal, i.e. black.
         else {
