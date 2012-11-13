@@ -424,8 +424,10 @@ public class SheepPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(1000, 650));
 
         panelMain.setBackground(new java.awt.Color(255, 255, 255));
+        panelMain.setPreferredSize(new java.awt.Dimension(1000, 600));
 
         jLabelLastUpdate.setText("Not Available");
 
@@ -434,10 +436,10 @@ public class SheepPanel extends javax.swing.JFrame {
         sheepJList.setModel(sheepShow);
         jScrollPane1.setViewportView(sheepJList);
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel2.setText("Last update:");
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel1.setText("Logged in as:");
 
         panelSheepInfo.setBackground(new java.awt.Color(255, 255, 255));
@@ -445,22 +447,22 @@ public class SheepPanel extends javax.swing.JFrame {
         panelSheepInfo.setMinimumSize(new java.awt.Dimension(323, 390));
         panelSheepInfo.setPreferredSize(new java.awt.Dimension(323, 390));
 
-        jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel7.setText("ID:");
 
-        jLabel8.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel8.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel8.setText("Nickname:");
 
-        jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel9.setText("Weight:");
 
-        jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel10.setText("Date of death:");
 
-        jLabel11.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel11.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel11.setText("Comment:");
 
-        jLabel12.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel12.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel12.setText("Date of birth:");
 
         taSheepComment.setEditable(false);
@@ -471,19 +473,19 @@ public class SheepPanel extends javax.swing.JFrame {
         taSheepComment.setMinimumSize(new java.awt.Dimension(240, 80));
         jScrollPane3.setViewportView(taSheepComment);
 
-        jLabel13.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel13.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel13.setText("Position:");
 
-        jLabel14.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel14.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel14.setText("Temperature:");
 
-        jLabel15.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel15.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel15.setText("Selected Update:");
 
-        jLabel16.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel16.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel16.setText("Hearth Rate:");
 
-        jLabel17.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel17.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel17.setText("Status:");
 
         lblSheepId.setText("No sheep selected");
@@ -513,7 +515,7 @@ public class SheepPanel extends javax.swing.JFrame {
             .addGroup(panelSheepInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelSheepInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)
                     .addGroup(panelSheepInfoLayout.createSequentialGroup()
                         .addGroup(panelSheepInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -522,7 +524,7 @@ public class SheepPanel extends javax.swing.JFrame {
                             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -539,9 +541,9 @@ public class SheepPanel extends javax.swing.JFrame {
                                     .addComponent(lblSheepTemperature)
                                     .addComponent(lblSheepPulse)
                                     .addComponent(lblSheepAlarm))
-                                .addGap(0, 103, Short.MAX_VALUE))
-                            .addComponent(lblSheepPosition, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                            .addComponent(lblSheepUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))))
+                                .addGap(0, 84, Short.MAX_VALUE))
+                            .addComponent(lblSheepPosition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSheepUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         panelSheepInfoLayout.setVerticalGroup(
@@ -591,13 +593,13 @@ public class SheepPanel extends javax.swing.JFrame {
                 .addGroup(panelSheepInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(lblSheepAlarm))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        lblFarmName.setFont(new java.awt.Font("Lucida Grande", 1, 18));
+        lblFarmName.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         lblFarmName.setText("Navnet til Sauefarmen");
 
-        jLabel19.setFont(new java.awt.Font("Lucida Grande", 1, 14));
+        jLabel19.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel19.setText("Sheeps:");
 
         sheepUpdateJList.setModel(sheepUpdatesShow);
@@ -608,19 +610,19 @@ public class SheepPanel extends javax.swing.JFrame {
         panelSheepEdit.setMinimumSize(new java.awt.Dimension(323, 390));
         panelSheepEdit.setPreferredSize(new java.awt.Dimension(323, 390));
 
-        jLabel18.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel18.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel18.setText("ID:");
 
-        jLabel20.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel20.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel20.setText("Nickname:");
 
-        jLabel21.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel21.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel21.setText("Weight:");
 
-        jLabel23.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel23.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel23.setText("Comment:");
 
-        jLabel24.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel24.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel24.setText("Date of birth:");
 
         taSheepEditComment.setColumns(20);
@@ -648,7 +650,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
         dcSheepEditBorn.setDateFormatString("dd.MM.yyyy");
 
-        jLabel25.setFont(new java.awt.Font("Lucida Grande", 1, 13));
+        jLabel25.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel25.setText("Date of death:");
 
         dcSheepEditDead.setDateFormatString("dd.MM.yyyy");
@@ -660,26 +662,26 @@ public class SheepPanel extends javax.swing.JFrame {
             .addGroup(panelSheepEditLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
                     .addGroup(panelSheepEditLayout.createSequentialGroup()
                         .addComponent(btnSheepEditSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                         .addComponent(btnSheepEditCancel))
+                    .addComponent(jScrollPane4)
                     .addGroup(panelSheepEditLayout.createSequentialGroup()
                         .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSheepEditId, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-                            .addComponent(txtSheepEditNickname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-                            .addComponent(txtSheepEditWeight, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-                            .addComponent(dcSheepEditBorn, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-                            .addComponent(dcSheepEditDead, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))))
+                        .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dcSheepEditBorn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtSheepEditWeight, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSheepEditNickname, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSheepEditId)
+                            .addComponent(dcSheepEditDead, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         panelSheepEditLayout.setVerticalGroup(
@@ -713,7 +715,7 @@ public class SheepPanel extends javax.swing.JFrame {
                 .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSheepEditSave)
                     .addComponent(btnSheepEditCancel))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         jButton1.setText("Edit selected sheep");
@@ -763,14 +765,14 @@ public class SheepPanel extends javax.swing.JFrame {
                         .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabelLastUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)))
-                    .addComponent(panelSheepEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-                    .addGroup(panelMainLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addGap(66, 66, 66)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2))
-                    .addComponent(panelSheepInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                    .addComponent(panelSheepEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelSheepInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2))
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -779,7 +781,7 @@ public class SheepPanel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jXSheepMap, javax.swing.GroupLayout.DEFAULT_SIZE, 778, Short.MAX_VALUE)
+                .addComponent(jXSheepMap, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelMainLayout.setVerticalGroup(
@@ -787,7 +789,7 @@ public class SheepPanel extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jXSheepMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)
+                    .addComponent(jXSheepMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelMainLayout.createSequentialGroup()
                         .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFarmName)
@@ -805,17 +807,17 @@ public class SheepPanel extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelSheepInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
+                                .addComponent(panelSheepInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(1, 1, 1)
                                 .addComponent(panelSheepEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jButton1)
                                     .addComponent(jButton2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                             .addGroup(panelMainLayout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jButton3)
@@ -935,7 +937,7 @@ public class SheepPanel extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
