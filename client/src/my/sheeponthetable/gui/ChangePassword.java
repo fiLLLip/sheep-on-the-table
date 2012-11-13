@@ -8,12 +8,12 @@ import my.sheeponthetable.tools.WebServiceClient;
  * 
  * @author Håkon
  */
-public class EditPassword extends javax.swing.JFrame {
+public class ChangePassword extends javax.swing.JFrame {
 
     /**
-     * Creates new form EditPassword
+     * Creates new form ChangePassword
      */
-    public EditPassword() {
+    public ChangePassword() {
         initComponents();
     }
 
@@ -67,14 +67,14 @@ public class EditPassword extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(ConfirmPasswordtxt)
                     .addComponent(NewPasswordtxt)
-                    .addComponent(CurrentPasswordtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CurrentPasswordtxt))
                 .addGap(40, 40, 40))
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(SaveButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CancelButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {CancelButton, SaveButton});
@@ -120,7 +120,7 @@ public class EditPassword extends javax.swing.JFrame {
         String confirmPwd = ConfirmPasswordtxt.getText();
         
         if (WebServiceClient.newPassword(currentPwd, newPwd, confirmPwd)) {
-            JOptionPane.showMessageDialog(null, "Succeede to save password!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Password has been succesfully changed!", "Information", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Failed to save new password!\r\nMake that sure the new passwords match.", "Error", JOptionPane.ERROR_MESSAGE);

@@ -130,7 +130,7 @@ public class SheepPanel extends javax.swing.JFrame {
      * displays an error.
      */
     private void removeSheep() {
-        if (selectedSheep != null) {
+        if (selectedSheep != null)   {
             if (WebServiceClient.removeSheep(selectedSheep)) {
                 deselect();
                 update();
@@ -1110,7 +1110,7 @@ public class SheepPanel extends javax.swing.JFrame {
      * Called when the edit password-option is selected from the menu.
      */
     private void menuEditPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditPasswordActionPerformed
-        new EditPassword().setVisible(true);
+        new ChangePassword().setVisible(true);
     }//GEN-LAST:event_menuEditPasswordActionPerformed
 
     /**
