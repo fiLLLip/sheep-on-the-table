@@ -41,6 +41,7 @@ public class WebServiceClient {
     private static String hash;
     private static String userid;
     private static String farmid;
+    private static Integer accessLevel = 0;
     private static ArrayList<Map> farmids = new ArrayList<>();
     private static URL serverURL;
     private static JSONRPC2Session mySession;
@@ -160,6 +161,7 @@ public class WebServiceClient {
                     map.put("id", obj.get("id").toString());
                     map.put("name", obj.get("name").toString());
                     map.put("address", obj.get("address").toString());
+                    map.put("level", obj.get("level").toString());
                     farmids.add(map);
                 }
                 returnValue = true;
@@ -585,6 +587,12 @@ public class WebServiceClient {
 
     public static void setFarmId(String fid) {
         farmid = fid;
+        for (int i = 0;i<farmids.size();i++) {
+            if(farmids.get(i).get("id").equals(fid)) {
+                accessLevel = Integer.parseInt(farmids.get(i).get("level").toString());
+                i = farmids.size();
+            }
+        }
     }
 
     public static void setUsername(String un) {
