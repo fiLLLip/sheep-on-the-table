@@ -258,7 +258,7 @@
         <Property name="name" type="java.lang.String" value="" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="setUserPermission"/>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="levelchanged"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblName">

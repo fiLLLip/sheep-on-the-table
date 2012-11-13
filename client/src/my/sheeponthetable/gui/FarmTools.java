@@ -75,20 +75,19 @@ public class FarmTools extends javax.swing.JFrame {
 
     }
 
-   
     /**
      * Sets the users variable and populates the list
      */
     private void refreshUserList() {
-        
+
         users.clear();
-        
+        listModel.clear();
         if (WebServiceClient.getUsersForFarm(farmID) != null) {
             users = WebServiceClient.getUsersForFarm(farmID);
         } else {
             listModel.addElement("No users found.");
         }
-        
+
         if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserID())) == 2) {
 
             for (User user : users) {
@@ -212,7 +211,7 @@ public class FarmTools extends javax.swing.JFrame {
         ClearanceChoice.setName(""); // NOI18N
         ClearanceChoice.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                setUserPermission(evt);
+                levelchanged(evt);
             }
         });
 
@@ -338,7 +337,7 @@ public class FarmTools extends javax.swing.JFrame {
         if (this.hasDoneChangesToSelectedUser && this.dontShowConfirm) {
             // make sure that the confirm button doesnt show up again if we press no or cancel
             this.dontShowConfirm = true;
-            
+
             // show confirmation popup
             int confirm = JOptionPane.showConfirmDialog(null, "You have unsaved changes, are you sure you want to discard them?");
 
@@ -356,10 +355,10 @@ public class FarmTools extends javax.swing.JFrame {
         }
 
         if (jListUser.getSelectedIndex() != -1) {
-            
+
             // disable the level setter
             ClearanceChoice.setEnabled(false);
-            
+
             // If user is a farm owner
             if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserID())) == 2) {
                 this.selectedUser = users.get(jListUser.getSelectedIndex());
@@ -392,13 +391,14 @@ public class FarmTools extends javax.swing.JFrame {
     }//GEN-LAST:event_valueChanged
 
     /**
-     * Fires every time there is a change to one of the checkboxes or clearence level
-     * 
-     * @param evt 
+     * Fires every time there is a change to one of the checkboxes or clearence
+     * level
+     *
+     * @param evt
      */
     private void userSettingsChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userSettingsChanged
-        
-        
+
+
         this.hasDoneChangesToSelectedUser = true;
 
         selectedUser.setEmailAlarmAttack(cbxEmailAlertAttack.isSelected());
@@ -412,30 +412,32 @@ public class FarmTools extends javax.swing.JFrame {
     }//GEN-LAST:event_userSettingsChanged
 
     /**
-     * Triggered when the Save-button is clicked. Sends the selectedUser object to the WebServiceClient and saves the changes.
-     * @param evt 
+     * Triggered when the Save-button is clicked. Sends the selectedUser object
+     * to the WebServiceClient and saves the changes.
+     *
+     * @param evt
      */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-       if(this.hasDoneChangesToSelectedUser) {
-        if(WebServiceClient.setUserOptions(selectedUser)) {
-            // if logged in user is a owner, set clearence level
-            if(WebServiceClient.getUserDetails().getClearance(Integer.parseInt(WebServiceClient.getFarmId())) == 2) {
-                if(!WebServiceClient.setUserPermission(selectedUser.getUserId(), Integer.parseInt(WebServiceClient.getFarmId()), Math.abs(ClearanceChoice.getSelectedIndex() - 2))) {
-                    JOptionPane.showMessageDialog(null, "Failed to set user level.");
+        if (this.hasDoneChangesToSelectedUser) {
+            if (WebServiceClient.setUserOptions(selectedUser)) {
+                // if logged in user is a owner, set clearence level
+                if (WebServiceClient.getUserDetails().getClearance(Integer.parseInt(WebServiceClient.getFarmId())) == 2) {
+                    if (!WebServiceClient.setUserPermission(selectedUser.getUserId(), Math.abs(ClearanceChoice.getSelectedIndex() - 2))) {
+                        JOptionPane.showMessageDialog(null, "Failed to set user level.");
+                    }
                 }
+                this.hasDoneChangesToSelectedUser = false;
+                this.refreshUserList();
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to save settings.");
             }
-            this.hasDoneChangesToSelectedUser = false;
-            this.refreshUserList();
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to save settings.");
         }
-       }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void addUserToFarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserToFarmButtonActionPerformed
         // TODO add your handling code here:
         String username = JOptionPane.showInputDialog(this, "Please enter the username of the user you want to grant access to this farm:", "Grant access to user", JOptionPane.QUESTION_MESSAGE);
-        if(!WebServiceClient.addNewUserToFarm(username)) {
+        if (!WebServiceClient.addNewUserToFarm(username)) {
             JOptionPane.showMessageDialog(this, "The user could not be added, is the username correct?", "Beeeeh!", JOptionPane.ERROR_MESSAGE, null);
         } else {
             this.refreshUserList();
@@ -443,19 +445,22 @@ public class FarmTools extends javax.swing.JFrame {
     }//GEN-LAST:event_addUserToFarmButtonActionPerformed
 
     private void removeUserFromFarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserFromFarmButtonActionPerformed
-        if(selectedUser != null) {
-            if(!WebServiceClient.removeUserFromFarm(selectedUser)) {
-                JOptionPane.showMessageDialog(this, "The user could not be removed, do you have the right permissions?", "Beeeeh!", JOptionPane.ERROR_MESSAGE, null);
-            } else {
-                this.refreshUserList();
+        if (selectedUser != null) {
+            if (JOptionPane.showConfirmDialog(this, "Are you sure you want to remove the access for selected user?", "Are you sure?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                if (!WebServiceClient.removeUserFromFarm(selectedUser)) {
+                    JOptionPane.showMessageDialog(this, "The user could not be removed, do you have the right permissions?", "Beeeeh!", JOptionPane.ERROR_MESSAGE, null);
+                } else {
+                    this.refreshUserList();
+                }
             }
         }
-        
+
     }//GEN-LAST:event_removeUserFromFarmButtonActionPerformed
 
-    private void setUserPermission(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_setUserPermission
+    private void levelchanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_levelchanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_setUserPermission
+        this.hasDoneChangesToSelectedUser = true;
+    }//GEN-LAST:event_levelchanged
     /**
      * @param args the command line arguments
      */
