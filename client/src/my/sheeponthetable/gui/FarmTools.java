@@ -203,6 +203,11 @@ public class FarmTools extends javax.swing.JFrame {
         });
 
         removeUserFromFarmButton.setText("-");
+        removeUserFromFarmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeUserFromFarmButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -324,15 +329,19 @@ public class FarmTools extends javax.swing.JFrame {
         }
 
         if (jListUser.getSelectedIndex() != -1) {
-
-            // If user is not a farm owner - (s)he can only change own info
+            
+            // disable the level setter
+            ClearanceChoice.setEnabled(false);
+            
+            // If user is a farm owner
             if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserID())) == 2) {
                 this.selectedUser = users.get(jListUser.getSelectedIndex());
                 ClearanceChoice.setEnabled(true); // owners can set levels
             } else {
+                // user is not a owner, and can only change own info
                 for (User user : users) {
                     if (user.getUserId() == Integer.parseInt(WebServiceClient.getUserID())) {
-                        selectedUser = user;
+                        this.selectedUser = user;
                     }
                 }
             }
@@ -355,6 +364,11 @@ public class FarmTools extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_valueChanged
 
+    /**
+     * Fires every time there is a change to one of the checkboxes or clearence level
+     * 
+     * @param evt 
+     */
     private void userSettingsChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userSettingsChanged
         
         
@@ -386,8 +400,20 @@ public class FarmTools extends javax.swing.JFrame {
 
     private void addUserToFarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserToFarmButtonActionPerformed
         // TODO add your handling code here:
-        String username = JOptionPane.showInputDialog(this, "Please enter the username of the user you want to grant access to this farm:");
+        String username = JOptionPane.showInputDialog(this, "Please enter the username of the user you want to grant access to this farm:", "Grant access to user", JOptionPane.QUESTION_MESSAGE);
+        if(!WebServiceClient.addNewUserToFarm(username)) {
+            JOptionPane.showMessageDialog(this, "The user could not be added, is the username correct?", "Beeeeh!", JOptionPane.ERROR_MESSAGE, null);
+        }
     }//GEN-LAST:event_addUserToFarmButtonActionPerformed
+
+    private void removeUserFromFarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserFromFarmButtonActionPerformed
+        if(selectedUser != null) {
+            if(!WebServiceClient.removeUserFromFarm(selectedUser)) {
+                JOptionPane.showMessageDialog(this, "The user could not be removed, do you have the right permissions?", "Beeeeh!", JOptionPane.ERROR_MESSAGE, null);
+            }
+        }
+        
+    }//GEN-LAST:event_removeUserFromFarmButtonActionPerformed
     /**
      * @param args the command line arguments
      */
