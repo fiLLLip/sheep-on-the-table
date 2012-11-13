@@ -41,7 +41,7 @@ public class WebServiceClient {
     private static String hash;
     private static String userid;
     private static String farmid;
-    private static Integer accessLevel = 0;
+    private static int accessLevel = 0;
     private static ArrayList<Map> farmids = new ArrayList<>();
     private static URL serverURL;
     private static JSONRPC2Session mySession;
@@ -455,8 +455,8 @@ public class WebServiceClient {
         ArrayList<User> returnArray = new ArrayList();
 
         ArrayList<String> params = new ArrayList<>();
-        params.add(Integer.toString(user.getUserId()));
         params.add(farmid);
+        params.add(Integer.toString(user.getUserId()));
         params.add(getStringFromBoolean(user.getSMSAlarmAttack()));
         params.add(getStringFromBoolean(user.getSMSAlarmHealth()));
         params.add(getStringFromBoolean(user.getSMSAlarmStationary()));
