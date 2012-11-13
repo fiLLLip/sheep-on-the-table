@@ -40,7 +40,6 @@ public class FarmTools extends javax.swing.JFrame {
         ClearanceChoice.add("View Access only");
         ClearanceChoice.select(2);
         setDisable();
-        getUsers();
         refreshUserList();
 
 
@@ -76,22 +75,20 @@ public class FarmTools extends javax.swing.JFrame {
 
     }
 
+   
     /**
-     * Sets the users variable with the user array from the WebService
+     * Sets the users variable and populates the list
      */
-    private void getUsers() {
-
+    private void refreshUserList() {
+        
+        users.clear();
+        
         if (WebServiceClient.getUsersForFarm(farmID) != null) {
             users = WebServiceClient.getUsersForFarm(farmID);
         } else {
             listModel.addElement("No users found.");
         }
-    }
-
-    /**
-     * Populates the userlist
-     */
-    private void refreshUserList() {
+        
         if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserID())) == 2) {
 
             for (User user : users) {
@@ -174,20 +171,50 @@ public class FarmTools extends javax.swing.JFrame {
         });
 
         cbxSMSAlertAttack.setText("Sheep killed");
+        cbxSMSAlertAttack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userSettingsChanged(evt);
+            }
+        });
 
         cbxEmailAlertHealth.setText("Health");
+        cbxEmailAlertHealth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userSettingsChanged(evt);
+            }
+        });
 
         cbxSMSAlertHealth.setText("Health");
+        cbxSMSAlertHealth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userSettingsChanged(evt);
+            }
+        });
 
         cbxSMSAlertStationary.setText("Stationary");
+        cbxSMSAlertStationary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userSettingsChanged(evt);
+            }
+        });
 
         cbxEmailAlertStationary.setText("Stationary");
+        cbxEmailAlertStationary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userSettingsChanged(evt);
+            }
+        });
 
         jLabel7.setText("Alert by phone:");
 
         lblClerance.setText("Clearance:");
 
         ClearanceChoice.setName(""); // NOI18N
+        ClearanceChoice.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                setUserPermission(evt);
+            }
+        });
 
         lblName.setText("Name:");
 
@@ -389,13 +416,20 @@ public class FarmTools extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-       if(WebServiceClient.setUserOptions(selectedUser)) {
-            // success
+       if(this.hasDoneChangesToSelectedUser) {
+        if(WebServiceClient.setUserOptions(selectedUser)) {
+            // if logged in user is a owner, set clearence level
+            if(WebServiceClient.getUserDetails().getClearance(Integer.parseInt(WebServiceClient.getFarmId())) == 2) {
+                if(!WebServiceClient.setUserPermission(selectedUser.getUserId(), Integer.parseInt(WebServiceClient.getFarmId()), Math.abs(ClearanceChoice.getSelectedIndex() - 2))) {
+                    JOptionPane.showMessageDialog(null, "Failed to set user level.");
+                }
+            }
             this.hasDoneChangesToSelectedUser = false;
+            this.refreshUserList();
         } else {
             JOptionPane.showMessageDialog(null, "Failed to save settings.");
         }
-        
+       }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void addUserToFarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserToFarmButtonActionPerformed
@@ -403,6 +437,8 @@ public class FarmTools extends javax.swing.JFrame {
         String username = JOptionPane.showInputDialog(this, "Please enter the username of the user you want to grant access to this farm:", "Grant access to user", JOptionPane.QUESTION_MESSAGE);
         if(!WebServiceClient.addNewUserToFarm(username)) {
             JOptionPane.showMessageDialog(this, "The user could not be added, is the username correct?", "Beeeeh!", JOptionPane.ERROR_MESSAGE, null);
+        } else {
+            this.refreshUserList();
         }
     }//GEN-LAST:event_addUserToFarmButtonActionPerformed
 
@@ -410,10 +446,16 @@ public class FarmTools extends javax.swing.JFrame {
         if(selectedUser != null) {
             if(!WebServiceClient.removeUserFromFarm(selectedUser)) {
                 JOptionPane.showMessageDialog(this, "The user could not be removed, do you have the right permissions?", "Beeeeh!", JOptionPane.ERROR_MESSAGE, null);
+            } else {
+                this.refreshUserList();
             }
         }
         
     }//GEN-LAST:event_removeUserFromFarmButtonActionPerformed
+
+    private void setUserPermission(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_setUserPermission
+        // TODO add your handling code here:
+    }//GEN-LAST:event_setUserPermission
     /**
      * @param args the command line arguments
      */

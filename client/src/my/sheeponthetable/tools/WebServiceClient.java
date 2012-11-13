@@ -554,7 +554,7 @@ public class WebServiceClient {
      * @param user_id
      * @return integer level: -1: error, 0: view only, 1: Admin, 2: Owner
      */
-    public static boolean setUserLevel(int farm_id, int user_id, int level) {
+    public static boolean setUserPermission(int farm_id, int user_id, int level) {
         List<String> params = new ArrayList<String>();
         params.add(Integer.toString(farm_id));
         params.add(Integer.toString(user_id));
