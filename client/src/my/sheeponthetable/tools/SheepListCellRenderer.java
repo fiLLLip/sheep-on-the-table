@@ -38,17 +38,17 @@ public class SheepListCellRenderer extends DefaultListCellRenderer {
         int status = s.getStatus();
         Color colour;
         // If there are no updates, make it grey
-        if (status == 3) {
+        if (status == -1) {
             colour = Color.GRAY;
-        } // If the sheep is dead, make it red
+        } // If the sheep is normal, make it black
         else if (status == 0) {
-            colour = Color.RED;
-        } // If the sheep is sick, make it blue
-        else if (status == 2) {
-            colour = Color.BLUE;
-        } // If nothing is weird about this sheep, make it normal, i.e. black.
-        else {
             colour = Color.BLACK;
+        } // If the sheep is dead, make it red
+        else if (status % 2 == 1) {
+            colour = Color.RED;
+        } // Otherwise, the sheep has a "minor" problem (sick or stationary)
+        else {
+            colour = Color.BLUE;
         }
         c.setForeground(colour);
         return c;

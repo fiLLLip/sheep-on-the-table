@@ -91,9 +91,17 @@ public class SheepUpdate {
     }
 
     /**
-     * Returns the alarm value of the update. This is more fine-grained than
-     * isAlarm() as it states the alarm type. To only check whether the update
-     * is an alarm or not, use isAlarm().
+     * Gets the alarm status of the update. The status is the sum of the 
+     * following flags:
+     * 
+     *  1 - the update is an alarm, the sheep is dead
+     *  2 - the sheep has abnormal physiological traits. It is most likely sick.
+     *  4 - the sheep has remained stationary of at least 24 hours.
+     * 
+     * Because of the binary encoding, it is possible to identify exactly which
+     * kinds of alarms are triggered in the update. 
+     * 
+     * Example: Alarm 5 = 4 + 1, the sheep is thus dead and stationary.
      */
     public int getAlarm() {
         return alarm;
@@ -105,29 +113,5 @@ public class SheepUpdate {
      */
     public void setAlarm(int alarm) {
         this.alarm = alarm;
-    }
-    
-        
-    /**
-     * Gets the status of the update. The status is found accordingly:
-     * 
-     *  0 - this update is an alarm, and the sheep is therefore dead
-     *  1 - the sheep is alive and healthy in this update
-     *  2 - the sheep is alive, but sick (abnormal pulse or temperature)
-     */
-    public int getStatus() {
-        // First check for death
-        if (isAlarm()) {
-            return 0;
-        }
-        // Then check for disease
-        else if (getPulse() > 90 || getPulse() < 60
-                || getTemp() < 35 || getTemp() > 45) {
-            return 2;
-        }
-        // Otherwise, the sheep is safe and sound. 
-        else {
-            return 1;
-        }
     }
 }

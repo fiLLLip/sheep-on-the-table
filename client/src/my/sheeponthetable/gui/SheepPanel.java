@@ -286,14 +286,18 @@ public class SheepPanel extends javax.swing.JFrame {
         lblSheepPosition.setText(su.getY() + ", " + su.getX());
 
         // Set the status label according to status
-        int status = su.getStatus();
+        int status = su.getAlarm();
         String lblText = "";
-        if (status == 0) {
+        if (status % 2 == 1) {
             lblText = "Dead";
-        } else if (status == 1) {
+        } else if (status == 0) {
             lblText = "Healthy";
+        } else if (status == 6) {
+            lblText = "Sick and stationary";
         } else if (status == 2) {
             lblText = "Sick";
+        } else if (status == 4) {
+            lblText = "Stationary";
         }
         lblSheepAlarm.setText(lblText);
 

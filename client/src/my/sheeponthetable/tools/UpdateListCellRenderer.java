@@ -35,16 +35,17 @@ public class UpdateListCellRenderer extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         SheepUpdate su = sp.getUpdateList().get(index);
+        int status = su.getAlarm();
         Color colour;
-        // If this is a warning, make it red
-        if (su.isAlarm()) {
-            colour = Color.RED;
-        } // If the sheep is sick, make it blue
-        else if (su.getPulse() > 90 || su.getPulse() < 60
-                || su.getTemp() < 35 || su.getTemp() > 45) {
-            colour = Color.BLUE;
-        } else {
+        // If the sheep is normal, make it black
+        if (status == 0) {
             colour = Color.BLACK;
+        } // If the sheep is dead, make it red
+        else if (status % 2 == 1) {
+            colour = Color.RED;
+        } // Otherwise, the sheep has a "minor" problem (sick or stationary)
+        else {
+            colour = Color.BLUE;
         }
         c.setForeground(colour);
         return c;
