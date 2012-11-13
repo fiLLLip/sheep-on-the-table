@@ -16,6 +16,7 @@ public class AddNewSheep extends javax.swing.JFrame {
 
     /**
      * Constructs the new form
+     * @param sp 
      */
     public AddNewSheep(SheepPanel sp) {
         this.setLocationRelativeTo(null);

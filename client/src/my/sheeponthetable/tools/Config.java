@@ -26,6 +26,7 @@ public final class Config {
 
     /**
      * Gets the URL field.
+     * @return 
      */
     public String getServerURL() {
         return serverURL;
@@ -33,6 +34,7 @@ public final class Config {
 
     /**
      * Gets the username field.
+     * @return 
      */
     public String getUsername() {
         return username;
@@ -40,6 +42,7 @@ public final class Config {
     
     /**
      * Gets the password field.
+     * @return 
      */
     public String getPassword() {
         return password;
@@ -47,6 +50,7 @@ public final class Config {
 
     /**
      * Sets the username, and which also stores this in the config file.
+     * @param username 
      */
     public void setUsername(String username) {
         this.username = username;
@@ -55,6 +59,7 @@ public final class Config {
 
     /**
      * Sets the password, and which also stores this in the config file.
+     * @param password 
      */
     public void setPassword(String password) {
         this.password = password;

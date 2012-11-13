@@ -71,6 +71,7 @@ public class SheepPanel extends javax.swing.JFrame {
      * Returns the list of Sheep Updates associated with the selected sheep.
      * To get the update list of a given sheep, use getSheepList() to get the
      * full list of sheep, and call getUpdates() on the desired sheep.
+     * @return 
      */
     public List<SheepUpdate> getUpdateList() {
         return sheepUpdateList;
@@ -78,6 +79,7 @@ public class SheepPanel extends javax.swing.JFrame {
 
     /**
      * Returns the list of sheep associated with the given farm.
+     * @return 
      */
     public List<Sheep> getSheepList() {
         return sheepList;
@@ -85,14 +87,17 @@ public class SheepPanel extends javax.swing.JFrame {
 
     /**
      *  Returns the mapKit-object used to draw the map. 
+     * @return 
      */
     public JXMapKit getMapKit() {
         return jXSheepMap;
     }
 
-    /*
+    /**
      * Returns the set of MyWaypoints that are currently being used to draw
      * waypoints on the map. Used by the map's mouse listener.
+     *
+     * @return
      */
     public Set<MyWaypoint> getWayPoints() {
         return wayPointSet;
@@ -147,7 +152,7 @@ public class SheepPanel extends javax.swing.JFrame {
      * It updates the information in the display area, as well as prints waypoints
      * on the map corresponding to the sheep's position history. 
      *
-     * @param Index: The index of the selected sheep
+     * @param index: The index of the selected sheep
      */
     private void selectSheep(int index) {
         // Get the correct sheep form the sheep list
@@ -258,8 +263,7 @@ public class SheepPanel extends javax.swing.JFrame {
      * value. This selection then fires the list event listeners which call the 
      * selectSheep method.
      *
-     * @param Index in the sheep list of the sheep corresponding to the selected
-     * waypoint.
+     * @param index 
      */
     public void mapSelectSheep(int index) {
         sheepJList.setSelectedIndex(index);
@@ -336,8 +340,7 @@ public class SheepPanel extends javax.swing.JFrame {
      * value. This selection then fires the list event listeners which call the
      * selectUpdate method.
      *
-     * @param Index in the sheep update list of the update corresponding to the 
-     * selected waypoint.
+     * @param index 
      */
     public void mapSelectUpdate(int index) {
         sheepUpdateJList.setSelectedIndex(index);

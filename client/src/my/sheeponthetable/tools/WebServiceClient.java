@@ -45,6 +45,9 @@ public class WebServiceClient {
     private static ArrayList<Map> farmids = new ArrayList<>();
     private static URL serverURL;
     private static JSONRPC2Session mySession;
+    /**
+     *
+     */
     public static String errorMessage;
 
     /**
@@ -225,6 +228,8 @@ public class WebServiceClient {
      *
      * Requires the connector to the logged in and connected.
      *
+     * @param sheepid 
+     * @param limit 
      * @return List<Sheep> or null, if not logged in, not connected or the user
      * doesn't have any sheep in the database.
      */
@@ -291,8 +296,9 @@ public class WebServiceClient {
     /**
      * Registers new password supplied from GUI
      *
-     * @param String Old Password
-     * @param String New Password
+     * @param oldPassword 
+     * @param newPassword 
+     * @param newConfirmedPassword 
      * @return true if successful or false if an error happened.
      */
     public static Boolean newPassword(String oldPassword, String newPassword, String newConfirmedPassword) {
@@ -343,7 +349,7 @@ public class WebServiceClient {
      * Adds permission for a user to current farm.
      * Sets default level to 0 (read only)
      *
-     * @param String
+     * @param username 
      * @return true if successful or false if an error happened.
      */
     public static Boolean addNewUserToFarm(String username) {
@@ -366,7 +372,7 @@ public class WebServiceClient {
     /**
      * Removes permission for a user from current farm.
      *
-     * @param User
+     * @param user 
      * @return true if successful or false if an error happened.
      */
     public static Boolean removeUserFromFarm(User user) {
@@ -447,7 +453,7 @@ public class WebServiceClient {
     /**
      * Returns the users connected to a specific farm
      *
-     * @param farm_id
+     * @param user 
      * @return ArrayList<String> with usernames
      */
     public static boolean setUserOptions(User user) {
@@ -476,7 +482,6 @@ public class WebServiceClient {
     /**
      * Returns the User object of the user logged in
      *
-     * @param farm_id
      * @return User on success, null if else
      */
     public static User getUserDetails() {
@@ -550,8 +555,8 @@ public class WebServiceClient {
     /**
      * Returns the user level of a specific user to a farm
      *
-     * @param farm_id
      * @param user_id
+     * @param level 
      * @return integer level: -1: error, 0: view only, 1: Admin, 2: Owner
      */
     public static boolean setUserPermission(int user_id, int level) {
@@ -569,22 +574,42 @@ public class WebServiceClient {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static String getUsername() {
         return username;
     }
 
+    /**
+     *
+     * @return
+     */
     public static String getName() {
         return name;
     }
 
+    /**
+     *
+     * @return
+     */
     public static String getUserID() {
         return userid;
     }
 
+    /**
+     *
+     * @return
+     */
     public static ArrayList<Map> getFarmIds() {
         return farmids;
     }
 
+    /**
+     *
+     * @param fid
+     */
     public static void setFarmId(String fid) {
         farmid = fid;
         for (int i = 0;i<farmids.size();i++) {
@@ -595,28 +620,52 @@ public class WebServiceClient {
         }
     }
 
+    /**
+     *
+     * @param un
+     */
     public static void setUsername(String un) {
         username = un;
     }
 
+    /**
+     *
+     * @param pw
+     */
     public static void setPassword(String pw) {
         password = pw;
     }
 
+    /**
+     *
+     * @return
+     */
     public static String getFarmId() {
         return farmid;
     }
 
+    /**
+     *
+     * @param message
+     */
     public static void setErrorMessage(String message) {
         errorMessage = message;
     }
 
+    /**
+     *
+     * @return
+     */
     public static String getErrorMessage() {
         String temp = errorMessage;
         setErrorMessage("");
         return temp;
     }
 
+    /**
+     *
+     * @return
+     */
     public static boolean isErrorMessage() {
         if (errorMessage != null) {
             return true;

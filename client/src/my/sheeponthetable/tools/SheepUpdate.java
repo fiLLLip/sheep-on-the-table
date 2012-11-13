@@ -29,6 +29,13 @@ public class SheepUpdate {
     /**
      * Creates a new SheepUpdate by specifying all the information associated 
      * with it.
+     * @param id 
+     * @param pos_x 
+     * @param alarm
+     * @param pulse 
+     * @param pos_y
+     * @param temperature 
+     * @param timestamp  
      */
     public SheepUpdate(int id, double pos_x, double pos_y, int pulse, double temperature, int alarm, long timestamp) {
         this.id = id;
@@ -42,6 +49,7 @@ public class SheepUpdate {
 
     /**
      * Gets the database ID of the SheepUpdate
+     * @return 
      */
     public int getID() {
         return id;
@@ -49,6 +57,7 @@ public class SheepUpdate {
 
     /**
      * Gets the timestamp. 
+     * @return 
      */
     public Long getTimeStamp() {
         return timestamp;
@@ -56,6 +65,7 @@ public class SheepUpdate {
 
     /**
      * Gets the longitudinal position.
+     * @return 
      */
     public double getX() {
         return pos_x;
@@ -63,6 +73,7 @@ public class SheepUpdate {
 
     /**
      * Gets the latitudinal position.
+     * @return 
      */
     public double getY() {
         return pos_y;
@@ -70,6 +81,7 @@ public class SheepUpdate {
 
     /**
      * Gets the pulse value of the update.
+     * @return 
      */
     public int getPulse() {
         return pulse;
@@ -77,6 +89,7 @@ public class SheepUpdate {
 
     /**
      * Gets the temperature value of the update.
+     * @return 
      */
     public double getTemp() {
         return temperature;
@@ -85,6 +98,7 @@ public class SheepUpdate {
     /**
      * Returns true if this update was an alarm, false otherwise. For information
      * about which kind of alarm it is, use getAlarm().
+     * @return 
      */
     public boolean isAlarm() {
         return (alarm > 0);
@@ -102,6 +116,7 @@ public class SheepUpdate {
      * kinds of alarms are triggered in the update. 
      * 
      * Example: Alarm 5 = 4 + 1, the sheep is thus dead and stationary.
+     * @return 
      */
     public int getAlarm() {
         return alarm;
@@ -110,6 +125,7 @@ public class SheepUpdate {
     /**
      * Sets that alarm field of the update. 0 is no alarm, while different 
      * positive integers correspond to different kinds of alarms.
+     * @param alarm 
      */
     public void setAlarm(int alarm) {
         this.alarm = alarm;

@@ -19,7 +19,7 @@ public class SheepListCellRenderer extends DefaultListCellRenderer {
     /**
      * Creates a new SheepListCellRenderer
      * 
-     * @param The SheepPanel on which the list we want to render is displayed.
+     * @param sp 
      */
     public SheepListCellRenderer(SheepPanel sp) {
         super();

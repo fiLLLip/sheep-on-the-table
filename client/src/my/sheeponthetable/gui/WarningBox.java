@@ -15,6 +15,8 @@ public class WarningBox extends javax.swing.JFrame {
 
     /**
      * Creates new form WarningBox
+     * @param sheep 
+     * @param sp 
      */
     public WarningBox(Sheep sheep, SheepPanel sp) {
         initComponents();

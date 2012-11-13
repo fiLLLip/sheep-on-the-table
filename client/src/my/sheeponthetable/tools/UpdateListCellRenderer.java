@@ -19,7 +19,7 @@ public class UpdateListCellRenderer extends DefaultListCellRenderer {
     /**
      * Creates a new UpdateListCellRenderer
      * 
-     * @param The SheepPanel on which the list we want to render is displayed.
+     * @param sp 
      */
     public UpdateListCellRenderer(SheepPanel sp) {
         super();

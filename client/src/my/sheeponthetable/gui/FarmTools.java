@@ -29,6 +29,8 @@ public class FarmTools extends javax.swing.JFrame {
 
     /**
      * Creates new form AddNewSheep
+     * @param sp
+     * @param id  
      */
     public FarmTools(SheepPanel sp, int id) {
         initComponents();

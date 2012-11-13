@@ -22,7 +22,7 @@ public class MouseClickOnWayPointListener implements MouseListener {
     /**
      * Create a new MouseClickOnWayPointListener
      * 
-     * @param the sheepPanel whose map the listener is supposed to be used on.
+     * @param sp 
      */
     public MouseClickOnWayPointListener(SheepPanel sp) {
         map = sp.getMapKit().getMainMap();

@@ -61,6 +61,12 @@ public class FancyWaypointRenderer implements WaypointRenderer<MyWaypoint> {
         return imgOut;
     }
 
+    /**
+     *
+     * @param g
+     * @param viewer
+     * @param w
+     */
     @Override
     public void paintWaypoint(Graphics2D g, JXMapViewer viewer, MyWaypoint w) {
         g = (Graphics2D) g.create();

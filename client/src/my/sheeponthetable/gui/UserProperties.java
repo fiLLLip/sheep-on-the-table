@@ -16,6 +16,7 @@ public class UserProperties extends javax.swing.JFrame {
 
     /**
      * Creates new form AddNewSheep
+     * @param sp 
      */
     public UserProperties(SheepPanel sp) {
         initComponents();

@@ -23,6 +23,11 @@ public class User {
     /**
      * Creates a new user without specifying information about which alarm the
      * user wants.
+     * @param userId 
+     * @param username 
+     * @param name 
+     * @param telephone
+     * @param email  
      */
     public User(int userId, String username, String name, String email, String telephone) {
         this.userId = userId;
@@ -34,6 +39,17 @@ public class User {
     
     /**
      * Creates a new user object by stating all the associated information.
+     * @param userId 
+     * @param username 
+     * @param EmailAlarmHealth
+     * @param name
+     * @param telephone 
+     * @param SMSAlarmStationary 
+     * @param email
+     * @param SMSAlarmAttack
+     * @param EmailAlarmStationary 
+     * @param SMSAlarmHealth 
+     * @param EmailAlarmAttack  
      */
     public User(int userId,
             String username,
@@ -63,6 +79,7 @@ public class User {
 
     /**
      * Gets the SMSAlarmStationary field
+     * @return 
      */ 
     public boolean getSMSAlarmStationary() {
         return SMSAlarmStationary;
@@ -70,6 +87,7 @@ public class User {
 
     /**
      * Sets the SMSAlarmStationary field
+     * @param SMSAlarmStationary 
      */ 
     public void setSMSAlarmStationary(boolean SMSAlarmStationary) {
         this.SMSAlarmStationary = SMSAlarmStationary;
@@ -77,6 +95,7 @@ public class User {
     
     /**
      * Gets the SMSAlarmAttack field
+     * @return 
      */ 
     public boolean getSMSAlarmAttack() {
         return SMSAlarmAttack;
@@ -84,6 +103,7 @@ public class User {
 
     /**
      * Sets the SMSAlarmAttack field
+     * @param SMSAlarmAttack 
      */ 
     public void setSMSAlarmAttack(boolean SMSAlarmAttack) {
         this.SMSAlarmAttack = SMSAlarmAttack;
@@ -91,6 +111,7 @@ public class User {
 
     /**
      * Gets the SMSAlarmHealth field
+     * @return 
      */ 
     public boolean getSMSAlarmHealth() {
         return SMSAlarmHealth;
@@ -98,6 +119,7 @@ public class User {
 
     /**
      * Sets the SMSAlarmHealth field
+     * @param SMSAlarmHealth 
      */ 
     public void setSMSAlarmHealth(boolean SMSAlarmHealth) {
         this.SMSAlarmHealth = SMSAlarmHealth;
@@ -105,6 +127,7 @@ public class User {
 
     /**
      * Gets the EmailAlarmStationary field
+     * @return 
      */ 
     public boolean getEmailAlarmStationary() {
         return EmailAlarmStationary;
@@ -112,6 +135,7 @@ public class User {
     
     /**
      * Sets the EmailAlarmStationary field
+     * @param EmailAlarmStationary 
      */ 
     public void setEmailAlarmStationary(boolean EmailAlarmStationary) {
         this.EmailAlarmStationary = EmailAlarmStationary;
@@ -119,6 +143,7 @@ public class User {
 
     /**
      * Gets the EmailAlarmAttack field
+     * @return 
      */ 
     public boolean getEmailAlarmAttack() {
         return EmailAlarmAttack;
@@ -126,6 +151,7 @@ public class User {
 
     /**
      * Sets the EmailAlarmAttack field
+     * @param EmailAlarmAttack 
      */ 
     public void setEmailAlarmAttack(boolean EmailAlarmAttack) {
         this.EmailAlarmAttack = EmailAlarmAttack;
@@ -133,6 +159,7 @@ public class User {
 
     /**
      * Gets the EmailAlarmField field
+     * @return 
      */ 
     public boolean getEmailAlarmHealth() {
         return EmailAlarmHealth;
@@ -141,6 +168,7 @@ public class User {
     
     /**
      * Sets the EmailAlarmHealth field
+     * @param EmailAlarmHealth 
      */ 
     public void setEmailAlarmHealth(boolean EmailAlarmHealth) {
         this.EmailAlarmHealth = EmailAlarmHealth;
@@ -149,6 +177,8 @@ public class User {
     /**
      * Gets the level of clerance the user has on this farm, by asking the 
      * server to provide this information.
+     * @param farmId 
+     * @return 
      */
     public int getClearance(int farmId) {
         return WebServiceClient.getUserLevel(farmId, this.userId);
@@ -156,6 +186,7 @@ public class User {
 
     /**
      * Gets the telephone field.
+     * @return 
      */
     public String getTelephone() {
         return telephone;
@@ -163,6 +194,7 @@ public class User {
     
     /**
      * Gets the email field.
+     * @return 
      */
     public String getEmail() {
         return this.email;
@@ -170,6 +202,7 @@ public class User {
 
     /**
      * Gets the name field.
+     * @return 
      */
     public String getName() {
         return this.name;
@@ -177,6 +210,7 @@ public class User {
 
     /**
      * Gets the username field.
+     * @return 
      */
     public String getUsername() {
         return this.username;
@@ -184,6 +218,7 @@ public class User {
 
     /**
      * Gets the user id field.
+     * @return 
      */
     public int getUserId() {
         return this.userId;
@@ -191,6 +226,7 @@ public class User {
 
     /**
      * Sets the name field
+     * @param name 
      */
     public void setName(String name) {
         this.name = name;
@@ -198,6 +234,7 @@ public class User {
 
     /**
      * Sets the email field
+     * @param mail 
      */
     public void setEmail(String mail) {
         this.email = mail;
@@ -205,6 +242,7 @@ public class User {
 
     /**
      * Sets the telephone field
+     * @param number 
      */
     public void setTelephone(String number) {
         this.telephone = number;

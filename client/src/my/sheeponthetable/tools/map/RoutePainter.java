@@ -33,6 +33,13 @@ public class RoutePainter implements Painter<JXMapViewer> {
         this.track = new ArrayList<>(track);
     }
 
+    /**
+     *
+     * @param g
+     * @param map
+     * @param w
+     * @param h
+     */
     @Override
     public void paint(Graphics2D g, JXMapViewer map, int w, int h) {
         g = (Graphics2D) g.create();

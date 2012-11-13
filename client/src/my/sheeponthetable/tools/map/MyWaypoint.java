@@ -21,6 +21,11 @@ public class MyWaypoint extends DefaultWaypoint {
 
     /**
      * Constructor for Waypoints
+     * @param label 
+     * @param color 
+     * @param coord
+     * @param sheep
+     * @param index  
      */
     public MyWaypoint(String label, Color color, GeoPosition coord, int index, boolean sheep) {
         super(coord);
@@ -32,6 +37,7 @@ public class MyWaypoint extends DefaultWaypoint {
 
     /**
      * Returns the label text
+     * @return 
      */
     public String getLabel() {
         return label;
@@ -39,6 +45,7 @@ public class MyWaypoint extends DefaultWaypoint {
 
     /**
      * Returns the color
+     * @return 
      */
     public Color getColor() {
         return color;
@@ -47,6 +54,7 @@ public class MyWaypoint extends DefaultWaypoint {
     /**
      * Returns true if this is a sheep waypoint, false if it is a update
      * waypoint
+     * @return 
      */
     public boolean isSheepWaypoint() {
         return sheep;
@@ -54,6 +62,7 @@ public class MyWaypoint extends DefaultWaypoint {
 
     /**
      * Returns the index of corresponding sheep or sheep update
+     * @return 
      */
     public int getIndex() {
         return index;

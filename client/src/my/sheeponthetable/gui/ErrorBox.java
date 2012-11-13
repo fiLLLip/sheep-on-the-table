@@ -19,7 +19,7 @@ public class ErrorBox extends javax.swing.JFrame {
     /**
      * Creates new form ErrorBox, while specifying the error message.
      *
-     * @param The message the box should display
+     * @param errorMessage 
      */
     public ErrorBox(String errorMessage) {
         this();
@@ -30,8 +30,8 @@ public class ErrorBox extends javax.swing.JFrame {
      * Creates new form ErrorBox, while specifying the error message and the
      * title.
      *
-     * @param The message the box should display
-     * @param The title the box should display
+     * @param errorMessage
+     * @param errorTitle  
      */
     public ErrorBox(String errorMessage, String errorTitle) {
         this();
