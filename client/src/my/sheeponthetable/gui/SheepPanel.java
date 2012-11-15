@@ -117,6 +117,7 @@ public class SheepPanel extends javax.swing.JFrame {
             menuAddSheep.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.META_MASK));
             menuEditSheep.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.META_MASK));
             menuRefresh.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.META_MASK));
+            menuChangePassword.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.META_MASK));
         } else {
             menuLogout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_DOWN_MASK));
             menuCloseProgram.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -125,6 +126,7 @@ public class SheepPanel extends javax.swing.JFrame {
             menuAddSheep.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
             menuEditSheep.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
             menuRefresh.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+            menuChangePassword.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         }
     }
 
@@ -435,7 +437,7 @@ public class SheepPanel extends javax.swing.JFrame {
         menuPreferences = new javax.swing.JMenu();
         menuPrefFarm = new javax.swing.JMenuItem();
         menuPrefUser = new javax.swing.JMenuItem();
-        menuEditPassword = new javax.swing.JMenuItem();
+        menuChangePassword = new javax.swing.JMenuItem();
         menuSheep = new javax.swing.JMenu();
         menuAddSheep = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -447,7 +449,6 @@ public class SheepPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1000, 650));
 
         panelMain.setBackground(new java.awt.Color(255, 255, 255));
         panelMain.setPreferredSize(new java.awt.Dimension(1000, 600));
@@ -891,13 +892,14 @@ public class SheepPanel extends javax.swing.JFrame {
         });
         menuPreferences.add(menuPrefUser);
 
-        menuEditPassword.setText("Edit Password");
-        menuEditPassword.addActionListener(new java.awt.event.ActionListener() {
+        menuChangePassword.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.META_MASK));
+        menuChangePassword.setText("Change Password");
+        menuChangePassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuEditPasswordActionPerformed(evt);
+                menuChangePasswordActionPerformed(evt);
             }
         });
-        menuPreferences.add(menuEditPassword);
+        menuPreferences.add(menuChangePassword);
 
         jMenuBar1.add(menuPreferences);
 
@@ -1134,9 +1136,9 @@ public class SheepPanel extends javax.swing.JFrame {
     /**
      * Called when the edit password-option is selected from the menu.
      */
-    private void menuEditPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditPasswordActionPerformed
+    private void menuChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuChangePasswordActionPerformed
         new ChangePassword().setVisible(true);
-    }//GEN-LAST:event_menuEditPasswordActionPerformed
+    }//GEN-LAST:event_menuChangePasswordActionPerformed
 
     /**
      * Called when the deselect sheep-option is selected from the menu.
@@ -1402,8 +1404,8 @@ private void menuRemoveSheepClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private javax.swing.JLabel lblSheepUpdate;
     private javax.swing.JLabel lblSheepWeight;
     private javax.swing.JMenuItem menuAddSheep;
+    private javax.swing.JMenuItem menuChangePassword;
     private javax.swing.JMenuItem menuCloseProgram;
-    private javax.swing.JMenuItem menuEditPassword;
     private javax.swing.JMenuItem menuEditSheep;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenuItem menuLogout;
