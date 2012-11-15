@@ -179,9 +179,9 @@ public class SheepPanel extends javax.swing.JFrame {
         // Set the status label according to status
         int status = selectedSheep.getStatus();
         String lblText = "";
-        if (status == 0) {
+        if (status == 1) {
             lblText = "Dead";
-        } else if (status == 1) {
+        } else if (status == 0) {
             lblText = "Healthy";
         } else if (status == 2) {
             lblText = "Sick";
