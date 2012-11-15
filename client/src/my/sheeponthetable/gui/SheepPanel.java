@@ -151,19 +151,30 @@ public class SheepPanel extends javax.swing.JFrame {
      * The function recives a status int and generates a Health
      * status in writing and sends it back as a String
     */ 
-    private String getHealthStatus(int status){
-      
-        String lblText = "";
-        if (status % 2 == 1) {
-            lblText = "Dead";
-        } else if (status == 0) {
-            lblText = "Healthy";
-        } else if (status == 6) {
-            lblText = "Sick and stationary";
+    private String getHealthStatusAlarm(int status){
+      /*1 = attack
+       * 2 = health
+       * 4 = stationary
+       * 3 = attack, health
+       * 5 = attack, stationary
+       * 6 = health, stationary
+       * 7 = alle
+       */
+        String lblText = "None";
+        if (status == 1) {
+            lblText = "Attacked";
         } else if (status == 2) {
-            lblText = "Sick";
+            lblText = "Health";
+        } else if (status == 3) {
+            lblText = "Attack and Health";
         } else if (status == 4) {
             lblText = "Stationary";
+        } else if (status == 5) {
+            lblText = "Attack and stationary";
+        } else if (status == 6) {
+            lblText = "Health and stationary";
+        } else if (status == 7) {
+            lblText = "Attack, stationary and health";
         }
         return lblText;
     }
@@ -198,8 +209,8 @@ public class SheepPanel extends javax.swing.JFrame {
         }
 
         // Set the status label according to status
-        //send status too getHealthStatus
-        String lblText = getHealthStatus(selectedSheep.getStatus());
+        //send status too getHealthStatusAlarm
+        String lblText = getHealthStatusAlarm(selectedSheep.getStatus());
         //recive a String
         lblSheepAlarm.setText(lblText);
 
@@ -305,8 +316,8 @@ public class SheepPanel extends javax.swing.JFrame {
         lblSheepPosition.setText(su.getY() + ", " + su.getX());
 
         // Set the status label according to status
-         //send status too getHealthStatus
-        String lblText = getHealthStatus(su.getAlarm());
+         //send status too getHealthStatusAlarm
+        String lblText = getHealthStatusAlarm(su.getAlarm());
         //recive a string
         lblSheepAlarm.setText(lblText);
 
