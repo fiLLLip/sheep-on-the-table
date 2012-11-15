@@ -146,6 +146,27 @@ public class SheepPanel extends javax.swing.JFrame {
             new ErrorBox("You have to select a sheep to remove one!");
         }
     }
+    /*
+     *Called upon when a HealthStatus is wanted in String format.
+     * The function recives a status int and generates a Health
+     * status in writing and sends it back as a String
+    */ 
+    private String getHealthStatus(int status){
+      
+        String lblText = "";
+        if (status % 2 == 1) {
+            lblText = "Dead";
+        } else if (status == 0) {
+            lblText = "Healthy";
+        } else if (status == 6) {
+            lblText = "Sick and stationary";
+        } else if (status == 2) {
+            lblText = "Sick";
+        } else if (status == 4) {
+            lblText = "Stationary";
+        }
+        return lblText;
+    }
 
     /**
      * Fired by event listeners to handle what happens when a sheep is seleced.
@@ -177,15 +198,9 @@ public class SheepPanel extends javax.swing.JFrame {
         }
 
         // Set the status label according to status
-        int status = selectedSheep.getStatus();
-        String lblText = "";
-        if (status == 1) {
-            lblText = "Dead";
-        } else if (status == 0) {
-            lblText = "Healthy";
-        } else if (status == 2) {
-            lblText = "Sick";
-        }
+        //send status too getHealthStatus
+        String lblText = getHealthStatus(selectedSheep.getStatus());
+        //recive a String
         lblSheepAlarm.setText(lblText);
 
         // Fill the SheepUpdate-list with the sheepUpdates corresponding to the
@@ -290,19 +305,9 @@ public class SheepPanel extends javax.swing.JFrame {
         lblSheepPosition.setText(su.getY() + ", " + su.getX());
 
         // Set the status label according to status
-        int status = su.getAlarm();
-        String lblText = "";
-        if (status % 2 == 1) {
-            lblText = "Dead";
-        } else if (status == 0) {
-            lblText = "Healthy";
-        } else if (status == 6) {
-            lblText = "Sick and stationary";
-        } else if (status == 2) {
-            lblText = "Sick";
-        } else if (status == 4) {
-            lblText = "Stationary";
-        }
+         //send status too getHealthStatus
+        String lblText = getHealthStatus(su.getAlarm());
+        //recive a string
         lblSheepAlarm.setText(lblText);
 
         Set<MyWaypoint> waypoints = new HashSet<>();
