@@ -36,7 +36,7 @@ import org.jdesktop.swingx.painter.Painter;
  * @author Gruppe 7
  */
 public class SheepPanel extends javax.swing.JFrame {
-
+// 你吸怪物马家伙
     private DefaultListModel sheepShow;
     private DefaultListModel sheepUpdatesShow;
     private List<Sheep> sheepList;
