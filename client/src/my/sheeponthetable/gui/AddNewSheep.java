@@ -190,7 +190,6 @@ public class AddNewSheep extends javax.swing.JFrame {
         // Make sure all the fields are filled
         if (txtNick.getText().equals("") 
                 || txtWeight.getText().equals("")
-                || txtComment.getText().equals("")
                 || dcSheepAddBorn.getDate().before(new Date(84600000))
                 ) {
 
