@@ -2,6 +2,7 @@ package my.sheeponthetable.tools;
 
 import com.thetransactioncompany.jsonrpc2.*;
 import com.thetransactioncompany.jsonrpc2.client.*;
+import java.awt.HeadlessException;
 import java.awt.Window;
 import java.net.*;
 import java.util.ArrayList;
@@ -121,10 +122,7 @@ public class WebServiceClient {
                 System.err.println(response.getError().getMessage());
                 setErrorMessage(response.getError().getMessage());
             }
-        } catch (JSONRPC2SessionException e) {
-            System.err.println(e.getMessage());
-            setErrorMessage(e.getMessage());
-        } catch (Exception e) {
+        } catch (JSONRPC2SessionException | HeadlessException e) {
             System.err.println(e.getMessage());
             setErrorMessage(e.getMessage());
         } finally {

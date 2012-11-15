@@ -40,12 +40,12 @@ public class SheepListCellRenderer extends DefaultListCellRenderer {
         // If there are no updates, make it grey
         if (status == -1) {
             colour = Color.GRAY;
+        } // If the sheep is dead, make it red
+        else if (status % 2 == 1 || !s.isAlive()) {
+            colour = Color.RED;
         } // If the sheep is normal, make it black
         else if (status == 0) {
             colour = Color.BLACK;
-        } // If the sheep is dead, make it red
-        else if (status % 2 == 1) {
-            colour = Color.RED;
         } // Otherwise, the sheep has a "minor" problem (sick or stationary)
         else {
             colour = Color.BLUE;
