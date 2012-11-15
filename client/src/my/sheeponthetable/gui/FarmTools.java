@@ -44,7 +44,7 @@ public class FarmTools extends javax.swing.JFrame {
         setDisable();
         refreshUserList();
 
-
+        this.setLocationRelativeTo(null);
 
     }
 

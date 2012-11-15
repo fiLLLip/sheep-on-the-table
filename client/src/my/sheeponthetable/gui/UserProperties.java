@@ -26,6 +26,7 @@ public class UserProperties extends javax.swing.JFrame {
         txtName.setText(user.getName());
         txtEmail.setText(user.getEmail());
         txtPhone.setText(user.getTelephone());
+        this.setLocationRelativeTo(null);
     }
 
     /**
