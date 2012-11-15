@@ -18,7 +18,7 @@ public class WarningBox extends javax.swing.JFrame {
      * @param sheep 
      * @param sp 
      */
-    public WarningBox(Sheep sheep, SheepPanel sp) {
+    public WarningBox(SheepPanel sp, Sheep sheep) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.titleLabel.setText("Are you sure?");
@@ -132,7 +132,7 @@ public class WarningBox extends javax.swing.JFrame {
      * Called when the "yes"-button is pressed
      */
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
-        sheepPanel.update();
+        sheepPanel.removeSheep(sheepToRemove);
         dispose();
     }//GEN-LAST:event_confirmButtonActionPerformed
 

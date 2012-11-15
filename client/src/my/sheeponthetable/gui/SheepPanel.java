@@ -36,7 +36,6 @@ import org.jdesktop.swingx.painter.Painter;
  * @author Gruppe 7
  */
 public class SheepPanel extends javax.swing.JFrame {
-// 你吸怪物马家伙
     private DefaultListModel sheepShow;
     private DefaultListModel sheepUpdatesShow;
     private List<Sheep> sheepList;
@@ -136,18 +135,15 @@ public class SheepPanel extends javax.swing.JFrame {
      * new sheep list. If not able to remove the sheep from the database, it 
      * displays an error.
      */
-    private void removeSheep() {
-        if (selectedSheep != null)   {
-            if (WebServiceClient.removeSheep(selectedSheep)) {
-                deselect();
-                update();
-            } else {
-                new ErrorBox("Could not remove sheep! Please verify that you have the required permissions. If the problem persists, contact sysadmin.");
-            }
+    public void removeSheep(Sheep s) {
+        if (WebServiceClient.removeSheep(s)) {
+            deselect();
+            update();
         } else {
-            new ErrorBox("You have to select a sheep to remove one!");
+            new ErrorBox("Could not remove sheep! Please verify that you have the required permissions. If the problem persists, contact sysadmin.");
         }
     }
+    
     /*
      *Called upon when a HealthStatus is wanted in String format.
      * The function recives a status int and generates a Health
@@ -1190,7 +1186,11 @@ private void btnDeselectAllClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      * Fired when the "delete sheep"-button is clicked
      */
 private void btnDeleteSelectedClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSelectedClicked
-    removeSheep();
+    if (selectedSheep != null) {
+        new WarningBox(this, selectedSheep).setVisible(true);
+    } else {
+        new ErrorBox("You have to select a sheep to remove one!");
+    }
 }//GEN-LAST:event_btnDeleteSelectedClicked
 
     /**
@@ -1204,7 +1204,11 @@ private void btnRefreshListClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      * Fired when the "remove sheep" option is picked from the menu
      */
 private void menuRemoveSheepClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRemoveSheepClicked
-    removeSheep();
+        if (selectedSheep != null) {
+        new WarningBox(this, selectedSheep).setVisible(true);
+    } else {
+        new ErrorBox("You have to select a sheep to remove one!");
+    }
 }//GEN-LAST:event_menuRemoveSheepClicked
 
     /**
