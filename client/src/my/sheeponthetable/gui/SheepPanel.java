@@ -1,5 +1,6 @@
 package my.sheeponthetable.gui;
 
+import my.sheeponthetable.tools.map.MouseClickOnWayPointListener;
 import java.awt.Color;
 import java.io.File;
 import java.text.DateFormat;
@@ -36,6 +37,7 @@ import org.jdesktop.swingx.painter.Painter;
  * @author Gruppe 7
  */
 public class SheepPanel extends javax.swing.JFrame {
+
     private DefaultListModel sheepShow;
     private DefaultListModel sheepUpdatesShow;
     private List<Sheep> sheepList;
@@ -143,21 +145,21 @@ public class SheepPanel extends javax.swing.JFrame {
             new ErrorBox("Could not remove sheep! Please verify that you have the required permissions. If the problem persists, contact sysadmin.");
         }
     }
-    
+
     /*
      *Called upon when a HealthStatus is wanted in String format.
      * The function recives a status int and generates a Health
      * status in writing and sends it back as a String
-    */ 
-    private String getHealthStatusAlarm(int status){
-      /*1 = attack
-       * 2 = health
-       * 4 = stationary
-       * 3 = attack, health
-       * 5 = attack, stationary
-       * 6 = health, stationary
-       * 7 = alle
-       */
+     */
+    private String getHealthStatusAlarm(int status) {
+        /*1 = attack
+         * 2 = health
+         * 4 = stationary
+         * 3 = attack, health
+         * 5 = attack, stationary
+         * 6 = health, stationary
+         * 7 = all of them
+         */
         String lblText = "None";
         if (status == 1) {
             lblText = "Attacked";
@@ -220,6 +222,8 @@ public class SheepPanel extends javax.swing.JFrame {
         List<SheepUpdate> updates = WebServiceClient.getSheepUpdate(Integer.toString(id), "100");
         selectedSheep.setUpdates(updates);
 
+        // A sheep has to be displayed differently depending on whether it has
+        // any updates associated with it or not.
         if (!selectedSheep.getUpdates().isEmpty()) {
             // The first update is the newest one, so fill the display fields
             // with information from this update.
@@ -258,19 +262,14 @@ public class SheepPanel extends javax.swing.JFrame {
             }
 
             paintWaypoints(track, waypoints);
-        } // If there are no updates associated with the sheep, clear the map of
-        // all waypoints, and set the label information as n/a
+        } 
+        // If there are no updates associated with the sheep, clear the map of
+        // all waypoints, and set the label information as n/a.
         else {
-            lblSheepId.setText("Not available");
             lblSheepPosition.setText("Not available");
             lblSheepUpdate.setText("Not available");
-            lblSheepNickname.setText("Not available");
-            taSheepComment.setText("Not available");
             lblSheepPulse.setText("Not available");
             lblSheepTemperature.setText("Not available");
-            lblSheepBorn.setText("Not available");
-            lblSheepWeight.setText("Not available");
-            lblSheepDeceased.setText("Not available");
             lblSheepAlarm.setText("Not available");
 
             CompoundPainter<JXMapViewer> painter = new CompoundPainter<>();
@@ -314,7 +313,7 @@ public class SheepPanel extends javax.swing.JFrame {
         lblSheepPosition.setText(su.getY() + ", " + su.getX());
 
         // Set the status label according to status
-         //send status too getHealthStatusAlarm
+        //send status too getHealthStatusAlarm
         String lblText = getHealthStatusAlarm(su.getAlarm());
         //recive a string
         lblSheepAlarm.setText(lblText);
@@ -1204,7 +1203,7 @@ private void btnRefreshListClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      * Fired when the "remove sheep" option is picked from the menu
      */
 private void menuRemoveSheepClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRemoveSheepClicked
-        if (selectedSheep != null) {
+    if (selectedSheep != null) {
         new WarningBox(this, selectedSheep).setVisible(true);
     } else {
         new ErrorBox("You have to select a sheep to remove one!");

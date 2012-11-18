@@ -4,7 +4,7 @@ import my.sheeponthetable.tools.Sheep;
 
 /**
  * WarningBox - a dialogue box that lets the user confirm that (s)he wants to
- * remove the selected sheep.
+ * remove the selected sheep, and, if the user confirms, removes the sheep.
  * 
  * @author Alex
  */
