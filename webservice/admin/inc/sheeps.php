@@ -316,8 +316,6 @@
 							location.href='?p=sheeps&id='+aData[0];
 						});
 						
-						$('.alert').delay(5000).hide('slow');
-						
 					} );
 				</script>
 			<?php

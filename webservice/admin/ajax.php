@@ -42,7 +42,7 @@
 			break;
 		
 		case 'permissions':
-			$aColumns = array( 'farm_id', 'level', 'SMSAlarmAttack', 'SMSAlarmTemperature', 'SMSAlarmStationary', 'EmailAlarmAttack', 'EmailAlarmTemperature', 'EmailAlarmStationary' );
+			$aColumns = array( 'farm_id', 'level', 'SMSAlarmAttack', 'SMSAlarmHealth', 'SMSAlarmStationary', 'EmailAlarmAttack', 'EmailAlarmHealth', 'EmailAlarmStationary' );
 			$whereID = $_GET['id'];
 			$sIndexColumn = "user_id";
 			$sTable = "sheep_permissions";

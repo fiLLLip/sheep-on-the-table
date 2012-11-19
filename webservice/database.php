@@ -34,11 +34,11 @@ class Database {
 	/**
 	 * Method to get results from a query formed as an array
 	 * 
-	 * @param mysql query $query
+	 * @param $query
 	 * @return array
 	 */
 	public function getResults ($query) {
-		/* Select queries return a resultset */
+		/* Select queries return a result set */
 		if ($result = $this->mysqli->query($query)) {
 			$rows = array();
 			while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -55,35 +55,36 @@ class Database {
 	/**
 	 * Method to update, delete or insert a set in the database
 	 * 
-	 * @param mysql query $query
+	 * @param
 	 * @return string
 	 */
 	public function setFields ($query) {
-		/* Select queries return a resultset */
+		/* Select queries return a result set */
 		
 		$this->mysqli->query($query);
-		$affectedrows = $this->mysqli->affected_rows;
-		return $affectedrows;
+		$affectedRows = $this->mysqli->affected_rows;
+		return $affectedRows;
 	}
-	
-	/**
-	 * Method to remove chances of mysql injection
-	 * 
-	 * @param mysql query $query
-	 * @return string
-	 */
+
+    /**
+     * Method to remove chances of mysql injection
+     *
+     * @param $input
+     * @return string
+     */
 	public function escapeStrings ($input) {
 		$output = $this->mysqli->real_escape_string($input);
 		return $output;
 	}
-	
-	/**
-	 * Method to get number of rows from a query
-	 * 
-	 * @return array
-	 */
+
+    /**
+     * Method to get number of rows from a query
+     *
+     * @param $query
+     * @return array
+     */
 	public function getNumRows ($query) {
-		/* Select queries return a resultset */
+		/* Select queries return a result set */
 		if ($result = $this->mysqli->query($query)) {
 			$return = $result->num_rows;
 			$result->free();

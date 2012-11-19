@@ -15,15 +15,15 @@
 		elseif (isset($_POST['detailsSubmit'])) {
 			$_POST['SMSAlarmAttack'] = ((isset($_POST['SMSAlarmAttack'])) ? '1' : '0');
 			$_POST['SMSAlarmStationary'] = ((isset($_POST['SMSAlarmStationary'])) ? '1' : '0');
-			$_POST['SMSAlarmTemperature'] = ((isset($_POST['SMSAlarmTemperature'])) ? '1' : '0');
+			$_POST['SMSAlarmHealth'] = ((isset($_POST['SMSAlarmHealth'])) ? '1' : '0');
 			$_POST['EmailAlarmAttack'] = ((isset($_POST['EmailAlarmAttack'])) ? '1' : '0');
 			$_POST['EmailAlarmStationary'] = ((isset($_POST['EmailAlarmStationary'])) ? '1' : '0');
-			$_POST['EmailAlarmTemperature'] = ((isset($_POST['EmailAlarmTemperature'])) ? '1' : '0');
+			$_POST['EmailAlarmHealth'] = ((isset($_POST['EmailAlarmHealth'])) ? '1' : '0');
 			
 			if ($adminsys->setUserFarmDetails($_GET['id'], $_GET['farmid'], $_POST['inputLevel'], 
 				$_POST['SMSAlarmAttack'], $_POST['SMSAlarmStationary'], 
-				$_POST['SMSAlarmTemperature'], $_POST['EmailAlarmAttack'], 
-				$_POST['EmailAlarmStationary'], $_POST['EmailAlarmTemperature']) >= 1) {
+				$_POST['SMSAlarmHealth'], $_POST['EmailAlarmAttack'], 
+				$_POST['EmailAlarmStationary'], $_POST['EmailAlarmHealth']) >= 1) {
 				
 				echo '<div class="alert alert-success"><b>Success!</b> User permissions updated successfully</div>';
 			}
@@ -56,7 +56,7 @@
 			}
 		}
 		elseif (isset($_POST['levelSubmit'])) {
-			if ($adminsys->addAccess($_GET['id'], $_POST['inputFarmID'], $_POST['inputLevel']) >= 1) {
+			if ($adminsys->newAccess($_GET['id'], $_POST['inputFarmID'], $_POST['inputLevel']) >= 1) {
 				echo '<div class="alert alert-success"><b>Success!</b> Added access successfully.</div>';
 			}
 			else {
@@ -77,10 +77,10 @@
 			$level = $details[0]['level'];
 			$SMSAlarmAttack = $details[0]['SMSAlarmAttack'];
 			$SMSAlarmStationary = $details[0]['SMSAlarmStationary'];
-			$SMSAlarmTemperature = $details[0]['SMSAlarmTemperature'];
+			$SMSAlarmHealth = $details[0]['SMSAlarmHealth'];
 			$EmailAlarmStationary = $details[0]['EmailAlarmStationary'];
 			$EmailAlarmAttack = $details[0]['EmailAlarmAttack'];
-			$EmailAlarmTemperature = $details[0]['EmailAlarmTemperature'];
+			$EmailAlarmHealth = $details[0]['EmailAlarmHealth'];
 			
 			?>
 			<form action="" class="form-horizontal" method="post">
@@ -107,7 +107,7 @@
 							<input type="checkbox" name="EmailAlarmAttack" value="1" <?php echo ($EmailAlarmAttack == '1') ? 'checked="checked"' : ''; ?>> Attack
 						</label>
 						<label class="checkbox">
-							<input type="checkbox" name="EmailAlarmTemperature" value="1" <?php echo ($EmailAlarmTemperature == '1') ? 'checked="checked"' : ''; ?>> Temperature
+							<input type="checkbox" name="EmailAlarmHealth" value="1" <?php echo ($EmailAlarmHealth == '1') ? 'checked="checked"' : ''; ?>> Health
 						</label>
 						<label class="checkbox">
 							<input type="checkbox" name="EmailAlarmStationary" value="1" <?php echo ($EmailAlarmStationary == '1') ? 'checked="checked"' : ''; ?>> Stationary
@@ -121,7 +121,7 @@
 							<input type="checkbox" name="SMSAlarmAttack" value="1" <?php echo ($SMSAlarmAttack == '1') ? 'checked="checked"' : ''; ?>> Attack
 						</label>
 						<label class="checkbox">
-							<input type="checkbox" name="SMSAlarmTemperature" value="1" <?php echo ($SMSAlarmTemperature == '1') ? 'checked="checked"' : ''; ?>> Temperature
+							<input type="checkbox" name="SMSAlarmHealth" value="1" <?php echo ($SMSAlarmHealth == '1') ? 'checked="checked"' : ''; ?>> Health
 						</label>
 						<label class="checkbox">
 							<input type="checkbox" name="SMSAlarmStationary" value="1" <?php echo ($SMSAlarmStationary == '1') ? 'checked="checked"' : ''; ?>> Stationary
@@ -260,10 +260,10 @@
 									<th>Farm ID</th> 
 									<th>Level</th> 
 									<th>Attack</th> 
-									<th>Temperature</th> 
+									<th>Health</th> 
 									<th>Stationary</th> 
 									<th>Attack</th> 
-									<th>Temperature</th> 
+									<th>Health</th> 
 									<th>Stationary</th> 
 								</tr> 
 							</thead> 
@@ -275,7 +275,7 @@
 						</table>
 					</div>
 					<div class="tab-pane" id="newAccess">			
-						<form action="" class="form-horizontal" method="post">
+						<form action="?p=users&id=<?php echo $_GET['id']; ?>" class="form-horizontal" method="post">
 							<div class="span6">
 								<div class="control-group">
 									<label class="control-label" for="inputFarmID">Farm ID</label>

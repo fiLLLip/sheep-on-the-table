@@ -8,6 +8,9 @@
 	</script>
 			<?php
 		}
+		else {
+			$error = true;
+		}
 	}
 ?>
 
@@ -46,8 +49,14 @@
 <h1 style="text-align:center;">
 	Sheep finder admin panel
 </h1><br />
+
 <form class="form-signin" method="post" action="">
 	<h2 class="form-signin-heading">Please sign in</h2>
+	<?php
+		if ($error) {
+			echo '<div class="alert alert-error"><b>Error!</b> Wrong username or password</div>';
+		}
+	?>
 	<input name="username" type="text" class="input-block-level" placeholder="Username">
 	<input name="password" type="password" class="input-block-level" placeholder="Password">
 	<!--<label class="checkbox">

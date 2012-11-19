@@ -48,7 +48,7 @@ if (isset($_GET['id'])) {
 			}
 		}
 		elseif (isset($_POST['levelSubmit'])) {
-			if ($adminsys->addAccess($_POST['inputFarmID'], $_GET['id'], $_POST['inputLevel']) >= 1) {
+			if ($adminsys->newAccess($_POST['inputUserID'], $_GET['id'], $_POST['inputLevel']) >= 1) {
 				echo '<div class="alert alert-success"><b>Success!</b> Added access successfully.</div>';
 			}
 			else {
@@ -183,10 +183,10 @@ if (isset($_GET['id'])) {
 						</table>
 					</div>
 					<div class="tab-pane" id="newAccess">			
-						<form action="" class="form-horizontal" method="post">
+						<form action="?p=farms&id=<?php echo $_GET['id']; ?>" class="form-horizontal" method="post">
 							<div class="span6">
 								<div class="control-group">
-									<label class="control-label" for="inputUserID">Farm ID</label>
+									<label class="control-label" for="inputUserID">User ID</label>
 									<div class="controls">
 										<select id="inputUserID" name="inputUserID">
 											<?php

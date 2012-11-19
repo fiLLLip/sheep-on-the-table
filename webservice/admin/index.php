@@ -8,9 +8,7 @@ session_start();
 require_once('./../database.php');
 require_once('./adminsys.php');
 $adminsys = new AdminSys();
-$ip = $_SERVER['REMOTE_ADDR'];
-$time = time();
-$hash = sha1(ip2long($ip) * $time);
+
 ?>
 <!doctype html>
 <html lang="us">

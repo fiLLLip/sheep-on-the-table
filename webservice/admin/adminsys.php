@@ -25,11 +25,13 @@ class AdminSys {
 		}
 	}
 
-	/**
-	 * Method that says to client YES YOU ARE CONNECTED 
-	 *
-	 * @return
-	 */
+    /**
+     * Method that says to client YES YOU ARE CONNECTED
+     *
+     * @param $user
+     * @param $pass
+     * @return array|null
+     */
 	public function logon ($user,$pass) {
 		if (!isset($user)) {
 			return null;
@@ -59,22 +61,21 @@ class AdminSys {
 		}
 	}
 
-	/**
-	 * Method that logs out 
-	 *
-	 * @return
-	 */
+    /**
+     * Method that logs out
+     *
+     * @return void
+     */
 	public function logout () {
 		$_SESSION = array();
 		session_destroy();
 	}
-	
-	/**
-	 * Method that gets all the users in the database and returns it as an array
-	 *
-	 * @param array $param
-	 * @return mixed
-	 */	 
+
+    /**
+     * Method that gets all the users in the database and returns it as an array
+     *
+     * @return mixed
+     */
 	public function getUserList () {
 		$DB = new Database();
 		$DB->connect();
@@ -86,7 +87,6 @@ class AdminSys {
 	/**
 	 * Method that gets all the users in the database and returns it as an array
 	 *
-	 * @param array $param
 	 * @return mixed
 	 */	 
 	public function getFarmList () {
@@ -100,7 +100,6 @@ class AdminSys {
 	/**
 	 * Method that gets all the users in the database and returns it as an array
 	 *
-	 * @param array $param
 	 * @return mixed
 	 */	 
 	public function getSheepList () {
@@ -110,13 +109,13 @@ class AdminSys {
 		$DB->disconnect();
 		return $returnarr;
 	}
-	
-	/**
-	 * Method that gets all the users in the database and returns it as an array
-	 *
-	 * @param array $param
-	 * @return mixed
-	 */	 
+
+    /**
+     * Method that gets all the users in the database and returns it as an array
+     *
+     * @param $sheepid
+     * @return mixed
+     */
 	public function getSheepDetails ($sheepid) {
 		$DB = new Database();
 		$DB->connect();
@@ -133,7 +132,6 @@ class AdminSys {
 	/**
 	 * Method that gets all the users in the database and returns it as an array
 	 *
-	 * @param array $param
 	 * @return mixed
 	 */	 
 	public function getStats () {
@@ -147,14 +145,17 @@ class AdminSys {
 		$DB->disconnect();
 		return $returnarr;
 	}
-	
-	/**
-	 * Method that serves the client all the n updates that belong 
-	 * to his sheep
-	 *
-	 * @param array $param
-	 * @return mixed
-	 */	 
+
+    /**
+     * Method that serves the client all the n updates that belong
+     * to his sheep
+     *
+     * @param $hash
+     * @param $userid
+     * @param $sheepid
+     * @param $limit
+     * @return mixed
+     */
 	public function getSheepUpdates ($hash, $userid, $sheepid, $limit) {
 		if (!isset($hash)) {
 			return null;
@@ -195,13 +196,20 @@ class AdminSys {
 		}
 		return $date;
 	}
-	
-	/**
-	 * Method that receives a all values of a sheep to update
-	 * in the database
-	 *
-	 * @return mixed
-	 */	 
+
+    /**
+     * Method that receives a all values of a sheep to update
+     * in the database
+     *
+     * @param $sheepid
+     * @param $farmid
+     * @param $name
+     * @param $born
+     * @param $deceased
+     * @param $comment
+     * @param $weight
+     * @return mixed
+     */
 	public function editSheep ($sheepid, $farmid, $name, $born, $deceased, $comment, $weight) {
 		$DB = new Database();
 		$DB->connect();
@@ -227,12 +235,13 @@ class AdminSys {
 		$DB->disconnect();
 		return $return;
 	}
-	
-	/**
-	 * Method that receives a farmid and returns all farms
-	 *
-	 * @return mixed
-	 */	 
+
+    /**
+     * Method that receives a user ID and returns all details
+     *
+     * @param $userid
+     * @return mixed
+     */
 	public function getUserDetails ($userid) {
 		$DB = new Database();
 		$DB->connect();
@@ -241,12 +250,15 @@ class AdminSys {
 		$DB->disconnect();
 		return $returnarr;
 	}
-	
-	/**
-	 * Method that receives a farmid and returns all farms
-	 *
-	 * @return mixed
-	 */	 
+
+    /**
+     * Gets details about users alarm settings and
+     * level associated with farm
+     *
+     * @param $userid
+     * @param $farmid
+     * @return mixed
+     */
 	public function getUserFarmDetails ($userid, $farmid) {
 		$DB = new Database();
 		$DB->connect();
@@ -254,8 +266,8 @@ class AdminSys {
 		$farmid = $DB->escapeStrings($farmid);
 		$returnarr = $DB->getResults('SELECT level, 
 			SMSAlarmAttack, EmailAlarmStationary, 
-			SMSAlarmStationary, SMSAlarmTemperature, 
-			EmailAlarmAttack, EmailAlarmTemperature 
+			SMSAlarmStationary, SMSAlarmHealth, 
+			EmailAlarmAttack, EmailAlarmHealth 
 			FROM sheep_permissions 
 			WHERE user_id = \''. $userid .'\' 
 			AND farm_id = \''. $farmid .'\'  
@@ -263,12 +275,13 @@ class AdminSys {
 		$DB->disconnect();
 		return $returnarr;
 	}
-	
-	/**
-	 * Method that receives a farmid and returns all farms
-	 *
-	 * @return mixed
-	 */	 
+
+    /**
+     * Gets all details of a specific farm
+     *
+     * @param $farmid
+     * @return mixed
+     */
 	public function getFarmDetails ($farmid) {
 		$DB = new Database();
 		$DB->connect();
@@ -277,14 +290,23 @@ class AdminSys {
 		$DB->disconnect();
 		return $returnarr;
 	}
-	
-	/**
-	 * Method that receives a all values of a sheep to update
-	 * in the database
-	 *
-	 * @return mixed
-	 */	 
-	public function setUserFarmDetails ($userid, $farmid, $level, $SMSAlarmAttack, $SMSAlarmStationary, $SMSAlarmTemperature, $EmailAlarmAttack, $EmailAlarmStationary, $EmailAlarmTemperature) {
+
+    /**
+     * Updates all alarm settings and level for a
+     * user associated with a farm
+     *
+     * @param $userid
+     * @param $farmid
+     * @param $level
+     * @param $SMSAlarmAttack
+     * @param $SMSAlarmStationary
+     * @param $SMSAlarmHealth
+     * @param $EmailAlarmAttack
+     * @param $EmailAlarmStationary
+     * @param $EmailAlarmHealth
+     * @return mixed
+     */
+	public function setUserFarmDetails ($userid, $farmid, $level, $SMSAlarmAttack, $SMSAlarmStationary, $SMSAlarmHealth, $EmailAlarmAttack, $EmailAlarmStationary, $EmailAlarmHealth) {
 		$DB = new Database();
 		$DB->connect();
 		$userid = $DB->escapeStrings($userid);
@@ -292,58 +314,68 @@ class AdminSys {
 		$level = $DB->escapeStrings($level);
 		$SMSAlarmAttack = $DB->escapeStrings($SMSAlarmAttack);
 		$SMSAlarmStationary = $DB->escapeStrings($SMSAlarmStationary);
-		$SMSAlarmTemperature = $DB->escapeStrings($SMSAlarmTemperature);
+		$SMSAlarmHealth = $DB->escapeStrings($SMSAlarmHealth);
 		$EmailAlarmAttack = $DB->escapeStrings($EmailAlarmAttack);
 		$EmailAlarmStationary = $DB->escapeStrings($EmailAlarmStationary);
-		$EmailAlarmTemperature = $DB->escapeStrings($EmailAlarmTemperature);
+		$EmailAlarmHealth = $DB->escapeStrings($EmailAlarmHealth);
 		
 		$result = $DB->setFields('UPDATE sheep_permissions
-			SET level=\'' . $level . '\',
+			SET level=\'' . $level . '\',	
 			SMSAlarmAttack=\'' . $SMSAlarmAttack . '\',
 			SMSAlarmStationary=\'' . $SMSAlarmStationary . '\',
-			SMSAlarmTemperature=\'' . $SMSAlarmTemperature . '\',
+			SMSAlarmHealth=\'' . $SMSAlarmHealth . '\',
 			EmailAlarmAttack=\'' . $EmailAlarmAttack . '\',
 			EmailAlarmStationary=\'' . $EmailAlarmStationary . '\',
-			EmailAlarmTemperature=\'' . $EmailAlarmTemperature . '\'
+			EmailAlarmHealth=\'' . $EmailAlarmHealth . '\'
 			WHERE user_id=\'' . $userid . '\'
 			AND farm_id=\'' . $farmid . '\'');
 		$return = $result;
 		$DB->disconnect();
 		return $return;
 	}
-	
-	/**
-	 * Method that receives a all values of a sheep to update
-	 * in the database
-	 *
-	 * @return mixed
-	 */	 
-	public function setFarmUserDetails ($userid, $farmid, $level) {
+
+    /**
+     * Sets access level for a specific user
+     * associated with a farm
+     *
+     * @param $userID
+     * @param $farmID
+     * @param $level
+     * @return mixed
+     */
+	public function setFarmUserDetails ($userID, $farmID, $level) {
 		$DB = new Database();
 		$DB->connect();
-		$userid = $DB->escapeStrings($userid);
-		$farmid = $DB->escapeStrings($farmid);
+		$userID = $DB->escapeStrings($userID);
+		$farmID = $DB->escapeStrings($farmID);
 		$level = $DB->escapeStrings($level);
 		
 		$result = $DB->setFields('UPDATE sheep_permissions
 			SET level=\'' . $level . '\'
-			WHERE user_id=\'' . $userid . '\'
-			AND farm_id=\'' . $farmid . '\'');
+			WHERE user_id=\'' . $userID . '\'
+			AND farm_id=\'' . $farmID . '\'');
 		$return = $result;
 		$DB->disconnect();
 		return $return;
 	}
-	
-	/**
-	 * Method that receives a all values of a sheep to update
-	 * in the database
-	 *
-	 * @return mixed
-	 */	 
-	public function editUser ($userid, $name, $username, $email, $phone, $password, $sysadmin) {
+
+    /**
+     * Updates a specific user, sets password if
+     * field is not empty
+     *
+     * @param $userID
+     * @param $name
+     * @param $username
+     * @param $email
+     * @param $phone
+     * @param $password
+     * @param $sysadmin
+     * @return mixed
+     */
+	public function editUser ($userID, $name, $username, $email, $phone, $password, $sysadmin) {
 		$DB = new Database();
 		$DB->connect();
-		$userid = $DB->escapeStrings($userid);
+		$userID = $DB->escapeStrings($userID);
 		$name = $DB->escapeStrings($name);
 		$username = $DB->escapeStrings($username);
 		$email = $DB->escapeStrings($email);
@@ -358,7 +390,7 @@ class AdminSys {
 				email=\'' . $email . '\',
 				phone=\'' . $phone . '\',
 				sysadmin=\'' . $sysadmin . '\'
-				WHERE id=\'' . $userid . '\'');
+				WHERE id=\'' . $userID . '\'');
 		}
 		else {
 			$result = $DB->setFields('UPDATE sheep_user
@@ -367,125 +399,137 @@ class AdminSys {
 				email=\'' . $email . '\',
 				phone=\'' . $phone . '\',
 				sysadmin=\'' . $sysadmin . '\'
-				WHERE id=\'' . $userid . '\'');
+				WHERE id=\'' . $userID . '\'');
 		}
 		$return = $result;
 		$DB->disconnect();
 		return $return;
 	}
-	
-	/**
-	 * Method that receives a user id and deletes the
-	 * user and all permissions related to it.
-	 *
-	 * @return mixed
-	 */	 
-	public function deleteUser ($userid) {
+
+    /**
+     * Deletes a specific user and all its relations
+     * to farms
+     *
+     * @param $userID
+     * @return mixed
+     */
+	public function deleteUser ($userID) {
 		$DB = new Database();
 		$DB->connect();
-		$userid = $DB->escapeStrings($userid);
+		$userID = $DB->escapeStrings($userID);
 		$delPermissions = $DB->setFields('DELETE FROM sheep_permissions
-			WHERE user_id=\'' . $userid . '\'');
+			WHERE user_id=\'' . $userID . '\'');
 		$result = $DB->setFields('DELETE FROM sheep_user
-			WHERE id=\'' . $userid . '\'');
+			WHERE id=\'' . $userID . '\'');
 		$return = $result;
 		$DB->disconnect();
 		return $return;
 	}
-	
-	/**
-	 * Method that receives a all values of a sheep to update
-	 * in the database.
-	 *
-	 * @return mixed
-	 */	 
-	public function deleteSheep ($sheepid) {
+
+    /**
+     * Deletes a specific sheep and all its related
+     * updates
+     *
+     * @param $sheepID
+     * @return mixed
+     */
+	public function deleteSheep ($sheepID) {
 		$DB = new Database();
 		$DB->connect();
-		$sheepid = $DB->escapeStrings($sheepid);
+		$sheepID = $DB->escapeStrings($sheepID);
 		$result = $DB->setFields('DELETE FROM sheep_sheep
-			WHERE id=\'' . $sheepid . '\'');
+			WHERE id=\'' . $sheepID . '\'');
 		if ($result >= 1) {
 			$delUpdates = $DB->setFields('DELETE FROM sheep_updates
-				WHERE sheep_id=\'' . $sheepid . '\'');
+				WHERE sheep_id=\'' . $sheepID . '\'');
 		}
 		$return = $result;
 		$DB->disconnect();
 		return $return;
 	}
-	
-	/**
-	 * Method that receives a user id and farm id
-	 * and deletes corresponding access in database.
-	 *
-	 * @return mixed
-	 */	 
-	public function deleteAccess ($userid, $farmid) {
+
+    /**
+     * Deletes the access between a user and a farm, including
+     * alarm settings for the specific farm
+     *
+     * @param $userID
+     * @param $farmID
+     * @return mixed
+     */
+	public function deleteAccess ($userID, $farmID) {
 		$DB = new Database();
 		$DB->connect();
-		$userid = $DB->escapeStrings($userid);
+		$userID = $DB->escapeStrings($userID);
 		$result = $DB->setFields('DELETE FROM sheep_permissions
-			WHERE user_id=\'' . $userid . '\'
-			AND farm_id=\'' . $farmid . '\'');
+			WHERE user_id=\'' . $userID . '\'
+			AND farm_id=\'' . $farmID . '\'');
 		$return = $result;
 		$DB->disconnect();
 		return $return;
 	}
-	
-	/**
-	 * Method that receives a farm id and deletes all related sheeps,
-	 * permissions and updates
-	 *
-	 * @return mixed
-	 */	 
-	public function deleteFarm ($farmid) {
+
+    /**
+     * Deletes the specific farm, all access permissions, sheeps, and updates.
+     *
+     * @param $farmID
+     * @return mixed
+     */
+	public function deleteFarm ($farmID) {
 		$DB = new Database();
 		$DB->connect();
-		$farmid = $DB->escapeStrings($farmid);
-		$sheeps = $DB->getResults('SELECT id FROM sheep_sheep WHERE farm_id = \'' . $farmid . '\'');
+		$farmID = $DB->escapeStrings($farmID);
+		$sheeps = $DB->getResults('SELECT id FROM sheep_sheep WHERE farm_id = \'' . $farmID . '\'');
 		foreach ($sheeps as $sheep) {
 			$delUpdates = $DB->setFields('DELETE FROM sheep_updates
 				WHERE sheep_id=\'' . $sheep['id'] . '\'');
 		}
-		$delSheps = $DB->setFields('DELETE FROM sheep_sheep
-			WHERE farm_id=\'' . $farmid . '\'');
+		$delSheeps = $DB->setFields('DELETE FROM sheep_sheep
+			WHERE farm_id=\'' . $farmID . '\'');
 		$delPermissions = $DB->setFields('DELETE FROM sheep_permissions
-			WHERE farm_id=\'' . $farmid . '\'');
+			WHERE farm_id=\'' . $farmID . '\'');
 		$delFarms = $DB->setFields('DELETE FROM sheep_farm
-			WHERE id=\'' . $farmid . '\'');
+			WHERE id=\'' . $farmID . '\'');
 		$return = $delFarms;
 		$DB->disconnect();
 		return $return;
 	}
-	
-	/**
-	 * Method that receives a all values of a farm to update
-	 * in the database
-	 *
-	 * @return mixed
-	 */	 
-	public function editFarm ($farmid, $name, $address) {
+
+    /**
+     * Edits name and address of a farm.
+     *
+     * @param $farmID
+     * @param $name
+     * @param $address
+     * @return mixed
+     */
+	public function editFarm ($farmID, $name, $address) {
 		$DB = new Database();
 		$DB->connect();
-		$farmid = $DB->escapeStrings($farmid);
+		$farmID = $DB->escapeStrings($farmID);
 		$name = $DB->escapeStrings($name);
 		$address = $DB->escapeStrings($address);
 		$result = $DB->setFields('UPDATE sheep_farm
 			SET name=\'' . $name . '\',
 			address=\'' . $address . '\'
-			WHERE id=\'' . $farmid . '\'');
+			WHERE id=\'' . $farmID . '\'');
 		$return = $result;
 		$DB->disconnect();
 		return $return;
 	}
-	
-	/**
-	 * Method that receives var for a "new user" and stores it in 
-	 * a database
-	 *
-	 * @return inserted ID or 0
-	 */	
-	public function newUser ($name, $username, $email, $phone, $password, $confirmpassword, $level) {
+
+    /**
+     * Creates a new user
+     *
+     * @param $name
+     * @param $username
+     * @param $email
+     * @param $phone
+     * @param $password
+     * @param $confirmPassword
+     * @param $sysadmin
+     * @return inserted ID or 0
+     */
+	public function newUser ($name, $username, $email, $phone, $password, $confirmPassword, $sysadmin) {
 		$DB = new Database();
 		$DB->connect();
 		$name = $DB->escapeStrings($name);
@@ -493,12 +537,12 @@ class AdminSys {
 		$email = $DB->escapeStrings($email);
 		$phone = $DB->escapeStrings($phone);
 		$password = $DB->escapeStrings($password);
-		$confirmpassword = $DB->escapeStrings($confirmpassword);
-		$level = $DB->escapeStrings($level);
-		if ($password == $confirmpassword && $password != '') {
+		$confirmPassword = $DB->escapeStrings($confirmPassword);
+		$sysadmin = $DB->escapeStrings($sysadmin);
+		if ($password == $confirmPassword && $password != '') {
 			$result = $DB->setFields('INSERT INTO sheep_user
 				(name, un, pw, email, phone, sysadmin)
-				VALUES (\'' . $name . '\', \'' . $username . '\', \'' . $password . '\', \'' . $email . '\', \'' . $phone . '\', \'' . $level . '\')
+				VALUES (\'' . $name . '\', \'' . $username . '\', \'' . $password . '\', \'' . $email . '\', \'' . $phone . '\', \'' . $sysadmin . '\')
 			');
 			if ($result >= 1) {
 				$id = $DB->getResults('SELECT last_insert_id() as id');
@@ -514,13 +558,14 @@ class AdminSys {
 		$DB->disconnect();
 		return $return;
 	}
-	
-	/**
-	 * Method that receives var for a "new user" and stores it in 
-	 * a database
-	 *
-	 * @return inserted ID or 0
-	 */	
+
+    /**
+     * Creates a new farm.
+     *
+     * @param $name
+     * @param $address
+     * @return inserted ID or 0
+     */
 	public function newFarm ($name, $address) {
 		$DB = new Database();
 		$DB->connect();
@@ -545,31 +590,27 @@ class AdminSys {
 		$DB->disconnect();
 		return $return;
 	}
-	
-	/**
-	 * Method that receives a user id, farm id and
-	 * access level and stores it in the database.
-	 *
-	 * @return mixed
-	 */	 
-	public function newAccess ($userid, $farmid, $level) {
+
+    /**
+     * Adds a new access between a farm and user.
+     *
+     * @param $userID
+     * @param $farmID
+     * @param $level
+     * @return mixed
+     */
+	public function newAccess ($userID, $farmID, $level) {
 		$DB = new Database();
 		$DB->connect();
-		$userid = $DB->escapeStrings($userid);
-		$farmid = $DB->escapeStrings($farmid);
+		$userID = $DB->escapeStrings($userID);
+		$farmID = $DB->escapeStrings($farmID);
 		$level = $DB->escapeStrings($level);
-		if ($userid != '' && $farmid != '' && $level != '') {
+		if ($userID != '' && $farmID != '' && $level != '') {
 			$result = $DB->setFields('INSERT INTO sheep_permissions
 				(user_id, farm_id, level)
-				VALUES (\'' . $userid . '\', \'' . $farmid . '\', \'' . $level . '\')
+				VALUES (\'' . $userID . '\', \'' . $farmID . '\', \'' . $level . '\')
 			');
-			if ($result >= 1) {
-				$id = $DB->getResults('SELECT last_insert_id() as id');
-				$return = $id[0]['id'];
-			}
-			else {
-				$return = 0;
-			}
+			$return = $result;
 		}
 		else {
 			$return = 0;
@@ -577,19 +618,24 @@ class AdminSys {
 		$DB->disconnect();
 		return $return;
 	}
-	
-	/**
-	 * Method that receives a all values of a sheep to update
-	 * in the database
-	 *
-	 * @return mixed
-	 */	 
-	public function newSheep ($farmid, $name, $born, $deceased, $weight, $comment) {
+
+    /**
+     * Creates a new sheep
+     *
+     * @param $farmID
+     * @param $name
+     * @param $born
+     * @param $deceased
+     * @param $weight
+     * @param $comment
+     * @return mixed
+     */
+	public function newSheep ($farmID, $name, $born, $deceased, $weight, $comment) {
 		$DB = new Database();
 		$DB->connect();
 		$born = $this->formatDate($born);
 		$deceased = $this->formatDate($deceased);
-		$farmid = $DB->escapeStrings($farmid);
+		$farmID = $DB->escapeStrings($farmID);
 		$name = $DB->escapeStrings($name);
 		$born = $DB->escapeStrings($born);
 		$deceased = $DB->escapeStrings($deceased);
@@ -598,12 +644,12 @@ class AdminSys {
 		}
 		$comment = $DB->escapeStrings($comment);
 		$weight = $DB->escapeStrings($weight);		
-		if ($name != '' && $farmid != '') {
+		if ($name != '' && $farmID != '') {
 			$result = $DB->setFields('INSERT INTO sheep_sheep
 				(name, born, deceased, comment, weight, farm_id)
 				VALUES (\'' . $name . '\', FROM_UNIXTIME(' . $born . '), 
 					FROM_UNIXTIME(' . $deceased . '), \'' . $comment . '\',
-					\'' . $weight . '\', \'' . $farmid . '\')
+					\'' . $weight . '\', \'' . $farmID . '\')
 			');
 			if ($result >= 1) {
 				$id = $DB->getResults('SELECT last_insert_id() as id');
