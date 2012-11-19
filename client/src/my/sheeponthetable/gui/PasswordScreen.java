@@ -71,7 +71,7 @@ public class PasswordScreen extends javax.swing.JFrame {
             }
         });
 
-        titleLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        titleLabel.setFont(new java.awt.Font("Tahoma", 1, 18));
         titleLabel.setText("Sheep Finder Alpha");
 
         usernameLabel.setText("Username");
@@ -102,7 +102,7 @@ public class PasswordScreen extends javax.swing.JFrame {
             }
         });
 
-        welcomeLabel.setText("Welcome to Sheep Finder Alpha, please log in to manage your sheeps.");
+        welcomeLabel.setText("Welcome to Sheep Finder Alpha, please log in to manage your sheep.");
 
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
         loginPanel.setLayout(loginPanelLayout);
@@ -160,8 +160,8 @@ public class PasswordScreen extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
