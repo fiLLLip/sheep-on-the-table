@@ -58,7 +58,14 @@ public class PasswordScreen extends javax.swing.JFrame {
         setResizable(false);
 
         loginPanel.setBackground(new java.awt.Color(255, 255, 255));
-        loginPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+
+        usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                keyPressedEvent(evt);
+            }
+        });
+
+        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 keyPressedEvent(evt);
             }
@@ -239,6 +246,7 @@ private void keyPressedEvent(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_key
         dispose();
     }
 }//GEN-LAST:event_keyPressedEvent
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton logOnButton;
     private javax.swing.JPanel loginPanel;
