@@ -23,9 +23,11 @@ import net.minidev.json.*;
  * methods are called.
  *
  * Also, note that this class is a static class, not an object class. This is 
- * because the entire application only needs a single WebServiceClient, so there
- * is no benefit to forcing the programmer to create a object that would work
- * exactly like a static class.
+ * because the entire application only needs a single WebServiceClient, which 
+ * should be accessible to most of the classes in the project, so there is no
+ * benefit to forcing the programmer to create a object that would work exactly 
+ * in the same way as a static class, except that the object would have to have
+ * a reference to it in every class.
  * 
  * @author Gruppe 7
  */

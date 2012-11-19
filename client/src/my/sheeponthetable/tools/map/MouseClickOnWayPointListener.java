@@ -5,7 +5,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import my.sheeponthetable.gui.SheepPanel;
-import my.sheeponthetable.tools.map.MyWaypoint;
 import org.jdesktop.swingx.JXMapViewer;
 
 /**

@@ -11,7 +11,7 @@ import java.awt.image.WritableRaster;
 /**
  * Multiplies two images.
  * 
- * This entire class has been found as part of an open source project.
+ * This entire class has been gathered from the examples of JxMapViewer2
  *
  * @author Martin Steiger
  */

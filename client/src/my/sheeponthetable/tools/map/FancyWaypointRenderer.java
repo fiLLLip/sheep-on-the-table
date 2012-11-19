@@ -17,7 +17,7 @@ import org.jdesktop.swingx.mapviewer.WaypointRenderer;
 /**
  * A fancy waypoint painter. 
  * 
- * This entire class has been found as part of an open source project.
+ * This entire class has been gathered from the examples of JxMapViewer2.
  *
  * @author Martin Steiger
  */
@@ -25,7 +25,6 @@ public class FancyWaypointRenderer implements WaypointRenderer<MyWaypoint> {
 
     private static final Log log = LogFactory.getLog(FancyWaypointRenderer.class);
     private final Map<Color, BufferedImage> map = new HashMap<>();
-//	private final Font font = new Font("Lucida Sans", Font.BOLD, 10);
     private BufferedImage origImage;
 
     /**

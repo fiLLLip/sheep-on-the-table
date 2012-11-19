@@ -7,8 +7,8 @@ import org.jdesktop.swingx.mapviewer.GeoPosition;
 /**
  * A waypoint that also has a color and a label.
  * 
- * This class is based on the Waypoint implementation used by Martin Steiger in
- * an open source mapping application.
+ * This class is based on the Waypoint implementation used in one of the examples
+ * from JxMapViewer2.
  *
  * @author Gruppe7
  */

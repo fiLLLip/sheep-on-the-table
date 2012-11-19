@@ -1,7 +1,9 @@
 package my.sheeponthetable.tools;
 
 /**
- * This is basically a data structure storeing information about the active user.
+ * This is basically a data structure storeing information about a single user.
+ * This might be the active user, or it might be any of the users associated with
+ * the active farm, such as when looking through permissions in FarmTools.
  * 
  * The information stored is the username in the database, the real name, the
  * telephone number and email (used in case of alarm), and information about
@@ -11,9 +13,9 @@ package my.sheeponthetable.tools;
  */
 public class User {
 
-    private String username, name, email, telephone;
-    private int userId;
-    private boolean SMSAlarmStationary,
+    private static String username, name, email, telephone;
+    private static int userId;
+    private static boolean SMSAlarmStationary,
             SMSAlarmAttack,
             SMSAlarmHealth,
             EmailAlarmStationary,
