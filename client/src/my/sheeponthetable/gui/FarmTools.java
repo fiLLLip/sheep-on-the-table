@@ -18,21 +18,18 @@ import my.sheeponthetable.tools.WebServiceClient;
  */
 public class FarmTools extends javax.swing.JFrame {
 
-    private SheepPanel sheepPanel;
     private List<User> users = new ArrayList();
     private DefaultListModel listModel = new DefaultListModel();
     private int farmID = Integer.parseInt(WebServiceClient.getFarmId());
-    private ListSelectionListener userSelect;
     private User selectedUser;
     private boolean hasDoneChangesToSelectedUser = false; // used to determine if we should alert the user of unsaved changes
     private boolean dontShowConfirm = false; // so the popup doesnt come twice
 
     /**
      * Creates new form AddNewSheep
-     * @param sp
-     * @param id  
+     * 
      */
-    public FarmTools(SheepPanel sp, int id) {
+    public FarmTools() {
         initComponents();
 
         this.setTitle("Preferences for " + WebServiceClient.getFarmName());
@@ -423,11 +420,12 @@ public class FarmTools extends javax.swing.JFrame {
         if (this.hasDoneChangesToSelectedUser) {
             if (WebServiceClient.setUserOptions(selectedUser)) {
                 // if logged in user is a owner, set clearence level
-                if (WebServiceClient.getUserDetails().getClearance(Integer.parseInt(WebServiceClient.getFarmId())) == 2) {
+                if (WebServiceClient.getUserDetails().getClearance(farmID) == 2) {
                     if (!WebServiceClient.setUserPermission(selectedUser.getUserId(), Math.abs(ClearanceChoice.getSelectedIndex() - 2))) {
-                        JOptionPane.showMessageDialog(null, "Failed to set user level.");
+                        JOptionPane.showMessageDialog(null, "The server returned an error while trying to change the user level.");
                     }
                 }
+                JOptionPane.showMessageDialog(null, "The changes to user " + selectedUser.getUsername() + " were saved successfully.");
                 this.hasDoneChangesToSelectedUser = false;
                 this.refreshUserList();
             } else {
@@ -437,11 +435,12 @@ public class FarmTools extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void addUserToFarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserToFarmButtonActionPerformed
-        // TODO add your handling code here:
+        
         String username = JOptionPane.showInputDialog(this, "Please enter the username of the user you want to grant access to this farm:", "Grant access to user", JOptionPane.QUESTION_MESSAGE);
         if (!WebServiceClient.addNewUserToFarm(username)) {
             JOptionPane.showMessageDialog(this, "The user could not be added, is the username correct?", "Beeeeh!", JOptionPane.ERROR_MESSAGE, null);
         } else {
+            
             this.refreshUserList();
         }
     }//GEN-LAST:event_addUserToFarmButtonActionPerformed
@@ -460,7 +459,6 @@ public class FarmTools extends javax.swing.JFrame {
     }//GEN-LAST:event_removeUserFromFarmButtonActionPerformed
 
     private void levelchanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_levelchanged
-        // TODO add your handling code here:
         this.hasDoneChangesToSelectedUser = true;
     }//GEN-LAST:event_levelchanged
     /**

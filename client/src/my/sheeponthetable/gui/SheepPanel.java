@@ -43,7 +43,6 @@ public class SheepPanel extends javax.swing.JFrame {
     private List<Sheep> sheepList;
     private List<SheepUpdate> sheepUpdateList;
     private Set<MyWaypoint> wayPointSet;
-    private int farmID;
     private Sheep selectedSheep;
     ListSelectionListener sheepListSelectionListener;
     ListSelectionListener updateListSelectionListener;
@@ -1023,7 +1022,7 @@ public class SheepPanel extends javax.swing.JFrame {
      * Called when the edit farm-option is selected from the menu.
      */
     private void menuPrefFarmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPrefFarmActionPerformed
-        new FarmTools(this, farmID).setVisible(true);
+        new FarmTools().setVisible(true);
     }//GEN-LAST:event_menuPrefFarmActionPerformed
 
     /**
