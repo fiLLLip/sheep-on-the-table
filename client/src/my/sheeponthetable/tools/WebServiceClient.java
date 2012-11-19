@@ -539,7 +539,7 @@ public class WebServiceClient {
      * @return integer level: -1: error, 0: view only, 1: Admin, 2: Owner
      */
     public static int getUserLevel(int farm_id, int user_id) {
-        List<String> params = new ArrayList<String>();
+        List<String> params = new ArrayList<>();
         params.add(Integer.toString(farm_id));
         params.add(Integer.toString(user_id));
 
@@ -560,7 +560,7 @@ public class WebServiceClient {
      * @return integer level: -1: error, 0: view only, 1: Admin, 2: Owner
      */
     public static boolean setUserPermission(int user_id, int level) {
-        List<String> params = new ArrayList<String>();
+        List<String> params = new ArrayList<>();
         params.add(farmid);
         params.add(Integer.toString(user_id));
         params.add(Integer.toString(level));

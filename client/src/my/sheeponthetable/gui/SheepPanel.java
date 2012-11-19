@@ -142,7 +142,7 @@ public class SheepPanel extends javax.swing.JFrame {
             deselect();
             update();
         } else {
-            new ErrorBox("Could not remove sheep! Please verify that you have the required permissions. If the problem persists, contact sysadmin.");
+            new ErrorBox("\tCould not remove sheep! \nPlease verify that you have the required permissions. \nIf the problem persists, contact sysadmin.");
         }
     }
 

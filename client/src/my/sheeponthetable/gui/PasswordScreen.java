@@ -23,7 +23,7 @@ public class PasswordScreen extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setTitle("Log in");
-        
+
         // Creats a config object to read a previously stored username and pass-
         // word, if there are any.
         this.config = new Config();
@@ -58,16 +58,9 @@ public class PasswordScreen extends javax.swing.JFrame {
         setResizable(false);
 
         loginPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+        loginPanel.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                onEnterLogon(evt);
-            }
-        });
-
-        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                onEnterLogon(evt);
+                keyPressedEvent(evt);
             }
         });
 
@@ -80,11 +73,6 @@ public class PasswordScreen extends javax.swing.JFrame {
 
         rememberMeCheckbox.setBackground(new java.awt.Color(255, 255, 255));
         rememberMeCheckbox.setText("Remember me");
-        rememberMeCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rememberMeCheckboxActionPerformed(evt);
-            }
-        });
 
         sheepImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/confused sheep.jpg"))); // NOI18N
 
@@ -160,7 +148,7 @@ public class PasswordScreen extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7))
         );
         layout.setVerticalGroup(
@@ -186,12 +174,11 @@ public class PasswordScreen extends javax.swing.JFrame {
         if (rememberMeCheckbox.isSelected()) {
             config.setUsername(username);
             config.setPassword(password);
-        }
-        else {
+        } else {
             config.setUsername("");
             config.setPassword("");
         }
-        
+
         if (username.isEmpty() || password.isEmpty()) {
             new ErrorBox("Username or password not set");
             return;
@@ -202,11 +189,10 @@ public class PasswordScreen extends javax.swing.JFrame {
 
         if (!WebServiceClient.isLoggedIn()) {
             // Login failed
-            if(WebServiceClient.isErrorMessage()) {
+            if (WebServiceClient.isErrorMessage()) {
                 new ErrorBox(WebServiceClient.getErrorMessage());
-            }
-            else {
-                new ErrorBox("Wrong username or password!");    
+            } else {
+                new ErrorBox("Wrong username or password!");
             }
             return;
         }
@@ -219,36 +205,14 @@ public class PasswordScreen extends javax.swing.JFrame {
             WebServiceClient.setFarmId(farmId);
             dispose();
             new SheepPanel().setVisible(true);
-        }
-        else if (WebServiceClient.getFarmIds().isEmpty()) {
+        } else if (WebServiceClient.getFarmIds().isEmpty()) {
             new ErrorBox("You have no farms!").setVisible(true);
             return;
-        }   
-        else {
+        } else {
             new ChooseFarm().setVisible(true);
         }
         dispose();
     }
-
-    /**
-     * Never used.
-     */
-    private void rememberMeCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rememberMeCheckboxActionPerformed
-
-    }//GEN-LAST:event_rememberMeCheckboxActionPerformed
-
-    /**
-     * Called by the keyboard listener when a key is pressed. If that key is
-     * enter, try to log in. If that key is esc, quit the program. TODO rename
-     */
-    private void onEnterLogon(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_onEnterLogon
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            loginAction();
-        }
-        else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            dispose();
-        }
-    }//GEN-LAST:event_onEnterLogon
 
     /**
      * Called when the log on-button is pressed.
@@ -263,6 +227,18 @@ public class PasswordScreen extends javax.swing.JFrame {
     private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
         dispose();
     }//GEN-LAST:event_quitButtonActionPerformed
+
+    /**
+     * Called by the keyboard listener when a key is pressed. If that key is
+     * enter, try to log in. If that key is esc, quit the program.
+     */
+private void keyPressedEvent(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyPressedEvent
+    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        loginAction();
+    } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+        dispose();
+    }
+}//GEN-LAST:event_keyPressedEvent
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton logOnButton;
     private javax.swing.JPanel loginPanel;
