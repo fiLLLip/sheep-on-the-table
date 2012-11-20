@@ -7,7 +7,7 @@ import my.sheeponthetable.tools.*;
 
 /**
  * Panel to handle adding new sheep
- * 
+ *
  * @author Håkon
  */
 public class AddNewSheep extends javax.swing.JFrame {
@@ -16,7 +16,8 @@ public class AddNewSheep extends javax.swing.JFrame {
 
     /**
      * Constructs the new form
-     * @param sp 
+     *
+     * @param sp
      */
     public AddNewSheep(SheepPanel sp) {
         this.setLocationRelativeTo(null);
@@ -54,8 +55,6 @@ public class AddNewSheep extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Register new Sheep");
-        setAlwaysOnTop(true);
-        setPreferredSize(new java.awt.Dimension(409, 305));
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -109,9 +108,9 @@ public class AddNewSheep extends javax.swing.JFrame {
                         .addComponent(addSheepButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cancel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                         .addComponent(clearbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -126,10 +125,10 @@ public class AddNewSheep extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE))
-                            .addComponent(dcSheepAddBorn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(dcSheepAddBorn, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 227, Short.MAX_VALUE)))
                 .addGap(45, 45, 45))
         );
         layout.setVerticalGroup(
@@ -184,32 +183,43 @@ public class AddNewSheep extends javax.swing.JFrame {
     }//GEN-LAST:event_clearbtnActionPerformed
 
     /**
-     * 
+     *
      */
     private void addSheepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepButtonActionPerformed
-        // Make sure all the fields are filled
-        if (txtNick.getText().equals("") 
-                || txtWeight.getText().equals("")
-                || dcSheepAddBorn.getDate().before(new Date(84600000))
-                ) {
 
-            // If some fields where not filled, ask the user to fill them
-            final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
+        Double weight;
+       
+        final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
+
+        // Make sure all the fields are filled
+        if (txtNick.getText().equals("")
+                || txtWeight.getText().equals("")
+                || dcSheepAddBorn.getDate().before(new Date(84600000))) {
+            
+             // If some fields where not filled, ask the user to fill them
             JOptionPane.showMessageDialog(null, "Please fill in all the required fields.", "Information", JOptionPane.INFORMATION_MESSAGE);
 
             return;
         }
 
+        // try to parse double
+        try {
+            weight = Double.parseDouble(txtWeight.getText().replace(",", "."));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "The weight has to be a number.", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+            return;
+        }
+        
         // If all fields are filled correctly, add the sheep
-            Double weight = Double.parseDouble(txtWeight.getText().replace(",", "."));
-            Sheep newSheep = new Sheep(-1, -1, txtNick.getText(), dcSheepAddBorn.getDate().getTime(), 84600000, txtComment.getText(), null, weight);
-            if (WebServiceClient.newSheep(newSheep)) {
-                this.setVisible(false);
-                sheepPanel.update();
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Sheep creation failed. Make sure you have the neccessary access level. \nIf the problem persists, please contact SysAdmin.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+        Sheep newSheep = new Sheep(-1, -1, txtNick.getText(), dcSheepAddBorn.getDate().getTime(), 84600000, txtComment.getText(), null, weight);
+        if (WebServiceClient.newSheep(newSheep)) {
+            this.setVisible(false);
+            sheepPanel.update();
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Sheep creation failed. Make sure you have the neccessary access level. \nIf the problem persists, please contact SysAdmin.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_addSheepButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
