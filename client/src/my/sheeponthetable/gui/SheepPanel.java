@@ -1196,7 +1196,10 @@ private void btnDeselectAllClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
 private void btnDeleteSelectedClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSelectedClicked
     if (selectedSheep != null) {
-        new WarningBox(this, selectedSheep).setVisible(true);
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to remove the selected sheep?");
+        if (choice == 0) {
+            removeSheep(selectedSheep);
+        }
     } else {
         JOptionPane.showMessageDialog(this, "You have to select a sheep to remove one!");
     }
@@ -1214,7 +1217,10 @@ private void btnRefreshListClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
 private void menuRemoveSheepClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRemoveSheepClicked
     if (selectedSheep != null) {
-        new WarningBox(this, selectedSheep).setVisible(true);
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to remove the selected sheep?");
+        if (choice == 0) {
+            removeSheep(selectedSheep);
+        }
     } else {
         JOptionPane.showMessageDialog(this, "You have to select a sheep to remove one!");
     }
