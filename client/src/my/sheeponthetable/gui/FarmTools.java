@@ -17,7 +17,7 @@ import my.sheeponthetable.tools.WebServiceClient;
  */
 public class FarmTools extends javax.swing.JFrame {
 
-    private List<User> users = new ArrayList();
+    private List<User> users;
     private DefaultListModel listModel = new DefaultListModel();
     private int farmID = Integer.parseInt(WebServiceClient.getFarmId());
     private User selectedUser;
@@ -78,26 +78,23 @@ public class FarmTools extends javax.swing.JFrame {
      */
     private void refreshUserList() {
 
-        users.clear();
-        listModel.clear();
-        
         users = WebServiceClient.getUsersForFarm(farmID);
-        
+        listModel.clear();
+
         if (users == null) {
             listModel.addElement("No users found.");
-        }
-
-
-        for (User user : users) {
-            listModel.addElement(user.getUsername());
-        }
-
-        if (WebServiceClient.getUserDetails().getClearance(farmID) >= 2) {
-            addUserToFarmButton.setEnabled(true);
-            removeUserFromFarmButton.setEnabled(true);
         } else {
-            addUserToFarmButton.setEnabled(false);
-            removeUserFromFarmButton.setEnabled(false);
+            for (User user : users) {
+                listModel.addElement(user.getUsername());
+            }
+
+            if (WebServiceClient.getUserDetails().getClearance(farmID) >= 2) {
+                addUserToFarmButton.setEnabled(true);
+                removeUserFromFarmButton.setEnabled(true);
+            } else {
+                addUserToFarmButton.setEnabled(false);
+                removeUserFromFarmButton.setEnabled(false);
+            }
         }
 
     }

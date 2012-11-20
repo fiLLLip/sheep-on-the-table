@@ -418,9 +418,9 @@ public class WebServiceClient {
      * @param farm_id
      * @return ArrayList<String> with usernames
      */
-    public static ArrayList<User> getUsersForFarm(int farm_id) {
+    public static List<User> getUsersForFarm(int farm_id) {
 
-        ArrayList<User> returnArray = new ArrayList();
+        List<User> returnArray = new ArrayList();
 
         ArrayList<String> params = new ArrayList<>();
         params.add(Integer.toString(farm_id));
@@ -432,7 +432,7 @@ public class WebServiceClient {
             JSONArray res = getArrayOfJSONObjects(response);
             for (int i = 0; i < res.size(); i++) {
                 JSONObject obj = (JSONObject) res.get(i);
-                returnArray.add(new User(Integer.parseInt(obj.get("user_id").toString()),
+                User user = new User(Integer.parseInt(obj.get("user_id").toString()),
                         obj.get("un").toString(),
                         obj.get("name").toString(),
                         obj.get("email").toString(),
@@ -442,7 +442,9 @@ public class WebServiceClient {
                         obj.get("SMSAlarmHealth").toString().equals("1"),
                         obj.get("EmailAlarmStationary").toString().equals("1"),
                         obj.get("EmailAlarmAttack").toString().equals("1"),
-                        obj.get("EmailAlarmHealth").toString().equals("1")));
+                        obj.get("EmailAlarmHealth").toString().equals("1"));
+                System.out.println(user.getName());
+                returnArray.add(user);
             }
             return returnArray;
         } else {
