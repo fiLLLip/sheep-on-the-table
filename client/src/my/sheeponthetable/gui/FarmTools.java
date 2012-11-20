@@ -91,6 +91,14 @@ public class FarmTools extends javax.swing.JFrame {
             for (User user : users) {
                 listModel.addElement(user.getUsername());
             }
+            
+            if(WebServiceClient.getUserDetails().getClearance(farmID) >= 2) {
+                addUserToFarmButton.setEnabled(true);
+                removeUserFromFarmButton.setEnabled(true);
+            } else {
+                addUserToFarmButton.setEnabled(false);
+                removeUserFromFarmButton.setEnabled(false);
+            }
         
     }
 
@@ -214,6 +222,7 @@ public class FarmTools extends javax.swing.JFrame {
         lblFarmNameTxt.setText("               ");
 
         addUserToFarmButton.setText("+");
+        addUserToFarmButton.setEnabled(false);
         addUserToFarmButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addUserToFarmButtonActionPerformed(evt);
@@ -221,6 +230,7 @@ public class FarmTools extends javax.swing.JFrame {
         });
 
         removeUserFromFarmButton.setText("-");
+        removeUserFromFarmButton.setEnabled(false);
         removeUserFromFarmButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeUserFromFarmButtonActionPerformed(evt);
@@ -348,20 +358,14 @@ public class FarmTools extends javax.swing.JFrame {
 
         if (jListUser.getSelectedIndex() != -1) {
 
+            this.selectedUser = users.get(jListUser.getSelectedIndex());
+            
             // disable the level setter
             ClearanceChoice.setEnabled(false);
 
             // If user is a farm owner
-            if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserID())) == 2) {
-                this.selectedUser = users.get(jListUser.getSelectedIndex());
+            if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserID())) >= 2) {
                 ClearanceChoice.setEnabled(true); // owners can set levels
-            } else {
-                // user is not a owner, and can only change own info
-                for (User user : users) {
-                    if (user.getUserId() == Integer.parseInt(WebServiceClient.getUserID())) {
-                        this.selectedUser = user;
-                    }
-                }
             }
 
             // enable input components
@@ -424,6 +428,8 @@ public class FarmTools extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to save settings.");
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "The changes to user " + selectedUser.getUsername() + " were saved successfully.");
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
