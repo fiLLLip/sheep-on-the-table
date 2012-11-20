@@ -1216,14 +1216,7 @@ private void btnRefreshListClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      * Fired when the "remove sheep" option is picked from the menu
      */
 private void menuRemoveSheepClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRemoveSheepClicked
-    if (selectedSheep != null) {
-        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to remove the selected sheep?");
-        if (choice == 0) {
-            removeSheep(selectedSheep);
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "You have to select a sheep to remove one!");
-    }
+    btnDeleteSelectedClicked(evt);
 }//GEN-LAST:event_menuRemoveSheepClicked
 
     /**
