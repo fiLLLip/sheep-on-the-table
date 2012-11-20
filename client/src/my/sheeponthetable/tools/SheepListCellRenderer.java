@@ -18,8 +18,8 @@ public class SheepListCellRenderer extends DefaultListCellRenderer {
 
     /**
      * Creates a new SheepListCellRenderer
-     * 
-     * @param sp 
+     *
+     * @param sp
      */
     public SheepListCellRenderer(SheepPanel sp) {
         super();
@@ -28,8 +28,8 @@ public class SheepListCellRenderer extends DefaultListCellRenderer {
 
     @Override
     /**
-     * Called when displaying the elements in the list. Basically it does what
-     * a generic listCellRendererComponent would do, but adds some colour 
+     * Called when displaying the elements in the list. Basically it does what a
+     * generic listCellRendererComponent would do, but adds some colour
      * depending on the status of the sheep.
      */
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {

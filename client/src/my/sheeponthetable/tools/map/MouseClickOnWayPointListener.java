@@ -8,9 +8,9 @@ import my.sheeponthetable.gui.SheepPanel;
 import org.jdesktop.swingx.JXMapViewer;
 
 /**
- * Mouse Listener to handle clicking events on the map. To be precise, this 
+ * Mouse Listener to handle clicking events on the map. To be precise, this
  * listener checks whether left mouse clicks hits any waypoint.
- * 
+ *
  * @author elias
  */
 public class MouseClickOnWayPointListener implements MouseListener {
@@ -20,8 +20,8 @@ public class MouseClickOnWayPointListener implements MouseListener {
 
     /**
      * Create a new MouseClickOnWayPointListener
-     * 
-     * @param sp 
+     *
+     * @param sp
      */
     public MouseClickOnWayPointListener(SheepPanel sp) {
         map = sp.getMapKit().getMainMap();

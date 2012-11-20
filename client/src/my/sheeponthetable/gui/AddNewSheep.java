@@ -188,22 +188,22 @@ public class AddNewSheep extends javax.swing.JFrame {
         txtWeight.setText("");
         txtComment.setText("");
     }
-    
+
     /**
      *
      */
     private void addSheepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSheepButtonActionPerformed
 
         Double weight;
-       
+
         final ImageIcon icon = new ImageIcon(getClass().getResource("/my/sheeponthetable/gui/resources/sadSheep.jpg"));
 
         // Make sure all the fields are filled
         if (txtNick.getText().equals("")
                 || txtWeight.getText().equals("")
                 || dcSheepAddBorn.getDate().before(new Date(84600000))) {
-            
-             // If some fields where not filled, ask the user to fill them
+
+            // If some fields where not filled, ask the user to fill them
             JOptionPane.showMessageDialog(null, "Please fill in all the required fields.", "Information", JOptionPane.INFORMATION_MESSAGE);
 
             return;
@@ -217,7 +217,7 @@ public class AddNewSheep extends javax.swing.JFrame {
 
             return;
         }
-        
+
         // If all fields are filled correctly, add the sheep
         Sheep newSheep = new Sheep(-1, -1, txtNick.getText(), dcSheepAddBorn.getDate().getTime(), 84600000, txtComment.getText(), null, weight);
         if (WebServiceClient.newSheep(newSheep)) {

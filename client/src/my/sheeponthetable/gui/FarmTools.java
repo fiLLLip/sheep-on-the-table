@@ -9,7 +9,7 @@ import my.sheeponthetable.tools.WebServiceClient;
 
 /**
  * A form used to give and edit user permissions for the given farm.
- * 
+ *
  * @author Gruppe 7
  */
 public class FarmTools extends javax.swing.JFrame {
@@ -513,7 +513,7 @@ public class FarmTools extends javax.swing.JFrame {
     }
 
     private int getClearenceLevelFromIndex(int selectedIndex) {
-        switch(selectedIndex) {
+        switch (selectedIndex) {
             case 0:
                 return 2;
             case 1:

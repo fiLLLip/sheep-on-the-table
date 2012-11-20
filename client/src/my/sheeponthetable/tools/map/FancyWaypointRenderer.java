@@ -15,8 +15,8 @@ import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.WaypointRenderer;
 
 /**
- * A fancy waypoint painter. 
- * 
+ * A fancy waypoint painter.
+ *
  * This entire class has been gathered from the examples of JxMapViewer2.
  *
  * @author Martin Steiger

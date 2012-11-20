@@ -13,7 +13,7 @@ import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.painter.Painter;
 
 /**
- * Paints a route. This entire class has been gathered from the examples of 
+ * Paints a route. This entire class has been gathered from the examples of
  * JxMapViewer2.
  *
  * @author Martin Steiger

@@ -6,9 +6,9 @@ import org.jdesktop.swingx.mapviewer.GeoPosition;
 
 /**
  * A waypoint that also has a color and a label.
- * 
- * This class is based on the Waypoint implementation used in one of the examples
- * from JxMapViewer2.
+ *
+ * This class is based on the Waypoint implementation used in one of the
+ * examples from JxMapViewer2.
  *
  * @author Gruppe7
  */
@@ -21,11 +21,12 @@ public class MyWaypoint extends DefaultWaypoint {
 
     /**
      * Constructor for Waypoints
-     * @param label 
-     * @param color 
+     *
+     * @param label
+     * @param color
      * @param coord
      * @param sheep
-     * @param index  
+     * @param index
      */
     public MyWaypoint(String label, Color color, GeoPosition coord, int index, boolean sheep) {
         super(coord);
@@ -37,7 +38,8 @@ public class MyWaypoint extends DefaultWaypoint {
 
     /**
      * Returns the label text
-     * @return 
+     *
+     * @return
      */
     public String getLabel() {
         return label;
@@ -45,7 +47,8 @@ public class MyWaypoint extends DefaultWaypoint {
 
     /**
      * Returns the color
-     * @return 
+     *
+     * @return
      */
     public Color getColor() {
         return color;
@@ -54,7 +57,8 @@ public class MyWaypoint extends DefaultWaypoint {
     /**
      * Returns true if this is a sheep waypoint, false if it is a update
      * waypoint
-     * @return 
+     *
+     * @return
      */
     public boolean isSheepWaypoint() {
         return sheep;
@@ -62,7 +66,8 @@ public class MyWaypoint extends DefaultWaypoint {
 
     /**
      * Returns the index of corresponding sheep or sheep update
-     * @return 
+     *
+     * @return
      */
     public int getIndex() {
         return index;

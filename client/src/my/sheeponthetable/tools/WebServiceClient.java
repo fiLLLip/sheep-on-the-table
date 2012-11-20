@@ -22,13 +22,13 @@ import net.minidev.json.*;
  * reads and writes information to and from the server when the appropriate
  * methods are called.
  *
- * Also, note that this class is a static class, not an object class. This is 
- * because the entire application only needs a single WebServiceClient, which 
+ * Also, note that this class is a static class, not an object class. This is
+ * because the entire application only needs a single WebServiceClient, which
  * should be accessible to most of the classes in the project, so there is no
- * benefit to forcing the programmer to create a object that would work exactly 
+ * benefit to forcing the programmer to create a object that would work exactly
  * in the same way as a static class, except that the object would have to have
  * a reference to it in every class.
- * 
+ *
  * @author Gruppe 7
  */
 public class WebServiceClient {
@@ -59,7 +59,7 @@ public class WebServiceClient {
      * @return true if successfully connected, or false otherwise
      */
     private static boolean connect() {
-        
+
         config.loadSettingsFile();
         url = config.getServerURL();
 
@@ -228,8 +228,8 @@ public class WebServiceClient {
      *
      * Requires the connector to the logged in and connected.
      *
-     * @param sheepid 
-     * @param limit 
+     * @param sheepid
+     * @param limit
      * @return List<Sheep> or null, if not logged in, not connected or the user
      * doesn't have any sheep in the database.
      */
@@ -296,9 +296,9 @@ public class WebServiceClient {
     /**
      * Registers new password supplied from GUI
      *
-     * @param oldPassword 
-     * @param newPassword 
-     * @param newConfirmedPassword 
+     * @param oldPassword
+     * @param newPassword
+     * @param newConfirmedPassword
      * @return true if successful or false if an error happened.
      */
     public static Boolean newPassword(String oldPassword, String newPassword, String newConfirmedPassword) {
@@ -346,10 +346,10 @@ public class WebServiceClient {
     }
 
     /**
-     * Adds permission for a user to current farm.
-     * Sets default level to 0 (read only)
+     * Adds permission for a user to current farm. Sets default level to 0 (read
+     * only)
      *
-     * @param username 
+     * @param username
      * @return true if successful or false if an error happened.
      */
     public static Boolean addNewUserToFarm(String username) {
@@ -372,7 +372,7 @@ public class WebServiceClient {
     /**
      * Removes permission for a user from current farm.
      *
-     * @param user 
+     * @param user
      * @return true if successful or false if an error happened.
      */
     public static Boolean removeUserFromFarm(User user) {
@@ -382,7 +382,7 @@ public class WebServiceClient {
         List<String> params = new ArrayList<>();
         params.add(farmid);
         params.add(Integer.toString(user.getUserId()));
-                
+
         Object response = doRequest(method, params, true);
 
         if (response != null && Integer.parseInt(response.toString()) >= 1) {
@@ -455,7 +455,7 @@ public class WebServiceClient {
     /**
      * Returns the users connected to a specific farm
      *
-     * @param user 
+     * @param user
      * @return ArrayList<String> with usernames
      */
     public static boolean setUserOptions(User user) {
@@ -558,7 +558,7 @@ public class WebServiceClient {
      * Returns the user level of a specific user to a farm
      *
      * @param user_id
-     * @param level 
+     * @param level
      * @return integer level: -1: error, 0: view only, 1: Admin, 2: Owner
      */
     public static boolean setUserPermission(int user_id, int level) {
@@ -614,8 +614,8 @@ public class WebServiceClient {
      */
     public static void setFarmId(String fid) {
         farmid = fid;
-        for (int i = 0;i<farmids.size();i++) {
-            if(farmids.get(i).get("id").equals(fid)) {
+        for (int i = 0; i < farmids.size(); i++) {
+            if (farmids.get(i).get("id").equals(fid)) {
                 accessLevel = Integer.parseInt(farmids.get(i).get("level").toString());
                 i = farmids.size();
             }

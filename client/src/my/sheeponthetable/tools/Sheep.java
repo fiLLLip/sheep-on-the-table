@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * The Sheep class implements the program-internal representation of a sheep.
- * 
+ *
  * @author Filip
  */
 public class Sheep {
@@ -23,14 +23,15 @@ public class Sheep {
     /**
      * Creates a new instance of the class sheep by specifying the information
      * about the sheep.
-     * @param id 
+     *
+     * @param id
      * @param born
-     * @param farmId 
+     * @param farmId
      * @param updates
      * @param name
-     * @param comment 
+     * @param comment
      * @param deceased
-     * @param weight  
+     * @param weight
      */
     public Sheep(int id, int farmId, String name, long born, long deceased, String comment, List<SheepUpdate> updates, double weight) {
         this.id = id;
@@ -45,7 +46,8 @@ public class Sheep {
 
     /**
      * Get the ID field.
-     * @return 
+     *
+     * @return
      */
     public int getID() {
         return id;
@@ -53,7 +55,8 @@ public class Sheep {
 
     /**
      * Gets the FarmID field.
-     * @return 
+     *
+     * @return
      */
     public int getFarmId() {
         return farmId;
@@ -61,7 +64,8 @@ public class Sheep {
 
     /**
      * Gets the name of the sheep.
-     * @return 
+     *
+     * @return
      */
     public String getName() {
         return name;
@@ -69,7 +73,8 @@ public class Sheep {
 
     /**
      * Gets the comment field.
-     * @return 
+     *
+     * @return
      */
     public String getComment() {
         return comment;
@@ -77,7 +82,8 @@ public class Sheep {
 
     /**
      * Gets the unix timestamp of when sheep was born.
-     * @return 
+     *
+     * @return
      */
     public Date getBorn() {
         Date formattedBorn = new Date(born);
@@ -86,7 +92,8 @@ public class Sheep {
 
     /**
      * Gets the weight field.
-     * @return 
+     *
+     * @return
      */
     public double getWeight() {
         return weight;
@@ -94,7 +101,8 @@ public class Sheep {
 
     /**
      * Gets the unix timestamp of when sheep was deceased.
-     * @return 
+     *
+     * @return
      */
     public Date getDeceased() {
         Date formattedDeceased = new Date(deceased);
@@ -103,7 +111,8 @@ public class Sheep {
 
     /**
      * Gets the list of updates associated with this sheep.
-     * @return 
+     *
+     * @return
      */
     public List<SheepUpdate> getUpdates() {
         return updates;
@@ -111,7 +120,8 @@ public class Sheep {
 
     /**
      * Sets the id field.
-     * @param id 
+     *
+     * @param id
      */
     public void setID(int id) {
         this.id = id;
@@ -119,7 +129,8 @@ public class Sheep {
 
     /**
      * Sets the farm ID field
-     * @param id 
+     *
+     * @param id
      */
     public void setFarmID(int id) {
         farmId = id;
@@ -127,7 +138,8 @@ public class Sheep {
 
     /**
      * Sets the name field.
-     * @param name 
+     *
+     * @param name
      */
     public void setName(String name) {
         this.name = name;
@@ -135,7 +147,8 @@ public class Sheep {
 
     /**
      * Sets the comment field.
-     * @param comment 
+     *
+     * @param comment
      */
     public void setComment(String comment) {
         this.comment = comment;
@@ -143,9 +156,10 @@ public class Sheep {
 
     /**
      * Sets the born date of the sheep. Make sure that the sheep is not given a
-     * value that is older than it's deceased field, otherwise it will be 
+     * value that is older than it's deceased field, otherwise it will be
      * registered as dead.
-     * @param date 
+     *
+     * @param date
      */
     public void setBorn(Date date) {
         born = date.getTime();
@@ -153,7 +167,8 @@ public class Sheep {
 
     /**
      * Sets the weight of the sheep
-     * @param w 
+     *
+     * @param w
      */
     public void setWeight(double w) {
         this.weight = w;
@@ -162,18 +177,20 @@ public class Sheep {
     /**
      * Set the deceased value of the sheep. If the sheep is to be registered as
      * alive, set the deceased value to "1st Jan 1970 00:00:00"
-     * @param date 
+     *
+     * @param date
      */
     public void setDeceased(Date date) {
         deceased = date.getTime();
     }
 
     /**
-     * Sets the SheepUpdate list in the sheep object. The program depends in 
-     * many places on the fact that this list is sorted by timestamp, with the 
-     * newest update having the lowest index. Therefore: Make sure that the 
-     * list is sorted before calling this method.
-     * @param updates 
+     * Sets the SheepUpdate list in the sheep object. The program depends in
+     * many places on the fact that this list is sorted by timestamp, with the
+     * newest update having the lowest index. Therefore: Make sure that the list
+     * is sorted before calling this method.
+     *
+     * @param updates
      */
     public void setUpdates(List<SheepUpdate> updates) {
         this.updates = updates;
@@ -182,12 +199,13 @@ public class Sheep {
     /**
      * Store an additional sheep update in the sheep's update list. This method
      * should only be called if it can be guaranteed that the new update has a
-     * newer timestamp than the previous newest update, thus making sure that 
+     * newer timestamp than the previous newest update, thus making sure that
      * the update list remains sorted.
-     * 
-     * If this cannot be guaranteed, use getUpdates(), add the update to the 
+     *
+     * If this cannot be guaranteed, use getUpdates(), add the update to the
      * list, sort the list, and then use setUpdates()
-     * @param su 
+     *
+     * @param su
      */
     public void addUpdate(SheepUpdate su) {
         if (updates == null) {
@@ -197,10 +215,11 @@ public class Sheep {
     }
 
     /**
-     * Returns true if the sheep is dead. In terms of data specifications, this 
+     * Returns true if the sheep is dead. In terms of data specifications, this
      * is when the deceased time is set to be after the born time. Living sheep
      * should normally have their deceased field set to "1st Jan 1970 00:00:00"
-     * @return 
+     *
+     * @return
      */
     public Boolean isAlive() {
         if (deceased <= born) {
@@ -208,18 +227,18 @@ public class Sheep {
         }
         return false;
     }
-    
+
     /**
      * Get status of the sheep. If the sheeps has any updates, it returns the
      * status of the newest update. If the sheep doesn't have any updates, it
      * returns -1.
-     * @return 
+     *
+     * @return
      */
     public int getStatus() {
         if (getUpdates().isEmpty()) {
             return -1;
-        }
-        else {
+        } else {
             return getUpdates().get(0).getAlarm();
         }
     }

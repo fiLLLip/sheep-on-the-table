@@ -5,7 +5,7 @@ import my.sheeponthetable.tools.WebServiceClient;
 
 /**
  * Dialogue box used to let the user change his password.
- * 
+ *
  * @author Håkon
  */
 public class ChangePassword extends javax.swing.JFrame {
@@ -119,7 +119,7 @@ public class ChangePassword extends javax.swing.JFrame {
         String currentPwd = CurrentPasswordtxt.getText();
         String newPwd = NewPasswordtxt.getText();
         String confirmPwd = ConfirmPasswordtxt.getText();
-        
+
         if (WebServiceClient.newPassword(currentPwd, newPwd, confirmPwd)) {
             JOptionPane.showMessageDialog(null, "Password has been succesfully changed!", "Information", JOptionPane.INFORMATION_MESSAGE);
             dispose();

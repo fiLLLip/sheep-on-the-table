@@ -2,13 +2,13 @@ package my.sheeponthetable.tools;
 
 /**
  * This is basically a data structure storeing information about a single user.
- * This might be the active user, or it might be any of the users associated with
- * the active farm, such as when looking through permissions in FarmTools.
- * 
+ * This might be the active user, or it might be any of the users associated
+ * with the active farm, such as when looking through permissions in FarmTools.
+ *
  * The information stored is the username in the database, the real name, the
  * telephone number and email (used in case of alarm), and information about
  * which kinds of events the user wants to trigger which alarms.
- * 
+ *
  * @author Alex
  */
 public class User {
@@ -25,11 +25,12 @@ public class User {
     /**
      * Creates a new user without specifying information about which alarm the
      * user wants.
-     * @param userId 
-     * @param username 
-     * @param name 
+     *
+     * @param userId
+     * @param username
+     * @param name
      * @param telephone
-     * @param email  
+     * @param email
      */
     public User(int userId, String username, String name, String email, String telephone) {
         this.userId = userId;
@@ -38,20 +39,21 @@ public class User {
         this.email = email;
         this.telephone = telephone;
     }
-    
+
     /**
      * Creates a new user object by stating all the associated information.
-     * @param userId 
-     * @param username 
+     *
+     * @param userId
+     * @param username
      * @param EmailAlarmHealth
      * @param name
-     * @param telephone 
-     * @param SMSAlarmStationary 
+     * @param telephone
+     * @param SMSAlarmStationary
      * @param email
      * @param SMSAlarmAttack
-     * @param EmailAlarmStationary 
-     * @param SMSAlarmHealth 
-     * @param EmailAlarmAttack  
+     * @param EmailAlarmStationary
+     * @param SMSAlarmHealth
+     * @param EmailAlarmAttack
      */
     public User(int userId,
             String username,
@@ -81,106 +83,118 @@ public class User {
 
     /**
      * Gets the SMSAlarmStationary field
-     * @return 
-     */ 
+     *
+     * @return
+     */
     public boolean getSMSAlarmStationary() {
         return SMSAlarmStationary;
     }
 
     /**
      * Sets the SMSAlarmStationary field
-     * @param SMSAlarmStationary 
-     */ 
+     *
+     * @param SMSAlarmStationary
+     */
     public void setSMSAlarmStationary(boolean SMSAlarmStationary) {
         this.SMSAlarmStationary = SMSAlarmStationary;
     }
-    
+
     /**
      * Gets the SMSAlarmAttack field
-     * @return 
-     */ 
+     *
+     * @return
+     */
     public boolean getSMSAlarmAttack() {
         return SMSAlarmAttack;
     }
 
     /**
      * Sets the SMSAlarmAttack field
-     * @param SMSAlarmAttack 
-     */ 
+     *
+     * @param SMSAlarmAttack
+     */
     public void setSMSAlarmAttack(boolean SMSAlarmAttack) {
         this.SMSAlarmAttack = SMSAlarmAttack;
     }
 
     /**
      * Gets the SMSAlarmHealth field
-     * @return 
-     */ 
+     *
+     * @return
+     */
     public boolean getSMSAlarmHealth() {
         return SMSAlarmHealth;
     }
 
     /**
      * Sets the SMSAlarmHealth field
-     * @param SMSAlarmHealth 
-     */ 
+     *
+     * @param SMSAlarmHealth
+     */
     public void setSMSAlarmHealth(boolean SMSAlarmHealth) {
         this.SMSAlarmHealth = SMSAlarmHealth;
     }
 
     /**
      * Gets the EmailAlarmStationary field
-     * @return 
-     */ 
+     *
+     * @return
+     */
     public boolean getEmailAlarmStationary() {
         return EmailAlarmStationary;
     }
-    
+
     /**
      * Sets the EmailAlarmStationary field
-     * @param EmailAlarmStationary 
-     */ 
+     *
+     * @param EmailAlarmStationary
+     */
     public void setEmailAlarmStationary(boolean EmailAlarmStationary) {
         this.EmailAlarmStationary = EmailAlarmStationary;
     }
 
     /**
      * Gets the EmailAlarmAttack field
-     * @return 
-     */ 
+     *
+     * @return
+     */
     public boolean getEmailAlarmAttack() {
         return EmailAlarmAttack;
     }
 
     /**
      * Sets the EmailAlarmAttack field
-     * @param EmailAlarmAttack 
-     */ 
+     *
+     * @param EmailAlarmAttack
+     */
     public void setEmailAlarmAttack(boolean EmailAlarmAttack) {
         this.EmailAlarmAttack = EmailAlarmAttack;
     }
 
     /**
      * Gets the EmailAlarmField field
-     * @return 
-     */ 
+     *
+     * @return
+     */
     public boolean getEmailAlarmHealth() {
         return EmailAlarmHealth;
     }
 
-    
     /**
      * Sets the EmailAlarmHealth field
-     * @param EmailAlarmHealth 
-     */ 
+     *
+     * @param EmailAlarmHealth
+     */
     public void setEmailAlarmHealth(boolean EmailAlarmHealth) {
         this.EmailAlarmHealth = EmailAlarmHealth;
     }
 
     /**
-     * Gets the level of clerance the user has on this farm, by asking the 
+     * Gets the level of clerance the user has on this farm, by asking the
      * server to provide this information.
-     * @param farmId 
-     * @return 
+     *
+     * @param farmId
+     * @return
      */
     public int getClearance(int farmId) {
         return WebServiceClient.getUserLevel(farmId, this.userId);
@@ -188,15 +202,17 @@ public class User {
 
     /**
      * Gets the telephone field.
-     * @return 
+     *
+     * @return
      */
     public String getTelephone() {
         return telephone;
     }
-    
+
     /**
      * Gets the email field.
-     * @return 
+     *
+     * @return
      */
     public String getEmail() {
         return this.email;
@@ -204,7 +220,8 @@ public class User {
 
     /**
      * Gets the name field.
-     * @return 
+     *
+     * @return
      */
     public String getName() {
         return this.name;
@@ -212,7 +229,8 @@ public class User {
 
     /**
      * Gets the username field.
-     * @return 
+     *
+     * @return
      */
     public String getUsername() {
         return this.username;
@@ -220,7 +238,8 @@ public class User {
 
     /**
      * Gets the user id field.
-     * @return 
+     *
+     * @return
      */
     public int getUserId() {
         return this.userId;
@@ -228,7 +247,8 @@ public class User {
 
     /**
      * Sets the name field
-     * @param name 
+     *
+     * @param name
      */
     public void setName(String name) {
         this.name = name;
@@ -236,7 +256,8 @@ public class User {
 
     /**
      * Sets the email field
-     * @param mail 
+     *
+     * @param mail
      */
     public void setEmail(String mail) {
         this.email = mail;
@@ -244,7 +265,8 @@ public class User {
 
     /**
      * Sets the telephone field
-     * @param number 
+     *
+     * @param number
      */
     public void setTelephone(String number) {
         this.telephone = number;

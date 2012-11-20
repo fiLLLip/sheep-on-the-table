@@ -29,11 +29,10 @@ import org.jdesktop.swingx.painter.CompoundPainter;
 import org.jdesktop.swingx.painter.Painter;
 
 /**
- * SheepPanel is the main dialogue box of the program. It gives the user most 
- * of the desired information, including lists of all the sheep on the farm, 
- * a map displaying their positions, and information belonging to the selected
- * sheep.
- * 
+ * SheepPanel is the main dialogue box of the program. It gives the user most of
+ * the desired information, including lists of all the sheep on the farm, a map
+ * displaying their positions, and information belonging to the selected sheep.
+ *
  * @author Gruppe 7
  */
 public class SheepPanel extends javax.swing.JFrame {
@@ -49,7 +48,7 @@ public class SheepPanel extends javax.swing.JFrame {
     private boolean isEditingSheep;
 
     /**
-     * Constructs a SheepPanel with all associated patterns.    
+     * Constructs a SheepPanel with all associated patterns.
      */
     public SheepPanel() {
         sheepShow = new DefaultListModel();
@@ -68,10 +67,11 @@ public class SheepPanel extends javax.swing.JFrame {
     }
 
     /**
-     * Returns the list of Sheep Updates associated with the selected sheep.
-     * To get the update list of a given sheep, use getSheepList() to get the
-     * full list of sheep, and call getUpdates() on the desired sheep.
-     * @return 
+     * Returns the list of Sheep Updates associated with the selected sheep. To
+     * get the update list of a given sheep, use getSheepList() to get the full
+     * list of sheep, and call getUpdates() on the desired sheep.
+     *
+     * @return
      */
     public List<SheepUpdate> getUpdateList() {
         return sheepUpdateList;
@@ -79,15 +79,17 @@ public class SheepPanel extends javax.swing.JFrame {
 
     /**
      * Returns the list of sheep associated with the given farm.
-     * @return 
+     *
+     * @return
      */
     public List<Sheep> getSheepList() {
         return sheepList;
     }
 
     /**
-     *  Returns the mapKit-object used to draw the map. 
-     * @return 
+     * Returns the mapKit-object used to draw the map.
+     *
+     * @return
      */
     public JXMapKit getMapKit() {
         return jXSheepMap;
@@ -104,8 +106,8 @@ public class SheepPanel extends javax.swing.JFrame {
     }
 
     /**
-     * Called by the constructor to build the keyboard shortcuts for the menu. 
-     * Has to be done differently on Mac OS and the other OS's because of the 
+     * Called by the constructor to build the keyboard shortcuts for the menu.
+     * Has to be done differently on Mac OS and the other OS's because of the
      * keyboard layout.
      */
     private void buildKeyboardShortcuts() {
@@ -133,7 +135,7 @@ public class SheepPanel extends javax.swing.JFrame {
     /**
      * Fired by event listeners to handle the removal of a sheep. Asks the Web
      * Service Client to remove the sheep from the database, and then fetchs the
-     * new sheep list. If not able to remove the sheep from the database, it 
+     * new sheep list. If not able to remove the sheep from the database, it
      * displays an error.
      */
     public void removeSheep(Sheep s) {
@@ -180,8 +182,8 @@ public class SheepPanel extends javax.swing.JFrame {
 
     /**
      * Fired by event listeners to handle what happens when a sheep is seleced.
-     * It updates the information in the display area, as well as prints waypoints
-     * on the map corresponding to the sheep's position history. 
+     * It updates the information in the display area, as well as prints
+     * waypoints on the map corresponding to the sheep's position history.
      *
      * @param index: The index of the selected sheep
      */
@@ -258,8 +260,8 @@ public class SheepPanel extends javax.swing.JFrame {
     }
 
     /**
-     * Display the correct information in the display fields. Called when a sheep
-     * is selected or an edit has been performed.
+     * Display the correct information in the display fields. Called when a
+     * sheep is selected or an edit has been performed.
      */
     private void setValueOfDisplayFields(Sheep s) {
         int id = s.getID();
@@ -287,13 +289,13 @@ public class SheepPanel extends javax.swing.JFrame {
     }
 
     /**
-     * This method is called by the mouse listeners on the map, to handle what 
-     * happens then the user clicks on a waypoint. What this method does is to 
-     * select the shep on the list with the index corresponding to the input 
-     * value. This selection then fires the list event listeners which call the 
+     * This method is called by the mouse listeners on the map, to handle what
+     * happens then the user clicks on a waypoint. What this method does is to
+     * select the shep on the list with the index corresponding to the input
+     * value. This selection then fires the list event listeners which call the
      * selectSheep method.
      *
-     * @param index 
+     * @param index
      */
     public void mapSelectSheep(int index) {
         sheepJList.setSelectedIndex(index);
@@ -301,8 +303,8 @@ public class SheepPanel extends javax.swing.JFrame {
     }
 
     /**
-     * 
-     * Called by event listeners to handle what happens when a sheep update is 
+     *
+     * Called by event listeners to handle what happens when a sheep update is
      * seleced. It updates the information in the display area.
      *
      * @param Index of the selected sheep.
@@ -355,12 +357,12 @@ public class SheepPanel extends javax.swing.JFrame {
 
     /**
      * This method is called by the mouse listeners on the map, to when a sheep
-     * update waypoint is clicked on on the map. What this method does is to 
-     * select the update on the list with the index corresponding to the input 
+     * update waypoint is clicked on on the map. What this method does is to
+     * select the update on the list with the index corresponding to the input
      * value. This selection then fires the list event listeners which call the
      * selectUpdate method.
      *
-     * @param index 
+     * @param index
      */
     public void mapSelectUpdate(int index) {
         sheepUpdateJList.setSelectedIndex(index);
@@ -980,7 +982,6 @@ public class SheepPanel extends javax.swing.JFrame {
 
         // Make one listener for the sheep list
         sheepListSelectionListener = new ListSelectionListener() {
-
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
 
@@ -997,7 +998,6 @@ public class SheepPanel extends javax.swing.JFrame {
 
         // Make another listener for the update lists
         updateListSelectionListener = new ListSelectionListener() {
-
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 JList list = (JList) e.getSource();
@@ -1064,8 +1064,8 @@ public class SheepPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_menuEditSheepActionPerformed
 
     /**
-     * Called by the event handling code for the menu-option "edit sheep" and 
-     * for the button "edit selected sheep". What it does, is to hide all the 
+     * Called by the event handling code for the menu-option "edit sheep" and
+     * for the button "edit selected sheep". What it does, is to hide all the
      * uneditable labels, and show an equvalent set of editable text fields, as
      * well as reveal the buttons to save or discard changes.
      */
@@ -1153,11 +1153,11 @@ private void menuDeselectSheepActionPerformed(java.awt.event.ActionEvent evt) {/
 }//GEN-LAST:event_menuDeselectSheepActionPerformed
 
     /**
-     *  Fired by the handling code for the event listeners on the "deselect all"
-     * button and the "deselect sheep" menu button. 
-     * 
-     * Clears all the sheep info labels on the screen, and redraws the map with all
-     * the sheep waypoints visible.
+     * Fired by the handling code for the event listeners on the "deselect all"
+     * button and the "deselect sheep" menu button.
+     *
+     * Clears all the sheep info labels on the screen, and redraws the map with
+     * all the sheep waypoints visible.
      */
     private void deselect() {
         selectedSheep = null;
@@ -1336,8 +1336,9 @@ private void menuRemoveSheepClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST
     }
 
     /**
-     * Paints the set of waypoints to the map. If the list of tracks is not null,
-     * it also prints a line between the waypoints, according to the track list.
+     * Paints the set of waypoints to the map. If the list of tracks is not
+     * null, it also prints a line between the waypoints, according to the track
+     * list.
      */
     private void paintWaypoints(List<GeoPosition> track, Set<MyWaypoint> waypoints) {
         List<Painter<JXMapViewer>> painters = new ArrayList<>();

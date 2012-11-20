@@ -6,7 +6,7 @@ import my.sheeponthetable.tools.WebServiceClient;
 
 /**
  * The UserProperties dialogue box lets the user edit the user information.
- * 
+ *
  * @author Alex
  */
 public class UserProperties extends javax.swing.JFrame {
@@ -16,7 +16,8 @@ public class UserProperties extends javax.swing.JFrame {
 
     /**
      * Creates new form AddNewSheep
-     * @param sp 
+     *
+     * @param sp
      */
     public UserProperties(SheepPanel sp) {
         initComponents();
@@ -152,7 +153,7 @@ public class UserProperties extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "All fields should be filled in!", "Required Field", JOptionPane.INFORMATION_MESSAGE);
         } else if (!txtEmail.getText().contains("@") || !txtEmail.getText().contains(".")) {
             JOptionPane.showMessageDialog(this, "Please enter a correct e-mail address.", "Required Field", JOptionPane.INFORMATION_MESSAGE);
-        // Check whether phone number contains 8 digits
+            // Check whether phone number contains 8 digits
         } else if (txtPhone.getText().length() != 8) {
             JOptionPane.showMessageDialog(this, "Please enter a phone number consisting of 8 numbers!", "Required Field", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -168,7 +169,6 @@ public class UserProperties extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btnSaveActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnCancel;
     private javax.swing.JToggleButton btnSave;

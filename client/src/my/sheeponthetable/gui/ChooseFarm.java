@@ -9,22 +9,22 @@ import my.sheeponthetable.tools.WebServiceClient;
 
 /**
  * Dialogue box to let the user pick which farm (s)he belongs to.
- * 
+ *
  * @author Håkon
  */
 public class ChooseFarm extends javax.swing.JFrame {
 
     private DefaultListModel farmListModel;
-    
+
     /**
      * Creates new form ChooseFarm which lists all available Farms that the user
      * who is logged in has access to.
      */
     public ChooseFarm() {
-        
+
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
         farmListModel = new DefaultListModel();
         for (Map farmName : WebServiceClient.getFarmIds()) {
             farmListModel.addElement(farmName.get("id") + " - " + farmName.get("name"));
@@ -174,7 +174,6 @@ public class ChooseFarm extends javax.swing.JFrame {
             new SheepPanel().setVisible(true);
         }
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonLogout;
     private javax.swing.JButton buttonSelect;

@@ -15,11 +15,11 @@ import my.sheeponthetable.gui.SheepPanel;
 public class UpdateListCellRenderer extends DefaultListCellRenderer {
 
     SheepPanel sp;
-    
+
     /**
      * Creates a new UpdateListCellRenderer
-     * 
-     * @param sp 
+     *
+     * @param sp
      */
     public UpdateListCellRenderer(SheepPanel sp) {
         super();
@@ -28,8 +28,8 @@ public class UpdateListCellRenderer extends DefaultListCellRenderer {
 
     @Override
     /**
-     * Called when displaying the elements in the list. Basically it does what
-     * a generic listCellRendererComponent would do, but adds some colour 
+     * Called when displaying the elements in the list. Basically it does what a
+     * generic listCellRendererComponent would do, but adds some colour
      * depending on the status of the sheep in the given update.
      */
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {

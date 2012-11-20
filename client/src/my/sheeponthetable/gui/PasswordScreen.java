@@ -8,7 +8,7 @@ import my.sheeponthetable.tools.WebServiceClient;
 /**
  * The screen that is opened when the program starts. Asks for the username and
  * password.
- * 
+ *
  * @author Håkon
  */
 public class PasswordScreen extends javax.swing.JFrame {
@@ -247,7 +247,6 @@ private void keyPressedEvent(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_key
         dispose();
     }
 }//GEN-LAST:event_keyPressedEvent
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton logOnButton;
     private javax.swing.JPanel loginPanel;
