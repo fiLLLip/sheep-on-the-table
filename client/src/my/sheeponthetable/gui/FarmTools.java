@@ -409,7 +409,7 @@ public class FarmTools extends javax.swing.JFrame {
             if (WebServiceClient.setUserOptions(selectedUser)) {
                 // if logged in user is a owner, set clearence level
                 if (WebServiceClient.getUserDetails().getClearance(farmID) == 2) {
-                    if (!WebServiceClient.setUserPermission(selectedUser.getUserId(), getClearenceIndex(ClearanceChoice.getSelectedIndex()))) {
+                    if (!WebServiceClient.setUserPermission(selectedUser.getUserId(), getClearenceLevelFromIndex(ClearanceChoice.getSelectedIndex()))) {
                         JOptionPane.showMessageDialog(null, "The server returned an error while trying to change the user level.");
                     }
                 }
@@ -492,6 +492,19 @@ public class FarmTools extends javax.swing.JFrame {
             default:
             case 0:
                 return 2;
+        }
+    }
+
+    private int getClearenceLevelFromIndex(int selectedIndex) {
+        switch(selectedIndex) {
+            case 0:
+                return 2;
+            case 1:
+                return 1;
+            case 2:
+            default:
+                return 0;
+
         }
     }
 }
