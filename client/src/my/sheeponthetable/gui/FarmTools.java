@@ -37,7 +37,6 @@ public class FarmTools extends javax.swing.JFrame {
         refreshUserList();
 
         this.setLocationRelativeTo(null);
-
     }
 
     /**
@@ -124,9 +123,11 @@ public class FarmTools extends javax.swing.JFrame {
         ClearanceChoice = new java.awt.Choice();
         lblName = new javax.swing.JLabel();
         lblSelectedUserName = new javax.swing.JLabel();
-        lblFarmNameTxt = new javax.swing.JLabel();
         addUserToFarmButton = new javax.swing.JButton();
         removeUserFromFarmButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        lblSelectedUsername = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jCheckBox9.setText("jCheckBox9");
 
@@ -148,7 +149,7 @@ public class FarmTools extends javax.swing.JFrame {
         });
 
         lblFarmName.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblFarmName.setText("Farm name:");
+        lblFarmName.setText("Selected user:");
 
         lblUserNameListLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblUserNameListLabel.setText("Username:");
@@ -210,9 +211,7 @@ public class FarmTools extends javax.swing.JFrame {
 
         lblName.setText("Name:");
 
-        lblSelectedUserName.setText("            ");
-
-        lblFarmNameTxt.setText("               ");
+        lblSelectedUserName.setText("(None selected)");
 
         addUserToFarmButton.setText("+");
         addUserToFarmButton.setEnabled(false);
@@ -230,6 +229,13 @@ public class FarmTools extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Username:");
+
+        lblSelectedUsername.setText("(None selected)");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setText("Alarm settings:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,33 +252,38 @@ public class FarmTools extends javax.swing.JFrame {
                         .addComponent(addUserToFarmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(removeUserFromFarmButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(cbxEmailAlertAttack)
                             .addComponent(cbxEmailAlertHealth)
                             .addComponent(cbxEmailAlertStationary))
-                        .addGap(18, 21, Short.MAX_VALUE)
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(cbxSMSAlertAttack)
                             .addComponent(cbxSMSAlertStationary)
                             .addComponent(cbxSMSAlertHealth)
                             .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblClerance)
-                            .addComponent(lblFarmName)
-                            .addComponent(lblName))
+                            .addComponent(jLabel1)
+                            .addComponent(lblName)
+                            .addComponent(lblClerance))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ClearanceChoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSelectedUserName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblFarmNameTxt)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(lblSelectedUserName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(lblSelectedUsername)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFarmName)
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -281,19 +292,24 @@ public class FarmTools extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFarmName)
-                    .addComponent(lblUserNameListLabel)
-                    .addComponent(lblFarmNameTxt))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblUserNameListLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(lblSelectedUsername))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblName)
                             .addComponent(lblSelectedUserName))
-                        .addGap(39, 39, 39)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblClerance)
                             .addComponent(ClearanceChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23)
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7))
@@ -309,10 +325,8 @@ public class FarmTools extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbxSMSAlertStationary)
                             .addComponent(cbxEmailAlertStationary)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(addUserToFarmButton)
@@ -366,6 +380,7 @@ public class FarmTools extends javax.swing.JFrame {
 
             // set info
             lblSelectedUserName.setText(selectedUser.getName());
+            lblSelectedUsername.setText(selectedUser.getUsername());
             ClearanceChoice.select(getClearenceIndex(this.selectedUser.getClearance(this.farmID)));
 
             cbxEmailAlertAttack.setSelected(selectedUser.getEmailAlarmAttack());
@@ -467,15 +482,17 @@ public class FarmTools extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbxSMSAlertHealth;
     private javax.swing.JCheckBox cbxSMSAlertStationary;
     private javax.swing.JCheckBox jCheckBox9;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JList jListUser;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblClerance;
     private javax.swing.JLabel lblFarmName;
-    private javax.swing.JLabel lblFarmNameTxt;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblSelectedUserName;
+    private javax.swing.JLabel lblSelectedUsername;
     private javax.swing.JLabel lblUserNameListLabel;
     private javax.swing.JButton removeUserFromFarmButton;
     // End of variables declaration//GEN-END:variables
