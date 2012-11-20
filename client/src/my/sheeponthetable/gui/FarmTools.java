@@ -24,16 +24,15 @@ public class FarmTools extends javax.swing.JFrame {
     private boolean hasDoneChangesToSelectedUser = false; // used to determine if we should alert the user of unsaved changes
     private boolean dontShowConfirm = false; // so the popup doesnt come twice
 
-    
     /**
      * Creates new form AddNewSheep
-     * 
+     *
      */
     public FarmTools() {
         initComponents();
 
         this.setTitle("Preferences for " + WebServiceClient.getFarmName());
-        
+
         ClearanceChoice.add("Owner");
         ClearanceChoice.add("Administrator");
         ClearanceChoice.add("View Access only");
@@ -81,25 +80,26 @@ public class FarmTools extends javax.swing.JFrame {
 
         users.clear();
         listModel.clear();
-        if (WebServiceClient.getUsersForFarm(farmID) != null) {
-            users = WebServiceClient.getUsersForFarm(farmID);
-        } else {
+        
+        users = WebServiceClient.getUsersForFarm(farmID);
+        
+        if (users == null) {
             listModel.addElement("No users found.");
         }
 
-       
-            for (User user : users) {
-                listModel.addElement(user.getUsername());
-            }
-            
-            if(WebServiceClient.getUserDetails().getClearance(farmID) >= 2) {
-                addUserToFarmButton.setEnabled(true);
-                removeUserFromFarmButton.setEnabled(true);
-            } else {
-                addUserToFarmButton.setEnabled(false);
-                removeUserFromFarmButton.setEnabled(false);
-            }
-        
+
+        for (User user : users) {
+            listModel.addElement(user.getUsername());
+        }
+
+        if (WebServiceClient.getUserDetails().getClearance(farmID) >= 2) {
+            addUserToFarmButton.setEnabled(true);
+            removeUserFromFarmButton.setEnabled(true);
+        } else {
+            addUserToFarmButton.setEnabled(false);
+            removeUserFromFarmButton.setEnabled(false);
+        }
+
     }
 
     /**
@@ -359,7 +359,7 @@ public class FarmTools extends javax.swing.JFrame {
         if (jListUser.getSelectedIndex() != -1) {
 
             this.selectedUser = users.get(jListUser.getSelectedIndex());
-            
+
             // disable the level setter
             ClearanceChoice.setEnabled(false);
 
@@ -434,12 +434,12 @@ public class FarmTools extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void addUserToFarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserToFarmButtonActionPerformed
-        
+
         String username = JOptionPane.showInputDialog(this, "Please enter the username of the user you want to grant access to this farm:", "Grant access to user", JOptionPane.QUESTION_MESSAGE);
         if (!WebServiceClient.addNewUserToFarm(username)) {
             JOptionPane.showMessageDialog(this, "The user could not be added, is the username correct?", "Beeeeh!", JOptionPane.ERROR_MESSAGE, null);
         } else {
-            
+
             this.refreshUserList();
         }
     }//GEN-LAST:event_addUserToFarmButtonActionPerformed
@@ -491,15 +491,16 @@ public class FarmTools extends javax.swing.JFrame {
     /*
      * Helper method to set the right clearence level (selection box)
      */
+
     private int getClearenceIndex(int level) {
-       switch(level) {
-           case 2:
-               return 0;
-           case 1:
-               return 1;
-           default:
-           case 0:
-               return 2;
-       }
+        switch (level) {
+            case 2:
+                return 0;
+            case 1:
+                return 1;
+            default:
+            case 0:
+                return 2;
+        }
     }
 }
