@@ -190,35 +190,15 @@ public class SheepPanel extends javax.swing.JFrame {
         selectedSheep = sheepList.get(index);
 
         // Set the value of the display fields
-        int id = selectedSheep.getID();
-        DateFormat sdf = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN);
-
-        lblSheepBorn.setText(sdf.format(selectedSheep.getBorn()));
-
-        lblSheepWeight.setText(Double.toString((selectedSheep.getWeight())) + " kg");
-        lblSheepId.setText(Integer.toString(id));
-
-        taSheepComment.setText(selectedSheep.getComment());
-        lblSheepNickname.setText(selectedSheep.getName());
-
-        if (selectedSheep.isAlive()) {
-            lblSheepDeceased.setText("Not Dead");
-        } else {
-            lblSheepDeceased.setText(sdf.format(selectedSheep.getDeceased()));
-        }
-
-        // Set the status label according to status
-        //send status too getHealthStatusAlarm
-        String lblText = getHealthStatusAlarm(selectedSheep.getStatus());
-        //recive a String
-        lblSheepAlarm.setText(lblText);
+        setValueOfDisplayFields(selectedSheep);
 
         // Fill the SheepUpdate-list with the sheepUpdates corresponding to the
         // selected sheep, and at the same time, build a list of waypoints for
         // the sheep updates.
         sheepUpdatesShow.removeAllElements();
 
-        List<SheepUpdate> updates = WebServiceClient.getSheepUpdate(Integer.toString(id), "100");
+        String id = Integer.toString(selectedSheep.getID());
+        List<SheepUpdate> updates = WebServiceClient.getSheepUpdate(id, "100");
         selectedSheep.setUpdates(updates);
 
         // A sheep has to be displayed differently depending on whether it has
@@ -261,8 +241,7 @@ public class SheepPanel extends javax.swing.JFrame {
             }
 
             paintWaypoints(track, waypoints);
-        } 
-        // If there are no updates associated with the sheep, clear the map of
+        } // If there are no updates associated with the sheep, clear the map of
         // all waypoints, and set the label information as n/a.
         else {
             lblSheepPosition.setText("Not available");
@@ -276,6 +255,35 @@ public class SheepPanel extends javax.swing.JFrame {
         }
 
         sheepUpdateList = selectedSheep.getUpdates();
+    }
+
+    /**
+     * Display the correct information in the display fields. Called when a sheep
+     * is selected or an edit has been performed.
+     */
+    private void setValueOfDisplayFields(Sheep s) {
+        int id = s.getID();
+        DateFormat sdf = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN);
+
+        lblSheepBorn.setText(sdf.format(s.getBorn()));
+
+        lblSheepWeight.setText(Double.toString((s.getWeight())) + " kg");
+        lblSheepId.setText(Integer.toString(id));
+
+        taSheepComment.setText(s.getComment());
+        lblSheepNickname.setText(s.getName());
+
+        if (s.isAlive()) {
+            lblSheepDeceased.setText("Not Dead");
+        } else {
+            lblSheepDeceased.setText(sdf.format(selectedSheep.getDeceased()));
+        }
+
+        // Set the status label according to status
+        //send status too getHealthStatusAlarm
+        String lblText = getHealthStatusAlarm(s.getStatus());
+        //recive a String
+        lblSheepAlarm.setText(lblText);
     }
 
     /**
@@ -1122,7 +1130,7 @@ public class SheepPanel extends javax.swing.JFrame {
         }
 
         if (!errors) {
-            selectSheep(sheepList.indexOf(selectedSheep));
+            setValueOfDisplayFields(selectedSheep);
             update();
             menuEditSheepActionPerformed(null);
         } else {
