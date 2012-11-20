@@ -141,7 +141,7 @@ public class SheepPanel extends javax.swing.JFrame {
             deselect();
             update();
         } else {
-            new ErrorBox("\tCould not remove sheep! \nPlease verify that you have the required permissions. \nIf the problem persists, contact sysadmin.");
+            JOptionPane.showMessageDialog(this, "Could not remove sheep! \nPlease verify that you have the required permissions. \nIf the problem persists, contact sysadmin.");
         }
     }
 
@@ -1198,7 +1198,7 @@ private void btnDeleteSelectedClicked(java.awt.event.ActionEvent evt) {//GEN-FIR
     if (selectedSheep != null) {
         new WarningBox(this, selectedSheep).setVisible(true);
     } else {
-        new ErrorBox("You have to select a sheep to remove one!");
+        JOptionPane.showMessageDialog(this, "You have to select a sheep to remove one!");
     }
 }//GEN-LAST:event_btnDeleteSelectedClicked
 
@@ -1216,7 +1216,7 @@ private void menuRemoveSheepClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST
     if (selectedSheep != null) {
         new WarningBox(this, selectedSheep).setVisible(true);
     } else {
-        new ErrorBox("You have to select a sheep to remove one!");
+        JOptionPane.showMessageDialog(this, "You have to select a sheep to remove one!");
     }
 }//GEN-LAST:event_menuRemoveSheepClicked
 

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.sheeponthetable.gui;
 
 import java.util.ArrayList;
@@ -12,8 +8,9 @@ import my.sheeponthetable.tools.User;
 import my.sheeponthetable.tools.WebServiceClient;
 
 /**
- *
- * @author Alex
+ * A form used to give and edit user permissions for the given farm.
+ * 
+ * @author Gruppe 7
  */
 public class FarmTools extends javax.swing.JFrame {
 
@@ -36,7 +33,6 @@ public class FarmTools extends javax.swing.JFrame {
         ClearanceChoice.add("Owner");
         ClearanceChoice.add("Administrator");
         ClearanceChoice.add("View Access only");
-        ClearanceChoice.select(2);
         setDisable();
         refreshUserList();
 
@@ -390,8 +386,6 @@ public class FarmTools extends javax.swing.JFrame {
      * @param evt
      */
     private void userSettingsChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userSettingsChanged
-
-
         this.hasDoneChangesToSelectedUser = true;
 
         selectedUser.setEmailAlarmAttack(cbxEmailAlertAttack.isSelected());
