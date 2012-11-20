@@ -1122,6 +1122,7 @@ public class SheepPanel extends javax.swing.JFrame {
         }
 
         if (!errors) {
+            selectSheep(sheepList.indexOf(selectedSheep));
             update();
             menuEditSheepActionPerformed(null);
         } else {
@@ -1305,7 +1306,6 @@ private void menuRemoveSheepClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST
         wms.setBaseUrl("http://openwms.statkart.no/skwms1/wms.topo2?");
         DefaultTileFactory fact = new WMSTileFactory(wms);
 
-        //jXSheepMap.setDefaultProvider(DefaultProviders.OpenStreetMaps);
         jXSheepMap.getMainMap().setTileFactory(fact);
 
         // Use 8 threads in parallel to load the tiles

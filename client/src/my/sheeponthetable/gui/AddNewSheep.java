@@ -23,7 +23,7 @@ public class AddNewSheep extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         initComponents();
         this.sheepPanel = sp;
-
+        clear();
     }
 
     /**
@@ -173,15 +173,22 @@ public class AddNewSheep extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelActionPerformed
 
     /**
-     * Called when the clear button is pressed. Reset all the fields.
+     * Called when the clear button is pressed.
      */
     private void clearbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearbtnActionPerformed
+        clear();
+    }//GEN-LAST:event_clearbtnActionPerformed
+
+    /**
+     * Resets all the fields
+     */
+    private void clear() {
         dcSheepAddBorn.setDate(new Date());
         txtNick.setText("");
         txtWeight.setText("");
         txtComment.setText("");
-    }//GEN-LAST:event_clearbtnActionPerformed
-
+    }
+    
     /**
      *
      */

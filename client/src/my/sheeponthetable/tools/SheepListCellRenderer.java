@@ -37,12 +37,12 @@ public class SheepListCellRenderer extends DefaultListCellRenderer {
         Sheep s = sp.getSheepList().get(index);
         int status = s.getStatus();
         Color colour;
-        // If there are no updates, make it grey
-        if (status == -1) {
-            colour = Color.GRAY;
-        } // If the sheep is dead, make it red
-        else if (status % 2 == 1 || !s.isAlive()) {
+        // If the sheep is dead, make it red
+        if (status % 2 == 1 || !s.isAlive()) {
             colour = Color.RED;
+        } // If there are no updates, make it grey
+        else if (status == -1) {
+            colour = Color.GRAY;
         } // If the sheep is normal, make it black
         else if (status == 0) {
             colour = Color.BLACK;
