@@ -149,16 +149,12 @@ public class UserProperties extends javax.swing.JFrame {
         // Check whether all fields are filled in
         if (txtName.getText().equals("") || txtEmail.getText().equals("")
                 || txtPhone.getText().equals("")) {
-            new ErrorBox("All fields should be filled in!");
-            return;           
-        // Check whether email contains "@" and "."
+            JOptionPane.showMessageDialog(this, "All fields should be filled in!", "Required Field", JOptionPane.INFORMATION_MESSAGE);
         } else if (!txtEmail.getText().contains("@") || !txtEmail.getText().contains(".")) {
-            new ErrorBox("Please enter a correct e-mail address.");
-            return;
+            JOptionPane.showMessageDialog(this, "Please enter a correct e-mail address.", "Required Field", JOptionPane.INFORMATION_MESSAGE);
         // Check whether phone number contains 8 digits
         } else if (txtPhone.getText().length() != 8) {
-            new ErrorBox("Please enter a phone number consisting of 8 numbers!");
-            return;
+            JOptionPane.showMessageDialog(this, "Please enter a phone number consisting of 8 numbers!", "Required Field", JOptionPane.INFORMATION_MESSAGE);
         } else {
             user.setName(txtName.getText());
             user.setEmail(txtEmail.getText());

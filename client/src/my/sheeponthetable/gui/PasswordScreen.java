@@ -1,6 +1,7 @@
 package my.sheeponthetable.gui;
 
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 import my.sheeponthetable.tools.Config;
 import my.sheeponthetable.tools.WebServiceClient;
 
@@ -187,7 +188,7 @@ public class PasswordScreen extends javax.swing.JFrame {
         }
 
         if (username.isEmpty() || password.isEmpty()) {
-            new ErrorBox("Username or password not set");
+            JOptionPane.showMessageDialog(this, "Username or password not set", "Bad login", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
@@ -197,9 +198,9 @@ public class PasswordScreen extends javax.swing.JFrame {
         if (!WebServiceClient.isLoggedIn()) {
             // Login failed
             if (WebServiceClient.isErrorMessage()) {
-                new ErrorBox(WebServiceClient.getErrorMessage());
+                JOptionPane.showMessageDialog(this, "The WebService returned an error:\n" + WebServiceClient.getErrorMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                new ErrorBox("Wrong username or password!");
+                JOptionPane.showMessageDialog(this, "The username or password is incorrect.", "Bad login", JOptionPane.INFORMATION_MESSAGE);
             }
             return;
         }
@@ -213,7 +214,7 @@ public class PasswordScreen extends javax.swing.JFrame {
             dispose();
             new SheepPanel().setVisible(true);
         } else if (WebServiceClient.getFarmIds().isEmpty()) {
-            new ErrorBox("You have no farms!").setVisible(true);
+            JOptionPane.showMessageDialog(this, "You have no farms.", "Farm selection", JOptionPane.INFORMATION_MESSAGE);
             return;
         } else {
             new ChooseFarm().setVisible(true);
