@@ -13,9 +13,9 @@ package my.sheeponthetable.tools;
  */
 public class User {
 
-    private static String username, name, email, telephone;
-    private static int userId;
-    private static boolean SMSAlarmStationary,
+    private String username, name, email, telephone;
+    private int userId;
+    private boolean SMSAlarmStationary,
             SMSAlarmAttack,
             SMSAlarmHealth,
             EmailAlarmStationary,
