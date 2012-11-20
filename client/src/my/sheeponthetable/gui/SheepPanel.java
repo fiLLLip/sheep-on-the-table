@@ -1294,10 +1294,6 @@ private void menuRemoveSheepClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST
         // first set zoom to level 1, to make sure we get the minimal focused zoom.
         jXSheepMap.getMainMap().setZoom(1);
         jXSheepMap.getMainMap().calculateZoomFrom(gp);
-        // CalculateZoomFrom() finds a zoom level that barely touches upon all
-        // the waypoints. In order to make sure all the waypoints are places 
-        // well within the bounds of the map, zoom out one more level.
-        jXSheepMap.getMainMap().setZoom(jXSheepMap.getMainMap().getZoom() + 1);
     }
 
     /**
