@@ -87,18 +87,11 @@ public class FarmTools extends javax.swing.JFrame {
             listModel.addElement("No users found.");
         }
 
-        if (WebServiceClient.getUserLevel(farmID, Integer.parseInt(WebServiceClient.getUserID())) == 2) {
-
+       
             for (User user : users) {
                 listModel.addElement(user.getUsername());
             }
-        } else {
-            for (User user : users) {
-                if (user.getUserId() == Integer.parseInt(WebServiceClient.getUserID())) {
-                    listModel.addElement(user.getUsername());
-                }
-            }
-        }
+        
     }
 
     /**
@@ -376,7 +369,7 @@ public class FarmTools extends javax.swing.JFrame {
 
             // set info
             lblSelectedUserName.setText(selectedUser.getName());
-            ClearanceChoice.select(Math.abs(this.selectedUser.getClearance(this.farmID) - 2));
+            ClearanceChoice.select(getClearenceIndex(this.selectedUser.getClearance(this.farmID)));
 
             cbxEmailAlertAttack.setSelected(selectedUser.getEmailAlarmAttack());
             cbxEmailAlertHealth.setSelected(selectedUser.getEmailAlarmHealth());
@@ -421,7 +414,7 @@ public class FarmTools extends javax.swing.JFrame {
             if (WebServiceClient.setUserOptions(selectedUser)) {
                 // if logged in user is a owner, set clearence level
                 if (WebServiceClient.getUserDetails().getClearance(farmID) == 2) {
-                    if (!WebServiceClient.setUserPermission(selectedUser.getUserId(), Math.abs(ClearanceChoice.getSelectedIndex() - 2))) {
+                    if (!WebServiceClient.setUserPermission(selectedUser.getUserId(), getClearenceIndex(ClearanceChoice.getSelectedIndex()))) {
                         JOptionPane.showMessageDialog(null, "The server returned an error while trying to change the user level.");
                     }
                 }
@@ -489,4 +482,18 @@ public class FarmTools extends javax.swing.JFrame {
     private javax.swing.JLabel lblUserNameListLabel;
     private javax.swing.JButton removeUserFromFarmButton;
     // End of variables declaration//GEN-END:variables
+    /*
+     * Helper method to set the right clearence level (selection box)
+     */
+    private int getClearenceIndex(int level) {
+       switch(level) {
+           case 2:
+               return 0;
+           case 1:
+               return 1;
+           default:
+           case 0:
+               return 2;
+       }
+    }
 }
