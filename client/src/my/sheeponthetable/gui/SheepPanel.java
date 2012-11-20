@@ -533,7 +533,7 @@ public class SheepPanel extends javax.swing.JFrame {
             .addGroup(panelSheepInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelSheepInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
                     .addGroup(panelSheepInfoLayout.createSequentialGroup()
                         .addGroup(panelSheepInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -559,9 +559,9 @@ public class SheepPanel extends javax.swing.JFrame {
                                     .addComponent(lblSheepTemperature)
                                     .addComponent(lblSheepPulse)
                                     .addComponent(lblSheepAlarm))
-                                .addGap(0, 84, Short.MAX_VALUE))
-                            .addComponent(lblSheepPosition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblSheepUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(0, 32, Short.MAX_VALUE))
+                            .addComponent(lblSheepPosition, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                            .addComponent(lblSheepUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         panelSheepInfoLayout.setVerticalGroup(
@@ -684,7 +684,7 @@ public class SheepPanel extends javax.swing.JFrame {
                         .addComponent(btnSheepEditSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                         .addComponent(btnSheepEditCancel))
-                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
                     .addGroup(panelSheepEditLayout.createSequentialGroup()
                         .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
@@ -695,11 +695,11 @@ public class SheepPanel extends javax.swing.JFrame {
                             .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelSheepEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(dcSheepEditBorn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtSheepEditWeight, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSheepEditNickname, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSheepEditId)
-                            .addComponent(dcSheepEditDead, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(dcSheepEditBorn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                            .addComponent(txtSheepEditWeight, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                            .addComponent(txtSheepEditNickname, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                            .addComponent(txtSheepEditId, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                            .addComponent(dcSheepEditDead, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         panelSheepEditLayout.setVerticalGroup(
@@ -909,6 +909,7 @@ public class SheepPanel extends javax.swing.JFrame {
         });
         menuSheep.add(menuAddSheep);
 
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
         jMenuItem3.setText("Deselect sheep");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -935,6 +936,7 @@ public class SheepPanel extends javax.swing.JFrame {
         });
         menuSheep.add(menuRefresh);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
         jMenuItem2.setText("Remove Sheep");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

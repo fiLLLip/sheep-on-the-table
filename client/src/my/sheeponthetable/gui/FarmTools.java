@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionListener;
 import my.sheeponthetable.tools.User;
 import my.sheeponthetable.tools.WebServiceClient;
 
@@ -25,6 +24,7 @@ public class FarmTools extends javax.swing.JFrame {
     private boolean hasDoneChangesToSelectedUser = false; // used to determine if we should alert the user of unsaved changes
     private boolean dontShowConfirm = false; // so the popup doesnt come twice
 
+    
     /**
      * Creates new form AddNewSheep
      * 
@@ -33,7 +33,7 @@ public class FarmTools extends javax.swing.JFrame {
         initComponents();
 
         this.setTitle("Preferences for " + WebServiceClient.getFarmName());
-
+        
         ClearanceChoice.add("Owner");
         ClearanceChoice.add("Administrator");
         ClearanceChoice.add("View Access only");
