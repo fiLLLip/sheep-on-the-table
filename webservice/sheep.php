@@ -43,6 +43,7 @@ class Sheep extends JsonRpcService{
 		$DB->connect();
 		$user = $DB->escapeStrings($user);
 		$pass = $DB->escapeStrings($pass);
+        $pass = $DB->cryptPassword($pass);
 		$result = $DB->getResults('SELECT id, name FROM sheep_user WHERE un = \'' . $user . '\' AND pw = \'' . $pass . '\' LIMIT 1');
 		$userID = $result[0]['id'];
 		$name = $result[0]['name'];
@@ -323,6 +324,7 @@ class Sheep extends JsonRpcService{
 		$level = $DB->escapeStrings($level);
 		$numRows = $DB->getNumRows('SELECT user_id FROM sheep_permissions WHERE user_id = \'' . $userID . '\' AND farm_id = \'' . $farmID . '\' AND level>=\'2\'');
         if ($numRows >= 1) {
+			$numRows = $DB->getNumRows('SELECT user_id FROM sheep_permissions WHERE farm_id = \'' . $farmID . '\' AND level>=\'2\'');
             if ($numRows == 1 && $level <=1) {
                 $return = null;
             }
@@ -456,12 +458,18 @@ class Sheep extends JsonRpcService{
 		$DB->connect();
 		$userID = $DB->escapeStrings($userID);
 		$farmID = $DB->escapeStrings($farmID);
-		$numRows = $DB->getNumRows('SELECT user_id FROM sheep_permissions WHERE user_id = \'' . $userID . '\' AND farm_id = \'' . $farmID . '\'');
-		if ($numRows >= 1) {
+		$results = $DB->getResults('SELECT level FROM sheep_permissions WHERE user_id = \'' . $userID . '\' AND farm_id = \'' . $farmID . '\'');
+		if ($results[0]['level'] >= 2) {
 			$returnArr = $DB->getResults('SELECT p.user_id, p.level, u.un, u.name, u.email, u.phone, p.SMSAlarmAttack, p.SMSAlarmHealth, p.SMSAlarmStationary, p.EmailAlarmAttack, p.EmailAlarmHealth,
 				p.EmailAlarmStationary FROM sheep_permissions p, sheep_user u WHERE u.id=p.user_id AND p.farm_id = \''. $farmID .'\'');
 			$DB->disconnect();
 			return array($returnArr);
+		}
+		elseif ($results[0]['level'] >= 0) {
+			$returnArr = $DB->getResults('SELECT p.user_id, p.level, u.un, u.name, u.email, u.phone, p.SMSAlarmAttack, p.SMSAlarmHealth, p.SMSAlarmStationary, p.EmailAlarmAttack, p.EmailAlarmHealth,
+                                p.EmailAlarmStationary FROM sheep_permissions p, sheep_user u WHERE u.id = \'' . $userID . '\' AND u.id=p.user_id AND p.farm_id = \''. $farmID .'\'');
+                        $DB->disconnect();
+                        return array($returnArr);
 		}
 		else {
 			$DB->disconnect();
@@ -666,8 +674,11 @@ class Sheep extends JsonRpcService{
 		$DB = new Database();
 		$DB->connect();
 		$oldPassword = $DB->escapeStrings($oldPassword);
+        $oldPassword = $DB->cryptPassword($oldPassword);
 		$newPassword = $DB->escapeStrings($newPassword);
+        $newPassword = $DB->cryptPassword($newPassword);
 		$newConfirmPassword = $DB->escapeStrings($newConfirmPassword);
+        $newConfirmPassword = $DB->cryptPassword($newConfirmPassword);
 		
 		$numRows = $DB->getNumRows('SELECT id FROM sheep_user WHERE id = \'' . $userID . '\' AND pw = \'' . $oldPassword . '\'');
 		if ($numRows >= 1 && $newPassword == $newConfirmPassword) {
@@ -805,24 +816,29 @@ class Sheep extends JsonRpcService{
 	public function simulateSheepUpdates ($possibilityOfAlarm) {
 		$DB = new Database();
 		$DB->connect();
-		$result = $DB->getResults('SELECT id FROM sheep_sheep ORDER BY id DESC');
+		$result = $DB->getResults('SELECT id, UNIX_TIMESTAMP(born) as born, UNIX_TIMESTAMP(deceased) as deceased FROM sheep_sheep ORDER BY id DESC');
 		$alarms = 0;
 		foreach ($result as $sheep) {
 			$sheepID = $sheep['id'];
-			$posX = rand(4510000, 17000000) / 1000000;
+			$posX = rand(10600000, 11120000) / 1000000;
 			//$posX = rand(4510000, 4510090) / 1000000;
-			$posY = rand(58000000, 64000000) / 1000000;
+			$posY = rand(62540000, 62800000) / 1000000;
 			//$posy = rand(58000000, 58000090) / 1000000;
 			$pulse = rand(50, 90);
 			$temp = rand(35, 40);
 			$alarm = rand(0, $possibilityOfAlarm);
-			if ($alarm != 1) {
-				$alarm = 0;
+			if ($sheep['born'] > $sheep['deceased']) {
+				if ($alarm < 100) {
+        	                        error_log("ALARM shizzle is: " . $alarm);
+	                        }
+				if ($alarm <> 1) {
+					$alarm = 0;
+				}
+				else {
+					$alarms++;
+				}
+				$this->newSheepUpdate($sheepID, $posX, $posY, $pulse, $temp, $alarm);
 			}
-			else {
-				$alarms++;
-			}
-			$this->newSheepUpdate($sheepID, $posX, $posY, $pulse, $temp, $alarm);
 		}
 		return 'Success, alarms invoked: ' . $alarms;
 		
@@ -944,7 +960,7 @@ class Sheep extends JsonRpcService{
 				$smsMessage = 'Sheep #' . $sheepId . ' is under attack! Last position: ' . $posY . ', ' . $posX . '';
 				$mailMessage = 'Sheep #' . $sheepId . ' is under attack!' . "\r\n"
 				. 'Last position: ' . $posY . ', ' . $posX . '' . "\r\n"
-				. 'http://dyn.filllip.net/sheepwebservice2/map.php?lon=' . $posX . '&lat=' . $posY . '';
+				. 'http://dyn.filllip.net/sheepwebservice/map.php?lon=' . $posX . '&lat=' . $posY . '';
 				break;
 				
 			case "stationary":
@@ -953,7 +969,7 @@ class Sheep extends JsonRpcService{
 				$smsMessage = 'Sheep #' . $sheepId . ' is stationary! Last position: ' . $posY . ', ' . $posX . '';
 				$mailMessage = 'Sheep #' . $sheepId . ' is stationary!' . "\r\n"
 				. 'Last position: ' . $posY . ', ' . $posX . '' . "\r\n"
-				. 'http://dyn.filllip.net/sheepwebservice2/map.php?lon=' . $posX . '&lat=' . $posY . '';
+				. 'http://dyn.filllip.net/sheepwebservice/map.php?lon=' . $posX . '&lat=' . $posY . '';
 				break;
 				
 			case "health":
@@ -962,7 +978,7 @@ class Sheep extends JsonRpcService{
 				$smsMessage = 'Sheep #' . $sheepId . ' has abnormal health! Last position: ' . $posY . ', ' . $posX . '';
 				$mailMessage = 'Sheep #' . $sheepId . ' has abnormal health!' . "\r\n"
 				. 'Last position: ' . $posY . ', ' . $posX . '' . "\r\n"
-				. 'http://dyn.filllip.net/sheepwebservice2/map.php?lon=' . $posX . '&lat=' . $posY . '';
+				. 'http://dyn.filllip.net/sheepwebservice/map.php?lon=' . $posX . '&lat=' . $posY . '';
 				break;
 			
 			default:
@@ -982,7 +998,7 @@ class Sheep extends JsonRpcService{
 				$this->sendEMail($user['email'], $mailMessage);
 			}
 			if ($user[$smsColumn] == '1') {
-				//$this->sendSMS($user['phone'], $smsmessage);
+				$this->sendSMS($user['phone'], $smsMessage);
 			}
 		}
 	}

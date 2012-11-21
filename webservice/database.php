@@ -10,6 +10,7 @@ class Database {
 	private $user = "knutela_sheep";
 	private $pass = "pwonthetable";
 	private $database = "knutela_sheep";
+    private $salt = '$6$rounds=5000$sheepstringsalts$';
 	private $mysqli;
 	
 	public function Database () {
@@ -72,10 +73,21 @@ class Database {
      * @param $input
      * @return string
      */
-	public function escapeStrings ($input) {
-		$output = $this->mysqli->real_escape_string($input);
-		return $output;
-	}
+    public function escapeStrings ($input) {
+        $output = $this->mysqli->real_escape_string($input);
+        return $output;
+    }
+
+    /**
+     * Crypts password and returns ready crypted for check
+     *
+     * @param $input
+     * @return string
+     */
+    public function cryptPassword ($input) {
+        $output = crypt($input, $this->salt);
+        return $output;
+    }
 
     /**
      * Method to get number of rows from a query

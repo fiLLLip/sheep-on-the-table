@@ -1,35 +1,23 @@
 <?php
 
-	extract($_POST);
-	
-	$phonenumber = '99364430';
-	$message = 'Sheep #20069 is under attack! Last position: LOLOLOLOL';
-	//set POST variables
-	$url = 'http://www.vestnesconsulting.no/smsgateway/smssheep.php';
-	$fields = array(
-		'recipient' => urlencode($phonenumber),
-		'message' => urlencode($message)
-	);
-	$fields_string = '';
-	foreach ($fields as $key=>$value) { 
-		$fields_string .= $key.'='.$value.'&';
-	}
-	rtrim($fields_string, '&');
+include("JsonRpcClient.php");
 
-	//open connection
-	$ch = curl_init();
+$listOfCalls = array();
 
-	//set the url, number of POST vars, POST data
-	curl_setopt($ch,CURLOPT_URL, $url);
-	curl_setopt($ch,CURLOPT_POST, count($fields));
-	curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+array_push($listOfCalls,new RpcRequest("newSheepUpdate",array('33','7.7', '7.7', '80', '37', '0')));
+//$client = new AuthenticatedJsonRpcClient('http://localhost/jsonrpc/sample/server/');
+$client = new JsonRpcClient('http://dyn.filllip.net/sheepwebservice/');
 
-	//execute post
-	$result = curl_exec($ch);
-	error_log('response from smsgateway: ' . $result);
-	//close connection
-	curl_close($ch);
-	echo '<pre>';
-	var_dump($result);
-	echo '</pre>';	
+echo '<pre>';
+$sheepID = 4;
+			$posX = rand(10600000, 11120000) / 1000000;
+			//$posX = rand(4510000, 4510090) / 1000000;
+			$posY = rand(62540000, 62800000) / 1000000;
+			//$posy = rand(58000000, 58000090) / 1000000;
+			$pulse = rand(50, 90);
+			$temp = rand(35, 40);
+			$alarm = 1;
+var_dump($client->newSheepUpdate($sheepID, $posX, $posY, $pulse, $temp, $alarm));
+echo '</pre>';
+
 ?>

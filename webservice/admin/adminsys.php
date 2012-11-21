@@ -43,6 +43,7 @@ class AdminSys {
 		$DB->connect();
 		$user = $DB->escapeStrings($user);
 		$pass = $DB->escapeStrings($pass);
+        $pass = $DB->cryptPassword($pass);
 		$result = $DB->getResults('SELECT id FROM sheep_user WHERE un = \'' . $user . '\' AND pw = \'' . $pass . '\' AND sysadmin = \'1\' LIMIT 1');
 		$userid = $result[0]['id'];
 		if ($userid >= 1) {
@@ -381,6 +382,7 @@ class AdminSys {
 		$email = $DB->escapeStrings($email);
 		$phone = $DB->escapeStrings($phone);
 		$password = $DB->escapeStrings($password);
+        $password = $DB->cryptPassword($password);
 		$sysadmin = $DB->escapeStrings($sysadmin);
 		if (!empty($password)) {
 			$result = $DB->setFields('UPDATE sheep_user
@@ -536,8 +538,10 @@ class AdminSys {
 		$username = $DB->escapeStrings($username);
 		$email = $DB->escapeStrings($email);
 		$phone = $DB->escapeStrings($phone);
-		$password = $DB->escapeStrings($password);
-		$confirmPassword = $DB->escapeStrings($confirmPassword);
+        $password = $DB->escapeStrings($password);
+        $password = $DB->cryptPassword($password);
+        $confirmPassword = $DB->escapeStrings($confirmPassword);
+        $confirmPassword = $DB->cryptPassword($confirmPassword);
 		$sysadmin = $DB->escapeStrings($sysadmin);
 		if ($password == $confirmPassword && $password != '') {
 			$result = $DB->setFields('INSERT INTO sheep_user
