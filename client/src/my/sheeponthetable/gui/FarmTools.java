@@ -348,7 +348,7 @@ public class FarmTools extends javax.swing.JFrame {
             this.dontShowConfirm = true;
 
             // show confirmation popup
-            int confirm = JOptionPane.showConfirmDialog(null, "You have unsaved changes, are you sure you want to discard them?");
+            int confirm = JOptionPane.showConfirmDialog(null, "You have unsaved changes, are you sure you want to discard them?", "Discard changes", JOptionPane.YES_NO_OPTION);
 
             // if user chooses no/cancel
             if (confirm != 0) {

@@ -1196,7 +1196,7 @@ private void btnDeselectAllClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
 private void btnDeleteSelectedClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSelectedClicked
     if (selectedSheep != null) {
-        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to remove the selected sheep?");
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to remove the selected sheep?", "Are you sure?", JOptionPane.YES_NO_OPTION);
         if (choice == 0) {
             removeSheep(selectedSheep);
         }
