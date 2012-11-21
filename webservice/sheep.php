@@ -1005,7 +1005,7 @@ class Sheep extends JsonRpcService{
 	
 	private function sendSMS ($phoneNumber, $message) {
 		//set POST variables
-		$url = 'http://www.vestnesconsulting.no/smsgateway/smssheep.php';
+		$url = 'http://url.to.sms.gateway.com/smsapi.php';
 		$fields = array(
             'recipient' => urlencode($phoneNumber),
             'message' => urlencode($message)
@@ -1025,8 +1025,10 @@ class Sheep extends JsonRpcService{
 		curl_setopt($cinit,CURLOPT_POSTFIELDS, $fields_string);
 		curl_setopt($cinit,CURLOPT_RETURNTRANSFER, true);
 		//execute post
+		
 		$curlresult = curl_exec($cinit);
 		error_log('Tried to send SMS to ' . $phoneNumber . ' - Result: ' . $curlresult);
+				
 		//close connection
 		curl_close($cinit);
 	}
