@@ -11,7 +11,7 @@ import org.jdesktop.swingx.JXMapViewer;
  * Mouse Listener to handle clicking events on the map. To be precise, this
  * listener checks whether left mouse clicks hits any waypoint.
  *
- * @author elias
+ * @author Gruppe 7
  */
 public class MouseClickOnWayPointListener implements MouseListener {
 

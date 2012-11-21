@@ -14,7 +14,7 @@ package my.sheeponthetable.tools;
  * which sheep it belongs to. The Sheep objects, on the other hand, contain
  * references to the SheepUpdates associated with it.
  *
- * @author Filip
+ * @author Gruppe 7
  */
 public class SheepUpdate {
 

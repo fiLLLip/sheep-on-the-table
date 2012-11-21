@@ -7,7 +7,7 @@ import my.sheeponthetable.gui.PasswordScreen;
 /**
  * This class starts the entire program.
  * 
- * @author Filip
+ * @author Gruppe7
  */
 public class SheepFinder {
 

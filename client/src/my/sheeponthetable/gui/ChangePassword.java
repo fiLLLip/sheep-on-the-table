@@ -6,7 +6,7 @@ import my.sheeponthetable.tools.WebServiceClient;
 /**
  * Dialogue box used to let the user change his password.
  *
- * @author Håkon
+ * @author Gruppe 7
  */
 public class ChangePassword extends javax.swing.JFrame {
 
