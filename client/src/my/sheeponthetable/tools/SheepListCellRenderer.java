@@ -10,7 +10,7 @@ import my.sheeponthetable.gui.SheepPanel;
  * Cell Renderer responsible for giving the cells in the Sheep List the correct
  * colours.
  *
- * @author elias
+ * @author Gruppe 7
  */
 public class SheepListCellRenderer extends DefaultListCellRenderer {
 

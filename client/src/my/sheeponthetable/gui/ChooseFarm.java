@@ -10,7 +10,7 @@ import my.sheeponthetable.tools.WebServiceClient;
 /**
  * Dialogue box to let the user pick which farm (s)he belongs to.
  *
- * @author Håkon
+ * @author Gruppe 7
  */
 public class ChooseFarm extends javax.swing.JFrame {
 

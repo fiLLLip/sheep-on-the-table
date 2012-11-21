@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * The Sheep class implements the program-internal representation of a sheep.
  *
- * @author Filip
+ * @author Gruppe 7
  */
 public class Sheep {
 

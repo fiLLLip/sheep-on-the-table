@@ -7,7 +7,7 @@ import my.sheeponthetable.tools.WebServiceClient;
 /**
  * The UserProperties dialogue box lets the user edit the user information.
  *
- * @author Alex
+ * @author Gruppe 7
  */
 public class UserProperties extends javax.swing.JFrame {
 

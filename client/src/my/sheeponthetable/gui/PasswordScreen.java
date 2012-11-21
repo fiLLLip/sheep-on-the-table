@@ -9,7 +9,7 @@ import my.sheeponthetable.tools.WebServiceClient;
  * The screen that is opened when the program starts. Asks for the username and
  * password.
  *
- * @author Håkon
+ * @author Gruppe 7
  */
 public class PasswordScreen extends javax.swing.JFrame {
 

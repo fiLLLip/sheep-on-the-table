@@ -8,7 +8,7 @@ import my.sheeponthetable.tools.*;
 /**
  * Panel to handle adding new sheep
  *
- * @author Håkon
+ * @author Gruppe 7
  */
 public class AddNewSheep extends javax.swing.JFrame {
 

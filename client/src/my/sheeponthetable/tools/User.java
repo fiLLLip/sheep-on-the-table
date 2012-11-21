@@ -9,7 +9,7 @@ package my.sheeponthetable.tools;
  * telephone number and email (used in case of alarm), and information about
  * which kinds of events the user wants to trigger which alarms.
  *
- * @author Alex
+ * @author Gruppe 7
  */
 public class User {
 
